@@ -1,0 +1,3 @@
+[submodule "wp-content/plugins/grouped-content"]
+	path = wp-content/plugins/grouped-content
+	url = https://github.com/PurpleTurtleCreative/grouped-content.git
