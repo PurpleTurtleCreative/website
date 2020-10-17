@@ -1,0 +1,68 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+
+ .handle {
+ 	font-size: 1.1em;
+ 	line-height: 1.3em;
+ 	padding-left: 0.6em;
+ 	font-style: italic;
+ }
+ .pad1 {
+ 	padding: 0 1em;
+ }
+ .submit {
+ 	padding: 0em;
+ }
+ .error {
+ 	background: white;
+ 	padding: 0.7em;
+ }
+ .warning {
+ 	border-left: 4px solid #dc3232; 
+ 	padding: 0 1em;
+ 	text-align: left;
+ 	line-height: 3em;
+ 	font-size: 1.1em;
+ 	font-weight: 700;
+ 	margin-top: 0.16em;
+ }
+ #confirm {
+ 	display: none;
+ }
+ .FBLabel, .FBInput {
+ 	display:block;
+ 	float:left;
+ 	margin-bottom:0.3em;
+ }
+ .FBLabel{
+ 	float: left;
+ 	width:11em;	
+ }
+ .FBInput{
+ 	float: left;
+ 	width:15em;	
+ }
+ .FBDescr {
+ 	font-style: italic;
+ 	padding: 0 0 0 2em;
+ 	width: 30em;
+ 	float: left;
+ }
+ #mc_embed_signup form {
+ 	padding: 1.2em 0 0 0 !important;
+ }
+ .ctg-btn {
+ 	padding: 0.5em;
+ }
+ .ctg-title {
+ 	float: left;
+ 	margin-right: 0.8em ;
+ 	margin-top: -0.5em;
+ 	clear: left;
+ }
+ .chThGenStar {
+ 	float:left; 
+ 	padding: 0 0.8em;
+ }

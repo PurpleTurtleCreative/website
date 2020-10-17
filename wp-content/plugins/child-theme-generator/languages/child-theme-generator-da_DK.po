@@ -1,0 +1,396 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Chil Theme Generator v. 2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/child-theme-"
+"generator\n"
+"POT-Creation-Date: 2017-05-20 16:25:23+00:00\n"
+"PO-Revision-Date: 2017-05-20 18:27+0100\n"
+"Last-Translator: Serafino Corriero <sercorrie@gmail.com>\n"
+"Language-Team:  <sercorrie@gmail.com>\n"
+"Language: da\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;esc_html__;esc_html_e;"
+"_n\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+# Name of the plugin
+#. #-#-#-#-#  child-theme-generator.pot (Child Theme Generator 2.1.2)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: admin/class-child-theme-generator-admin.php:117
+msgid "Child Theme Generator"
+msgstr ""
+
+#: admin/class-child-theme-generator-admin.php:190
+msgid "Write here a brief description about your child-theme"
+msgstr "Skriv en kortfattet beskrivelse af dit undertema"
+
+#: admin/class-child-theme-generator-admin.php:191
+msgid "Write here the author's name"
+msgstr "Skriv forfatterens navn"
+
+#: admin/class-child-theme-generator-admin.php:192
+msgid "Write here the author's blog or website url"
+msgstr "Skriv website adressen på forfatterens blog eller hjemmeside"
+
+#: admin/class-child-theme-generator-admin.php:209 admin/class-child-theme-generator-admin.php:259
+msgid "Please correct before continue"
+msgstr "Ret venligst før du fortsætter"
+
+#: admin/class-child-theme-generator-admin.php:211 admin/class-child-theme-generator-admin.php:261
+msgid "Try again?"
+msgstr "Prøv igen?"
+
+#: admin/class-child-theme-generator-admin.php:227
+msgid "Child Theme %1$s %2$s %3$s has been created successfully!"
+msgstr "Undertemaet %1$s %2$s %3$s blev korrekt oprettet!"
+
+#: admin/class-child-theme-generator-admin.php:231
+msgid "Activate"
+msgstr "Aktiver"
+
+#: admin/class-child-theme-generator-admin.php:233
+msgid "Finished"
+msgstr "Færdig"
+
+#: admin/class-child-theme-generator-admin.php:275
+msgid "Child Theme %1$s %2$s %3$s has been removed successfully!"
+msgstr "Undertemaet %1$s %2$s %3$s blev fjernet korrekt!"
+
+#: admin/class-child-theme-generator-admin.php:278
+msgid " Finished"
+msgstr " Færdig"
+
+#: admin/class-child-theme-generator-admin.php:294
+msgid "Create New"
+msgstr "Opret ny"
+
+#: admin/class-child-theme-generator-admin.php:295
+msgid "Remove Child Theme"
+msgstr "Fjern undertema"
+
+#: admin/class-child-theme-generator-admin.php:317
+msgid "Create"
+msgstr "Opret"
+
+#: admin/partials/child-theme-generator-admin-display.php:37
+msgid ""
+" Fatal error: cannot continue because the theme root folder is write-"
+"protected - permissions detected: %1$s"
+msgstr ""
+" Fatal fejl: kan ikke fortsætte fordi temamappen er skrivebeskyttet - "
+"tilladelses adgang: %1$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:39
+msgid ""
+"Tips: change your folder's permissions to writing on %1$s %2$s %3$s before "
+"continue."
+msgstr ""
+"Tip: ændre skrive tilladelsen på mappen %1$s %2$s %3$s før du fortsætter."
+
+#: admin/partials/child-theme-generator-admin-display.php:76
+msgid "%1$s How to use this plugin %2$s"
+msgstr "%1$s Hvordan du anvender dette plugin %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:90
+msgid "%1$s Follow me & Review %2$s"
+msgstr "%1$s Følg mig & Anmeldelse %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:111
+msgid ""
+"Your feedback and review are both important, %1$s Rate this plugin! %2$s"
+msgstr ""
+"Din Feedback og anmeldelse er begge vigtige, %1$s Bedøm dette plugin! %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:126
+msgid ""
+"Thank you for using Child Theme Generator. This plugin is free and you can "
+"use it whenever you wish. If you have appreciated my work, consider a small "
+"donation to show your appreciation. Thanks! "
+msgstr ""
+"Tak fordi du anvender Child Theme Generator. Dette plugin er gratis og du "
+"kan anvende det som du vil. Hvis du værdsætter mit arbejde bør du overveje "
+"en mindre donation for at vise din tilfredshed. Tak! "
+
+#: admin/partials/child-theme-generator-admin-display.php:145
+msgid "%1$s Keep in touch %2$s"
+msgstr "%1$s Hold kontakten %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:146
+msgid ""
+"This plugins has been coded with the best practices, it will not slow down "
+"your website or spam your database."
+msgstr ""
+"Dette plugin er kodet efter bedste praksis og vil ikke sænke hastigheden på "
+"dit website eller spamme din database."
+
+#: admin/partials/child-theme-generator-admin-display.php:147
+msgid ""
+"Subscribe to get notificed once new plugin is out. No spam, just one mail "
+"per one new plugin.%1$s"
+msgstr ""
+"Abonner på notifikationer når et nyt plugin er ude. Ingen spam, kun en email "
+"pr. nyt plugin. %1$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:151
+msgid "Subscribe to my mailing list"
+msgstr "Abonner på mit nyhedsbrev"
+
+#: admin/partials/child-theme-generator-admin-display.php:152
+msgid "Email address"
+msgstr "Email adresse"
+
+#: admin/partials/child-theme-generator-admin-display.php:155
+msgid "Subscribe"
+msgstr "Abonner"
+
+#: includes/class-child-theme-generator-functions.php:51
+msgid "%1$s Create a child theme from a parent-theme %2$s"
+msgstr "%1$s Opret et undertema fra et overordnet tema %2$s"
+
+#: includes/class-child-theme-generator-functions.php:52
+msgid "Theme active: %1$s %2$s"
+msgstr "Aktiv tema: %1$s %2$s"
+
+#: includes/class-child-theme-generator-functions.php:53
+msgid ""
+"%1$s Select a parent theme from drop-down menu, then fill out the form "
+"(Note: %2$s all fields are optional) %3$s"
+msgstr ""
+"%1$s Vælg et overordnet tema fra drop-down menuen, udfyld formularen "
+"(Bemærk: %2$s alle felter er valgfrie) %3$s"
+
+#: includes/class-child-theme-generator-functions.php:70
+msgid "%1$s (Active)"
+msgstr "%1$s (Aktive)"
+
+#: includes/class-child-theme-generator-functions.php:83
+msgid " Select a theme from drop-down menu (mandatory)"
+msgstr " Vælg et tema fra drop-down menuen (obligatorisk)"
+
+#: includes/class-child-theme-generator-functions.php:86
+msgid "Heading:"
+msgstr "Overskrift:"
+
+#: includes/class-child-theme-generator-functions.php:88
+msgid " Write an easy title to remember (i.e. 'The Green Giants')"
+msgstr " Skrive en let titel du kan huske (f.eks 'The Green Giants')"
+
+#: includes/class-child-theme-generator-functions.php:91
+msgid "Description:"
+msgstr "Beskrivelse:"
+
+#: includes/class-child-theme-generator-functions.php:93
+msgid ""
+" Write a sentence about your job (i.e. 'Few tweaks to my baseball website')"
+msgstr ""
+" Skriv en sætning som beskriver din website (f.eks. 'Nogle fif til min "
+"baseball webside')"
+
+#: includes/class-child-theme-generator-functions.php:96
+msgid "Child Theme URL:"
+msgstr "Undertemaet's webadresse (URL):"
+
+#: includes/class-child-theme-generator-functions.php:98
+msgid ""
+" Enter the URL where to find out more (i.e. link to your article or post)"
+msgstr ""
+" Angiv webadressen (URL) hvor man kan se mere (f.eks. link til en artikel "
+"eller side)"
+
+#: includes/class-child-theme-generator-functions.php:101
+msgid "Author:"
+msgstr "Forfatter:"
+
+#: includes/class-child-theme-generator-functions.php:103
+msgid " Enter your name/nickname"
+msgstr " Angiv dit navn/kaldenavn"
+
+#: includes/class-child-theme-generator-functions.php:106
+msgid "Author URL:"
+msgstr "Forfatteren's webadresse (URL):"
+
+#: includes/class-child-theme-generator-functions.php:108
+msgid " Enter your blog/website Home Page"
+msgstr " Angiv din blog/website adresse"
+
+#: includes/class-child-theme-generator-functions.php:111
+msgid "Version:"
+msgstr "Version:"
+
+#: includes/class-child-theme-generator-functions.php:113
+msgid " Early version, usually 1.0"
+msgstr " Tildig version, normalt 1.0"
+
+#: includes/class-child-theme-generator-functions.php:116
+msgid "Include GPL License:"
+msgstr "Inkluder GPL License:"
+
+#: includes/class-child-theme-generator-functions.php:119
+msgid "Yes"
+msgstr "Ja"
+
+#: includes/class-child-theme-generator-functions.php:120
+msgid "No"
+msgstr "Nej"
+
+#: includes/class-child-theme-generator-functions.php:123
+msgid " Include the General Public License. "
+msgstr " Inkluder General Public License. "
+
+#: includes/class-child-theme-generator-functions.php:125
+msgid "Click here to learn more"
+msgstr "Klik her for at lære mere"
+
+#: includes/class-child-theme-generator-functions.php:129
+msgid "Create new child theme"
+msgstr "Opret nyt undertema"
+
+#: includes/class-child-theme-generator-functions.php:141
+msgid ""
+"It's STRONGLY recommended to save your jobs before continue, all deleted "
+"files will be lost!"
+msgstr ""
+"Det anbefales KRAFTIGT at gemme dit arbejde før du fortsætter. Alle slettet "
+"filer vil blive tabt!"
+
+#: includes/class-child-theme-generator-functions.php:144
+msgid "Remove a child theme, then will switch to its parent-theme"
+msgstr "Fjern et undertema og skift til det overordnet tema"
+
+#: includes/class-child-theme-generator-functions.php:146
+msgid "%1$s Active theme: %2$s"
+msgstr "%1$s Aktive tema: %2$s"
+
+#: includes/class-child-theme-generator-functions.php:153
+msgid ""
+"Click on radio button to choice one child theme, then, click on Remove "
+"button to delete it "
+msgstr ""
+"Vælg ved hjælp af knapperne et undertema, klik så på Fjern for at slette det "
+
+#: includes/class-child-theme-generator-functions.php:165
+msgid "Remove"
+msgstr "Fjern"
+
+#: includes/class-child-theme-generator-functions.php:168
+msgid "Are you really sure? "
+msgstr "Er du helt sikker? "
+
+#: includes/class-child-theme-generator-functions.php:169
+msgid " Confirm "
+msgstr " Bekræft "
+
+#: includes/class-child-theme-generator-functions.php:175
+msgid "No child theme detected"
+msgstr "Ingen undertemaer blev slettet"
+
+#: includes/class-child-theme-generator-functions.php:193
+msgid "Deleting file "
+msgstr "Slet fil "
+
+#: includes/class-child-theme-generator-functions.php:196
+msgid "Deleting folder "
+msgstr "Slet mappe "
+
+#: includes/class-child-theme-generator-functions.php:198
+msgid "Switching to "
+msgstr "Skift til "
+
+#: includes/class-child-theme-generator-functions.php:200
+msgid "Error deleting "
+msgstr "Fejl i sletningen "
+
+#: includes/class-child-theme-generator-functions.php:200
+msgid "theme folder not found!"
+msgstr "tema mappen blev ikke fundet!"
+
+#: includes/class-child-theme-generator-functions.php:260
+#: includes/class-child-theme-generator-functions.php:277
+msgid "Error: cannot create "
+msgstr "Fejl: kan ikke oprette "
+
+#: includes/class-child-theme-generator-functions.php:263
+msgid "existing folder."
+msgstr "eksisterende mappe."
+
+#: includes/class-child-theme-generator-functions.php:272
+#: includes/class-child-theme-generator-functions.php:372
+#: includes/class-child-theme-generator-functions.php:457
+msgid "Writing "
+msgstr "Skriver "
+
+#: includes/class-child-theme-generator-functions.php:279
+msgid "This folder is read-only: "
+msgstr "Denne mappe er skrivebeskyttet: "
+
+#: includes/class-child-theme-generator-functions.php:317
+msgid "Write here your own personal stylesheet"
+msgstr "Skriv her dit eget personlige stylesheet"
+
+#: includes/class-child-theme-generator-functions.php:325
+msgid "Writing"
+msgstr "Skriver"
+
+#: includes/class-child-theme-generator-functions.php:331
+msgid "Error: cannot write style.css, permission denied"
+msgstr "Fejl: kan ikke oprette style.css. Adgang nægtet"
+
+#: includes/class-child-theme-generator-functions.php:348
+msgid "This file is part of "
+msgstr "Denne fil er en del af "
+
+#: includes/class-child-theme-generator-functions.php:350
+msgid ""
+"All functions of this file will be loaded before of parent theme functions."
+msgstr ""
+"Alle funktionerne i denne fil vil blive indlæst før det overordnet temas "
+"funktioner."
+
+#: includes/class-child-theme-generator-functions.php:351
+msgid "Learn more at "
+msgstr "Lær mere af "
+
+#: includes/class-child-theme-generator-functions.php:352
+msgid ""
+"Note: this function loads the parent stylesheet before, then child theme "
+"stylesheet"
+msgstr ""
+"Note: denne funktion indlæser det overordnet temas stylesheet før "
+"undertemaets stylesheet"
+
+#: includes/class-child-theme-generator-functions.php:353
+msgid "(leave it in place unless you know what you are doing.)"
+msgstr "(lad være tomt med mindre du ved hvad du laver.)"
+
+#: includes/class-child-theme-generator-functions.php:365
+msgid "Write here your own functions"
+msgstr "Skriv her dine egne funktioner"
+
+#: includes/class-child-theme-generator-functions.php:378
+msgid "Error: cannot write functions.php, permission denied"
+msgstr "Fejl: kan ikke oprette functions.php. Adgang nægtet"
+
+#: includes/class-child-theme-generator-functions.php:464
+msgid "Error: cannot write screenshot.png, permission denied"
+msgstr "Fejl: kan ikke oprette screenshot.png. Tilladelse nægtet"
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.serafinocorriero.it/child-theme-generator"
+msgstr "https://www.serafinocorriero.it/child-theme-generator"
+
+#. Description of the plugin/theme
+msgid "This plugin allow to generate a child theme, and all related files"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Serafino Corriero"
+msgstr "Serafino Corriero"
+
+#. Author URI of the plugin/theme
+msgid "https://www.serafinocorriero.it"
+msgstr "https://www.serafinocorriero.it"

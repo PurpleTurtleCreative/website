@@ -1,0 +1,398 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Child Themes Generator v.2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/child-theme-generator\n"
+"POT-Creation-Date: 2017-05-20 16:25:23+00:00\n"
+"PO-Revision-Date: 2020-03-08 13:45+0100\n"
+"Last-Translator: Serafino Corriero <sercorrie@gmail.com>\n"
+"Language-Team: my Team <sercorrie@gmail.com>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-KeywordsList: __;gettext;gettext_noop;_e;esc_html__;esc_html_e;_n\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: ..\n"
+
+#. Plugin Name of the plugin/theme
+#: admin/class-child-theme-generator-admin.php:117
+msgid "Child Theme Generator"
+msgstr "Child Theme Generator"
+
+#: admin/class-child-theme-generator-admin.php:190
+msgid "Write here a brief description about your child-theme"
+msgstr "Scrivi qui una breve descrizione del tuo child theme"
+
+#: admin/class-child-theme-generator-admin.php:191
+msgid "Write here the author's name"
+msgstr "Scrivi qui il nome dell'autore"
+
+#: admin/class-child-theme-generator-admin.php:192
+msgid "Write here the author's blog or website url"
+msgstr "Scrivi qui il l'URL  del blog / sito web dell'autore"
+
+#: admin/class-child-theme-generator-admin.php:209 admin/class-child-theme-generator-admin.php:259
+msgid "Please correct before continue"
+msgstr "Si prega di correggere prima di continuare"
+
+#: admin/class-child-theme-generator-admin.php:211 admin/class-child-theme-generator-admin.php:261
+msgid "Try again?"
+msgstr "Riprovare?"
+
+#: admin/class-child-theme-generator-admin.php:227
+msgid "Child Theme %1$s %2$s %3$s has been created successfully!"
+msgstr "Il tema figlio %1$s %2$s %3$s è stato creato con successo!"
+
+#: admin/class-child-theme-generator-admin.php:231
+msgid "Activate"
+msgstr "Attivare"
+
+#: admin/class-child-theme-generator-admin.php:233
+msgid "Finished"
+msgstr "Finito"
+
+#: admin/class-child-theme-generator-admin.php:275
+msgid "Child Theme %1$s %2$s %3$s has been removed successfully!"
+msgstr "Il tema figlio %1$s %2$s %3$s  è stato cancellato con successo!"
+
+#: admin/class-child-theme-generator-admin.php:278
+msgid " Finished"
+msgstr " Finito"
+
+#: admin/class-child-theme-generator-admin.php:294
+msgid "Create New"
+msgstr "Crea Nuovo"
+
+#: admin/class-child-theme-generator-admin.php:295
+msgid "Remove Child Theme"
+msgstr "Rimuovi il tema figlio"
+
+#: admin/class-child-theme-generator-admin.php:317
+msgid "Create"
+msgstr "Crea"
+
+#: admin/partials/child-theme-generator-admin-display.php:37
+msgid ""
+" Fatal error: cannot continue because the theme root folder is write-protected - permissions "
+"detected: %1$s"
+msgstr ""
+" Errore fatale: non posso continuare perché la cartella del tema è protetta da scrittura - "
+"permessi rilevati: %1$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:39
+msgid "Tips: change your folder's permissions to writing on %1$s %2$s %3$s before continue."
+msgstr ""
+"Suggerimenti: prima di continuare, cambia il permessi su della cartella  %1$s %2$s %3$s per "
+"consentirne la scrittura."
+
+#: admin/partials/child-theme-generator-admin-display.php:76
+msgid "%1$s How to use this plugin %2$s"
+msgstr "%1$s Come usare questo plugin %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:90
+msgid "%1$s Follow me & Review %2$s"
+msgstr "%1$s Seguimi & Recensioni %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:111
+msgid "Your feedback and review are both important, %1$s Rate this plugin! %2$s"
+msgstr "Recensioni e risposte sono importanti, %1$s Vota questo plugin! %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:126
+msgid ""
+"Thank you for using Child Theme Generator. This plugin is free and you can use it whenever you "
+"wish. If you have appreciated my work, consider a small donation to show your appreciation. "
+"Thanks! "
+msgstr ""
+"Grazie per aver usato Child Theme Generator. Questo plugin è gratuito e puoi usarlo ogni volta "
+"che lo desideri. Se il mio lavoro ti è stato utile, considera una piccola donazione per "
+"mostrare il tuo apprezzamento. Grazie! "
+
+#: admin/partials/child-theme-generator-admin-display.php:145
+msgid "%1$s Keep in touch %2$s"
+msgstr "%1$s Restiamo in contatto %2$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:146
+msgid ""
+"This plugins has been coded with the best practices, it will not slow down your website or spam "
+"your database."
+msgstr ""
+"Questo plugin è stato codificato secondo le migliori pratiche, non rallenterà il tuo sito web e "
+"non sporcherà il tuo database."
+
+#: admin/partials/child-theme-generator-admin-display.php:147
+msgid ""
+"Subscribe to get notificed once new plugin is out. No spam, just one mail per one new plugin."
+"%1$s"
+msgstr ""
+"Iscriviti per ricevere informazioni sull'uscita di nuovi plugins. Niente spam, solo una mail "
+"per ogni nuovo plugin.%1$s"
+
+#: admin/partials/child-theme-generator-admin-display.php:151
+msgid "Subscribe to my mailing list"
+msgstr "Iscriviti alla mailing list"
+
+#: admin/partials/child-theme-generator-admin-display.php:152
+msgid "Email address"
+msgstr "Indirizzo email"
+
+#: admin/partials/child-theme-generator-admin-display.php:155
+msgid "Subscribe"
+msgstr "Iscriviti"
+
+#: includes/class-child-theme-generator-functions.php:51
+msgid "%1$s Create a child theme from a parent-theme %2$s"
+msgstr "%1$s Crea un child theme da un parent theme %2$s"
+
+#: includes/class-child-theme-generator-functions.php:52
+msgid "Theme active: %1$s %2$s"
+msgstr "Tema attivo:  %1$s %2$s"
+
+#: includes/class-child-theme-generator-functions.php:53
+msgid ""
+"%1$s Select a parent theme from drop-down menu, then fill out the form (Note: %2$s all fields "
+"are optional) %3$s"
+msgstr ""
+"%1$s Selezionare un parent theme dal menu a discesa, dopo compila il modulo. (Nota: %2$s tutti "
+"i campi sono facoltativi) %3$s"
+
+#: includes/class-child-theme-generator-functions.php:70
+msgid "%1$s (Active)"
+msgstr "%1$s (Attivo)"
+
+#: includes/class-child-theme-generator-functions.php:83
+msgid " Select a theme from drop-down menu (mandatory)"
+msgstr "  Seleziona un tema dal menu a scomparsa (obbligatori0)"
+
+#: includes/class-child-theme-generator-functions.php:86
+msgid "Heading:"
+msgstr "Intestazione:"
+
+#: includes/class-child-theme-generator-functions.php:88
+msgid " Write an easy title to remember (i.e. 'The Green Giants')"
+msgstr " Scrivi un titolo facile da ricordare (p.es. 'I Giganti Verdi')"
+
+#: includes/class-child-theme-generator-functions.php:91
+msgid "Description:"
+msgstr "Descrizione:"
+
+#: includes/class-child-theme-generator-functions.php:93
+msgid " Write a sentence about your job (i.e. 'Few tweaks to my baseball website')"
+msgstr " Scrivi una frase sul tuo lavoro (p.es. 'Alcune modifiche al mio sito di baseball')"
+
+#: includes/class-child-theme-generator-functions.php:96
+msgid "Child Theme URL:"
+msgstr "URL del tema figlio:"
+
+#: includes/class-child-theme-generator-functions.php:98
+msgid " Enter the URL where to find out more (i.e. link to your article or post)"
+msgstr " Inserire l'URL per saperne di più (p.es. collegamento al tuo articolo)"
+
+#: includes/class-child-theme-generator-functions.php:101
+msgid "Author:"
+msgstr "Autore:"
+
+#: includes/class-child-theme-generator-functions.php:103
+msgid " Enter your name/nickname"
+msgstr " Inserire il tuo nome/soprannome"
+
+#: includes/class-child-theme-generator-functions.php:106
+msgid "Author URL:"
+msgstr "URL dell'Autore:"
+
+#: includes/class-child-theme-generator-functions.php:108
+msgid " Enter your blog/website Home Page"
+msgstr " Inserire l' Home Page del tuo blog/sito web"
+
+#: includes/class-child-theme-generator-functions.php:111
+msgid "Version:"
+msgstr "Versione:"
+
+#: includes/class-child-theme-generator-functions.php:113
+msgid " Early version, usually 1.0"
+msgstr " Prima versione, di solito 1.0"
+
+#: includes/class-child-theme-generator-functions.php:116
+msgid "Include GPL License:"
+msgstr "Includere licenza GPL:"
+
+#: includes/class-child-theme-generator-functions.php:119
+msgid "Yes"
+msgstr "Si"
+
+#: includes/class-child-theme-generator-functions.php:120
+msgid "No"
+msgstr "No"
+
+#: includes/class-child-theme-generator-functions.php:123
+msgid " Include the General Public License. "
+msgstr " Include la General Public License "
+
+#: includes/class-child-theme-generator-functions.php:125
+msgid "Click here to learn more"
+msgstr "Clicca qui per saperne di più"
+
+#: includes/class-child-theme-generator-functions.php:129
+msgid "Create new child theme"
+msgstr "Crea un nuovo tema figlio"
+
+#: includes/class-child-theme-generator-functions.php:141
+msgid ""
+"It's STRONGLY recommended to save your jobs before continue, all deleted files will be lost!"
+msgstr ""
+"È CALDAMENTE consigliato di salvare i tuoi lavori prima di continuare, i files cancellati "
+"andranno persi per sempre!"
+
+#: includes/class-child-theme-generator-functions.php:144
+msgid "Remove a child theme, then will switch to its parent-theme"
+msgstr "Rimuove un tema figlio e attiva il suo parent theme"
+
+#: includes/class-child-theme-generator-functions.php:146
+msgid "%1$s Active theme: %2$s"
+msgstr "%1$s Tema attivo: %2$s"
+
+#: includes/class-child-theme-generator-functions.php:153
+msgid ""
+"Click on radio button to choice one child theme, then, click on Remove button to delete it "
+msgstr "Seleziona un tema figlio, poi click su Rimozione per cancellarlo "
+
+#: includes/class-child-theme-generator-functions.php:165
+msgid "Remove"
+msgstr "Rimozione"
+
+#: includes/class-child-theme-generator-functions.php:168
+msgid "Are you really sure? "
+msgstr "Sei proprio sicuro? "
+
+#: includes/class-child-theme-generator-functions.php:169
+msgid " Confirm "
+msgstr " Conferm "
+
+#: includes/class-child-theme-generator-functions.php:175
+msgid "No child theme detected"
+msgstr "Nessun tema figlio rilevato"
+
+#: includes/class-child-theme-generator-functions.php:193
+msgid "Deleting file "
+msgstr "Cancellazione file "
+
+#: includes/class-child-theme-generator-functions.php:196
+msgid "Deleting folder "
+msgstr "Cancellazione cartella "
+
+#: includes/class-child-theme-generator-functions.php:198
+msgid "Switching to "
+msgstr "Passaggio a "
+
+#: includes/class-child-theme-generator-functions.php:200
+msgid "Error deleting "
+msgstr "Errore durante la cancellazione di "
+
+#: includes/class-child-theme-generator-functions.php:200
+msgid "theme folder not found!"
+msgstr "cartella del tema non trovata!"
+
+#: includes/class-child-theme-generator-functions.php:260
+#: includes/class-child-theme-generator-functions.php:277
+msgid "Error: cannot create "
+msgstr "Errore: non posso creare "
+
+#: includes/class-child-theme-generator-functions.php:263
+msgid "existing folder."
+msgstr "cartella esistente."
+
+#: includes/class-child-theme-generator-functions.php:272
+#: includes/class-child-theme-generator-functions.php:372
+#: includes/class-child-theme-generator-functions.php:457
+msgid "Writing "
+msgstr "Scrittura "
+
+#: includes/class-child-theme-generator-functions.php:279
+msgid "This folder is read-only: "
+msgstr "Cartella a sola lettura: "
+
+#: includes/class-child-theme-generator-functions.php:317
+msgid "Write here your own personal stylesheet"
+msgstr "Scrivi qui il tuo foglio di stile personalizzato"
+
+#: includes/class-child-theme-generator-functions.php:325
+msgid "Writing"
+msgstr "Scrittura"
+
+#: includes/class-child-theme-generator-functions.php:331
+msgid "Error: cannot write style.css, permission denied"
+msgstr "Errore: impossibile scrivere il file style.css, permesso negato"
+
+#: includes/class-child-theme-generator-functions.php:348
+msgid "This file is part of "
+msgstr "Questo file è parte di "
+
+#: includes/class-child-theme-generator-functions.php:350
+msgid "All functions of this file will be loaded before of parent theme functions."
+msgstr "Tutte le funzioni di questo file saranno caricate prima delle funzioni del tema genitore."
+
+#: includes/class-child-theme-generator-functions.php:351
+msgid "Learn more at "
+msgstr "Per saperne di più "
+
+#: includes/class-child-theme-generator-functions.php:352
+msgid "Note: this function loads the parent stylesheet before, then child theme stylesheet"
+msgstr ""
+"Nota: questa funzione carica prima il foglio di stile genitore, poi il foglio di stile figlio"
+
+#: includes/class-child-theme-generator-functions.php:353
+msgid "(leave it in place unless you know what you are doing.)"
+msgstr "(non toccare se non sai cosa stai facendo)"
+
+#: includes/class-child-theme-generator-functions.php:365
+msgid "Write here your own functions"
+msgstr "Scrivi qui le tue funzioni"
+
+#: includes/class-child-theme-generator-functions.php:378
+msgid "Error: cannot write functions.php, permission denied"
+msgstr "Errore: impossibile scrivere functions.php, permesso negato"
+
+#: includes/class-child-theme-generator-functions.php:464
+msgid "Error: cannot write screenshot.png, permission denied"
+msgstr "Errore: impossibile scrivere screenshot.png, permesso negato"
+
+#. Plugin URI of the plugin/theme
+msgid "https://www.serafinocorriero.it/child-theme-generator"
+msgstr "https://www.serafinocorriero.it/child-theme-generator"
+
+#. Description of the plugin/theme
+msgid "This plugin allow to generate a child theme, and all related files"
+msgstr "Questo plugin consente di generare un tema figlio e tutti i files ad esso collegati"
+
+#. Author of the plugin/theme
+msgid "Serafino Corriero"
+msgstr "Serafino Corriero"
+
+#. Author URI of the plugin/theme
+msgid "https://www.serafinocorriero.it"
+msgstr "https://www.serafinocorriero.it"
+
+#~ msgid "Child Themes Generator"
+#~ msgstr "Generatore di tema figlio"
+
+#~ msgid "Detected "
+#~ msgstr "Rilevato"
+
+#~ msgid " Will be used a default image."
+#~ msgstr "Verrà usata l'immagine di default"
+
+#~ msgid " Create"
+#~ msgstr "Crea"
+
+#~ msgid "Please correct before continue."
+#~ msgstr " Si prega di correggere prima di continuare."
+
+#~ msgid " Please correct before continue."
+#~ msgstr " Si prega di correggere prima di continuare."
+
+#~ msgid "folder"
+#~ msgstr "cartella"
+
+#~ msgid "Error: Cannot create "
+#~ msgstr "Errore: non posso creare"
