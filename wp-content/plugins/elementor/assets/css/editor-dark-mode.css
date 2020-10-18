@@ -1,4 +1,4 @@
-/*! elementor - v3.0.8.1 - 14-09-2020 */
+/*! elementor - v3.0.11 - 30-09-2020 */
 body {
   color: #E0E1E3; }
   body .pcr-app {
@@ -256,9 +256,12 @@ a.elementor-responsive-switcher {
   border-color: #64666A; }
 
 .elementor-control-media-area, .pcr-app[data-theme=monolith] .pcr-color-palette, .pcr-button {
-  background-image: -webkit-linear-gradient(45deg, #34383C 25%, transparent 25%, transparent 75%, #34383C 75%, #34383C), -webkit-linear-gradient(45deg, #34383C 25%, transparent 25%, transparent 75%, #34383C 75%, #34383C);
-  background-image: -o-linear-gradient(45deg, #34383C 25%, transparent 25%, transparent 75%, #34383C 75%, #34383C), -o-linear-gradient(45deg, #34383C 25%, transparent 25%, transparent 75%, #34383C 75%, #34383C);
-  background-image: linear-gradient(45deg, #34383C 25%, transparent 25%, transparent 75%, #34383C 75%, #34383C), linear-gradient(45deg, #34383C 25%, transparent 25%, transparent 75%, #34383C 75%, #34383C);
+  background-image: -webkit-linear-gradient(45deg, #34383C 25%, transparent 0, transparent 75%, #34383C 0, #34383C), -webkit-linear-gradient(45deg, #34383C 25%, transparent 0, transparent 75%, #34383C 0, #34383C);
+  background-image: -o-linear-gradient(45deg, #34383C 25%, transparent 0, transparent 75%, #34383C 0, #34383C), -o-linear-gradient(45deg, #34383C 25%, transparent 0, transparent 75%, #34383C 0, #34383C);
+  background-image: linear-gradient(45deg, #34383C 25%, transparent 0, transparent 75%, #34383C 0, #34383C), linear-gradient(45deg, #34383C 25%, transparent 0, transparent 75%, #34383C 0, #34383C);
+  -webkit-background-size: 12px 12px;
+          background-size: 12px 12px;
+  background-position: 0 0, 6px 6px;
   background-color: #64666A; }
 
 .elementor-control-type-icons .elementor-control-media__preview i {

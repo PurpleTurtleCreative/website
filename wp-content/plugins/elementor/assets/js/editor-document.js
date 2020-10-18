@@ -1,4 +1,4 @@
-/*! elementor - v3.0.8.1 - 14-09-2020 */
+/*! elementor - v3.0.11 - 30-09-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -12944,7 +12944,7 @@ var DisableEnable = /*#__PURE__*/function (_CommandDisableEnable) {
   (0, _createClass2.default)(DisableEnable, null, [{
     key: "getName",
     value: function getName() {
-      return 'globals';
+      return 'Global';
     }
   }, {
     key: "getEnableCommand",

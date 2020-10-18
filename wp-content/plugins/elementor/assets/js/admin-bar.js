@@ -1,4 +1,4 @@
-/*! elementor - v3.0.8.1 - 14-09-2020 */
+/*! elementor - v3.0.11 - 30-09-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -2064,7 +2064,9 @@ var AdminBar = /*#__PURE__*/function (_elementorModules$Vie) {
           adminBarSubItems: 'ab-submenu'
         },
         selectors: {
-          adminBar: '#wp-admin-bar-root-default'
+          adminBar: '#wp-admin-bar-root-default',
+          editMenuItem: '#wp-admin-bar-edit',
+          newMenuItem: '#wp-admin-bar-new-content'
         }
       };
     }
@@ -2076,10 +2078,14 @@ var AdminBar = /*#__PURE__*/function (_elementorModules$Vie) {
     key: "getDefaultElements",
     value: function getDefaultElements() {
       var _this$getSettings = this.getSettings('selectors'),
-          adminBar = _this$getSettings.adminBar;
+          adminBar = _this$getSettings.adminBar,
+          editMenuItem = _this$getSettings.editMenuItem,
+          newMenuItem = _this$getSettings.newMenuItem;
 
       return {
-        $adminBar: jQuery(adminBar)
+        $adminBar: jQuery(adminBar),
+        $editMenuItem: jQuery(editMenuItem),
+        $newMenuItem: jQuery(newMenuItem)
       };
     }
     /**
@@ -2101,7 +2107,18 @@ var AdminBar = /*#__PURE__*/function (_elementorModules$Vie) {
   }, {
     key: "createMenu",
     value: function createMenu(adminBarConfig) {
-      this.elements.$adminBar.append(this.createMenuItems((0, _values.default)(adminBarConfig)));
+      var $items = this.createMenuItems((0, _values.default)(adminBarConfig));
+
+      if (this.elements.$editMenuItem.length) {
+        // This is the normal case, when user visit a preview page of single post.
+        this.elements.$editMenuItem.after($items);
+      } else if (this.elements.$newMenuItem) {
+        // This is another case, when user visit a preview page that cannot be edited e.g: archive page.
+        this.elements.$newMenuItem.after($items);
+      } else {
+        // Default fallback in case there are no "new" or "edit" button.
+        this.elements.$adminBar.append($items);
+      }
     }
     /**
      * Creates a menu items from array of declaration.

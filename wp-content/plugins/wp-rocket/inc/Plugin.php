@@ -157,6 +157,7 @@ class Plugin {
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Admin\Settings\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Admin\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Optimization\AdminServiceProvider' );
+		$this->container->addServiceProvider( 'WP_Rocket\Engine\License\ServiceProvider' );
 
 		return [
 			'beacon',
@@ -171,6 +172,7 @@ class Plugin {
 			'minify_css_admin_subscriber',
 			'admin_cache_subscriber',
 			'google_fonts_admin_subscriber',
+			'license_subscriber',
 		];
 	}
 
@@ -216,6 +218,7 @@ class Plugin {
 	private function init_common_subscribers() {
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Capabilities\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Addon\ServiceProvider' );
+		$this->container->addServiceProvider( 'WP_Rocket\Addon\Varnish\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Preload\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Preload\Links\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\CDN\ServiceProvider' );

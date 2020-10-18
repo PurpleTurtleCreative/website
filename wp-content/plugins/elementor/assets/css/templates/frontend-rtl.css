@@ -1470,18 +1470,15 @@ ul.elementor-icon-list-items.elementor-inline-items {
 .elementor-widget-divider {
   --divider-border-style: none;
   --divider-border-width: 1px;
-  --divider-border-color: $gray-darkest;
+  --divider-color: #2C2C2C;
   --divider-icon-size: 20px;
   --divider-element-spacing: 10px;
   --divider-pattern-height: 24px;
   --divider-pattern-size: 20px;
   --divider-pattern-url: none;
-  --divider-pattern-repeat: repeat-x;
-  /* Backwards compatibility */ }
-  .elementor-widget-divider:not(.elementor-widget-divider--view-line_text):not(.elementor-widget-divider--view-line_icon):not(.elementor-widget-divider--separator-type-pattern) .elementor-divider-separator {
-    display: inline-block; }
+  --divider-pattern-repeat: repeat-x; }
   .elementor-widget-divider .elementor-divider {
-    line-height: 0; }
+    display: flex; }
     .elementor-widget-divider .elementor-divider__text {
       font-size: 15px;
       line-height: 1;
@@ -1502,7 +1499,7 @@ ul.elementor-icon-list-items.elementor-inline-items {
       content: '';
       border-bottom: 0;
       flex-grow: 1;
-      border-top: var(--divider-border-width) var(--divider-border-style) var(--divider-border-color); }
+      border-top: var(--divider-border-width) var(--divider-border-style) var(--divider-color); }
   .elementor-widget-divider--element-align-left .elementor-divider .elementor-divider-separator > .elementor-divider__svg:first-of-type {
     flex-grow: 0;
     flex-shrink: 100; }
@@ -1518,17 +1515,22 @@ ul.elementor-icon-list-items.elementor-inline-items {
   .elementor-widget-divider--element-align-right .elementor-divider__element {
     margin-right: 0; }
   .elementor-widget-divider:not(.elementor-widget-divider--view-line_text):not(.elementor-widget-divider--view-line_icon) .elementor-divider-separator {
-    border-top: var(--divider-border-width) var(--divider-border-style) var(--divider-border-color); }
+    border-top: var(--divider-border-width) var(--divider-border-style) var(--divider-color); }
   .elementor-widget-divider--separator-type-pattern {
     --divider-border-style: none; }
-    .elementor-widget-divider--separator-type-pattern .elementor-divider-separator, .elementor-widget-divider--separator-type-pattern .elementor-divider-separator:before, .elementor-widget-divider--separator-type-pattern .elementor-divider-separator:after {
+    .elementor-widget-divider--separator-type-pattern.elementor-widget-divider--view-line .elementor-divider-separator,
+    .elementor-widget-divider--separator-type-pattern:not([class*=elementor-widget-divider--view]) .elementor-divider-separator,
+    .elementor-widget-divider--separator-type-pattern:not(.elementor-widget-divider--view-line) .elementor-divider-separator:before,
+    .elementor-widget-divider--separator-type-pattern:not(.elementor-widget-divider--view-line) .elementor-divider-separator:after {
       width: 100%;
       min-height: var(--divider-pattern-height);
-      background-image: var(--divider-pattern-url);
-      background-size: var(--divider-pattern-size) 100%;
-      background-repeat: var(--divider-pattern-repeat); }
-    .elementor-widget-divider--separator-type-pattern.elementor-widget-divider--view-line_text .elementor-divider-separator, .elementor-widget-divider--separator-type-pattern.elementor-widget-divider--view-line_icon .elementor-divider-separator {
-      background-image: none; }
+      -webkit-mask-size: var(--divider-pattern-size) 100%;
+      mask-size: var(--divider-pattern-size) 100%;
+      -webkit-mask-repeat: var(--divider-pattern-repeat);
+      mask-repeat: var(--divider-pattern-repeat);
+      background-color: var(--divider-color);
+      -webkit-mask-image: var(--divider-pattern-url);
+      mask-image: var(--divider-pattern-url); }
   .elementor-widget-divider--no-spacing {
     --divider-pattern-size: auto; }
   .elementor-widget-divider--bg-round {
