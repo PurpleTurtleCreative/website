@@ -1,4 +1,4 @@
-/*! elementor - v3.0.8.1 - 14-09-2020 */
+/*! elementor - v3.0.11 - 30-09-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -5538,7 +5538,9 @@ var baseTabs = /*#__PURE__*/function (_elementorModules$fro) {
           $requestedTitle = this.elements.$tabTitles.filter('[data-tab="' + tabIndex + '"]'),
           $requestedContent = this.elements.$tabContents.filter('[data-tab="' + tabIndex + '"]');
       $requestedTitle.add($requestedContent).addClass(activeClass);
-      $requestedContent[settings.showTabFn]();
+      $requestedContent[settings.showTabFn](function () {
+        return elementorFrontend.elements.$window.trigger('resize');
+      });
     }
   }, {
     key: "isActiveTab",

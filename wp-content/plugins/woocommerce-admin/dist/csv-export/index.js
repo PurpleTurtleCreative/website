@@ -82,19 +82,19 @@ this["wc"] = this["wc"] || {}; this["wc"]["csvExport"] =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 696);
+/******/ 	return __webpack_require__(__webpack_require__.s = 669);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 17:
+/***/ 15:
 /***/ (function(module, exports) {
 
 (function() { module.exports = this["moment"]; }());
 
 /***/ }),
 
-/***/ 429:
+/***/ 507:
 /***/ (function(module, exports, __webpack_require__) {
 
 /* FileSaver.js
@@ -381,7 +381,7 @@ if ( true && module.exports) {
 
 /***/ }),
 
-/***/ 696:
+/***/ 669:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -389,9 +389,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateCSVDataFromTable", function() { return generateCSVDataFromTable; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "generateCSVFileName", function() { return generateCSVFileName; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "downloadCSVFile", function() { return downloadCSVFile; });
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(15);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var browser_filesaver__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(429);
+/* harmony import */ var browser_filesaver__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(507);
 /* harmony import */ var browser_filesaver__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(browser_filesaver__WEBPACK_IMPORTED_MODULE_1__);
 /**
  * External dependencies

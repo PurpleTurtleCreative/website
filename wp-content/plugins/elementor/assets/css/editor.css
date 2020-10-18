@@ -1,4 +1,4 @@
-/*! elementor - v3.0.8.1 - 14-09-2020 */
+/*! elementor - v3.0.11 - 30-09-2020 */
 @charset "UTF-8";
 .elementor-control-unit-1 {
   width: 27px; }
@@ -2139,7 +2139,6 @@ a.elementor-responsive-switcher {
     width: 7px; }
   .e-global__preview-items-container::-webkit-scrollbar-thumb {
     background-color: #c2cbd2;
-    outline: 1px solid #556068;
     -webkit-border-radius: 10px;
             border-radius: 10px; }
 
@@ -2181,7 +2180,7 @@ a.elementor-responsive-switcher {
     margin-top: 5px; }
   .e-global__color:last-child {
     margin-bottom: 10px; }
-  .e-global__color-preview {
+  .e-global__color-preview-container {
     height: 20px;
     width: 20px;
     -webkit-border-radius: 3px;
@@ -2189,7 +2188,23 @@ a.elementor-responsive-switcher {
     border: 1px solid rgba(0, 0, 0, 0.1);
     margin-right: 10px;
     -ms-flex-negative: 0;
-        flex-shrink: 0; }
+        flex-shrink: 0;
+    position: relative; }
+  .e-global__color-preview-color, .e-global__color-preview-transparent-bg {
+    -webkit-border-radius: 3px;
+            border-radius: 3px;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .e-global__color-preview-transparent-bg {
+    background-image: -webkit-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd), -webkit-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd);
+    background-image: -o-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd), -o-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd);
+    background-image: linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd), linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd);
+    -webkit-background-size: 12px 12px;
+            background-size: 12px 12px;
+    background-position: 0 0, 6px 6px; }
   .e-global__color-title {
     font-weight: 500;
     color: #6d7882;
@@ -2207,7 +2222,7 @@ a.elementor-responsive-switcher {
     color: #c2cbd2; }
   .e-global__color .pcr-button {
     background-color: #fff; }
-  .e-global__color.e-global__preview-item--selected .e-global__color-preview {
+  .e-global__color.e-global__preview-item--selected .e-global__color-preview-container {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2218,11 +2233,12 @@ a.elementor-responsive-switcher {
         -ms-flex-align: center;
             align-items: center;
     color: #ffffff; }
-    .e-global__color.e-global__preview-item--selected .e-global__color-preview:before {
+    .e-global__color.e-global__preview-item--selected .e-global__color-preview-container:before {
       font-family: 'eicons';
       font-size: 13px;
       content: '\e90e';
-      text-shadow: 0px 0px 1px #000; }
+      text-shadow: 0px 0px 1px #000;
+      z-index: 1; }
 
 .e-global__preview-item {
   cursor: pointer;
@@ -2272,6 +2288,9 @@ a.elementor-responsive-switcher {
 
 .e-control-global.elementor-control .elementor-control-input-wrapper {
   direction: ltr; }
+
+.e-control-global .elementor-control-spinner {
+  margin-right: 4px; }
 
 .elementor-control-type-hidden {
   display: none !important; }
@@ -2340,9 +2359,9 @@ a.elementor-responsive-switcher {
   background-position: center; }
 
 .elementor-control-media-area {
-  background-image: -webkit-linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd), -webkit-linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
-  background-image: -o-linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd), -o-linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
-  background-image: linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd), linear-gradient(45deg, #ddd 25%, transparent 25%, transparent 75%, #ddd 75%, #ddd);
+  background-image: -webkit-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd), -webkit-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd);
+  background-image: -o-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd), -o-linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd);
+  background-image: linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd), linear-gradient(45deg, #ddd 25%, transparent 0, transparent 75%, #ddd 0, #ddd);
   -webkit-background-size: 16px 16px;
           background-size: 16px 16px;
   background-position: 0 0, 8px 8px;

@@ -82,12 +82,12 @@ this["wc"] = this["wc"] || {}; this["wc"]["number"] =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 699);
+/******/ 	return __webpack_require__(__webpack_require__.s = 672);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 135:
+/***/ 124:
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -98,7 +98,7 @@ module.exports = _arrayWithHoles;
 
 /***/ }),
 
-/***/ 136:
+/***/ 125:
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
@@ -132,7 +132,7 @@ module.exports = _iterableToArrayLimit;
 
 /***/ }),
 
-/***/ 137:
+/***/ 126:
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
@@ -140,6 +140,25 @@ function _nonIterableRest() {
 }
 
 module.exports = _nonIterableRest;
+
+/***/ }),
+
+/***/ 38:
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(124);
+
+var iterableToArrayLimit = __webpack_require__(125);
+
+var unsupportedIterableToArray = __webpack_require__(81);
+
+var nonIterableRest = __webpack_require__(126);
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
 
 /***/ }),
 
@@ -165,26 +184,7 @@ module.exports = _defineProperty;
 
 /***/ }),
 
-/***/ 53:
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithHoles = __webpack_require__(135);
-
-var iterableToArrayLimit = __webpack_require__(136);
-
-var unsupportedIterableToArray = __webpack_require__(77);
-
-var nonIterableRest = __webpack_require__(137);
-
-function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
-}
-
-module.exports = _slicedToArray;
-
-/***/ }),
-
-/***/ 699:
+/***/ 672:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -194,7 +194,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "calculateDelta", function() { return calculateDelta; });
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 /* harmony import */ var _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(53);
+/* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38);
 /* harmony import */ var _babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_slicedToArray__WEBPACK_IMPORTED_MODULE_1__);
 
 
@@ -233,15 +233,15 @@ function _objectSpread(target) {
   return target;
 }
 
-var numberFormatter = __webpack_require__(700);
+var numberFormatter = __webpack_require__(673);
 /**
  * Formats a number using site's current locale
  *
  * @see http://locutus.io/php/strings/number_format/
  * @param {Object} numberConfig number formatting configuration object.
- * @param numberConfig.precision
- * @param numberConfig.decimalSeparator
- * @param numberConfig.thousandSeparator
+ * @param {number} numberConfig.precision
+ * @param {string} numberConfig.decimalSeparator
+ * @param {string} numberConfig.thousandSeparator
  * @param {number|string} number number to format
  * @return {?string} A formatted string.
  */
@@ -321,7 +321,7 @@ function calculateDelta(primaryValue, secondaryValue) {
 
 /***/ }),
 
-/***/ 700:
+/***/ 673:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -415,7 +415,7 @@ module.exports = function number_format(number, decimals, decPoint, thousandsSep
 
 /***/ }),
 
-/***/ 73:
+/***/ 78:
 /***/ (function(module, exports) {
 
 function _arrayLikeToArray(arr, len) {
@@ -432,10 +432,10 @@ module.exports = _arrayLikeToArray;
 
 /***/ }),
 
-/***/ 77:
+/***/ 81:
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeToArray = __webpack_require__(73);
+var arrayLikeToArray = __webpack_require__(78);
 
 function _unsupportedIterableToArray(o, minLen) {
   if (!o) return;

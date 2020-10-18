@@ -1,19 +1,21 @@
 # User Switching
 
-Stable tag: 1.5.5  
+Stable tag: 1.5.6  
 Requires at least: 3.7  
-Tested up to: 5.4  
+Tested up to: 5.5  
 Requires PHP: 5.3  
 License: GPL v2 or later  
 Tags: users, profiles, user switching, fast user switching, multisite, buddypress, bbpress, become, user management, developer  
 Contributors: johnbillion  
+Donate link: https://johnblackbourn.com/donations/
 
 ![](.wordpress-org/banner-1544x500.png)
 
 Instant switching between user accounts in WordPress.
 
-[![](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=flat-square)](https://github.com/johnbillion/user-switching/actions)
-[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=flat-square)](#ethical-open-source)
+[![](https://img.shields.io/badge/ethical-open%20source-4baaaa.svg?style=for-the-badge)](#ethical-open-source)
+[![](https://img.shields.io/wordpress/plugin/installs/user-switching?style=for-the-badge)](https://wordpress.org/plugins/user-switching/)
+[![](https://img.shields.io/github/workflow/status/johnbillion/user-switching/Test/develop?style=for-the-badge)](https://github.com/johnbillion/user-switching/actions)
 
 ## Description
 
@@ -112,7 +114,47 @@ A user needs the `edit_users` capability in order to switch user accounts. By de
 
 Yes. The `switch_users` meta capability can be explicitly granted to a user or a role to allow them to switch users regardless of whether or not they have the `edit_users` capability. For practical purposes, the user or role will also need the `list_users` capability so they can access the Users menu in the WordPress admin area.
 
-If you know what you're doing with user capabilities, this capability can also be denied from a user or role to prevent the ability to switch users, regardless of whether or not they have the `edit_users` capability.
+### Can the ability to switch accounts be denied from users?
+
+Yes. User capabilities in WordPress can be set to `false` to deny them from a user. Denying the `switch_users` capability prevents the user from switching users, even if they have the `edit_users` capability.
+
+    add_filter( 'user_has_cap', function( $allcaps, $caps, $args, $user ) {
+        if ( 'switch_to_user' === $args[0] ) {
+            if ( my_condition() ) {
+                $allcaps['switch_users'] = false;
+            }
+        }
+        return $allcaps;
+    }, 9, 4 );
+
+Note that this needs to happen before User Switching's own capability filtering, hence the priority of `9`.
+
+### Can I add a custom "Switch To" link to my own plugin or theme?
+
+Yes. Use the `user_switching::maybe_switch_url()` method for this. It takes care of authentication and returns a nonce-protected URL for the current user to switch into the provided user account.
+
+    if ( method_exists( 'user_switching', 'maybe_switch_url' ) ) {
+        $url = user_switching::maybe_switch_url( $target_user );
+        if ( $url ) {
+            printf(
+                '<a href="%1$s">Switch to %2$s</a>',
+                $url,
+                $target_user->display_name
+            );
+        }
+    }
+
+### Can I determine whether the current user switched into their account?
+
+Yes. Use the `current_user_switched()` function for this.
+
+    if ( function_exists( 'current_user_switched' ) ) {
+        $switched_user = current_user_switched();
+        if ( $switched_user ) {
+            // User is logged in and has switched into their account.
+            // $switched_user is the WP_User object for their originating user.
+        }
+    }
 
 ### Does this plugin allow a user to frame another user for an action?
 
@@ -188,11 +230,20 @@ In addition, User Switching respects the following filters from WordPress core w
 * `login_redirect` when switching to another user.
 * `logout_redirect` when switching off.
 
+### Do you accept donations?
+
+[I am accepting sponsorships via the GitHub Sponsors program](https://johnblackbourn.com/donations/) and any support you can give will help me maintain this plugin and keep it free for everyone.
+
 ## Changelog ##
+
+### 1.5.6 ###
+
+* Add a class to the table row on the user edit screen.
+* Updated docs.
 
 ### 1.5.5 ###
 
-* Added the `user_switching_in_footer` filter to disable output in footer on front end. Thanks @pierreminik.
+* Added the `user_switching_in_footer` filter to disable output in footer on front end.
 * Documentation additions and improvements.
 
 ### 1.5.4 ###
@@ -262,11 +313,6 @@ In addition, User Switching respects the following filters from WordPress core w
 * Switch to safe redirects for extra paranoid hardening.
 * Docblock improvements.
 * Coding standards improvements.
-
-### 0.6.2 ###
-
-- Polish translation by Bartosz Arendt.
-
 
 ### 0.6.1 ###
 

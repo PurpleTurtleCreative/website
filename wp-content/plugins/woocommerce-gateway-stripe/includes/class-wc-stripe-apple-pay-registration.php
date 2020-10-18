@@ -39,13 +39,6 @@ class WC_Stripe_Apple_Pay_Registration {
 	public $apple_pay_domain_set;
 
 	/**
-	 * Testmode.
-	 *
-	 * @var bool
-	 */
-	public $testmode;
-
-	/**
 	 * Secret Key.
 	 *
 	 * @var string
@@ -60,15 +53,15 @@ class WC_Stripe_Apple_Pay_Registration {
 	public $apple_pay_verify_notice;
 
 	public function __construct() {
-		add_action( 'woocommerce_stripe_updated', array( $this, 'update_verification_file' ) );
+		add_action( 'woocommerce_stripe_updated', array( $this, 'verify_domain_if_needed' ) );
+		add_action( 'update_option_woocommerce_stripe_settings', array( $this, 'verify_domain_on_new_secret_key' ), 10, 2 );
 
 		$this->stripe_settings         = get_option( 'woocommerce_stripe_settings', array() );
 		$this->stripe_enabled          = $this->get_option( 'enabled' );
 		$this->payment_request         = 'yes' === $this->get_option( 'payment_request', 'yes' );
 		$this->apple_pay_domain_set    = 'yes' === $this->get_option( 'apple_pay_domain_set', 'no' );
 		$this->apple_pay_verify_notice = '';
-		$this->testmode                = 'yes' === $this->get_option( 'testmode', 'no' );
-		$this->secret_key              = $this->testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
+		$this->secret_key              = $this->get_secret_key();
 
 		if ( empty( $this->stripe_settings ) ) {
 			return;
@@ -100,6 +93,17 @@ class WC_Stripe_Apple_Pay_Registration {
 	}
 
 	/**
+	 * Gets the Stripe secret key for the current mode.
+	 *
+	 * @since 4.5.3
+	 * @return string Secret key.
+	 */
+	private function get_secret_key() {
+		$testmode = 'yes' === $this->get_option( 'testmode', 'no' );
+		return $testmode ? $this->get_option( 'test_secret_key' ) : $this->get_option( 'secret_key' );
+	}
+
+	/**
 	 * Initializes Apple Pay process on settings page.
 	 *
 	 * @since 3.1.0
@@ -113,7 +117,7 @@ class WC_Stripe_Apple_Pay_Registration {
 			isset( $_GET['section'] ) && 'stripe' === $_GET['section'] &&
 			$this->payment_request
 		) {
-			$this->process_apple_pay_verification();
+			$this->verify_domain();
 		}
 	}
 
@@ -124,7 +128,7 @@ class WC_Stripe_Apple_Pay_Registration {
 	 * @version 3.1.0
 	 * @param string $secret_key
 	 */
-	private function register_apple_pay_domain( $secret_key = '' ) {
+	private function register_domain_with_apple( $secret_key = '' ) {
 		if ( empty( $secret_key ) ) {
 			throw new Exception( __( 'Unable to verify domain - missing secret key.', 'woocommerce-gateway-stripe' ) );
 		}
@@ -164,7 +168,7 @@ class WC_Stripe_Apple_Pay_Registration {
 	}
 
 	/**
-	 * Updates the Apple Pay domain verification file.
+	 * Updates the Apple Pay domain association file.
 	 *
 	 * @param bool $force True to create the file if it didn't exist, false for just updating the file if needed.
 	 *
@@ -172,7 +176,7 @@ class WC_Stripe_Apple_Pay_Registration {
 	 * @since 4.3.0
 	 * @return bool True on success, false on failure.
 	 */
-	public function update_verification_file( $force = false ) {
+	public function update_domain_association_file( $force = false ) {
 			$path     = untrailingslashit( $_SERVER['DOCUMENT_ROOT'] );
 			$dir      = '.well-known';
 			$file     = 'apple-developer-merchantid-domain-association';
@@ -206,8 +210,8 @@ class WC_Stripe_Apple_Pay_Registration {
 	 * @since 3.1.0
 	 * @version 3.1.0
 	 */
-	public function process_apple_pay_verification() {
-		if ( ! $this->update_verification_file( true ) ) {
+	public function verify_domain() {
+		if ( ! $this->update_domain_association_file( true ) ) {
 			$this->stripe_settings['apple_pay_domain_set'] = 'no';
 			update_option( 'woocommerce_stripe_settings', $this->stripe_settings );
 			return;
@@ -216,7 +220,7 @@ class WC_Stripe_Apple_Pay_Registration {
 		try {
 			// At this point then the domain association folder and file should be available.
 			// Proceed to verify/and or verify again.
-			$this->register_apple_pay_domain( $this->secret_key );
+			$this->register_domain_with_apple( $this->secret_key );
 
 			// No errors to this point, verification success!
 			$this->stripe_settings['apple_pay_domain_set'] = 'yes';
@@ -232,6 +236,38 @@ class WC_Stripe_Apple_Pay_Registration {
 			update_option( 'woocommerce_stripe_settings', $this->stripe_settings );
 
 			WC_Stripe_Logger::log( 'Error: ' . $e->getMessage() );
+		}
+	}
+
+	/**
+	 * Conditionally process the Apple Pay domain verification after a new secret key is set.
+	 *
+	 * @since 4.5.3
+	 * @version 4.5.3
+	 */
+	public function verify_domain_on_new_secret_key( $prev_settings, $settings ) {
+		$this->stripe_settings = $prev_settings;
+		$prev_secret_key = $this->get_secret_key();
+
+		$this->stripe_settings = $settings;
+		$this->secret_key = $this->get_secret_key();
+
+		if ( ! empty( $this->secret_key ) && $this->secret_key !== $prev_secret_key ) {
+			$this->verify_domain();
+		}
+	}
+
+	/**
+	 * Process the Apple Pay domain verification if not already done - otherwise just update the file.
+	 *
+	 * @since 4.5.3
+	 * @version 4.5.3
+	 */
+	public function verify_domain_if_needed() {
+		if ( $this->apple_pay_domain_set ) {
+			$this->update_domain_association_file();
+		} else {
+			$this->verify_domain();
 		}
 	}
 
