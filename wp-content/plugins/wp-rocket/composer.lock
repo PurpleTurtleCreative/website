@@ -751,16 +751,16 @@
         },
         {
             "name": "league/mime-type-detection",
-            "version": "1.5.0",
+            "version": "1.5.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/mime-type-detection.git",
-                "reference": "ea2fbfc988bade315acd5967e6d02274086d0f28"
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/ea2fbfc988bade315acd5967e6d02274086d0f28",
-                "reference": "ea2fbfc988bade315acd5967e6d02274086d0f28",
+                "url": "https://api.github.com/repos/thephpleague/mime-type-detection/zipball/353f66d7555d8a90781f6f5e7091932f9a4250aa",
+                "reference": "353f66d7555d8a90781f6f5e7091932f9a4250aa",
                 "shasum": ""
             },
             "require": {
@@ -788,7 +788,7 @@
                 }
             ],
             "description": "Mime-type detection for Flysystem",
-            "time": "2020-09-21T18:10:53+00:00"
+            "time": "2020-10-18T11:50:25+00:00"
         },
         {
             "name": "maxmind-db/reader",
@@ -1626,16 +1626,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "0.12.49",
+            "version": "0.12.50",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05"
+                "reference": "b8248f9c81265af75d6d969ca3252aaf3e998f3a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9a6136c2b39d5214da78de37128d5fe08e5d5b05",
-                "reference": "9a6136c2b39d5214da78de37128d5fe08e5d5b05",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b8248f9c81265af75d6d969ca3252aaf3e998f3a",
+                "reference": "b8248f9c81265af75d6d969ca3252aaf3e998f3a",
                 "shasum": ""
             },
             "require": {
@@ -1664,7 +1664,7 @@
                 "MIT"
             ],
             "description": "PHPStan - PHP Static Analysis Tool",
-            "time": "2020-10-12T14:10:44+00:00"
+            "time": "2020-10-16T12:22:23+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2009,12 +2009,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "ba5d234b3a1559321b816b64aafc2ce6728799ff"
+                "reference": "327370943772f9917bc2dc2aa4263db2d572a112"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/ba5d234b3a1559321b816b64aafc2ce6728799ff",
-                "reference": "ba5d234b3a1559321b816b64aafc2ce6728799ff",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/327370943772f9917bc2dc2aa4263db2d572a112",
+                "reference": "327370943772f9917bc2dc2aa4263db2d572a112",
                 "shasum": ""
             },
             "conflict": {
@@ -2114,6 +2114,7 @@
                 "magento/magento1ee": ">=1,<1.14.4.3",
                 "magento/product-community-edition": ">=2,<2.2.10|>=2.3,<2.3.2-p.2",
                 "marcwillmann/turn": "<0.3.3",
+                "mediawiki/core": ">=1.31,<1.31.4|>=1.32,<1.32.4|>=1.33,<1.33.1",
                 "mittwald/typo3_forum": "<1.2.1",
                 "monolog/monolog": ">=1.8,<1.12",
                 "namshi/jose": "<2.2",
@@ -2300,7 +2301,7 @@
                 }
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
-            "time": "2020-10-08T21:02:27+00:00"
+            "time": "2020-10-19T07:02:45+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4257,15 +4258,15 @@
         },
         {
             "name": "wpackagist-plugin/pdf-embedder",
-            "version": "4.6",
+            "version": "4.6.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/pdf-embedder/",
-                "reference": "trunk"
+                "reference": "tags/4.6.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/pdf-embedder.zip?timestamp=1602567877"
+                "url": "https://downloads.wordpress.org/plugin/pdf-embedder.4.6.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
