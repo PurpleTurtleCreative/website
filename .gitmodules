@@ -4,3 +4,6 @@
 [submodule "wp-content/plugins/completionist"]
 	path = wp-content/plugins/completionist
 	url = https://github.com/PurpleTurtleCreative/completionist.git
+[submodule "wp-content/themes/purple-turtle-creative"]
+	path = wp-content/themes/purple-turtle-creative
+	url = https://github.com/PurpleTurtleCreative/purple-turtle-creative.git
