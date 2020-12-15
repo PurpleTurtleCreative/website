@@ -100,11 +100,14 @@ class Plugin {
 		$this->options = $this->container->get( 'options' );
 
 		$this->container->addServiceProvider( 'WP_Rocket\ServiceProvider\Database' );
+		$this->container->addServiceProvider( 'WP_Rocket\Engine\Support\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Admin\Beacon\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\CDN\RocketCDN\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Cache\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\CriticalPath\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\HealthCheck\ServiceProvider' );
+		$this->container->addServiceProvider( 'WP_Rocket\Engine\Media\ServiceProvider' );
+		$this->container->addServiceProvider( 'WP_Rocket\Engine\Optimization\DeferJS\ServiceProvider' );
 
 		$this->is_valid_key = rocket_valid_key();
 
@@ -173,6 +176,9 @@ class Plugin {
 			'admin_cache_subscriber',
 			'google_fonts_admin_subscriber',
 			'license_subscriber',
+			'image_dimensions_admin_subscriber',
+			'defer_js_admin_subscriber',
+			'lazyload_admin_subscriber',
 		];
 	}
 
@@ -184,7 +190,6 @@ class Plugin {
 	 * @return array array of subscribers.
 	 */
 	private function init_valid_key_subscribers() {
-		$this->container->addServiceProvider( 'WP_Rocket\Engine\Media\ServiceProvider' );
 		$this->container->addServiceProvider( 'WP_Rocket\Engine\Optimization\ServiceProvider' );
 
 		$subscribers = [
@@ -198,6 +203,8 @@ class Plugin {
 			'embeds_subscriber',
 			'emojis_subscriber',
 			'delay_js_subscriber',
+			'image_dimensions_subscriber',
+			'defer_js_subscriber',
 		];
 
 		// Don't insert the LazyLoad file if Rocket LazyLoad is activated.
@@ -269,6 +276,7 @@ class Plugin {
 			'divi',
 			'preload_links_admin_subscriber',
 			'preload_links_subscriber',
+			'support_subscriber',
 		];
 
 		$host_type = HostResolver::get_host_service();
