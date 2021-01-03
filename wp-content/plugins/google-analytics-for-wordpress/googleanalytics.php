@@ -6,7 +6,11 @@
  * Author:              MonsterInsights
  * Author URI:          https://www.monsterinsights.com/?utm_source=liteplugin&utm_medium=pluginheader&utm_campaign=authoruri&utm_content=7%2E0%2E0
  *
+<<<<<<< HEAD
  * Version:             7.14.0
+=======
+ * Version:             7.13.3
+>>>>>>> 77c493320a910052a9db68940d58ec502105bb68
  * Requires at least:   3.8.0
  * Requires PHP:        5.2
  *
@@ -69,7 +73,11 @@ final class MonsterInsights_Lite {
 	 * @access public
 	 * @var string $version Plugin version.
 	 */
+<<<<<<< HEAD
 	public $version = '7.14.0';
+=======
+	public $version = '7.13.3';
+>>>>>>> 77c493320a910052a9db68940d58ec502105bb68
 
 	/**
 	 * Plugin file.
