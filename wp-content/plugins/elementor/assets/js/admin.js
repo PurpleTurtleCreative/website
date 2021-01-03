@@ -1,4 +1,4 @@
-/*! elementor - v3.0.14 - 25-11-2020 */
+/*! elementor - v3.0.15 - 21-12-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -93,7 +93,7 @@
 "use strict";
 
 
-var classof = __webpack_require__(118);
+var classof = __webpack_require__(119);
 var builtinExec = RegExp.prototype.exec;
 
  // `RegExpExec` abstract operation
@@ -306,7 +306,7 @@ module.exports = false;
 
 /***/ }),
 
-/***/ 118:
+/***/ 119:
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
@@ -336,7 +336,7 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 125:
+/***/ 126:
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
@@ -349,7 +349,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 
 /***/ }),
 
-/***/ 126:
+/***/ 127:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.2.8 IsRegExp(argument)
@@ -364,7 +364,7 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 127:
+/***/ 128:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.1 ToPrimitive(input [, PreferredType])
@@ -483,7 +483,7 @@ module.exports = function (O, D) {
 // 5 -> Array#find
 // 6 -> Array#findIndex
 var ctx = __webpack_require__(81);
-var IObject = __webpack_require__(125);
+var IObject = __webpack_require__(126);
 var toObject = __webpack_require__(102);
 var toLength = __webpack_require__(46);
 var asc = __webpack_require__(216);
@@ -841,7 +841,7 @@ module.exports = function (it) {
 
 var anObject = __webpack_require__(20);
 var IE8_DOM_DEFINE = __webpack_require__(135);
-var toPrimitive = __webpack_require__(127);
+var toPrimitive = __webpack_require__(128);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(28) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -1561,7 +1561,7 @@ module.exports = function (fn, that, length) {
 "use strict";
 
 
-var isRegExp = __webpack_require__(126);
+var isRegExp = __webpack_require__(127);
 var anObject = __webpack_require__(20);
 var speciesConstructor = __webpack_require__(180);
 var advanceStringIndex = __webpack_require__(108);

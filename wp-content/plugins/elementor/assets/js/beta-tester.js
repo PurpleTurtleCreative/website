@@ -1,4 +1,4 @@
-/*! elementor - v3.0.14 - 25-11-2020 */
+/*! elementor - v3.0.15 - 21-12-2020 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -198,7 +198,7 @@ module.exports = function (object, names) {
 
 /***/ }),
 
-/***/ 119:
+/***/ 120:
 /***/ (function(module, exports, __webpack_require__) {
 
 var _Object$setPrototypeOf = __webpack_require__(111);
@@ -216,14 +216,14 @@ module.exports = _setPrototypeOf;
 
 /***/ }),
 
-/***/ 130:
+/***/ 131:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(160);
 
 /***/ }),
 
-/***/ 131:
+/***/ 132:
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(15);
@@ -243,7 +243,7 @@ module.exports = __webpack_require__(14) ? Object.defineProperties : function de
 
 /***/ }),
 
-/***/ 132:
+/***/ 133:
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(8).document;
@@ -252,7 +252,7 @@ module.exports = document && document.documentElement;
 
 /***/ }),
 
-/***/ 133:
+/***/ 134:
 /***/ (function(module, exports) {
 
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -861,7 +861,7 @@ $export($export.S + $export.F * (NEW_TARGET_BUG || ARGS_BUG), 'Reflect', {
 
 var aFunction = __webpack_require__(35);
 var isObject = __webpack_require__(9);
-var invoke = __webpack_require__(133);
+var invoke = __webpack_require__(134);
 var arraySlice = [].slice;
 var factories = {};
 
@@ -1254,9 +1254,9 @@ module.exports = Object.keys || function keys(O) {
 /***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
-var _Object$create = __webpack_require__(130);
+var _Object$create = __webpack_require__(131);
 
-var setPrototypeOf = __webpack_require__(119);
+var setPrototypeOf = __webpack_require__(120);
 
 function _inherits(subClass, superClass) {
   if (typeof superClass !== "function" && superClass !== null) {
@@ -1320,7 +1320,7 @@ module.exports = _assertThisInitialized;
 
 // 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
 var anObject = __webpack_require__(11);
-var dPs = __webpack_require__(131);
+var dPs = __webpack_require__(132);
 var enumBugKeys = __webpack_require__(74);
 var IE_PROTO = __webpack_require__(70)('IE_PROTO');
 var Empty = function () { /* empty */ };
@@ -1335,7 +1335,7 @@ var createDict = function () {
   var gt = '>';
   var iframeDocument;
   iframe.style.display = 'none';
-  __webpack_require__(132).appendChild(iframe);
+  __webpack_require__(133).appendChild(iframe);
   iframe.src = 'javascript:'; // eslint-disable-line no-script-url
   // createDict = iframe.contentWindow.Object;
   // html.removeChild(iframe);
