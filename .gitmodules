@@ -7,6 +7,3 @@
 [submodule "wp-content/themes/purple-turtle-creative"]
 	path = wp-content/themes/purple-turtle-creative
 	url = https://github.com/PurpleTurtleCreative/purple-turtle-creative.git
-[submodule "wp-content/plugins/ptc-resources-server"]
-	path = wp-content/plugins/ptc-resources-server
-	url = https://github.com/PurpleTurtleCreative/ptc-resources-server.git
