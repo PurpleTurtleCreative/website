@@ -18,7 +18,7 @@ class PostmanLicenseHandler {
     private $item_shortname;
     private $version;
     private $author;
-	private $api_url = 'http://localhost/psp/';
+	private $api_url = 'https://postmansmtp.com';
 
 
 	function __construct( $_file, $_item_name, $_version, $_author, $_optname = null, $_api_url = null, $_item_id = null ) {
@@ -92,7 +92,7 @@ class PostmanLicenseHandler {
 		// Display notices to admins
 		add_action( 'admin_notices', array( $this, 'notices' ) );
 
-		add_action( 'in_plugin_update_message-' . plugin_basename( $this->file ), array( $this, 'plugin_row_license_missing' ), 10, 2 );
+		//add_action( 'in_plugin_update_message-' . plugin_basename( $this->file ), array( $this, 'plugin_row_license_missing' ), 10, 2 );
 	}
 
     /**
@@ -344,7 +344,7 @@ class PostmanLicenseHandler {
 
 	        if ( $interval->days == 0 ) {
 		        add_action( 'admin_notices', function () use ( $license_data ) {
-			        echo $this->item_name . ' license expire today at: ' . $license_data->expires;
+			        //echo $this->item_name . ' license expire today at: ' . $license_data->expires;
 		        });
 
 		        return;
@@ -353,7 +353,7 @@ class PostmanLicenseHandler {
 
         if ( $license_data->activations_left == 0 ) {
 	        add_action( 'admin_notices', function () use ( $license_data ) {
-		        echo $this->item_name . ' has no activations';
+		        //echo $this->item_name . ' has no activations';
 	        });
 
 	        return;
