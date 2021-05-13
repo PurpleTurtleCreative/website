@@ -6,6 +6,75 @@ class_alias( '\WP_Rocket\Engine\Cache\PurgeExpired\PurgeExpiredCache', '\WP_Rock
 class_alias( '\WP_Rocket\Engine\Cache\PurgeExpired\Subscriber', '\WP_Rocket\Subscriber\Cache\Expired_Cache_Purge_Subscriber');
 class_alias( '\WP_Rocket\Engine\Media\Lazyload\Subscriber', '\WP_Rocket\Engine\Media\LazyloadSubscriber');
 
+if ( ! class_exists( 'WP_Rocket\Subscriber\Optimization\Dequeue_JQuery_Migrate_Subscriber' ) ) {
+	require_once __DIR__ . '/subscriber/Optimization/class-dequeue-jquery-migrate-subscriber.php';
+}
+
+/**
+ * Deactivate WP Rocket lazyload if Avada lazyload is enabled
+ *
+ * @since 3.8.1 deprecated
+ * @since 3.3.4
+ *
+ *  @param string $old_value Previous Avada option value.
+ * @param string $value New Avada option value.
+ * @return void
+ */
+function rocket_avada_maybe_deactivate_lazyload( $old_value, $value ) {
+	_deprecated_function( __FUNCTION__ . '()', '3.8.1', 'WP_Rocket\ThirdParty\Themes\Avada::maybe_deactivate_lazyload()' );
+
+	if (
+		empty( $old_value['lazy_load'] )
+		||
+		( ! empty( $value['lazy_load'] ) && 'avada' === $value['lazy_load'] )
+	) {
+		update_rocket_option( 'lazyload', 0 );
+	}
+}
+
+/**
+ * Disable WP Rocket lazyload field if Avada lazyload is enabled
+ *
+ * @since 3.8.1 deprecated
+ * @since 3.3.4
+ *
+ * @return bool
+ */
+function rocket_avada_maybe_disable_lazyload() {
+	_deprecated_function( __FUNCTION__ . '()', '3.8.1', 'WP_Rocket\ThirdParty\Themes\Avada::maybe_disable_lazyload()' );
+
+	$avada_options = get_option( 'fusion_options' );
+	$current_theme = wp_get_theme();
+
+	if ( 'Avada' !== $current_theme->get( 'Name' ) ) {
+		return false;
+	}
+
+	if ( empty( $avada_options['lazy_load'] ) ) {
+		return false;
+	}
+
+	if ( ! empty( $avada_options['lazy_load'] && 'avada' !== $avada_options['lazy_load'] ) ) {
+		return false;
+	}
+
+	return true;
+}
+
+/**
+ * Clears WP Rocket's cache after Avada's Fusion Patcher flushes their caches
+ *
+ * @since 3.8.1 deprecated
+ * @since 3.3.5
+ *
+ * @return void
+ */
+function rocket_avada_clear_cache_fusion_patcher() {
+	_deprecated_function( __FUNCTION__ . '()', '3.8.1', 'WP_Rocket\ThirdParty\Themes\Avada::clear_cache_fusion_patcher()' );
+
+	rocket_clean_domain();
+}
+
 /**
  * Defer all JS files.
  *
@@ -130,6 +199,7 @@ function get_rocket_exclude_defer_js() { // phpcs:ignore WordPress.NamingConvent
 /**
  * Add width and height attributes on all images
  *
+ * @since 3.8 deprecated
  * @since 2.2.2 This feature is enabled by a hook
  * @since 1.3.0 This process is called via the new filter rocket_buffer
  * @since 1.3.0 It's possible to not specify dimensions of an image with data-no-image-dimensions attribute
@@ -203,6 +273,7 @@ function rocket_specify_image_dimensions( $buffer ) {
 /**
  * Conflict with LayerSlider: don't add width and height attributes on all images
  *
+ * @since 3.8 deprecated
  * @since 2.1
  */
 function rocket_deactivate_specify_image_dimensions_with_layerslider() {
@@ -210,3 +281,53 @@ function rocket_deactivate_specify_image_dimensions_with_layerslider() {
 	remove_filter( 'rocket_buffer', 'rocket_specify_image_dimensions' );
 }
 
+/**
+ * Add age-verified to the list of mandatory cookies
+ *
+ * @since 3.8.6 deprecated
+ * @since 2.7
+ *
+ * @param Array $cookies Array of mandatory cookies.
+ * @return Array Updated array of mandatory cookies
+ */
+function rocket_add_cache_mandatory_cookie_for_age_verify( $cookies ) {
+	_deprecated_function( __FUNCTION__ . '()', '3.8.6' );
+
+	$cookies[] = 'age-verified';
+	return $cookies;
+}
+
+/**
+ * Add age-verified cookie when we activate the plugin
+ *
+ * @since 3.8.6 deprecated
+ * @since 2.7
+ */
+function rocket_activate_age_verify() {
+	_deprecated_function( __FUNCTION__ . '()', '3.8.6' );
+	add_filter( 'rocket_htaccess_mod_rewrite', '__return_false', 18 );
+	add_filter( 'rocket_cache_mandatory_cookies', 'rocket_add_cache_mandatory_cookie_for_age_verify' );
+
+	// Update the WP Rocket rules on the .htaccess file.
+	flush_rocket_htaccess();
+
+	// Regenerate the config file.
+	rocket_generate_config_file();
+}
+
+/**
+ * Remove age-verified cookie when we deactivate the plugin
+ *
+ * @since 3.8.6 deprecated
+ * @since 2.7
+ */
+function rocket_deactivate_age_verify() {
+	_deprecated_function( __FUNCTION__ . '()', '3.8.6' );
+	remove_filter( 'rocket_cache_mandatory_cookies', 'rocket_add_cache_mandatory_cookie_for_age_verify' );
+
+	// Update the WP Rocket rules on the .htaccess file.
+	flush_rocket_htaccess();
+
+	// Regenerate the config file.
+	rocket_generate_config_file();
+}

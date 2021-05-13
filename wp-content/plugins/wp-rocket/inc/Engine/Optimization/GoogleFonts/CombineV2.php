@@ -46,8 +46,13 @@ class CombineV2 extends AbstractGFOptimization {
 
 		if ( ! $font_tags ) {
 			Logger::debug( 'No v2 Google Fonts found.', [ 'GF combine process' ] );
+
+			$this->has_google_fonts = false;
+
 			return $html;
 		}
+
+		$this->has_google_fonts = true;
 
 		$num_tags = count( $font_tags );
 
@@ -139,10 +144,9 @@ class CombineV2 extends AbstractGFOptimization {
 	 * @return string
 	 */
 	protected function get_combine_tag( array $families ): string {
-		$display = $this->get_font_display_value();
 		return sprintf(
 			'<link rel="stylesheet" href="%s" />', // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
-			esc_url( "https://fonts.googleapis.com/css2{$this->get_concatenated_families( $families )}&display={$display}" )
+			esc_url( "https://fonts.googleapis.com/css2{$this->get_concatenated_families( $families )}&display=swap" )
 		);
 	}
 

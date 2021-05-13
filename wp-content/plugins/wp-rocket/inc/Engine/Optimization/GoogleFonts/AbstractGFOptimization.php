@@ -29,6 +29,27 @@ abstract class AbstractGFOptimization extends AbstractOptimization {
 	];
 
 	/**
+	 * Flag for whether google fonts have been detected (Default: true)
+	 *
+	 * @since 3.8.8
+	 *
+	 * @var bool
+	 */
+	protected $has_google_fonts = true;
+
+
+	/**
+	 * Check whether the optimizer has found google fonts on the page.
+	 *
+	 * @since 3.8.8
+	 *
+	 * @return bool Will default to true when extending classes have not set via the optimize() method.
+	 */
+	public function has_google_fonts() {
+		return $this->has_google_fonts;
+	}
+
+	/**
 	 * Returns font with display value.
 	 *
 	 * @since  3.8 Moved here from GoogleFonts\Combine::class
@@ -46,11 +67,10 @@ abstract class AbstractGFOptimization extends AbstractOptimization {
 			return $font[0];
 		}
 
-		$display     = $this->get_font_display_value();
 		$parsed_font = wp_parse_args( $query );
 		$font_url    = ! empty( $parsed_font['display'] )
-			? str_replace( "&display={$parsed_font['display']}", "&display={$display}", $font_url )
-			: "{$font_url}&display={$display}";
+			? str_replace( "&display={$parsed_font['display']}", '&display=swap', $font_url )
+			: "{$font_url}&display=swap";
 
 		return str_replace( $font['url'], esc_url( $font_url ), $font[0] );
 	}

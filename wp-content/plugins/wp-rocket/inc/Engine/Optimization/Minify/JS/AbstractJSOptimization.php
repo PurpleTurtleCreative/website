@@ -49,6 +49,10 @@ abstract class AbstractJSOptimization extends AbstractOptimization {
 	protected function get_excluded_files() {
 		$excluded_files   = $this->options->get( 'exclude_js', [] );
 		$excluded_files[] = '/wp-includes/js/dist/i18n.min.js';
+		$excluded_files[] = '/interactive-3d-flipbook-powered-physics-engine/assets/js/html2canvas.min.js';
+		$excluded_files[] = '/interactive-3d-flipbook-powered-physics-engine/assets/js/pdf.min.js';
+		$excluded_files[] = '/interactive-3d-flipbook-powered-physics-engine/assets/js/three.min.js';
+		$excluded_files[] = '/interactive-3d-flipbook-powered-physics-engine/assets/js/3d-flip-book.min.js';
 
 		/**
 		 * Filter JS files to exclude from minification/concatenation.
@@ -232,10 +236,12 @@ abstract class AbstractJSOptimization extends AbstractOptimization {
 			'loader.knack.com',
 			'embed.lpcontent.net/leadboxes/current/embed.js',
 			'cc.cdn.civiccomputing.com/9/cookieControl-9.x.min.js',
-			'/wp-content/plugins/interactive-3d-flipbook-powered-physics-engine/assets/js/html2canvas.min.js',
-			'/wp-content/plugins/interactive-3d-flipbook-powered-physics-engine/assets/js/pdf.min.js',
-			'/wp-content/plugins/interactive-3d-flipbook-powered-physics-engine/assets/js/three.min.js',
-			'/wp-content/plugins/interactive-3d-flipbook-powered-physics-engine/assets/js/3d-flip-book.min.js',
+			'cse.google.com/cse.js',
+			'kit.fontawesome.com',
+			'cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js',
+			'static.leadpages.net/leadbars/current/embed.js',
+			'booqable.com/v2/booqable.js',
+			'googleoptimize.com',
 		];
 
 		$excluded_external = array_merge( $defaults, $this->options->get( 'exclude_js', [] ) );

@@ -34,7 +34,6 @@ class Combine extends AbstractGFOptimization {
 	 * Combines multiple Google Fonts links into one
 	 *
 	 * @since  3.1
-	 * @author Remy Perona
 	 *
 	 * @param string $html HTML content.
 	 *
@@ -49,8 +48,12 @@ class Combine extends AbstractGFOptimization {
 		if ( ! $fonts ) {
 			Logger::debug( 'No Google Fonts found.', [ 'GF combine process' ] );
 
+			$this->has_google_fonts = false;
+
 			return $html;
 		}
+
+		$this->has_google_fonts = true;
 
 		$num_fonts = count( $fonts );
 
@@ -95,7 +98,6 @@ class Combine extends AbstractGFOptimization {
 	 * Parses found matches to extract fonts and subsets.
 	 *
 	 * @since  3.1
-	 * @author Remy Perona
 	 *
 	 * @param array $matches Found matches for the pattern.
 	 *
@@ -136,16 +138,13 @@ class Combine extends AbstractGFOptimization {
 	 *
 	 * @since  3.3.5 Add support for the display parameter
 	 * @since  3.1
-	 * @author Remy Perona
 	 *
 	 * @return string
 	 */
 	private function get_combine_tag() {
-		$display = $this->get_font_display_value();
-
 		return sprintf(
 			'<link rel="stylesheet" href="%s" />', // phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
-			esc_url( "https://fonts.googleapis.com/css?family={$this->fonts}{$this->subsets}&display={$display}" )
+			esc_url( "https://fonts.googleapis.com/css?family={$this->fonts}{$this->subsets}&display=swap" )
 		);
 	}
 }
