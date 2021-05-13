@@ -169,13 +169,6 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 					'bad_response' => __( 'An unexpected error occurred', 'post-smtp' ),
 					'corrupt_response' => __( 'Unexpected PHP messages corrupted the Ajax response', 'post-smtp' ),
 			) );
-
-			wp_localize_script( 'jquery_steps_script', 'steps_current_step', 'steps_current_step' );
-			wp_localize_script( 'jquery_steps_script', 'steps_pagination', 'steps_pagination' );
-			wp_localize_script( 'jquery_steps_script', 'steps_finish', _x( 'Finish', 'Press this button to Finish this task', 'post-smtp' ) );
-			wp_localize_script( 'jquery_steps_script', 'steps_next', _x( 'Next', 'Press this button to go to the next step', 'post-smtp' ) );
-			wp_localize_script( 'jquery_steps_script', 'steps_previous', _x( 'Previous', 'Press this button to go to the previous step', 'post-smtp' ) );
-			wp_localize_script( 'jquery_steps_script', 'steps_loading', 'steps_loading' );
 		}
 
 		/**
@@ -320,10 +313,11 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 			printf( '<h2>%s</h2>', sprintf( __( '%s Setup', 'post-smtp' ), __( 'Post SMTP', 'post-smtp' ) ) );
 
 			if ( ! $show && POST_SMTP_SHOW_RELEASE_MESSAGE ) {
+			    $linkText = POST_SMTP_RELEASE_URL == '#' ? '' : '<a target="_blank" href="' . POST_SMTP_RELEASE_URL . '">Read Here</a>';
 				echo '
 				<div class="updated settings-error notice is-dismissible"> 
 					<p>
-					<strong>Version ' . $version . ' ' . POST_SMTP_RELEASE_MESSAGE . ':</strong> <a target="_blank" href="' . POST_SMTP_RELEASE_URL . '">Read Here</a>
+					<strong>Version ' . $version . ' ' . POST_SMTP_RELEASE_MESSAGE . ':</strong> ' . $linkText . '
 					</p>
 					<button style="z-index: 100;" data-version="'. $version . '" data-security="' . wp_create_nonce('postsmtp') .'" type="button" class="notice-dismiss postman-release-message">
 						<span class="screen-reader-text">Dismiss this notice.</span>
@@ -331,7 +325,7 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 				</div>';
 			}
 
-            include_once POST_SMTP_PATH . '/Postman/extra/donation.php';
+            //include_once POST_SMTP_PATH . '/Postman/extra/donation.php';
 
             echo '<div class="twitter-wrap">';
 			    print '<div id="postman-main-menu" class="welcome-panel">';
@@ -370,6 +364,9 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
                 $resetTitle = __( 'Reset Plugin', 'post-smtp' );
                 $importExportReset = sprintf( '%s/%s/%s', $importTitle, $exportTile, $resetTitle );
                 printf( $purgeLinkPattern, $this->getPageUrl( PostmanAdminController::MANAGE_OPTIONS_PAGE_SLUG ), sprintf( '%s', $importExportReset ) );
+
+                do_action( 'post_smtp_extension_reset_link' );
+
                 print '</ul>';
                 print '</div>';
                 ?>
@@ -378,6 +375,7 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
                     <h4><img class="align-middle" src="<?php echo plugins_url( 'style/images/new.gif', dirname( __DIR__ ) . '/postman-smtp.php' ); ?>"><a style="color: black;" target="_blank" href="https://postmansmtp.com/extensions/">Extensions</a></h4>
                     <ul>
                         <li><a target="_blank" href="https://postmansmtp.com/extensions/office-365-for-post-smtp-extension/">Office 365 API</a></li>
+                        <li><a target="_blank" href="https://postmansmtp.com/extensions/post-smtp-extension-for-amazon-ses/">Amazon SES</a></li>
                     </ul>
                 </div>
 
@@ -385,12 +383,13 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
                 print '<div class="ps-welcome-panel-column welcome-panel-last">';
                 printf( '<h4>%s</h4>', _x( 'Troubleshooting', 'Main Menu', 'post-smtp' ) );
                 print '<ul>';
+                printf( '<li><a target="blank" class="align-middle" href="https://postmansmtp.com/help-configure-post-smtp/" class="welcome-icon postman_guides">%s</a></li>', __( 'Need help setup everything? (paid)', 'post-smtp' ) );
                 printf( '<li><a href="%s" class="welcome-icon run-port-test">%s</a></li>', $this->getPageUrl( PostmanConnectivityTestController::PORT_TEST_SLUG ), __( 'Connectivity Test', 'post-smtp' ) );
                 printf( '<li><a href="%s" class="welcome-icon run-port-test">%s</a></li>', $this->getPageUrl( PostmanDiagnosticTestController::DIAGNOSTICS_SLUG ), __( 'Diagnostic Test', 'post-smtp' ) );
                 printf( '<li><a href="%s" data-security="%s" class="welcome-icon release-lock-file">%s</a></li>', '#', wp_create_nonce( "postman" ), __( 'Release Lock File Error', 'post-smtp' ) );
                 printf( '<li><a href="https://wordpress.org/support/plugin/post-smtp/" class="welcome-icon postman_support">%s</a></li>', __( 'Online Support', 'post-smtp' ) );
                 printf( '<li><a target="blank" class="align-middle" href="https://www.facebook.com/groups/post.smtp" class="welcome-icon postman_guides">%s</a></li>', __( 'Facebook Group', 'post-smtp' ) );
-			    printf( '<li><a target="blank" class="align-middle" href="https://postmansmtp.com/category/guides/" class="welcome-icon postman_guides">%s</a></li>', __( 'Guides', 'post-smtp' ) );
+                printf( '<li><a target="blank" class="align-middle" href="https://postmansmtp.com/category/guides/" class="welcome-icon postman_guides">%s</a></li>', __( 'Guides', 'post-smtp' ) );
                 print '</ul></div></div></div></div>';
                 ?>
             </div>

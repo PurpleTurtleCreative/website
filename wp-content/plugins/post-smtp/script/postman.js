@@ -36,11 +36,21 @@ jQuery(document).ready(function($) {
 	});
 
 	$('#postman_trash_all').on('click',function(e) {
-		if (confirm("Are You Sure?") == false) {
-		    e.preventDefault();
+		e.preventDefault();
 
+		if (confirm("Are You Sure?") == false) {
 		    return false;
 		}
+
+		let security = $('#post-smtp-log-nonce').val();
+
+		$.post(ajaxurl, {action: 'post_smtp_log_trash_all', security: security}, function(result) {
+			if ( result.success ) {
+				location.reload();
+			} else {
+				alert(result.data);
+			}
+		}, 'json');
 	});
 
 	$('.release-lock-file').on('click', function(e) {
@@ -100,7 +110,7 @@ function handleConfigurationResponse(response) {
 	if (response.display_auth == 'oauth2') {
 		show('p#wizard_oauth2_help');
 		jQuery('p#wizard_oauth2_help').html(response.help_text);
-		jQuery(postman_redirect_url_el).val(response.redirect_url);
+		jQuery(post_smtp_localize.postman_redirect_url_el).val(response.redirect_url);
 		jQuery('#input_oauth_callback_domain').val(response.callback_domain);
 		jQuery('#client_id').html(response.client_id_label);
 		jQuery('#client_secret').html(response.client_secret_label);

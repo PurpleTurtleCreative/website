@@ -1,14 +1,13 @@
 === Post SMTP Mailer/Email Log ===
 Contributors: yehudah
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=yehudahas@gmail.com&item_name=Donation+for+PostSMTP
 Tags: postman smtp, postman, smtp, email, mail, mailer, email log, oauth2, gmail, google apps, hotmail, yahoo, mandrill api, sendgrid api, elastic email, office365, mailgun
 Requires at least: 3.9
-Tested up to: 5.6
-Stable tag: 2.0.18
+Tested up to: 5.7.1
+Stable tag: 2.0.23
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Send, log and troubleshoot your Outgoing Email easily. Supports everything: SMTP, Gmail, Mailgun, office365, SendGrid, Elastic Email and OAuth 2.0!
+Send, log, and get notified when your emails are failing. Plus a unique option for secondary backup SMTP so your emails will never stop. Supports everything: SMTP, Gmail, Mailgun, office365, SendGrid, Elastic Email and OAuth 2.0!
 
 == Description ==
 
@@ -281,7 +280,27 @@ To avoid being flagged as spam, you need to prove your email isn't forged. On a 
 
 == Changelog ==
 
-= 2.0.18 - 2020-01-17
+= 2.0.23 - 2021-04-22
+* Fixed: `WP_Scripts::localize called incorrectly` message.
+
+= 2.0.22 - 2021-02-14
+* Update: Chrome extension URL change
+* Fixed: Double save when extension save to option
+
+= 2.0.21 - 2021-02-11
+* Fixed: Security issue - nonce validation.
+* Fixed: Class ‘PostmanViewController’ not found
+* New: New wp-config.php constant to disable the email logger = `POST_SMTP_CORE_MAIL_LOG`.
+
+= 2.0.20 - 2021-01-19
+* Fixed: All reported office 365 issues.
+* New: Add link to Amazon SES Extension
+
+= 2.0.19 - 2021-01-19
+* Fixed: All reported office 365 issues.
+* New: Add link to Amazon SES Extension
+
+= 2.0.18 - 2021-01-17
 * New: Plugin Extensions
 
 = 2.0.16 - 2020-12-13

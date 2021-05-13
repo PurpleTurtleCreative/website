@@ -70,7 +70,6 @@ class Postman {
 		require_once 'Postman-Mail/PostmanMyMailConnector.php';
 		require_once 'Postman-Mail/PostmanContactForm7.php';
 		require_once 'Phpmailer/PostsmtpMailer.php';
-        require_once 'Extensions/License/PostmanLicenseManager.php';
         require_once 'Extensions/Admin/PostmanAdmin.php';
 		//require_once 'Postman-Mail/PostmanWooCommerce.php';
 
@@ -146,17 +145,7 @@ class Postman {
 				'on_plugins_loaded',
 		) );
 
-		/**
-		 * @todo: WPML say they fix the issue in version 3.9
-		 * https://wordpress.org/support/topic/error-in-pluggable-php173/#post-10021301
-		 */
-		if ( get_option( 'icl_sitepress_version' ) && version_compare( get_option( 'icl_sitepress_version' ), '3.9', '<' ) ) {
-
-			$active_plugins = (array)get_option('active_plugins', array());
-			if (in_array('sitepress-multilingual-cms/sitepress.php', $active_plugins) && !get_option('postman_wpml_fixed')) {
-				add_action('admin_notices', array($this, 'post_smtp_wpml_admin_notice'));
-			}
-		}
+        add_filter( 'extra_plugin_headers', [ $this, 'add_extension_headers' ] );
 
 		// hook on the wp_loaded event
 		add_action( 'wp_loaded', array(
@@ -178,6 +167,12 @@ class Postman {
 
 	}
 
+    function add_extension_headers($headers) {
+        $headers[] = 'Class';
+        $headers[] = 'Slug';
+
+        return $headers;
+    }
 
 	/**
 	 * Functions to execute on the plugins_loaded event
@@ -189,8 +184,6 @@ class Postman {
 
 		// register the email transports
 		$this->registerTransports( $this->rootPluginFilenameAndPath );
-
-        PostmanLicenseManager::get_instance()->init();
 
 		// load the text domain
 		$this->loadTextDomain();
@@ -262,6 +255,9 @@ class Postman {
 		require_once 'Postman-Configuration/PostmanConfigurationController.php';
 		require_once 'Postman-Send-Test-Email/PostmanSendTestEmailController.php';
 		require_once 'Postman-Diagnostic-Test/PostmanDiagnosticTestController.php';
+        require_once 'Extensions/License/PostmanLicenseManager.php';
+
+        PostmanLicenseManager::get_instance()->init();
 
 		// create and store an instance of the MessageHandler
 		$this->messageHandler = new PostmanMessageHandler();

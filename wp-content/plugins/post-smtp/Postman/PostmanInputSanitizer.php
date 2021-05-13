@@ -20,6 +20,11 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 		 *        	Contains all settings fields as array keys
 		 */
 		public function sanitize( $input ) {
+
+		    if ( array_key_exists( 'external_option', $input ) ) {
+		        return $input;
+            }
+
 			$this->logger->debug( 'Sanitizing data before storage' );
 
 			$new_input = array();
@@ -124,6 +129,7 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 		 * @param mixed $new_input
 		 */
 		public function sanitizePassword( $desc, $key, $input, &$new_input, $existingPassword ) {
+
 			// WordPress calling Sanitize twice is a known issue
 			// https://core.trac.wordpress.org/ticket/21989
 			$action = PostmanSession::getInstance()->getAction();
