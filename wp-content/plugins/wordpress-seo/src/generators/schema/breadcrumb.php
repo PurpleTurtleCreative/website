@@ -101,7 +101,7 @@ class Breadcrumb extends Abstract_Schema_Piece {
 		$crumb = [
 			'@type'    => 'ListItem',
 			'position' => ( $index + 1 ),
-			'item'     => []
+			'item'     => [],
 		];
 
 		if ( ! isset( $breadcrumb['url'] ) && isset( $breadcrumb['@id'] ) ) {
@@ -146,7 +146,7 @@ class Breadcrumb extends Abstract_Schema_Piece {
 	 */
 	private function is_broken( $breadcrumb ) {
 		// A breadcrumb is broken if it is not an array.
-		if ( ! is_array( $breadcrumb ) ) {
+		if ( ! \is_array( $breadcrumb ) ) {
 			return true;
 		}
 
