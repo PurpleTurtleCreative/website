@@ -8,11 +8,16 @@ Author URI:    https://purpleturtlecreative.com/
 License:       Copyright (c) 2020 Michelle Blanchette
 */
 
-/* Add Dashboard > Nags page */
-add_action( 'admin_menu', function() {
+add_action( 'admin_menu', 'ptc_tidy_nags__admin_menu' );
+add_action( 'admin_head', 'ptc_tidy_nags__admin_head', 1 );
+
+/**
+ * Adds the Nags admin page.
+ */
+function ptc_tidy_nags__admin_menu() {
 	add_submenu_page(
 		'index.php',
-		'Plugin Nags',
+		'Admin Nags',
 		'Nags',
 		'manage_options',
 		'ptc-tidy-nags',
@@ -32,16 +37,15 @@ add_action( 'admin_menu', function() {
 		},
 		999
 	);
-});
+}
 
-/* Remove nags if not on Dashboard > Nags page */
-add_action( 'admin_head', function() {
-	if (
-		isset( $_SERVER['REQUEST_URI'] )
-		&& strpos( $_SERVER['REQUEST_URI'], 'index.php?page=ptc-tidy-nags' ) !== FALSE
-	) {
-		return;
+/**
+ * Removes nags if not on the Nags admin page.
+ */
+function ptc_tidy_nags__admin_head() {
+	$current_screen = get_current_screen();
+	if ( $current_screen && 'dashboard_page_ptc-tidy-nags' !== $current_screen->id ) {
+		remove_all_actions( 'admin_notices' );
+		remove_all_actions( 'all_admin_notices' );
 	}
-	remove_all_actions( 'admin_notices' );
-	remove_all_actions( 'all_admin_notices' );
-}, 1);
+}
