@@ -3,7 +3,7 @@
  * Plugin Name:  Code Syntax Block
  * Plugin URI:   https://github.com/mkaz/code-syntax-block
  * Description:  A plugin to extend Gutenberg code block with syntax highlighting
- * Version:      2.0.3
+ * Version:      2.1.0
  * Author:       Marcus Kazmierczak
  * Author URI:   https://mkaz.blog/
  * License:      GPL2
@@ -14,7 +14,7 @@
  */
 
 // version added, used in URL
-const MKAZ_CODE_SYNTAX_BLOCK_VERSION = '2.0.3';
+const MKAZ_CODE_SYNTAX_BLOCK_VERSION = '2.1.0';
 const MKAZ_CODE_SYNTAX_DEFAULT_SCHEME = 'prism-a11y-dark';
 const MKAZ_CODE_SYNTAX_COLOR_SCHEMES = ['prism-a11y-dark', 'prism-ghcolors', 'prism-nord', 'prism-onedark'];
 require dirname( __FILE__ ) . '/prism-languages.php';
@@ -72,9 +72,9 @@ add_action( 'enqueue_block_editor_assets', function() {
 } );
 
 /**
- * Enqueue assets for viewing for both front and editor.
+ * Enqueue assets for frontend, not editor.
  */
-add_action( 'enqueue_block_assets', function() {
+add_action( 'wp_enqueue_scripts', function() {
 
 	// If not in editor, check if we should load the asset files
 	if ( ! is_admin() ) {
@@ -104,17 +104,8 @@ add_action( 'enqueue_block_assets', function() {
 	}
 
 	// Files.
-	$view_style_path = 'assets/blocks.style.css';
 	$prism_js_path   = 'assets/prism/prism.js';
 	$prism_settings_path = 'assets/prism/prism-settings.js';
-
-	// Enqueue view style.
-	wp_enqueue_style(
-		'mkaz-code-syntax-css',
-		plugins_url( $view_style_path, __FILE__ ),
-		[],
-		filemtime( plugin_dir_path( __FILE__ ) . $view_style_path )
-	);
 
 	// Enqueue prism style.
 	wp_enqueue_style(
