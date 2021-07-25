@@ -75,7 +75,11 @@ class Beacon extends Abstract_Render implements Subscriber_Interface {
 	 * @return void
 	 */
 	public function insert_script() {
-		if ( ! current_user_can( 'rocket_manage_options' ) ) {
+		if (
+			rocket_get_constant( 'WP_ROCKET_WHITE_LABEL_ACCOUNT' )
+			||
+			! current_user_can( 'rocket_manage_options' )
+		) {
 			return;
 		}
 
@@ -351,6 +355,12 @@ class Beacon extends Abstract_Render implements Subscriber_Interface {
 					'url' => 'https://fr.docs.wp-rocket.me/article/1018-configuration-http-2/?utm_source=wp_plugin&utm_medium=wp_rocket',
 				],
 			],
+			'remove_unused_css'          => [
+				'en' => [
+					'id'  => '6076083ff8c0ef2d98df1f97',
+					'url' => 'https://docs.wp-rocket.me/article/1529-remove-unused-css?utm_source=wp_plugin&utm_medium=wp_rocket',
+				],
+			],
 			'exclude_inline_js'          => [
 				'en' => [
 					'id'  => '5b4879100428630abc0c0713',
@@ -377,6 +387,12 @@ class Beacon extends Abstract_Render implements Subscriber_Interface {
 				'en' => [
 					'id'  => '5f359695042863444aa04e26',
 					'url' => 'https://docs.wp-rocket.me/article/1349-delay-javascript-execution/?utm_source=wp_plugin&utm_medium=wp_rocket',
+				],
+			],
+			'delay_js_exclusions'        => [
+				'en' => [
+					'id'  => '',
+					'url' => 'https://docs.wp-rocket.me/article/1560-delay-javascript-execution-compatibility-exclusions/?utm_source=wp_plugin&utm_medium=wp_rocket',
 				],
 			],
 			'async'                      => [
@@ -607,22 +623,6 @@ class Beacon extends Abstract_Render implements Subscriber_Interface {
 				'fr' => [
 					'id'  => '5bcf4378042863215a46bc00',
 					'url' => 'https://fr.docs.wp-rocket.me/article/1124-controler-api-wordpress-heartbeat/?utm_source=wp_plugin&utm_medium=wp_rocket',
-				],
-			],
-			'google_tracking'            => [
-				'en' => [
-					'id'  => '5b4693220428630abc0bf97b',
-					'url' => 'https://docs.wp-rocket.me/article/1103-google-tracking-add-on/?utm_source=wp_plugin&utm_medium=wp_rocket',
-				],
-			],
-			'facebook_tracking'          => [
-				'en' => [
-					'id'  => '5bc904e7042863158cc79d57',
-					'url' => 'https://docs.wp-rocket.me/article/1117-facebook-pixel-add-on/?utm_source=wp_plugin&utm_medium=wp_rocket',
-				],
-				'fr' => [
-					'id'  => '5bcf3d35042863215a46bb7f',
-					'url' => 'https://fr.docs.wp-rocket.me/article/1123-add-on-facebook-pixel/?utm_source=wp_plugin&utm_medium=wp_rocket',
 				],
 			],
 			'google_fonts'               => [

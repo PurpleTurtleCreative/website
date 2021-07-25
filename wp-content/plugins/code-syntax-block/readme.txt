@@ -3,17 +3,17 @@ Contributors: mkaz, westonruter, memuller, jazanne, jeherve, eclev91
 Donate link: https://www.paypal.me/marcuskazmierczak
 Tags: code, code syntax, syntax highlight, code highlighting
 Requires at least: 5.0
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 5.6
-Stable tag: 2.0.3
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Code Syntax Block plugin extends the Gutenberg Block Editor by adding syntax highlighting to the core code block.
+Code Syntax Block plugin extends the block editor by adding syntax highlighting to the core code block.
 
 == Description ==
 
-Code Syntax Block extends the WordPress Block Editor by adding syntax highlighting support to the core code block using the Prism syntax highlighter.
+Code Syntax Block extends the WordPress block editor by adding syntax highlighting support to the core code block using the Prism syntax highlighter.
 
 The Prism syntax highlighter runs JavaScript loaded on the front-end to parse code blocks and apply syntax markup. A CSS file specifies the color and style to apply to that markup.  See [Prism syntax highlighter](https://prismjs.com) for full details.
 
@@ -107,6 +107,17 @@ Example:
 2. In Editor Example
 
 == Changelog ==
+
+= 2.1.0 =
+
+- Fix background color not being applied unless language specified.
+- Fixes issues with white text on light background.
+- Applies color syntax to all code blocks, language not required
+
+= 2.0.4 =
+
+- Fix pasting plain text stripping elements
+- Removing formating tools that did not work
 
 = 2.0.3 =
 
