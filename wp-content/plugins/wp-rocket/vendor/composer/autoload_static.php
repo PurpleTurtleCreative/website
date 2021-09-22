@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8dee8385f0148b7c36beab9e22ffbb1e
+class ComposerStaticInit4a0083c1caafd076408a2b9da80597e4
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -55,6 +55,7 @@ class ComposerStaticInit8dee8385f0148b7c36beab9e22ffbb1e
     );
 
     public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Imagify_Partner' => __DIR__ . '/../..' . '/inc/vendors/classes/class-imagify-partner.php',
         'Minify_CSS_UriRewriter' => __DIR__ . '/../..' . '/inc/vendors/classes/class-minify-css-urirewriter.php',
         'Minify_HTML' => __DIR__ . '/../..' . '/inc/deprecated/vendors/classes/class-minify-html.php',
@@ -102,7 +103,6 @@ class ComposerStaticInit8dee8385f0148b7c36beab9e22ffbb1e
         'WP_Rocket\\Subscriber\\Plugin\\Information_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/Plugin/class-information-subscriber.php',
         'WP_Rocket\\Subscriber\\Plugin\\Updater_Api_Common_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/Plugin/class-updater-api-common-subscriber.php',
         'WP_Rocket\\Subscriber\\Plugin\\Updater_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/Plugin/class-updater-subscriber.php',
-        'WP_Rocket\\Subscriber\\Third_Party\\Hostings\\Litespeed_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/Hostings/class-litespeed-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Ecommerce\\BigCommerce_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/ecommerce/class-bigcommerce-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Images\\Webp\\EWWW_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/Images/Webp/class-ewww-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Images\\Webp\\Imagify_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/Images/Webp/class-imagify-subscriber.php',
@@ -127,9 +127,9 @@ class ComposerStaticInit8dee8385f0148b7c36beab9e22ffbb1e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8dee8385f0148b7c36beab9e22ffbb1e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8dee8385f0148b7c36beab9e22ffbb1e::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit8dee8385f0148b7c36beab9e22ffbb1e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4a0083c1caafd076408a2b9da80597e4::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4a0083c1caafd076408a2b9da80597e4::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4a0083c1caafd076408a2b9da80597e4::$classMap;
 
         }, null, ClassLoader::class);
     }
