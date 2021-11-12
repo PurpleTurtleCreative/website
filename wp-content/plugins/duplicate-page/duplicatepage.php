@@ -4,7 +4,7 @@ Plugin Name: Duplicate Page
 Plugin URI: https://wordpress.org/plugins/duplicate-page/
 Description: Duplicate Posts, Pages and Custom Posts using single click.
 Author: mndpsingh287
-Version: 4.4.4
+Version: 4.4.5
 Author URI: https://profiles.wordpress.org/mndpsingh287/
 License: GPLv2
 Text Domain: duplicate-page
@@ -13,7 +13,7 @@ if (!defined('DUPLICATE_PAGE_PLUGIN_DIRNAME')) {
     define('DUPLICATE_PAGE_PLUGIN_DIRNAME', plugin_basename(dirname(__FILE__)));
 }
 if (!defined('DUPLICATE_PAGE_PLUGIN_VERSION')) {
-    define('DUPLICATE_PAGE_PLUGIN_VERSION', '4.4.4');
+    define('DUPLICATE_PAGE_PLUGIN_VERSION', '4.4.5');
 }
 if (!class_exists('duplicate_page')):
     class duplicate_page
@@ -231,7 +231,9 @@ if (!class_exists('duplicate_page')):
             $html .= '<a href="admin.php?action=dt_duplicate_post_as_draft&amp;post='.$post->ID.'&amp;nonce='.wp_create_nonce( 'dt-duplicate-page-'.$post->ID ).'" title="'.__('Duplicate this as ','duplicate-page').$post_status.'" rel="permalink">'.__('Duplicate This', 'duplicate-page').'</a>';
             $html .= '</div>';
             $html .= '</div>';
-            echo apply_filters('the_content',$html);
+            $content = apply_filters('wpautop', $html);
+            $content = str_replace(']]>', ']]>', $content);
+            echo $content;
         }
 
         /*

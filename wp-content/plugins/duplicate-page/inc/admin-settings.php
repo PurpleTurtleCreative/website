@@ -50,7 +50,7 @@ endif;
     	<option value="classic" <?php echo (isset($opt['duplicate_post_editor']) && $opt['duplicate_post_editor'] == 'classic') ? "selected = 'selected'" : ''; ?>><?php _e('Classic Editor', 'duplicate-page'); ?></option>
     	<option value="gutenberg" <?php echo (isset($opt['duplicate_post_editor']) && $opt['duplicate_post_editor'] == 'gutenberg') ? "selected = 'selected'" : ''; ?>><?php _e('Gutenberg Editor', 'duplicate-page'); ?></option>
         </select>
-    <p><?php _e('Please select which editor your are using.<strong>Default: </strong> Classic Editor', 'duplicate-page'); ?></p>
+    <p><?php _e('Please select which editor you are using.<strong>Default: </strong> Classic Editor', 'duplicate-page'); ?></p>
 </td>
 </tr>	
 <tr>
