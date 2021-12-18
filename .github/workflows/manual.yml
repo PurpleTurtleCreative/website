@@ -26,6 +26,10 @@ jobs:
           token: ${{ secrets.PTC_GITHUB_PAT }}
 
       # Build Submodule Code.
+      - name: List Submodule, Completionist
+        run: ls -a wp-content/plugins/completionist
+      - name: Prepare Completionist Action
+        run: mv ./wp-content/plugins/completionist/.github/workflows/manual.yml ./wp-content/plugins/completionist/.github/workflows/action.yml
       - name: Build Completionist
         uses: ./wp-content/plugins/completionist/.github/workflows
 
@@ -38,8 +42,6 @@ jobs:
         run: ls wp-content/plugins
       - name: List Themes
         run: ls wp-content/themes
-      - name: List Submodule, Completionist
-        run: ls wp-content/plugins/completionist
       - name: List Submodule, PTC Theme
         run: ls wp-content/themes/purple-turtle-creative
 
