@@ -32,7 +32,7 @@ jobs:
       # Remove unnecessary files and directories.
       - name: Clean Up
         run: |
-          find . -name '.git*' -print -exec rm -rfv {} \;
+          find . -name '.git*' -print -exec rm -rfv {} + -depth
           find . -type d -empty -print -delete
 
       # Upload Code to Production.
