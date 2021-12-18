@@ -2,39 +2,40 @@
 
 name: Experimental Workflow
 
-on: workflow_dispatch
+on:
+  workflow_dispatch:
 
 jobs:
 
-	checkout-code:
-		runs-on: ubuntu-18.04
-		steps:
-			- name: Checkout repository
-				uses: actions/checkout@v2
-				with:
-					submodules: 'recursive'
+  checkout-code:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
 
-	review-code:
-		runs-on: ubuntu-18.04
-		steps:
-			- name: Print Working Dir
-				run: pwd
-			- name: List Plugins
-				run: ls /wp-content/plugins
-			- name: List Themes
-				run: ls /wp-content/themes
-			- name: List Submodule, Completionist
-				run: ls /wp-content/plugins/completionist
-			- name: List Submodule, PTC Theme
-				run: ls /wp-content/themes/purple-turtle-creative
+  review-code:
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Print Working Dir
+        run: pwd
+      - name: List Plugins
+        run: ls /wp-content/plugins
+      - name: List Themes
+        run: ls /wp-content/themes
+      - name: List Submodule, Completionist
+        run: ls /wp-content/plugins/completionist
+      - name: List Submodule, PTC Theme
+        run: ls /wp-content/themes/purple-turtle-creative
 
-	# deploy:
-	#   runs-on: ubuntu-18.04
+  # deploy:
+  #   runs-on: ubuntu-18.04
 
-	#   environment:
-	#     name: production
-	#     url: https://purpleturtlecreative.com/
+  #   environment:
+  #     name: production
+  #     url: https://purpleturtlecreative.com/
 
-	#   steps:
-	#   - name: Send greeting
-	#     run: echo "Hello"
+  #   steps:
+  #   - name: Send greeting
+  #     run: echo "Hello"
