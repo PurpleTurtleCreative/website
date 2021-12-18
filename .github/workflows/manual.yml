@@ -40,9 +40,9 @@ jobs:
         env:
           destination: "github@${{ secrets.PTC_PROD_HOSTNAME }}:/home/github/release"
         run: |
-          ls -la
           echo "${{ secrets.PTC_GITHUB_SSH_KEY }}" > deploy_key
+          chmod 600 ./deploy_key
           rsync --archive --checksum --delete --verbose \
-            --exclude-from="exclude.lst" \
+            --exclude-from="./exclude.lst" \
             -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
             ./wp-content ${{ env.destination }}
