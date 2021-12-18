@@ -11,17 +11,13 @@ jobs:
     name: Checkout Code
     runs-on: ubuntu-18.04
     steps:
+      # Download All Code.
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
           token: ${{ secrets.PTC_GITHUB_PAT }}
-
-  review-code:
-    name: Confirm Code Exists
-    needs: checkout-code
-    runs-on: ubuntu-18.04
-    steps:
+      # Confirm Downloaded Code.
       - name: Print Working Dir
         run: pwd
       - name: List Working Dir Contents
