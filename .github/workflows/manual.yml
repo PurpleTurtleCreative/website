@@ -2,8 +2,7 @@
 
 name: Experimental Workflow
 
-on:
-	workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
 
