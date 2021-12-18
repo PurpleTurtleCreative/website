@@ -25,25 +25,9 @@ jobs:
           submodules: recursive
           token: ${{ secrets.PTC_GITHUB_PAT }}
 
-      # Build Submodule Code.
-      - name: List Submodule, Completionist
-        run: ls -a wp-content/plugins/completionist
+      # Build Completionist.
       - name: Build Completionist
         uses: ./wp-content/plugins/completionist
-
-      # Confirm Downloaded Code.
-      - name: Print Working Dir
-        run: pwd
-      - name: List Working Dir Contents
-        run: ls -la
-      - name: List Plugins
-        run: ls wp-content/plugins
-      - name: List Themes
-        run: ls wp-content/themes
-      - name: List Submodule, PTC Theme
-        run: ls wp-content/themes/purple-turtle-creative
-
-      # @TODO - Build completionist code using its own workflow file.
 
       # Upload Code to Production.
       - name: Sync Code to Production
