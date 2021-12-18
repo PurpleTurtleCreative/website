@@ -14,20 +14,23 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: 'recursive'
+          token: ${{ secrets.PTC_GITHUB_PAT }}
 
   review-code:
     runs-on: ubuntu-18.04
     steps:
       - name: Print Working Dir
         run: pwd
+      - name: List Working Dir Contents
+        run: ls -la
       - name: List Plugins
-        run: ls /wp-content/plugins
+        run: ls wp-content/plugins
       - name: List Themes
-        run: ls /wp-content/themes
+        run: ls wp-content/themes
       - name: List Submodule, Completionist
-        run: ls /wp-content/plugins/completionist
+        run: ls wp-content/plugins/completionist
       - name: List Submodule, PTC Theme
-        run: ls /wp-content/themes/purple-turtle-creative
+        run: ls wp-content/themes/purple-turtle-creative
 
   # deploy:
   #   runs-on: ubuntu-18.04
