@@ -25,6 +25,10 @@ jobs:
           submodules: recursive
           token: ${{ secrets.PTC_GITHUB_PAT }}
 
+      # Build Submodule Code.
+      - name: Build Completionist
+        uses: ./wp-content/plugins/completionist/.github/workflows/manual
+
       # Confirm Downloaded Code.
       - name: Print Working Dir
         run: pwd
