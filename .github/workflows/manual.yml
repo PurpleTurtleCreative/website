@@ -12,9 +12,9 @@ jobs:
     name: Checkout Code
     runs-on: ubuntu-18.04
 
-    environment:
-      name: production
-      url: https://purpleturtlecreative.com/
+    # environment:
+    #   name: production
+    #   url: https://purpleturtlecreative.com/
 
     steps:
 
@@ -27,7 +27,7 @@ jobs:
 
       # Build Submodule Code.
       - name: Build Completionist
-        uses: ./wp-content/plugins/completionist/.github/workflows/manual
+        uses: ./wp-content/plugins/completionist/.github/workflows/manual.yml
 
       # Confirm Downloaded Code.
       - name: Print Working Dir
