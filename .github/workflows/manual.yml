@@ -33,7 +33,7 @@ jobs:
       - name: Clean Up
         run: |
           find . -type d -empty -print -delete
-          find . -name '.git*' -print -delete
+          find . -name '.git*' -print -delete -depth
 
       # Upload Code to Production.
       - name: Sync Code to Production
