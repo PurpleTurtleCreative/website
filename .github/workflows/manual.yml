@@ -7,14 +7,14 @@ on:
 
 jobs:
 
-  checkout-code:
+  deploy:
 
-    name: Checkout Code
+    name: Deploy to Production
     runs-on: ubuntu-18.04
 
-    # environment:
-    #   name: production
-    #   url: https://purpleturtlecreative.com/
+    environment:
+      name: production
+      url: https://purpleturtlecreative.com/
 
     steps:
 
@@ -41,3 +41,7 @@ jobs:
           destination: "github@${{ secrets.PTC_PROD_HOSTNAME }}:/home/github/release"
         run: |
           echo "${{ secrets.PTC_GITHUB_SSH_KEY }}" > deploy_key
+          rsync --archive --checksum --delete --verbose \
+            --exclude-from="./wp-content/exclude.lst" \
+            -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
+            ./wp-content ${{ env.destination }}
