@@ -1,0 +1,9 @@
+advanced-cache.php
+index.php
+cache/
+upgrade/
+uploads/
+wflogs/
+wp-rocket-config/
+plugins/ptc-resources-server/logs/
+plugins/ptc-resources-server/resources/
