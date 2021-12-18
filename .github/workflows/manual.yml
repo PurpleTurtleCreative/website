@@ -48,6 +48,6 @@ jobs:
         run: |
           echo "${{ secrets.PTC_GITHUB_SSH_KEY }}" > deploy_key
           echo 'deploy_key wc:'
-          wc -c .ssh/deploy_key
+          wc -c deploy_key
           echo 'env.destination:'
           echo "${{ env.destination }}"
