@@ -51,3 +51,4 @@ jobs:
           destination: "github@${{ secrets.PTC_PROD_HOSTNAME }}:/home/github/release"
         run: |
           echo "${{ secrets.PTC_GITHUB_SSH_KEY }}" > deploy_key
+          echo "${{ github.action_path }}"
