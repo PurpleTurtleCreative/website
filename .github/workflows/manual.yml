@@ -1,30 +1,41 @@
-# This is a basic workflow that is manually triggered
+# Experimental workflow to test GitHub Actions.
 
-name: Manual workflow
+name: Experimental Workflow
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
-  workflow_dispatch:
-    # Inputs the workflow accepts.
-    inputs:
-      name:
-        # Friendly description to be shown in the UI instead of 'name'
-        description: 'Person to greet'
-        # Default value if no value is explicitly provided
-        default: 'World'
-        # Input has to be provided for the workflow to run
-        required: true
+	workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+	checkout-code:
+		runs-on: ubuntu-18.04
+		steps:
+			- name: Checkout repository
+				uses: actions/checkout@v2
+				with:
+					submodules: 'recursive'
+
+	review-code:
+		runs-on: ubuntu-18.04
+		steps:
+			- name: Print Working Dir
+				run: pwd
+			- name: List Plugins
+				run: ls /wp-content/plugins
+			- name: List Themes
+				run: ls /wp-content/themes
+			- name: List Submodule, Completionist
+				run: ls /wp-content/plugins/completionist
+			- name: List Submodule, PTC Theme
+				run: ls /wp-content/themes/purple-turtle-creative
+
+	# deploy:
+	#   runs-on: ubuntu-18.04
+
+	#   environment:
+	#     name: production
+	#     url: https://purpleturtlecreative.com/
+
+	#   steps:
+	#   - name: Send greeting
+	#     run: echo "Hello"
