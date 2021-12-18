@@ -8,15 +8,23 @@ on:
 jobs:
 
   checkout-code:
+
     name: Checkout Code
     runs-on: ubuntu-18.04
+
+    environment:
+      name: production
+      url: https://purpleturtlecreative.com/
+
     steps:
+
       # Download All Code.
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
           submodules: recursive
           token: ${{ secrets.PTC_GITHUB_PAT }}
+
       # Confirm Downloaded Code.
       - name: Print Working Dir
         run: pwd
@@ -31,13 +39,15 @@ jobs:
       - name: List Submodule, PTC Theme
         run: ls wp-content/themes/purple-turtle-creative
 
-  # deploy:
-  #   runs-on: ubuntu-18.04
+      # @TODO - Build completionist code using its own workflow file.
 
-  #   environment:
-  #     name: production
-  #     url: https://purpleturtlecreative.com/
-
-  #   steps:
-  #   - name: Send greeting
-  #     run: echo "Hello"
+      # Upload Code to Production.
+      - name: Sync Code to Production
+        env:
+          destination: "github@${{ secrets.PTC_PROD_HOSTNAME }}:/home/github/release"
+        run: |
+          echo "${{ secrets.PTC_GITHUB_SSH_KEY }}" > deploy_key
+          echo 'deploy_key wc:'
+          wc -c .ssh/deploy_key
+          echo 'env.destination:'
+          echo "${{ env.destination }}"
