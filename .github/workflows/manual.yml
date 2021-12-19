@@ -47,4 +47,4 @@ jobs:
             --exclude-from="./exclude.lst" \
             -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
             ./wp-content ${{ env.remote }}:${{ env.destination }}
-          ssh -i ./deploy_key -o StrictHostKeyChecking=no ${{ env.remote }} 'chmod -R 775 ${{ env.destination }}; chgrp -R www-data ${{ env.destination }}'
+          ssh -i ./deploy_key -o StrictHostKeyChecking=no ${{ env.remote }} 'chmod -R 775 ${{ env.destination }}/wp-content; chgrp -R www-data ${{ env.destination }}/wp-content'
