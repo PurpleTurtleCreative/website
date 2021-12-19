@@ -38,13 +38,13 @@ jobs:
       # Upload Code to Production.
       - name: Sync Code to Production
         env:
-          destination: "github@${{ secrets.PTC_PROD_HOSTNAME }}:/home/github/release"
+          remote: "github@${{ secrets.PTC_PROD_HOSTNAME }}"
+          destination: "/home/github/release"
         run: |
           echo "${{ secrets.PTC_GITHUB_SSH_KEY }}" > deploy_key
           chmod 600 ./deploy_key
-          chown -R www-data:www-data wp-content
-          chmod -R 775 wp-content
-          rsync --archive --checksum --perms --owner --group --delete --verbose \
+          rsync --archive --checksum --delete --verbose \
             --exclude-from="./exclude.lst" \
             -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
-            ./wp-content ${{ env.destination }}
+            ./wp-content ${{ env.remote }}:${{ env.destination }}
+          ssh ${{ env.remote }} 'chmod -R 775 ${{ env.destination }}; chown -R www-data:www-data ${{ env.destination }}'
