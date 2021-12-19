@@ -1,6 +1,6 @@
 # Experimental workflow to test GitHub Actions.
 
-name: Experimental Workflow
+name: Deploy
 
 on:
   workflow_dispatch:
@@ -32,8 +32,8 @@ jobs:
       # Remove unnecessary files and directories.
       - name: Clean Up
         run: |
-          find . -name '.git*' -print -exec rm -rfv {} + -depth
-          find . -type d -empty -print -delete
+          find . -name '.git*' -exec rm -rf {} + -depth
+          find . -type d -empty -delete
 
       # Upload Code to Production.
       - name: Sync Code to Production
