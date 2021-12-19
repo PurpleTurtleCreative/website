@@ -43,7 +43,7 @@ jobs:
         run: |
           echo "${{ secrets.PTC_GITHUB_SSH_KEY }}" > deploy_key
           chmod 600 ./deploy_key
-          rsync --archive --checksum --delete --verbose \
+          rsync --archive --checksum --delete \
             --exclude-from="./exclude.lst" \
             -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
             ./wp-content ${{ env.remote }}:${{ env.destination }}
