@@ -3,7 +3,7 @@
  * Plugin Name:  Code Syntax Block
  * Plugin URI:   https://github.com/mkaz/code-syntax-block
  * Description:  A plugin to extend Gutenberg code block with syntax highlighting
- * Version:      2.2.0
+ * Version:      3.0.0
  * Author:       Marcus Kazmierczak
  * Author URI:   https://mkaz.blog/
  * License:      GPL2
@@ -14,7 +14,7 @@
  */
 
 // version added, used in URL
-const MKAZ_CODE_SYNTAX_BLOCK_VERSION = '2.2.0';
+const MKAZ_CODE_SYNTAX_BLOCK_VERSION = '3.0.0';
 const MKAZ_CODE_SYNTAX_DEFAULT_SCHEME = 'prism-a11y-dark';
 const MKAZ_CODE_SYNTAX_COLOR_SCHEMES = ['prism-a11y-dark', 'prism-ghcolors', 'prism-nord', 'prism-onedark'];
 require dirname( __FILE__ ) . '/prism-languages.php';
@@ -76,30 +76,27 @@ add_action( 'enqueue_block_editor_assets', function() {
  */
 add_action( 'wp_enqueue_scripts', function() {
 
-	// If not in editor, check if we should load the asset files
-	if ( ! is_admin() ) {
-		global $posts;
-		/**
-		 * Filter forces loading assets event if no block detected
-		 *
-		 * @since 1.2.4
-		 *
-		 */
-		$force_load = apply_filters( 'mkaz_code_syntax_force_loading', false );
-		// if not forcing the loading of assets check if the block
-		// is found and if no block skip loading assets
-		if ( ! $force_load ) {
-			if ( empty( $posts ) ) {
-				return;
-			}
+	global $posts;
+	/**
+	 * Filter forces loading assets even if no block detected.
+	 *
+	 * @since 1.2.4
+	 *
+	 */
+	$force_load = apply_filters( 'mkaz_code_syntax_force_loading', false );
+	// if not forcing the loading of assets check if the block
+	// is found and if no block skip loading assets
+	if ( ! $force_load ) {
+		if ( empty( $posts ) ) {
+			return;
+		}
 
-			$found_block = array_reduce( $posts, function($found, $post) {
-				return $found || has_block( 'code', $post );
-			}, false );
+		$found_block = array_reduce( $posts, function($found, $post) {
+			return $found || has_block( 'code', $post );
+		}, false );
 
-			if ( ! $found_block ) {
-				return;
-			}
+		if ( ! $found_block ) {
+			return;
 		}
 	}
 
@@ -131,7 +128,7 @@ add_action( 'wp_enqueue_scripts', function() {
 } );
 
 /**
- * Locate a given resource URL in the active theme or with the default
+ * Locate a given resource URL in the active theme or with the default.
  *
  * @param boolean $rtnPath True returns path, default false returns URL
  */
@@ -194,11 +191,14 @@ function mkaz_prism_theme_css( $rtnPath = false ) {
 }
 
 /**
- * Return timestamp for theme_css to be used in enqueue version
+ * Return version or timestamp for theme_css to be used in enqueue version,
+ * otherwise plugin version used for cache busting CSS enqueue.
+ *
+ * @return string
  *
  */
 function mkaz_prism_theme_css_ver() {
-	// check if full url is being used, if so return 0
+	// Check if full url is being used, if so return version.
 	$prism_css_url = apply_filters( 'mkaz_prism_css_url', false );
 	if ( $prism_css_url ) {
 		return MKAZ_CODE_SYNTAX_BLOCK_VERSION;
