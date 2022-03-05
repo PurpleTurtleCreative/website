@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit638b4f188e7d358ede33847d0b02b02e
+class ComposerStaticInita0881009fab80efb51162bfcdbf1464d
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -104,7 +104,6 @@ class ComposerStaticInit638b4f188e7d358ede33847d0b02b02e
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Images\\Webp\\Webp_Interface' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/Images/Webp/webp-interface.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Mobile_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/class-mobile-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\NGG_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/class-ngg-subscriber.php',
-        'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Security\\Sucuri_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/security/class-sucuri-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\SyntaxHighlighter_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/class-syntaxhighlighter-subscriber.php',
         'WP_Rocket\\Subscriber\\Tools\\Detect_Missing_Tags_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/Tools/class-detect-missing-tags-subscriber.php',
         'WP_Rocket\\Traits\\Config_Updater' => __DIR__ . '/../..' . '/inc/classes/traits/trait-config-updater.php',
@@ -119,9 +118,9 @@ class ComposerStaticInit638b4f188e7d358ede33847d0b02b02e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit638b4f188e7d358ede33847d0b02b02e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit638b4f188e7d358ede33847d0b02b02e::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit638b4f188e7d358ede33847d0b02b02e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita0881009fab80efb51162bfcdbf1464d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita0881009fab80efb51162bfcdbf1464d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita0881009fab80efb51162bfcdbf1464d::$classMap;
 
         }, null, ClassLoader::class);
     }

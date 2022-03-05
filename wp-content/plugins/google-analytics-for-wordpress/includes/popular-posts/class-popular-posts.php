@@ -307,10 +307,10 @@ class MonsterInsights_Popular_Posts {
 			}
 			$posts = get_posts( $posts_args );
 
-			$posts = $this->process_posts( $posts );
-
 			$this->get_cache()->save_posts_to_cache( $posts_args, $posts );
 		}
+
+		$posts = $this->process_posts( $posts );
 
 		return apply_filters( 'monsterinsights_popular_posts_posts', $posts );
 
@@ -369,6 +369,7 @@ class MonsterInsights_Popular_Posts {
 		$args = array(
 			'numberposts'         => $this->posts_count,
 			'ignore_sticky_posts' => true,
+			'fields'              => 'ids',
 		);
 		$args = wp_parse_args( $this->query_args(), $args );
 
