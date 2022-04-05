@@ -2,16 +2,16 @@
 # This file is distributed under the same license as the ExactMetrics Pro plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: ExactMetrics Pro 7.4.0\n"
+"Project-Id-Version: ExactMetrics Pro 7.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/monsterinsights-temp\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-02-28T18:54:11+00:00\n"
+"POT-Creation-Date: 2022-03-31T10:45:58+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
+"X-Generator: WP-CLI 2.6.0\n"
 "X-Domain: google-analytics-for-wordpress\n"
 
 #. Plugin Name of the plugin
@@ -126,7 +126,7 @@ msgstr ""
 #: includes/admin/admin.php:34
 #: includes/admin/admin.php:42
 #: includes/admin/admin.php:222
-#: languages/vue.php:515
+#: languages/vue.php:523
 msgid "Settings"
 msgstr ""
 
@@ -142,7 +142,7 @@ msgstr ""
 
 #: includes/admin/admin.php:39
 #: includes/admin/admin.php:130
-#: languages/vue.php:1993
+#: languages/vue.php:1995
 msgid "Reports"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr ""
 
 #: includes/admin/admin.php:51
 #: languages/gutenberg.php:83
-#: languages/vue.php:891
+#: languages/vue.php:890
 msgid "Popular Posts"
 msgstr ""
 
@@ -186,7 +186,7 @@ msgstr ""
 
 #: includes/admin/admin.php:71
 #: includes/admin/admin.php:146
-#: languages/vue.php:495
+#: languages/vue.php:502
 msgid "About Us"
 msgstr ""
 
@@ -205,7 +205,7 @@ msgstr ""
 #: includes/admin/admin.php:76
 #: includes/admin/notifications/notification-upgrade-to-pro-high-traffic.php:41
 #: includes/admin/notifications/notification-upgrade-to-pro.php:33
-#: languages/vue.php:1420
+#: languages/vue.php:1421
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -233,19 +233,19 @@ msgstr ""
 
 #: includes/admin/admin.php:212
 #: includes/admin/admin.php:215
-#: languages/vue.php:916
+#: languages/vue.php:914
 msgid "Support"
 msgstr ""
 
 #: includes/admin/admin.php:229
-#: includes/admin/notifications/notification-upgrade-eu-traffic.php:54
+#: includes/admin/notifications/notification-upgrade-eu-traffic.php:61
 #: includes/admin/notifications/notification-upgrade-for-custom-dimensions.php:32
 #: includes/admin/notifications/notification-upgrade-for-email-summaries.php:32
 #: includes/admin/notifications/notification-upgrade-for-events-reporting.php:32
 #: includes/admin/notifications/notification-upgrade-for-google-optimize.php:32
 #: includes/admin/notifications/notification-upgrade-for-post-templates.php:32
 #: includes/admin/reports/abstract-report.php:418
-#: languages/vue.php:1417
+#: languages/vue.php:1418
 msgid "Get MonsterInsights Pro"
 msgstr ""
 
@@ -255,12 +255,12 @@ msgid "Please rate %1$sMonsterInsights%2$s on %3$s %4$sWordPress.org%5$s to help
 msgstr ""
 
 #: includes/admin/admin.php:324
-#: languages/vue.php:479
+#: languages/vue.php:487
 msgid "Please Setup Website Analytics to See Audience Insights"
 msgstr ""
 
 #: includes/admin/admin.php:325
-#: languages/vue.php:485
+#: languages/vue.php:493
 msgid "Connect MonsterInsights and Setup Website Analytics"
 msgstr ""
 
@@ -275,12 +275,12 @@ msgstr ""
 #: includes/admin/notifications/notification-mobile-device-low-traffic.php:41
 #: includes/admin/notifications/notification-returning-visitors.php:43
 #: includes/admin/notifications/notification-traffic-dropping.php:43
-#: languages/vue.php:432
+#: languages/vue.php:440
 msgid "Learn More"
 msgstr ""
 
 #: includes/admin/admin.php:329
-#: languages/vue.php:482
+#: languages/vue.php:490
 msgid "MonsterInsights, WordPress analytics plugin, helps you connect your website with Google Analytics, so you can see how people find and use your website. Over 3 million website owners use MonsterInsights to see the stats that matter and grow their business."
 msgstr ""
 
@@ -291,17 +291,17 @@ msgstr ""
 
 #. Translators: Adds a link to the license renewal.
 #: includes/admin/admin.php:350
-#: languages/vue.php:720
+#: languages/vue.php:718
 msgid "Your license key for MonsterInsights has expired. %1$sPlease click here to renew your license key.%2$s"
 msgstr ""
 
 #: includes/admin/admin.php:352
-#: languages/vue.php:723
+#: languages/vue.php:721
 msgid "Your license key for MonsterInsights has been disabled. Please use a different key."
 msgstr ""
 
 #: includes/admin/admin.php:354
-#: languages/vue.php:726
+#: languages/vue.php:724
 msgid "Your license key for MonsterInsights is invalid. The key no longer exists or the user associated with the key has been deleted. Please use a different key."
 msgstr ""
 
@@ -359,7 +359,7 @@ msgid "Your Measurement Protocol API Secret is currently left blank, so you won'
 msgstr ""
 
 #: includes/admin/ajax.php:55
-#: includes/admin/routes.php:967
+#: includes/admin/routes.php:971
 #: lite/includes/admin/onboarding-wizard.php:249
 msgid "You are not allowed to install plugins"
 msgstr ""
@@ -505,7 +505,7 @@ msgid "View 2021 Year in Review report!"
 msgstr ""
 
 #: includes/admin/common.php:951
-#: languages/vue.php:3498
+#: languages/vue.php:3487
 msgid "See how your website performed this year and find tips along the way to help grow even more in 2022!"
 msgstr ""
 
@@ -526,7 +526,7 @@ msgstr ""
 
 #: includes/admin/exclude-page-metabox.php:102
 #: languages/gutenberg.php:149
-#: languages/vue.php:2384
+#: languages/vue.php:2391
 msgid "Upgrade"
 msgstr ""
 
@@ -555,7 +555,7 @@ msgstr ""
 
 #: includes/admin/notification-event.php:256
 #: includes/admin/routes.php:873
-#: includes/admin/routes.php:1207
+#: includes/admin/routes.php:1211
 msgid "You don't have permission to view MonsterInsights reports."
 msgstr ""
 
@@ -656,11 +656,11 @@ msgstr ""
 msgid "Traffic from mobile devices is considerably lower on your site compared to desktop devices. This could be an indicator that your site is not optimised for mobile devices.<br><br>Take a look now at %show your site looks%s on mobile and make sure all your content can be accessed correctly."
 msgstr ""
 
-#: includes/admin/notifications/notification-multiple-gtags.php:37
+#: includes/admin/notifications/notification-multiple-gtags.php:39
 msgid "Multiple Google Analytics Tags Found"
 msgstr ""
 
-#: includes/admin/notifications/notification-multiple-gtags.php:38
+#: includes/admin/notifications/notification-multiple-gtags.php:40
 msgid "MonsterInsights has detected multiple analytics tags on your website. Please disable the other plugin to ensure accurate tracking."
 msgstr ""
 
@@ -709,11 +709,11 @@ msgstr ""
 msgid "Your website traffic is decreasing and that’s a reason to take action now. Less traffic means less opportunities to make your brand known, make relationships and ultimately sell your service or product. <br><br>Follow the marketing hacks of %sthis article%s to start growing your traffic again."
 msgstr ""
 
-#: includes/admin/notifications/notification-upgrade-eu-traffic.php:49
+#: includes/admin/notifications/notification-upgrade-eu-traffic.php:56
 msgid "Help Your Site Become GDPR Compliant"
 msgstr ""
 
-#: includes/admin/notifications/notification-upgrade-eu-traffic.php:50
+#: includes/admin/notifications/notification-upgrade-eu-traffic.php:57
 msgid "Your site is receiving traffic from the EU. Help ensure your site is more compliant with GDPR by upgrading to MonsterInsights Pro and enable our EU Privacy addon."
 msgstr ""
 
@@ -933,7 +933,7 @@ msgid "Please ask your webmaster to enable this addon."
 msgstr ""
 
 #: includes/admin/reports/overview.php:34
-#: languages/vue.php:570
+#: languages/vue.php:577
 msgid "Overview"
 msgstr ""
 
@@ -1058,40 +1058,40 @@ msgid "Please upload a file to import"
 msgstr ""
 
 #: includes/admin/routes.php:885
-#: includes/admin/routes.php:1219
+#: includes/admin/routes.php:1223
 msgid "You can't view MonsterInsights reports because you are not licensed."
 msgstr ""
 
 #: includes/admin/routes.php:886
-#: includes/admin/routes.php:1220
+#: includes/admin/routes.php:1224
 msgid "Add your license"
 msgstr ""
 
 #: includes/admin/routes.php:893
-#: includes/admin/routes.php:1227
+#: includes/admin/routes.php:1231
 msgid "You can't view MonsterInsights reports due to license key errors."
 msgstr ""
 
 #: includes/admin/routes.php:901
-#: includes/admin/routes.php:1235
+#: includes/admin/routes.php:1239
 msgid "You must authenticate with MonsterInsights before you can view reports."
 msgstr ""
 
 #: includes/admin/routes.php:907
-#: includes/admin/routes.php:1241
+#: includes/admin/routes.php:1245
 msgid "Unknown report. Try refreshing and retrying. Contact support if this issue persists."
 msgstr ""
 
-#: includes/admin/routes.php:955
-#: includes/admin/routes.php:1289
+#: includes/admin/routes.php:959
+#: includes/admin/routes.php:1293
 msgid "We encountered an error when fetching the report data."
 msgstr ""
 
-#: includes/admin/routes.php:975
+#: includes/admin/routes.php:979
 msgid "Missing plugin name."
 msgstr ""
 
-#: includes/admin/routes.php:1119
+#: includes/admin/routes.php:1123
 msgid "Homepage"
 msgstr ""
 
@@ -1429,7 +1429,7 @@ msgid "Question"
 msgstr ""
 
 #: includes/gutenberg/headline-tool/headline-tool.php:290
-#: languages/vue.php:522
+#: languages/vue.php:530
 msgid "General"
 msgstr ""
 
@@ -3659,12 +3659,12 @@ msgid "United States"
 msgstr ""
 
 #: includes/helpers.php:385
-#: includes/helpers.php:1741
+#: includes/helpers.php:1770
 msgid "Canada"
 msgstr ""
 
 #: includes/helpers.php:386
-#: includes/helpers.php:1786
+#: includes/helpers.php:1815
 msgid "United Kingdom"
 msgstr ""
 
@@ -3705,7 +3705,7 @@ msgid "Antarctica"
 msgstr ""
 
 #: includes/helpers.php:396
-#: includes/helpers.php:1734
+#: includes/helpers.php:1763
 msgid "Antigua and Barbuda"
 msgstr ""
 
@@ -3722,7 +3722,7 @@ msgid "Aruba"
 msgstr ""
 
 #: includes/helpers.php:400
-#: includes/helpers.php:1735
+#: includes/helpers.php:1764
 msgid "Australia"
 msgstr ""
 
@@ -3747,7 +3747,7 @@ msgid "Bangladesh"
 msgstr ""
 
 #: includes/helpers.php:406
-#: includes/helpers.php:1736
+#: includes/helpers.php:1765
 msgid "Barbados"
 msgstr ""
 
@@ -3760,7 +3760,7 @@ msgid "Belgium"
 msgstr ""
 
 #: includes/helpers.php:409
-#: includes/helpers.php:1737
+#: includes/helpers.php:1766
 msgid "Belize"
 msgstr ""
 
@@ -3789,7 +3789,7 @@ msgid "Bosnia and Herzegovina"
 msgstr ""
 
 #: includes/helpers.php:416
-#: includes/helpers.php:1738
+#: includes/helpers.php:1767
 msgid "Botswana"
 msgstr ""
 
@@ -3818,7 +3818,7 @@ msgid "Burkina Faso"
 msgstr ""
 
 #: includes/helpers.php:423
-#: includes/helpers.php:1739
+#: includes/helpers.php:1768
 msgid "Burundi"
 msgstr ""
 
@@ -3827,7 +3827,7 @@ msgid "Cambodia"
 msgstr ""
 
 #: includes/helpers.php:425
-#: includes/helpers.php:1740
+#: includes/helpers.php:1769
 msgid "Cameroon"
 msgstr ""
 
@@ -3920,7 +3920,7 @@ msgid "Djibouti"
 msgstr ""
 
 #: includes/helpers.php:448
-#: includes/helpers.php:1742
+#: includes/helpers.php:1771
 msgid "Dominica"
 msgstr ""
 
@@ -3969,7 +3969,7 @@ msgid "Faroe Islands"
 msgstr ""
 
 #: includes/helpers.php:460
-#: includes/helpers.php:1743
+#: includes/helpers.php:1772
 msgid "Fiji"
 msgstr ""
 
@@ -3998,7 +3998,7 @@ msgid "Gabon"
 msgstr ""
 
 #: includes/helpers.php:467
-#: includes/helpers.php:1746
+#: includes/helpers.php:1775
 msgid "Gambia"
 msgstr ""
 
@@ -4015,7 +4015,7 @@ msgid "Greece"
 msgstr ""
 
 #: includes/helpers.php:471
-#: includes/helpers.php:1747
+#: includes/helpers.php:1776
 msgid "Ghana"
 msgstr ""
 
@@ -4028,7 +4028,7 @@ msgid "Greenland"
 msgstr ""
 
 #: includes/helpers.php:474
-#: includes/helpers.php:1744
+#: includes/helpers.php:1773
 msgid "Grenada"
 msgstr ""
 
@@ -4057,7 +4057,7 @@ msgid "Guinea-Bissau"
 msgstr ""
 
 #: includes/helpers.php:481
-#: includes/helpers.php:1745
+#: includes/helpers.php:1774
 msgid "Guyana"
 msgstr ""
 
@@ -4090,7 +4090,7 @@ msgid "Iceland"
 msgstr ""
 
 #: includes/helpers.php:489
-#: includes/helpers.php:1749
+#: includes/helpers.php:1778
 msgid "India"
 msgstr ""
 
@@ -4107,7 +4107,7 @@ msgid "Iraq"
 msgstr ""
 
 #: includes/helpers.php:493
-#: includes/helpers.php:1748
+#: includes/helpers.php:1777
 msgid "Ireland"
 msgstr ""
 
@@ -4124,7 +4124,7 @@ msgid "Italy"
 msgstr ""
 
 #: includes/helpers.php:497
-#: includes/helpers.php:1750
+#: includes/helpers.php:1779
 msgid "Jamaica"
 msgstr ""
 
@@ -4145,12 +4145,12 @@ msgid "Kazakhstan"
 msgstr ""
 
 #: includes/helpers.php:502
-#: includes/helpers.php:1751
+#: includes/helpers.php:1780
 msgid "Kenya"
 msgstr ""
 
 #: includes/helpers.php:503
-#: includes/helpers.php:1752
+#: includes/helpers.php:1781
 msgid "Kiribati"
 msgstr ""
 
@@ -4175,12 +4175,12 @@ msgid "Lebanon"
 msgstr ""
 
 #: includes/helpers.php:509
-#: includes/helpers.php:1753
+#: includes/helpers.php:1782
 msgid "Lesotho"
 msgstr ""
 
 #: includes/helpers.php:510
-#: includes/helpers.php:1754
+#: includes/helpers.php:1783
 msgid "Liberia"
 msgstr ""
 
@@ -4213,7 +4213,7 @@ msgid "Madagascar"
 msgstr ""
 
 #: includes/helpers.php:518
-#: includes/helpers.php:1755
+#: includes/helpers.php:1784
 msgid "Malawi"
 msgstr ""
 
@@ -4230,12 +4230,12 @@ msgid "Mali"
 msgstr ""
 
 #: includes/helpers.php:522
-#: includes/helpers.php:1756
+#: includes/helpers.php:1785
 msgid "Malta"
 msgstr ""
 
 #: includes/helpers.php:523
-#: includes/helpers.php:1757
+#: includes/helpers.php:1786
 msgid "Marshall Islands"
 msgstr ""
 
@@ -4248,7 +4248,7 @@ msgid "Mauritania"
 msgstr ""
 
 #: includes/helpers.php:526
-#: includes/helpers.php:1758
+#: includes/helpers.php:1787
 msgid "Mauritius"
 msgstr ""
 
@@ -4261,7 +4261,7 @@ msgid "Mexico"
 msgstr ""
 
 #: includes/helpers.php:529
-#: includes/helpers.php:1759
+#: includes/helpers.php:1788
 msgid "Micronesia"
 msgstr ""
 
@@ -4298,12 +4298,12 @@ msgid "Myanmar"
 msgstr ""
 
 #: includes/helpers.php:538
-#: includes/helpers.php:1761
+#: includes/helpers.php:1790
 msgid "Namibia"
 msgstr ""
 
 #: includes/helpers.php:539
-#: includes/helpers.php:1762
+#: includes/helpers.php:1791
 msgid "Nauru"
 msgstr ""
 
@@ -4324,7 +4324,7 @@ msgid "New Caledonia"
 msgstr ""
 
 #: includes/helpers.php:544
-#: includes/helpers.php:1760
+#: includes/helpers.php:1789
 msgid "New Zealand"
 msgstr ""
 
@@ -4337,7 +4337,7 @@ msgid "Niger"
 msgstr ""
 
 #: includes/helpers.php:547
-#: includes/helpers.php:1763
+#: includes/helpers.php:1792
 msgid "Nigeria"
 msgstr ""
 
@@ -4366,12 +4366,12 @@ msgid "Oman"
 msgstr ""
 
 #: includes/helpers.php:554
-#: includes/helpers.php:1764
+#: includes/helpers.php:1793
 msgid "Pakistan"
 msgstr ""
 
 #: includes/helpers.php:555
-#: includes/helpers.php:1765
+#: includes/helpers.php:1794
 msgid "Palau"
 msgstr ""
 
@@ -4384,7 +4384,7 @@ msgid "Panama"
 msgstr ""
 
 #: includes/helpers.php:558
-#: includes/helpers.php:1766
+#: includes/helpers.php:1795
 msgid "Papua New Guinea"
 msgstr ""
 
@@ -4397,7 +4397,7 @@ msgid "Peru"
 msgstr ""
 
 #: includes/helpers.php:561
-#: includes/helpers.php:1767
+#: includes/helpers.php:1796
 msgid "Philippines"
 msgstr ""
 
@@ -4438,7 +4438,7 @@ msgid "Russian Federation"
 msgstr ""
 
 #: includes/helpers.php:571
-#: includes/helpers.php:1768
+#: includes/helpers.php:1797
 msgid "Rwanda"
 msgstr ""
 
@@ -4495,17 +4495,17 @@ msgid "Serbia"
 msgstr ""
 
 #: includes/helpers.php:585
-#: includes/helpers.php:1775
+#: includes/helpers.php:1804
 msgid "Seychelles"
 msgstr ""
 
 #: includes/helpers.php:586
-#: includes/helpers.php:1776
+#: includes/helpers.php:1805
 msgid "Sierra Leone"
 msgstr ""
 
 #: includes/helpers.php:587
-#: includes/helpers.php:1769
+#: includes/helpers.php:1798
 msgid "Singapore"
 msgstr ""
 
@@ -4518,7 +4518,7 @@ msgid "Slovenia"
 msgstr ""
 
 #: includes/helpers.php:590
-#: includes/helpers.php:1777
+#: includes/helpers.php:1806
 msgid "Solomon Islands"
 msgstr ""
 
@@ -4527,7 +4527,7 @@ msgid "Somalia"
 msgstr ""
 
 #: includes/helpers.php:592
-#: includes/helpers.php:1778
+#: includes/helpers.php:1807
 msgid "South Africa"
 msgstr ""
 
@@ -4540,7 +4540,7 @@ msgid "South Korea"
 msgstr ""
 
 #: includes/helpers.php:595
-#: includes/helpers.php:1779
+#: includes/helpers.php:1808
 msgid "South Sudan"
 msgstr ""
 
@@ -4553,7 +4553,7 @@ msgid "Sri Lanka"
 msgstr ""
 
 #: includes/helpers.php:598
-#: includes/helpers.php:1780
+#: includes/helpers.php:1809
 msgid "Sudan"
 msgstr ""
 
@@ -4566,7 +4566,7 @@ msgid "Svalbard and Jan Mayen Islands"
 msgstr ""
 
 #: includes/helpers.php:601
-#: includes/helpers.php:1773
+#: includes/helpers.php:1802
 msgid "Swaziland"
 msgstr ""
 
@@ -4591,7 +4591,7 @@ msgid "Tajikistan"
 msgstr ""
 
 #: includes/helpers.php:607
-#: includes/helpers.php:1783
+#: includes/helpers.php:1812
 msgid "Tanzania"
 msgstr ""
 
@@ -4612,12 +4612,12 @@ msgid "Tokelau"
 msgstr ""
 
 #: includes/helpers.php:612
-#: includes/helpers.php:1784
+#: includes/helpers.php:1813
 msgid "Tonga"
 msgstr ""
 
 #: includes/helpers.php:613
-#: includes/helpers.php:1781
+#: includes/helpers.php:1810
 msgid "Trinidad and Tobago"
 msgstr ""
 
@@ -4638,12 +4638,12 @@ msgid "Turks and Caicos Islands"
 msgstr ""
 
 #: includes/helpers.php:618
-#: includes/helpers.php:1785
+#: includes/helpers.php:1814
 msgid "Tuvalu"
 msgstr ""
 
 #: includes/helpers.php:619
-#: includes/helpers.php:1788
+#: includes/helpers.php:1817
 msgid "Uganda"
 msgstr ""
 
@@ -4668,7 +4668,7 @@ msgid "Uzbekistan"
 msgstr ""
 
 #: includes/helpers.php:625
-#: includes/helpers.php:1789
+#: includes/helpers.php:1818
 msgid "Vanuatu"
 msgstr ""
 
@@ -4705,12 +4705,12 @@ msgid "Yemen"
 msgstr ""
 
 #: includes/helpers.php:634
-#: includes/helpers.php:1790
+#: includes/helpers.php:1819
 msgid "Zambia"
 msgstr ""
 
 #: includes/helpers.php:635
-#: includes/helpers.php:1791
+#: includes/helpers.php:1820
 msgid "Zimbabwe"
 msgstr ""
 
@@ -4728,27 +4728,27 @@ msgstr ""
 msgid "%1$sWe have detected multiple tracking codes%2$s! You should remove non-MonsterInsights ones. If you need help finding them please %3$sread this article%4$s."
 msgstr ""
 
-#: includes/helpers.php:1770
+#: includes/helpers.php:1799
 msgid "St Kitts and Nevis"
 msgstr ""
 
-#: includes/helpers.php:1771
+#: includes/helpers.php:1800
 msgid "St Lucia"
 msgstr ""
 
-#: includes/helpers.php:1772
+#: includes/helpers.php:1801
 msgid "St Vincent and the Grenadines"
 msgstr ""
 
-#: includes/helpers.php:1774
+#: includes/helpers.php:1803
 msgid "Samoa"
 msgstr ""
 
-#: includes/helpers.php:1782
+#: includes/helpers.php:1811
 msgid "The Bahamas"
 msgstr ""
 
-#: includes/helpers.php:1787
+#: includes/helpers.php:1816
 msgid "United States of America"
 msgstr ""
 
@@ -4829,7 +4829,7 @@ msgid "Theme"
 msgstr ""
 
 #: languages/gutenberg.php:77
-#: languages/vue.php:506
+#: languages/vue.php:512
 msgid "Inline Popular Posts"
 msgstr ""
 
@@ -4866,7 +4866,7 @@ msgid "Comment Color"
 msgstr ""
 
 #: languages/gutenberg.php:107
-#: languages/vue.php:2997
+#: languages/vue.php:2988
 msgid "Wide-Layout Options"
 msgstr ""
 
@@ -4875,12 +4875,12 @@ msgid "Choose Layout"
 msgstr ""
 
 #: languages/gutenberg.php:113
-#: languages/vue.php:3000
+#: languages/vue.php:2991
 msgid "Adjust the number of columns displayed when the widget is placed in a wide container."
 msgstr ""
 
 #: languages/gutenberg.php:116
-#: languages/vue.php:3021
+#: languages/vue.php:3012
 msgid "Post Count"
 msgstr ""
 
@@ -4889,7 +4889,7 @@ msgid "Number of posts displayed."
 msgstr ""
 
 #: languages/gutenberg.php:122
-#: languages/vue.php:3003
+#: languages/vue.php:2994
 msgid "Display Options"
 msgstr ""
 
@@ -4902,7 +4902,7 @@ msgid "Display Widget Title"
 msgstr ""
 
 #: languages/gutenberg.php:131
-#: languages/vue.php:2809
+#: languages/vue.php:2804
 msgid "Widget Title"
 msgstr ""
 
@@ -4911,17 +4911,17 @@ msgid "Only Show Posts From These Categories"
 msgstr ""
 
 #: languages/gutenberg.php:137
-#: languages/vue.php:3009
+#: languages/vue.php:3000
 msgid "Display Author"
 msgstr ""
 
 #: languages/gutenberg.php:140
-#: languages/vue.php:3012
+#: languages/vue.php:3003
 msgid "Display Date"
 msgstr ""
 
 #: languages/gutenberg.php:143
-#: languages/vue.php:3015
+#: languages/vue.php:3006
 msgid "Display Comments"
 msgstr ""
 
@@ -5142,7 +5142,7 @@ msgid "Goal: "
 msgstr ""
 
 #: languages/gutenberg.php:324
-#: languages/vue.php:870
+#: languages/vue.php:868
 msgid "Headline Analyzer"
 msgstr ""
 
@@ -5592,75 +5592,75 @@ msgstr ""
 msgid "Custom Dimensions"
 msgstr ""
 
-#: languages/vue.php:343
+#: languages/vue.php:342
 msgid "Author Tracking"
 msgstr ""
 
-#: languages/vue.php:346
+#: languages/vue.php:345
 msgid "Google Optimize"
 msgstr ""
 
-#: languages/vue.php:349
+#: languages/vue.php:348
 msgid "Category / Tags Tracking"
 msgstr ""
 
-#: languages/vue.php:352
+#: languages/vue.php:351
 msgid "WooCommerce"
 msgstr ""
 
-#: languages/vue.php:355
+#: languages/vue.php:354
 msgid "Easy Digital Downloads"
 msgstr ""
 
-#: languages/vue.php:358
+#: languages/vue.php:357
 msgid "MemberPress"
 msgstr ""
 
-#: languages/vue.php:361
+#: languages/vue.php:360
 msgid "LifterLMS"
 msgstr ""
 
 #. Translators: Current PHP version and recommended PHP version.
-#: languages/vue.php:365
+#: languages/vue.php:364
 msgid "MonsterInsights has detected that your site is running an outdated, insecure version of PHP (%1$s), which could be putting your site at risk for being hacked. WordPress stopped supporting your PHP version in April, 2019. Updating to the recommended version (PHP %2$s) only takes a few minutes and will make your website significantly faster and more secure."
 msgstr ""
 
 #. Translators: Current WordPress version.
-#: languages/vue.php:369
+#: languages/vue.php:368
 msgid "MonsterInsights has detected that your site is running an outdated version of WordPress (%s). MonsterInsights will stop supporting WordPress versions lower than 4.9 in 2020.  Updating WordPress takes just a few minutes and will also solve many bugs that exist in your WordPress install."
 msgstr ""
 
-#: languages/vue.php:372
+#: languages/vue.php:371
 msgid "Yikes! PHP Update Required"
 msgstr ""
 
 #. Translators: Current PHP version and recommended PHP version.
-#: languages/vue.php:376
+#: languages/vue.php:375
 msgid "MonsterInsights has detected that your site is running an outdated, insecure version of PHP (%1$s), which could be putting your site at risk for being hacked. Updating to the recommended version (PHP %2$s) only takes a few minutes and will make your website significantly faster and more secure."
 msgstr ""
 
-#: languages/vue.php:379
+#: languages/vue.php:378
 msgid "Learn more about updating PHP"
 msgstr ""
 
-#: languages/vue.php:382
+#: languages/vue.php:381
 msgid "Yikes! WordPress Update Required"
 msgstr ""
 
 #. Translators: Current WordPress version.
-#: languages/vue.php:386
+#: languages/vue.php:385
 msgid "MonsterInsights has detected that your site is running an outdated version of WordPress (%s). Updating WordPress takes just a few minutes and will also solve many bugs that exist in your WordPress install."
 msgstr ""
 
-#: languages/vue.php:389
+#: languages/vue.php:388
 msgid "Learn more about updating WordPress"
 msgstr ""
 
-#: languages/vue.php:392
+#: languages/vue.php:391
 msgid "MonsterInsights encountered an error loading your report data"
 msgstr ""
 
-#: languages/vue.php:395
+#: languages/vue.php:394
 msgid "There is an issue with your Google Account authentication. Please use the button below to fix it by re-authenticating."
 msgstr ""
 
@@ -5668,341 +5668,341 @@ msgstr ""
 msgid "Reconnect MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:401
+#: languages/vue.php:402
 msgid "Re-Authenticating"
 msgstr ""
 
-#: languages/vue.php:404
+#: languages/vue.php:406
 msgid "Ok"
 msgstr ""
 
-#: languages/vue.php:407
+#: languages/vue.php:409
 msgid "See Quick Links"
 msgstr ""
 
-#: languages/vue.php:410
+#: languages/vue.php:412
 msgid "Suggest a Feature"
 msgstr ""
 
-#: languages/vue.php:413
+#: languages/vue.php:415
 msgid "Join Our Community"
 msgstr ""
 
-#: languages/vue.php:416
+#: languages/vue.php:418
 msgid "Support & Docs"
 msgstr ""
 
-#: languages/vue.php:419
+#: languages/vue.php:421
 msgid "Upgrade to Pro &#187;"
 msgstr ""
 
 #. Translators: Placeholder is replaced with WPForms.
-#: languages/vue.php:423
+#: languages/vue.php:425
 msgid "Recommended Plugin: %s"
 msgstr ""
 
-#: languages/vue.php:426
+#: languages/vue.php:430
 msgid "Install"
 msgstr ""
 
-#: languages/vue.php:429
+#: languages/vue.php:435
 msgid "Activate"
 msgstr ""
 
-#: languages/vue.php:435
+#: languages/vue.php:443
 msgid "Powered by MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:438
+#: languages/vue.php:446
 #: lite/includes/admin/wp-site-health.php:253
 msgid "View Reports"
 msgstr ""
 
-#: languages/vue.php:441
+#: languages/vue.php:449
 msgid "Congratulations!"
 msgstr ""
 
 #. Translators: Add link to YouTube video and Onboarding Wizard.
-#: languages/vue.php:445
+#: languages/vue.php:453
 msgid "MonsterInsights makes it easy to connect your website with Google Analytics and see all important website stats right inside your WordPress dashboard. In order to setup website analytics, please take a look at our %1$sGetting started video%2$s or use our %3$s to get you quickly set up."
 msgstr ""
 
 #. Translators: Add link to YouTube video and Onboarding Wizard.
-#: languages/vue.php:449
+#: languages/vue.php:457
 msgid "Onboarding Wizard"
 msgstr ""
 
-#: languages/vue.php:452
+#: languages/vue.php:460
 msgid "You are now connected with MonsterInsights. We make it effortless for you to implement Google Analytics tracking and see the stats that matter, right inside the WordPress dashboard."
 msgstr ""
 
-#: languages/vue.php:455
+#: languages/vue.php:463
 msgid "Save Changes"
 msgstr ""
 
-#: languages/vue.php:458
+#: languages/vue.php:466
 msgid "Inbox"
 msgstr ""
 
-#: languages/vue.php:461
+#: languages/vue.php:469
 msgid "Back to Inbox"
 msgstr ""
 
-#: languages/vue.php:464
+#: languages/vue.php:472
 msgid "View Dismissed"
 msgstr ""
 
-#: languages/vue.php:467
+#: languages/vue.php:475
 msgid "Notifications"
 msgstr ""
 
-#: languages/vue.php:470
+#: languages/vue.php:478
 msgid "Dismiss All"
 msgstr ""
 
-#: languages/vue.php:473
+#: languages/vue.php:481
 msgid "Dismissed"
 msgstr ""
 
-#: languages/vue.php:476
+#: languages/vue.php:484
 msgid "No Notifications"
 msgstr ""
 
-#: languages/vue.php:488
+#: languages/vue.php:496
 msgid "Import Export"
 msgstr ""
 
-#: languages/vue.php:491
+#: languages/vue.php:499
 msgid "PrettyLinks Integration"
 msgstr ""
 
-#: languages/vue.php:499
+#: languages/vue.php:505
 msgid "Getting Started"
 msgstr ""
 
-#: languages/vue.php:503
+#: languages/vue.php:508
 msgid "Lite vs Pro"
 msgstr ""
 
-#: languages/vue.php:509
+#: languages/vue.php:516
 msgid "Popular Posts Widget"
 msgstr ""
 
-#: languages/vue.php:512
+#: languages/vue.php:520
 msgid "Popular Products"
 msgstr ""
 
-#: languages/vue.php:518
+#: languages/vue.php:526
 msgid "Sub menu item for WooCommerce Analytics"
 msgstr ""
 
-#: languages/vue.php:527
+#: languages/vue.php:534
 msgid "Engagement"
 msgstr ""
 
-#: languages/vue.php:530
+#: languages/vue.php:538
 #: lite/includes/admin/reports/report-ecommerce.php:22
 msgid "eCommerce"
 msgstr ""
 
-#: languages/vue.php:534
+#: languages/vue.php:542
 msgid "Publisher"
 msgstr ""
 
-#: languages/vue.php:538
+#: languages/vue.php:546
 msgid "Conversions"
 msgstr ""
 
-#: languages/vue.php:542
+#: languages/vue.php:550
 msgid "Advanced"
 msgstr ""
 
-#: languages/vue.php:545
+#: languages/vue.php:553
 msgid "URL Builder"
 msgstr ""
 
-#: languages/vue.php:548
+#: languages/vue.php:556
 msgid "MonsterInsights Addons"
 msgstr ""
 
-#: languages/vue.php:551
+#: languages/vue.php:559
 msgid "Search Addons"
 msgstr ""
 
-#: languages/vue.php:554
+#: languages/vue.php:562
 msgid "Exit Setup"
 msgstr ""
 
-#: languages/vue.php:557
+#: languages/vue.php:565
 msgid "You must connect with MonsterInsights before you can view reports."
 msgstr ""
 
-#: languages/vue.php:560
+#: languages/vue.php:568
 msgid "MonsterInsights makes it \"effortless\" for you to connect your site with Google Analytics and see reports right here in the WordPress dashboard."
 msgstr ""
 
-#: languages/vue.php:563
+#: languages/vue.php:571
 msgid "Launch Setup Wizard"
 msgstr ""
 
-#: languages/vue.php:566
+#: languages/vue.php:574
 msgid "Please ask your webmaster to connect MonsterInsights to Google Analytics."
 msgstr ""
 
-#: languages/vue.php:573
+#: languages/vue.php:580
 #: lite/includes/admin/reports/report-publisher.php:22
 msgid "Publishers"
 msgstr ""
 
-#: languages/vue.php:576
+#: languages/vue.php:583
 #: lite/includes/admin/reports/report-queries.php:22
 msgid "Search Console"
 msgstr ""
 
-#: languages/vue.php:579
+#: languages/vue.php:586
 #: lite/includes/admin/reports/report-dimensions.php:22
 msgid "Dimensions"
 msgstr ""
 
-#: languages/vue.php:582
+#: languages/vue.php:589
 #: lite/includes/admin/reports/report-forms.php:22
 msgid "Forms"
 msgstr ""
 
-#: languages/vue.php:585
+#: languages/vue.php:592
 msgid "Real-Time"
 msgstr ""
 
-#: languages/vue.php:589
+#: languages/vue.php:596
 msgid "Site Speed"
 msgstr ""
 
-#: languages/vue.php:592
+#: languages/vue.php:599
 msgid "2020 Year in Review"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:596
+#: languages/vue.php:603
 msgid "Can't load report data. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:599
+#: languages/vue.php:606
 msgid "Error loading report data"
 msgstr ""
 
-#: languages/vue.php:602
+#: languages/vue.php:609
 msgid "Publishers Report"
 msgstr ""
 
-#: languages/vue.php:605
+#: languages/vue.php:612
 msgid "eCommerce Report"
 msgstr ""
 
-#: languages/vue.php:609
+#: languages/vue.php:615
 msgid "Search Console Report"
 msgstr ""
 
-#: languages/vue.php:612
+#: languages/vue.php:618
 msgid "Dimensions Report"
 msgstr ""
 
-#: languages/vue.php:615
+#: languages/vue.php:621
 msgid "Forms Report"
 msgstr ""
 
-#: languages/vue.php:618
+#: languages/vue.php:624
 msgid "Real-Time Report"
 msgstr ""
 
-#: languages/vue.php:621
+#: languages/vue.php:627
 msgid "Site Speed Report"
 msgstr ""
 
-#: languages/vue.php:625
+#: languages/vue.php:630
 msgid "Time to Purchase"
 msgstr ""
 
-#: languages/vue.php:628
+#: languages/vue.php:633
 msgid "This list shows how many days from first visit it took users to purchase products from your site."
 msgstr ""
 
-#: languages/vue.php:632
+#: languages/vue.php:636
 msgid "Sessions to Purchase"
 msgstr ""
 
-#: languages/vue.php:635
+#: languages/vue.php:639
 msgid "This list shows the number of sessions it took users before they purchased a product from your website."
 msgstr ""
 
-#: languages/vue.php:638
+#: languages/vue.php:642
 msgid "New Customers"
 msgstr ""
 
-#: languages/vue.php:641
+#: languages/vue.php:645
 msgid "This list shows the percentage of new customers who purchased a product from your website."
 msgstr ""
 
-#: languages/vue.php:644
+#: languages/vue.php:648
 msgid "Abandoned Checkouts"
 msgstr ""
 
-#: languages/vue.php:647
+#: languages/vue.php:651
 msgid "This list shows the percentage of carts that never went through the checkout process."
 msgstr ""
 
-#: languages/vue.php:650
+#: languages/vue.php:654
 msgid "Top Posts/Pages"
 msgstr ""
 
-#: languages/vue.php:653
+#: languages/vue.php:657
 msgid "This list shows the most viewed posts and pages on your website."
 msgstr ""
 
-#: languages/vue.php:656
+#: languages/vue.php:660
 msgid "New vs. Returning Visitors"
 msgstr ""
 
-#: languages/vue.php:659
+#: languages/vue.php:663
 msgid "This graph shows what percent of your user sessions come from new versus repeat visitors."
 msgstr ""
 
-#: languages/vue.php:662
+#: languages/vue.php:666
 msgid "Device Breakdown"
 msgstr ""
 
-#: languages/vue.php:665
+#: languages/vue.php:669
 msgid "This graph shows what percent of your visitor sessions are done using a traditional computer or laptop, tablet or mobile device to view your site."
 msgstr ""
 
-#: languages/vue.php:669
+#: languages/vue.php:672
 msgid "Top Landing Pages"
 msgstr ""
 
-#: languages/vue.php:672
+#: languages/vue.php:675
 msgid "This list shows the top pages users first land on when visiting your website."
 msgstr ""
 
-#: languages/vue.php:676
+#: languages/vue.php:678
 msgid "Top Exit Pages"
 msgstr ""
 
-#: languages/vue.php:679
+#: languages/vue.php:681
 msgid "This list shows the top pages users exit your website from."
 msgstr ""
 
-#: languages/vue.php:683
+#: languages/vue.php:684
 msgid "Top Outbound Links"
 msgstr ""
 
-#: languages/vue.php:686
+#: languages/vue.php:687
 msgid "This list shows the top links clicked on your website that go to another website."
 msgstr ""
 
-#: languages/vue.php:689
+#: languages/vue.php:690
 msgid "Top Affiliate Links"
 msgstr ""
 
-#: languages/vue.php:692
+#: languages/vue.php:693
 msgid "This list shows the top affiliate links your visitors clicked on."
 msgstr ""
 
@@ -6014,362 +6014,362 @@ msgstr ""
 msgid "This list shows the download links your visitors clicked the most."
 msgstr ""
 
-#: languages/vue.php:703
+#: languages/vue.php:702
 msgid "Top Products"
 msgstr ""
 
-#: languages/vue.php:706
+#: languages/vue.php:705
 msgid "This list shows the top selling products on your website."
 msgstr ""
 
-#: languages/vue.php:710
+#: languages/vue.php:708
 msgid "Top Conversion Sources"
 msgstr ""
 
-#: languages/vue.php:713
+#: languages/vue.php:711
 msgid "This list shows the top referral websites in terms of product revenue."
 msgstr ""
 
-#: languages/vue.php:716
+#: languages/vue.php:714
 msgid "Total Add/Remove"
 msgstr ""
 
 #. Translators: Adds a link to documentation.
-#: languages/vue.php:730
+#: languages/vue.php:728
 msgid "In order for the MonsterInsights Google AMP addon to work properly, please ask your webmaster to install the WordPress AMP plugin by Automattic. %1$sLearn More%2$s"
 msgstr ""
 
 #. Translators: Adds link to activate/install plugin and documentation.
-#: languages/vue.php:734
+#: languages/vue.php:732
 msgid "In order for the MonsterInsights Google AMP addon to work properly, you need to install the WordPress AMP plugin by Automattic. %1$s%2$s Plugin%3$s | %4$sLearn More%5$s"
 msgstr ""
 
 #. Translators: Adds a link to documentation.
-#: languages/vue.php:738
+#: languages/vue.php:736
 msgid "In order for the MonsterInsights Instant Articles addon to work properly, please ask your webmaster to install the Instant Articles for WP plugin by Automattic version 3.3.5 or newer. %1$sLearn More%2$s"
 msgstr ""
 
 #. Translators: Adds link to activate/install plugin and documentation.
-#: languages/vue.php:742
+#: languages/vue.php:740
 msgid "In order for the MonsterInsights Instant Articles addon to work properly, you need to install the Instant Articles for WP plugin by Automattic version 3.3.5 or newer. %1$s%2$s Plugin%3$s | %4$sLearn More%5$s"
 msgstr ""
 
-#: languages/vue.php:745
+#: languages/vue.php:743
 msgid "GDPR Guide"
 msgstr ""
 
-#: languages/vue.php:748
+#: languages/vue.php:746
 msgid "Compliance with European data laws including GDPR can be confusing and time-consuming. In order to help MonsterInsights users comply with these laws, we’ve created an addon that automates a lot of the necessary configuration changes for you. "
 msgstr ""
 
-#: languages/vue.php:751
+#: languages/vue.php:749
 msgid "How to Install and Activate MonsterInsights Addons"
 msgstr ""
 
-#: languages/vue.php:754
+#: languages/vue.php:752
 msgid "The process for installing and activating addons is quick and easy after you install the MonsterInsights plugin. In this guide we’ll walk you through the process, step by step."
 msgstr ""
 
-#: languages/vue.php:757
+#: languages/vue.php:755
 msgid "Enabling eCommerce Tracking and Reports"
 msgstr ""
 
-#: languages/vue.php:760
+#: languages/vue.php:758
 msgid "Want to track your eCommerce sales data for your WooCommerce, MemberPress, or Easy Digital Downloads store with MonsterInsights? In this guide, we’ll show you how to enable eCommerce tracking in Google Analytics in just a few clicks."
 msgstr ""
 
-#: languages/vue.php:763
+#: languages/vue.php:761
 msgid "Read Documentation"
 msgstr ""
 
-#: languages/vue.php:766
+#: languages/vue.php:764
 msgid "Getting Started with MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:769
+#: languages/vue.php:767
 msgid "MonsterInsights is the easiest analytics solution on the market to get started with, as we walk you through exactly what you need to do, in plain english, using our 3 minute setup wizard."
 msgstr ""
 
-#: languages/vue.php:772
+#: languages/vue.php:770
 msgid "To begin with, we’ll get your site authorized with Google Analytics, so we can start tracking and generating reports for you right away."
 msgstr ""
 
-#: languages/vue.php:775
+#: languages/vue.php:773
 msgid "In no time at all, and after just a few clicks, you'll have setup the most powerful Google Analytics tracking available for WordPress. It's easy to double your traffic and sales when you know exactly how people find and use your website. Let's get started!."
 msgstr ""
 
-#: languages/vue.php:778
+#: languages/vue.php:776
 msgid "Launch the wizard!"
 msgstr ""
 
-#: languages/vue.php:781
+#: languages/vue.php:779
 msgid "Get MonsterInsights Pro and Unlock all the Powerful Features"
 msgstr ""
 
 #. Translators: Makes text bold.
-#: languages/vue.php:785
+#: languages/vue.php:783
 msgid "Thanks for being a loyal MonsterInsights Lite user. %1$sUpgrade to MonsterInsights Pro%2$s to unlock all the awesome features and experience why MonsterInsights is consistently rated the best Google Analytics solution for WordPress."
 msgstr ""
 
-#: languages/vue.php:788
+#: languages/vue.php:786
 msgid "Universal Tracking across devices and campaigns with just a few clicks."
 msgstr ""
 
-#: languages/vue.php:791
+#: languages/vue.php:789
 msgid "See your website analytics reports inside the WordPress dashboard"
 msgstr ""
 
-#: languages/vue.php:794
+#: languages/vue.php:792
 msgid "Get real-time stats right inside WordPress"
 msgstr ""
 
-#: languages/vue.php:797
+#: languages/vue.php:795
 msgid "1-click Google Analytics Enhanced eCommerce tracking"
 msgstr ""
 
-#: languages/vue.php:800
+#: languages/vue.php:798
 msgid "Get detailed stats for each post and page."
 msgstr ""
 
-#: languages/vue.php:803
+#: languages/vue.php:801
 msgid "Automatically track clicks on your affiliate links and ads."
 msgstr ""
 
-#: languages/vue.php:806
+#: languages/vue.php:804
 msgid "Make Google Analytics GDPR compliant automatically"
 msgstr ""
 
-#: languages/vue.php:809
+#: languages/vue.php:807
 msgid "Setup tracking for authors, categories, tags, custom post types, users and more"
 msgstr ""
 
-#: languages/vue.php:812
+#: languages/vue.php:810
 msgid "Enable Google Optimize for A/B testing, adjust sample speed & sample rate."
 msgstr ""
 
-#: languages/vue.php:815
+#: languages/vue.php:813
 msgid "More advanced features"
 msgstr ""
 
-#: languages/vue.php:818
+#: languages/vue.php:816
 msgid "Get MonsterInsights Pro Today and Unlock all the Powerful Features"
 msgstr ""
 
 #. Translators: Makes text green.
-#: languages/vue.php:822
+#: languages/vue.php:820
 msgid "Bonus: MonsterInsights Lite users get %1$s50%% off regular price%2$s, automatically applied at checkout."
 msgstr ""
 
-#: languages/vue.php:825
+#: languages/vue.php:823
 msgid "How to Connect to Google Analytics"
 msgstr ""
 
-#: languages/vue.php:828
+#: languages/vue.php:826
 msgid "After you install MonsterInsights, you’ll need to connect your WordPress site with your Google Analytics account. MonsterInsights makes the process easy, with no coding required."
 msgstr ""
 
-#: languages/vue.php:831
+#: languages/vue.php:829
 msgid "Guide and Checklist for Advanced Insights"
 msgstr ""
 
-#: languages/vue.php:834
+#: languages/vue.php:832
 msgid "Our goal is to make it as easy as possible for you to measure and track your stats so you can grow your business. This easy-to-follow guide and checklist will get you set up with MonsterInsights’ advanced tracking."
 msgstr ""
 
-#: languages/vue.php:837
+#: languages/vue.php:835
 msgid "WPForms, Ninja Forms, Contact Form 7, Gravity Forms and any other WordPress form plugin"
 msgstr ""
 
-#: languages/vue.php:840
+#: languages/vue.php:838
 msgid "WordPress Admin Area Reports"
 msgstr ""
 
-#: languages/vue.php:843
+#: languages/vue.php:841
 msgid "Standard Reports"
 msgstr ""
 
-#: languages/vue.php:846
+#: languages/vue.php:844
 msgid "Overview Reports for the last 30 days."
 msgstr ""
 
-#: languages/vue.php:849
+#: languages/vue.php:847
 msgid "Advanced Reports"
 msgstr ""
 
-#: languages/vue.php:852
+#: languages/vue.php:850
 msgid "Publisher, eCommerce, Search Console, Custom Dimensions, Forms and Real-Time with custom date period selection"
 msgstr ""
 
-#: languages/vue.php:855
+#: languages/vue.php:853
 msgid "Dashboard Widget"
 msgstr ""
 
-#: languages/vue.php:858
+#: languages/vue.php:856
 msgid "Basic Widget"
 msgstr ""
 
-#: languages/vue.php:861
+#: languages/vue.php:859
 msgid "Overview Report Synopsis"
 msgstr ""
 
-#: languages/vue.php:864
+#: languages/vue.php:862
 msgid "Advanced Dashboard Widget"
 msgstr ""
 
-#: languages/vue.php:867
+#: languages/vue.php:865
 msgid "Includes the complete Overview report, Publisher reports and 6 different eCommerce reports"
 msgstr ""
 
-#: languages/vue.php:873
+#: languages/vue.php:872
 msgid "Email Summaries"
 msgstr ""
 
-#: languages/vue.php:876
+#: languages/vue.php:875
 msgid "Included"
 msgstr ""
 
-#: languages/vue.php:879
+#: languages/vue.php:878
 msgid "Get weekly traffic reports directly in your inbox."
 msgstr ""
 
-#: languages/vue.php:882
+#: languages/vue.php:881
 msgid "Publisher Reports"
 msgstr ""
 
-#: languages/vue.php:885
+#: languages/vue.php:884
 msgid "Advanced Publisher Reports & Tracking"
 msgstr ""
 
-#: languages/vue.php:888
+#: languages/vue.php:887
 msgid "View Top Landing/Exit Pages, Top Links, Demographics & Interests data and more"
 msgstr ""
 
-#: languages/vue.php:894
+#: languages/vue.php:893
 msgid "Basic Options"
 msgstr ""
 
-#: languages/vue.php:897
+#: languages/vue.php:896
 msgid "Order Popular Posts by comments or shares with 3 simple theme choices."
 msgstr ""
 
-#: languages/vue.php:900
+#: languages/vue.php:899
 msgid "Dynamic Popular Posts & Popular Products"
 msgstr ""
 
-#: languages/vue.php:903
+#: languages/vue.php:902
 msgid "Display Popular Posts based on your actual traffic data from Google Analytics and choose from over 20 advanced themes. Display Popular WooCommerce products using widgets or Gutenberg blocks."
 msgstr ""
 
-#: languages/vue.php:907
+#: languages/vue.php:905
 msgid "Not Available"
 msgstr ""
 
-#: languages/vue.php:910
+#: languages/vue.php:908
 msgid "Complete Custom Dimensions Tracking"
 msgstr ""
 
-#: languages/vue.php:913
+#: languages/vue.php:911
 msgid "Track and measure by the Author, Post Type, Category, Tag, SEO Score, Focus Keyword, Logged-in User, User ID and Published Time of each post and page"
 msgstr ""
 
-#: languages/vue.php:919
+#: languages/vue.php:917
 msgid "Limited Support"
 msgstr ""
 
-#: languages/vue.php:922
+#: languages/vue.php:920
 msgid "Priority Support"
 msgstr ""
 
-#: languages/vue.php:925
+#: languages/vue.php:923
 msgid "Get the most out of MonsterInsights by upgrading to Pro and unlocking all of the powerful features."
 msgstr ""
 
-#: languages/vue.php:928
+#: languages/vue.php:926
 msgid "Feature"
 msgstr ""
 
-#: languages/vue.php:931
+#: languages/vue.php:929
 msgid "Lite"
 msgstr ""
 
-#: languages/vue.php:934
+#: languages/vue.php:932
 msgid "Pro"
 msgstr ""
 
-#: languages/vue.php:937
+#: languages/vue.php:935
 msgid "Custom Google Analytics Link Tracking"
 msgstr ""
 
-#: languages/vue.php:940
+#: languages/vue.php:938
 msgid "Standard Tracking"
 msgstr ""
 
-#: languages/vue.php:943
+#: languages/vue.php:941
 msgid "Advanced Tracking"
 msgstr ""
 
-#: languages/vue.php:946
+#: languages/vue.php:944
 msgid "Automatic tracking of outbound/external, file download, affiliate, email and telephone links and our simple Custom Link Attribution markup for custom link tracking"
 msgstr ""
 
-#: languages/vue.php:949
+#: languages/vue.php:947
 msgid "Scroll tracking as well as tracking on Google Accelerated Mobile Pages (AMP) and Facebook Instant Articles for Publishers"
 msgstr ""
 
-#: languages/vue.php:952
+#: languages/vue.php:950
 msgid "No-Code-Needed Tracking Features"
 msgstr ""
 
-#: languages/vue.php:955
+#: languages/vue.php:953
 msgid "Basic Tracking Options"
 msgstr ""
 
-#: languages/vue.php:958
+#: languages/vue.php:956
 msgid "Cross-domain tracking, anonymization of IP addresses, and automatic exclusion of administrators from tracking"
 msgstr ""
 
-#: languages/vue.php:961
+#: languages/vue.php:959
 msgid "Advanced Tracking Options"
 msgstr ""
 
-#: languages/vue.php:964
+#: languages/vue.php:962
 msgid "Easily integrate Google Optimize as well as adjust recordings of site speed and the sample rate of visitors"
 msgstr ""
 
-#: languages/vue.php:967
+#: languages/vue.php:965
 msgid "eCommerce Tracking"
 msgstr ""
 
-#: languages/vue.php:970
+#: languages/vue.php:968
 msgid "One-click Complete eCommerce tracking"
 msgstr ""
 
-#: languages/vue.php:973
+#: languages/vue.php:971
 msgid "Complete eCommerce tracking for WooCommerce, Easy Digital Downloads and MemberPress stores with no code or settings required"
 msgstr ""
 
-#: languages/vue.php:976
+#: languages/vue.php:974
 msgid "Forms Tracking"
 msgstr ""
 
-#: languages/vue.php:979
+#: languages/vue.php:977
 msgid "One-click Form Events Tracking"
 msgstr ""
 
-#: languages/vue.php:982
+#: languages/vue.php:980
 msgid "License Key"
 msgstr ""
 
 #. Translators: Add link to retrieve license key from account.
-#: languages/vue.php:986
+#: languages/vue.php:984
 msgid "Add your MonsterInsights license key from the email receipt or account area. %1$sRetrieve your license key%2$s."
 msgstr ""
 
-#: languages/vue.php:989
+#: languages/vue.php:987
 msgid "Google Authentication"
 msgstr ""
 
-#: languages/vue.php:992
+#: languages/vue.php:991
 msgid "Connect Google Analytics + WordPress"
 msgstr ""
 
@@ -6726,15 +6726,15 @@ msgstr ""
 msgid "Continue & Install WPForms"
 msgstr ""
 
-#: languages/vue.php:1262
+#: languages/vue.php:1263
 msgid "Installing..."
 msgstr ""
 
-#: languages/vue.php:1265
+#: languages/vue.php:1266
 msgid "Show in widget mode"
 msgstr ""
 
-#: languages/vue.php:1268
+#: languages/vue.php:1269
 msgid "Show in full-width mode"
 msgstr ""
 
@@ -6786,57 +6786,57 @@ msgstr ""
 msgid "Please wait"
 msgstr ""
 
-#: languages/vue.php:1310
+#: languages/vue.php:1309
 msgid "activate"
 msgstr ""
 
-#: languages/vue.php:1314
+#: languages/vue.php:1312
 msgid "install"
 msgstr ""
 
-#: languages/vue.php:1318
+#: languages/vue.php:1315
 msgid "Visit addons page"
 msgstr ""
 
-#: languages/vue.php:1321
+#: languages/vue.php:1318
 msgid "Report Unavailable"
 msgstr ""
 
 #. Translators: Install/Activate the addon.
-#: languages/vue.php:1325
+#: languages/vue.php:1322
 msgid "%s Addon"
 msgstr ""
 
-#: languages/vue.php:1328
+#: languages/vue.php:1325
 msgid "Go Back To Reports"
 msgstr ""
 
-#: languages/vue.php:1331
+#: languages/vue.php:1328
 msgid "Enable Enhanced eCommerce"
 msgstr ""
 
 #. Translators: Placeholders are used for making text bold and adding a link.
-#: languages/vue.php:1335
+#: languages/vue.php:1332
 msgid "You're using %1$s%2$s Lite%3$s. To unlock more features consider %4$supgrading to Pro%5$s."
 msgstr ""
 
-#: languages/vue.php:1338
+#: languages/vue.php:1335
 msgid "Last 30 Days Insights for:"
 msgstr ""
 
-#: languages/vue.php:1341
+#: languages/vue.php:1338
 msgid "Your Website"
 msgstr ""
 
-#: languages/vue.php:1344
+#: languages/vue.php:1342
 msgid "Sessions"
 msgstr ""
 
-#: languages/vue.php:1347
+#: languages/vue.php:1346
 msgid "Pageviews"
 msgstr ""
 
-#: languages/vue.php:1350
+#: languages/vue.php:1349
 msgid "Avg. Duration"
 msgstr ""
 
@@ -6844,1560 +6844,1560 @@ msgstr ""
 msgid "Bounce Rate"
 msgstr ""
 
-#: languages/vue.php:1356
+#: languages/vue.php:1357
 msgid "Total Users"
 msgstr ""
 
-#: languages/vue.php:1359
+#: languages/vue.php:1360
 msgid "More data is available"
 msgstr ""
 
-#: languages/vue.php:1362
+#: languages/vue.php:1363
 msgid "Want to see page-specific stats?"
 msgstr ""
 
-#: languages/vue.php:1365
+#: languages/vue.php:1366
 msgid "There was an issue retrieving the addons for this site. Please click on the button below the refresh the addons data."
 msgstr ""
 
-#: languages/vue.php:1368
+#: languages/vue.php:1369
 msgid "No addons found."
 msgstr ""
 
-#: languages/vue.php:1371
+#: languages/vue.php:1372
 msgid "Refresh Addons"
 msgstr ""
 
-#: languages/vue.php:1374
+#: languages/vue.php:1375
 msgid "Refreshing Addons"
 msgstr ""
 
 #. Translators: Make text green.
-#: languages/vue.php:1378
+#: languages/vue.php:1379
 msgid "Upgrade to Pro to unlock addons and other great features. As a valued MonsterInsights Lite user you %1$sreceive 50%% off%2$s, automatically applied at checkout!"
 msgstr ""
 
-#: languages/vue.php:1381
+#: languages/vue.php:1382
 msgid "See who's viewing and submitting your forms, so you can increase your conversion rate."
 msgstr ""
 
-#: languages/vue.php:1384
+#: languages/vue.php:1385
 msgid "Use Google Optimize to retarget your website visitors and perform A/B split tests with ease."
 msgstr ""
 
-#: languages/vue.php:1387
+#: languages/vue.php:1388
 msgid "Add Custom Dimensions and track who's the most popular author on your site, which post types get the most traffic, and more"
 msgstr ""
 
-#: languages/vue.php:1390
+#: languages/vue.php:1391
 msgid "See All Your Important Store Metrics in One Place"
 msgstr ""
 
-#: languages/vue.php:1393
+#: languages/vue.php:1394
 msgid "Get an Answer to All Your Top Ecommerce Questions From a Single Report"
 msgstr ""
 
-#: languages/vue.php:1396
+#: languages/vue.php:1397
 msgid "ONE-CLICK INTEGRATIONS"
 msgstr ""
 
-#: languages/vue.php:1399
+#: languages/vue.php:1400
 msgid "Enable Ecommerce Tracking and Grow Your Business with Confidence"
 msgstr ""
 
-#: languages/vue.php:1402
+#: languages/vue.php:1403
 msgid "MonsterInsights Ecommerce Addon makes it easy to setup enhanced eCommerce tracking, so you can see all your important eCommerce metrics like total revenue, conversion rate, average order value, top products, top referral sources, and more in a single report right inside your WordPress dashboard."
 msgstr ""
 
-#: languages/vue.php:1405
+#: languages/vue.php:1406
 msgid "Affiliate Tracking"
 msgstr ""
 
-#: languages/vue.php:1408
+#: languages/vue.php:1409
 msgid "Automatically Track Affiliate Sales"
 msgstr ""
 
-#: languages/vue.php:1411
+#: languages/vue.php:1412
 msgid "The MonsterInsights eCommerce addon works with EasyAffiliate to automatically attribute orders originating from an EasyAffiliate link in Google Analytics. Gain valuable insights into your top affiliates with no coding required."
 msgstr ""
 
-#: languages/vue.php:1414
+#: languages/vue.php:1415
 msgid "Works with WooCommerce, MemberPress and Easy Digital Downloads."
 msgstr ""
 
-#: languages/vue.php:1423
+#: languages/vue.php:1424
 msgid "Cart Funnel"
 msgstr ""
 
-#: languages/vue.php:1426
+#: languages/vue.php:1427
 msgid "Customer Insights"
 msgstr ""
 
-#: languages/vue.php:1429
+#: languages/vue.php:1430
 msgid "Campaign Measurement"
 msgstr ""
 
-#: languages/vue.php:1432
+#: languages/vue.php:1433
 msgid "Customer Profiles"
 msgstr ""
 
-#: languages/vue.php:1435
+#: languages/vue.php:1436
 msgid "See all the critical eCommerce data you need at a glance: your conversion rate, transactions, revenue, and average order value, and more."
 msgstr ""
 
-#: languages/vue.php:1438
+#: languages/vue.php:1439
 msgid "Truly Understand Your%1$s Customers With %2$sMonsterInsights%3$s"
 msgstr ""
 
-#: languages/vue.php:1441
+#: languages/vue.php:1442
 msgid "You never truly understand your customers until you used Enhanced %1$s eCommerce from MonsterInsights!"
 msgstr ""
 
-#: languages/vue.php:1444
+#: languages/vue.php:1445
 msgid "Track all-new metrics!"
 msgstr ""
 
-#: languages/vue.php:1447
+#: languages/vue.php:1448
 msgid "Get stats WooCommerce doesn’t give you like: Conversion Sources, Avg. Order Value, Revenue per Source, Total Add to Carts & More!"
 msgstr ""
 
-#: languages/vue.php:1450
+#: languages/vue.php:1451
 msgid "FEATURES"
 msgstr ""
 
-#: languages/vue.php:1453
+#: languages/vue.php:1454
 msgid "Get The Unique Metrics Neccessary for Growth"
 msgstr ""
 
-#: languages/vue.php:1456
+#: languages/vue.php:1457
 msgid "See all the critical eCommerce data you need at a glance: your conversion rate, transactions, %1$srevenue, and average order value, and more."
 msgstr ""
 
-#: languages/vue.php:1459
+#: languages/vue.php:1460
 msgid "Get Answers to the important questions %1$syou should know."
 msgstr ""
 
-#: languages/vue.php:1462
+#: languages/vue.php:1463
 msgid "Did the login/registration step of the checkout put users off?"
 msgstr ""
 
-#: languages/vue.php:1465
+#: languages/vue.php:1466
 msgid "Which ad campaign is driving the most revenue?"
 msgstr ""
 
-#: languages/vue.php:1468
+#: languages/vue.php:1469
 msgid "Who is my typical customer?"
 msgstr ""
 
-#: languages/vue.php:1471
+#: languages/vue.php:1472
 msgid "Level-up Your eCommerce store with %1$sMonsterInsights + WooCommerce!%1$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:1475
+#: languages/vue.php:1476
 msgid "Yes (recommended) %1$s- Get the latest features, bugfixes, and security updates as they are released.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:1479
+#: languages/vue.php:1480
 msgid "Minor only %1$s- Get bugfixes and security updates, but not major features.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:1483
+#: languages/vue.php:1484
 msgid "None %1$s- Manually update everything.%2$s"
 msgstr ""
 
-#: languages/vue.php:1486
+#: languages/vue.php:1487
 msgid "Automatic Updates"
 msgstr ""
 
-#: languages/vue.php:1489
+#: languages/vue.php:1490
 msgid "Awesome, You're All Set!"
 msgstr ""
 
-#: languages/vue.php:1492
+#: languages/vue.php:1493
 msgid "MonsterInsights is all set up and ready to use. We've verified that the tracking code is deployed properly and collecting data."
 msgstr ""
 
 #. Translators: Make text bold.
-#: languages/vue.php:1496
+#: languages/vue.php:1497
 msgid "%1$sPlease Note:%2$s While Google Analytics is properly setup and tracking everything, it does not send the data back to WordPress immediately. Depending on the size of your website, it can take between a few hours to 24 hours for reports to populate."
 msgstr ""
 
 #. Translators: Link to our blog.
-#: languages/vue.php:1500
+#: languages/vue.php:1501
 msgid "%1$sSubscribe to the MonsterInsights blog%2$s for tips on how to get more traffic and grow your business."
 msgstr ""
 
-#: languages/vue.php:1503
+#: languages/vue.php:1504
 msgid "Finish Setup & Exit Wizard"
 msgstr ""
 
-#: languages/vue.php:1506
+#: languages/vue.php:1507
 msgid "Checking your website..."
 msgstr ""
 
-#: languages/vue.php:1509
+#: languages/vue.php:1510
 msgid "See All Reports"
 msgstr ""
 
-#: languages/vue.php:1512
+#: languages/vue.php:1513
 msgid "Go to the Analytics Dashboard"
 msgstr ""
 
 #. Translators: Line break.
-#: languages/vue.php:1516
+#: languages/vue.php:1517
 msgid "Unique %s Sessions"
 msgstr ""
 
 #. Translators: Line break.
-#: languages/vue.php:1520
+#: languages/vue.php:1521
 msgid "Unique %s Pageviews"
 msgstr ""
 
-#: languages/vue.php:1523
+#: languages/vue.php:1524
 msgid "A session is the browsing session of a single user to your site."
 msgstr ""
 
-#: languages/vue.php:1526
+#: languages/vue.php:1527
 msgid "A pageview is defined as a view of a page on your site that is being tracked by the Analytics tracking code. Each refresh of a page is also a new pageview."
 msgstr ""
 
-#: languages/vue.php:1529
+#: languages/vue.php:1530
 msgid "Total duration of all sessions (in seconds) / number of sessions."
 msgstr ""
 
-#: languages/vue.php:1532
+#: languages/vue.php:1533
 msgid "Percentage of single page visits (or web sessions). It is the number of visits in which a person leaves your website from the landing page without browsing any further."
 msgstr ""
 
-#: languages/vue.php:1535
+#: languages/vue.php:1536
 msgid "The number of distinct tracked users"
 msgstr ""
 
-#: languages/vue.php:1538
+#: languages/vue.php:1539
 msgid "Avg. Session Duration"
 msgstr ""
 
-#: languages/vue.php:1541
+#: languages/vue.php:1542
 msgid "Still Calculating..."
 msgstr ""
 
-#: languages/vue.php:1544
+#: languages/vue.php:1545
 msgid "Your 2020 Year in Review is still calculating. Please check back later to see how your website performed last year."
 msgstr ""
 
-#: languages/vue.php:1547
+#: languages/vue.php:1548
 msgid "Back to Overview Report"
 msgstr ""
 
-#: languages/vue.php:1550
+#: languages/vue.php:1551
 msgid "Your 2020 Analytics Report"
 msgstr ""
 
-#: languages/vue.php:1553
+#: languages/vue.php:1554
 msgid "See how your website performed this year and find tips along the way to help grow even more in 2021!"
 msgstr ""
 
-#: languages/vue.php:1556
+#: languages/vue.php:1557
 msgid "Audience"
 msgstr ""
 
-#: languages/vue.php:1559
+#: languages/vue.php:1560
 msgid "Congrats"
 msgstr ""
 
-#: languages/vue.php:1562
+#: languages/vue.php:1563
 msgid "Your website was quite popular this year! "
 msgstr ""
 
-#: languages/vue.php:1565
+#: languages/vue.php:1566
 msgid "You had "
 msgstr ""
 
-#: languages/vue.php:1568
+#: languages/vue.php:1569
 msgid " visitors!"
 msgstr ""
 
-#: languages/vue.php:1571
+#: languages/vue.php:1572
 msgid " visitors"
 msgstr ""
 
-#: languages/vue.php:1574
+#: languages/vue.php:1575
 msgid "Total Visitors"
 msgstr ""
 
-#: languages/vue.php:1577
+#: languages/vue.php:1578
 msgid "Total Sessions"
 msgstr ""
 
-#: languages/vue.php:1580
+#: languages/vue.php:1581
 msgid "Visitors by Month"
 msgstr ""
 
-#: languages/vue.php:1583
+#: languages/vue.php:1584
 msgid "January 1, 2020 - December 31, 2020"
 msgstr ""
 
-#: languages/vue.php:1586
+#: languages/vue.php:1587
 msgid "A Tip for 2021"
 msgstr ""
 
-#: languages/vue.php:1589
+#: languages/vue.php:1591
 msgid "Demographics"
 msgstr ""
 
-#: languages/vue.php:1592
+#: languages/vue.php:1594
 msgid "#1"
 msgstr ""
 
-#: languages/vue.php:1595
+#: languages/vue.php:1597
 msgid "You Top 5 Countries"
 msgstr ""
 
-#: languages/vue.php:1598
+#: languages/vue.php:1600
 msgid "Let’s get to know your visitors a little better, shall we?"
 msgstr ""
 
-#: languages/vue.php:1601
+#: languages/vue.php:1603
 msgid "Gender"
 msgstr ""
 
-#: languages/vue.php:1604
+#: languages/vue.php:1606
 msgid "Female"
 msgstr ""
 
-#: languages/vue.php:1607
+#: languages/vue.php:1609
 msgid "Women"
 msgstr ""
 
-#: languages/vue.php:1610
+#: languages/vue.php:1612
 msgid "Male"
 msgstr ""
 
-#: languages/vue.php:1613
+#: languages/vue.php:1615
 msgid "Average Age"
 msgstr ""
 
-#: languages/vue.php:1617
+#: languages/vue.php:1618
 msgid "Behavior"
 msgstr ""
 
-#: languages/vue.php:1620
+#: languages/vue.php:1621
 msgid "Your Top 5 Pages"
 msgstr ""
 
-#: languages/vue.php:1623
+#: languages/vue.php:1624
 msgid "Time Spent on Site"
 msgstr ""
 
-#: languages/vue.php:1626
+#: languages/vue.php:1627
 msgid "minutes"
 msgstr ""
 
-#: languages/vue.php:1629
+#: languages/vue.php:1630
 msgid "Device Type"
 msgstr ""
 
-#: languages/vue.php:1632
+#: languages/vue.php:1633
 msgid "A Tip For 2021"
 msgstr ""
 
-#: languages/vue.php:1635
+#: languages/vue.php:1636
 msgid "Take advantage of what you’ve already built. See how to get more traffic from existing content in our 32 Marketing Hacks to Grow Your Traffic."
 msgstr ""
 
-#: languages/vue.php:1638
+#: languages/vue.php:1639
 msgid "Read - 32 Marketing Hacks to Grow Your Traffic"
 msgstr ""
 
-#: languages/vue.php:1641
+#: languages/vue.php:1642
 msgid "So, where did all of these visitors come from?"
 msgstr ""
 
-#: languages/vue.php:1644
+#: languages/vue.php:1645
 msgid "Clicks"
 msgstr ""
 
-#: languages/vue.php:1647
+#: languages/vue.php:1648
 msgid "Your Top 5 Keywords"
 msgstr ""
 
-#: languages/vue.php:1650
+#: languages/vue.php:1651
 msgid "What keywords visitors searched for to find your site"
 msgstr ""
 
-#: languages/vue.php:1653
+#: languages/vue.php:1654
 msgid "Your Top 5 Referrals"
 msgstr ""
 
-#: languages/vue.php:1656
+#: languages/vue.php:1657
 msgid "The websites that link back to your website"
 msgstr ""
 
-#: languages/vue.php:1659
+#: languages/vue.php:1660
 msgid "Opportunity"
 msgstr ""
 
-#: languages/vue.php:1662
+#: languages/vue.php:1663
 msgid "Use referral sources to create new partnerships or expand existing ones. See our guide on how to spy on your competitors and ethically steal their traffic."
 msgstr ""
 
-#: languages/vue.php:1665
+#: languages/vue.php:1666
 msgid "Read - How to Ethically Steal Your Competitor’s Traffic"
 msgstr ""
 
-#: languages/vue.php:1668
+#: languages/vue.php:1669
 msgid "Thank you for using MonsterInsights!"
 msgstr ""
 
-#: languages/vue.php:1671
+#: languages/vue.php:1672
 msgid "We’re grateful for your continued support. If there’s anything we can do to help you grow your business, please don’t hesitate to contact our team."
 msgstr ""
 
-#: languages/vue.php:1674
+#: languages/vue.php:1675
 msgid "Here's to an amazing 2021!"
 msgstr ""
 
-#: languages/vue.php:1677
+#: languages/vue.php:1678
 msgid "Enjoying MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:1680
+#: languages/vue.php:1681
 msgid "Leave a five star review!"
 msgstr ""
 
-#: languages/vue.php:1683
+#: languages/vue.php:1684
 msgid "Syed Balkhi"
 msgstr ""
 
-#: languages/vue.php:1686
+#: languages/vue.php:1687
 msgid "Chris Christoff"
 msgstr ""
 
-#: languages/vue.php:1689
+#: languages/vue.php:1690
 msgid "Write Review"
 msgstr ""
 
-#: languages/vue.php:1692
+#: languages/vue.php:1693
 msgid "Did you know over 10 million websites use our plugins?"
 msgstr ""
 
-#: languages/vue.php:1695
+#: languages/vue.php:1696
 msgid "Try our other popular WordPress plugins to grow your website in 2021."
 msgstr ""
 
-#: languages/vue.php:1698
+#: languages/vue.php:1699
 msgid "Join our Communities!"
 msgstr ""
 
-#: languages/vue.php:1701
+#: languages/vue.php:1702
 msgid "Become a WordPress expert in 2021. Join our amazing communities and take your website to the next level."
 msgstr ""
 
-#: languages/vue.php:1704
+#: languages/vue.php:1705
 msgid "Facebook Group"
 msgstr ""
 
-#: languages/vue.php:1707
+#: languages/vue.php:1708
 msgid "Join our team of WordPress experts and other motivated website owners in the WPBeginner Engage Facebook Group."
 msgstr ""
 
-#: languages/vue.php:1710
+#: languages/vue.php:1711
 msgid "Join Now...It’s Free!"
 msgstr ""
 
-#: languages/vue.php:1713
+#: languages/vue.php:1714
 msgid "WordPress Tutorials by WPBeginner"
 msgstr ""
 
-#: languages/vue.php:1716
+#: languages/vue.php:1717
 msgid "WPBeginner is the largest free WordPress resource site for beginners and non-techy users."
 msgstr ""
 
-#: languages/vue.php:1719
+#: languages/vue.php:1720
 msgid "Visit WPBeginner"
 msgstr ""
 
-#: languages/vue.php:1722
+#: languages/vue.php:1723
 msgid "Follow Us!"
 msgstr ""
 
-#: languages/vue.php:1725
+#: languages/vue.php:1726
 msgid "Follow MonsterInsights on social media to stay up to date with latest updates, trends, and tutorials on how to make the most out of analytics."
 msgstr ""
 
-#: languages/vue.php:1728
+#: languages/vue.php:1729
 msgid "Copyright MonsterInsights, 2021"
 msgstr ""
 
-#: languages/vue.php:1731
+#: languages/vue.php:1732
 msgid "Upgrade to MonsterInsights Pro to Unlock Additional Actionable Insights"
 msgstr ""
 
-#: languages/vue.php:1734
+#: languages/vue.php:1735
 msgid "January"
 msgstr ""
 
-#: languages/vue.php:1737
+#: languages/vue.php:1738
 msgid "February"
 msgstr ""
 
-#: languages/vue.php:1740
+#: languages/vue.php:1741
 msgid "March"
 msgstr ""
 
-#: languages/vue.php:1743
+#: languages/vue.php:1744
 msgid "April"
 msgstr ""
 
-#: languages/vue.php:1746
+#: languages/vue.php:1747
 msgid "May"
 msgstr ""
 
-#: languages/vue.php:1749
+#: languages/vue.php:1750
 msgid "June"
 msgstr ""
 
-#: languages/vue.php:1752
+#: languages/vue.php:1753
 msgid "July"
 msgstr ""
 
-#: languages/vue.php:1755
+#: languages/vue.php:1756
 msgid "August"
 msgstr ""
 
-#: languages/vue.php:1758
+#: languages/vue.php:1759
 msgid "September"
 msgstr ""
 
-#: languages/vue.php:1761
+#: languages/vue.php:1762
 msgid "October"
 msgstr ""
 
-#: languages/vue.php:1764
+#: languages/vue.php:1765
 msgid "November"
 msgstr ""
 
-#: languages/vue.php:1767
+#: languages/vue.php:1768
 msgid "December"
 msgstr ""
 
 #. Translators: Number of visitors.
-#: languages/vue.php:1771
+#: languages/vue.php:1772
 msgid "Your best month was <strong>%1$s</strong> with <strong>%2$s visitors!</strong>"
 msgstr ""
 
-#: languages/vue.php:1774
+#: languages/vue.php:1775
 msgid "See the top Traffic Sources and Top Pages for the Month of %s in the Overview Report to replicate your success."
 msgstr ""
 
 #. Translators: Number of visitors.
-#: languages/vue.php:1778
+#: languages/vue.php:1779
 msgid "Your <strong>%1$s</strong> visitors came from <strong>%2$s</strong> different countries."
 msgstr ""
 
 #. Translators: Number of visitors.
-#: languages/vue.php:1782
+#: languages/vue.php:1783
 msgid "%s Visitors"
 msgstr ""
 
 #. Translators: Percent and Number of visitors.
-#: languages/vue.php:1786
+#: languages/vue.php:1787
 msgid "%1$s&#37 of your visitors were %2$s"
 msgstr ""
 
 #. Translators: Number of visitors and their age.
-#: languages/vue.php:1790
+#: languages/vue.php:1791
 msgid "%1$s&#37 of your visitors were between the ages of %2$s"
 msgstr ""
 
-#: languages/vue.php:1793
+#: languages/vue.php:1794
 msgid "Your <strong>%1$s</strong> visitors viewed a total of <strong>%2$s</strong> pages. <span class='average-page-per-user' style='font-size: 20px;margin-top:25px;display:block;font-family:Lato'>That's an average of %3$s pages for each visitor!</span>"
 msgstr ""
 
 #. Translators: Number of minutes spent on site.
-#: languages/vue.php:1797
+#: languages/vue.php:1798
 msgid "Each visitor spent an average of %s minutes on your website in 2020."
 msgstr ""
 
 #. Translators: Name of device type.
-#: languages/vue.php:1801
+#: languages/vue.php:1802
 msgid "Most of your visitors viewed your website from their <strong>%s</strong> device."
 msgstr ""
 
 #. Translators: Number of visitors and device percentage.
-#: languages/vue.php:1805
+#: languages/vue.php:1806
 msgid "%1$s&#37 of your visitors were on a %2$s device."
 msgstr ""
 
-#: languages/vue.php:1808
+#: languages/vue.php:1809
 msgid "Desktop"
 msgstr ""
 
-#: languages/vue.php:1811
+#: languages/vue.php:1812
 msgid "Tablet"
 msgstr ""
 
-#: languages/vue.php:1814
+#: languages/vue.php:1815
 msgid "Mobile"
 msgstr ""
 
-#: languages/vue.php:1817
+#: languages/vue.php:1818
 msgid "Right Now"
 msgstr ""
 
-#: languages/vue.php:1820
+#: languages/vue.php:1821
 msgid "Active users on site"
 msgstr ""
 
-#: languages/vue.php:1823
+#: languages/vue.php:1824
 msgid "The real-time graph of visitors over time is not currently available for this site. Please try again later."
 msgstr ""
 
-#: languages/vue.php:1826
+#: languages/vue.php:1827
 msgid "Important: this only includes users who are tracked in real-time. Not all users are tracked in real-time including (but not limited to) logged-in site administrators, certain mobile users, and users who match a Google Analytics filter."
 msgstr ""
 
-#: languages/vue.php:1829
+#: languages/vue.php:1830
 msgid "The real-time report automatically updates approximately every 60 seconds."
 msgstr ""
 
 #. Translators: Number of seconds that have passed since the report was refreshed.
-#: languages/vue.php:1833
+#: languages/vue.php:1834
 msgid "The real-time report was last updated %s seconds ago."
 msgstr ""
 
-#: languages/vue.php:1836
+#: languages/vue.php:1837
 msgid "The latest data will be automatically shown on this page when it becomes available."
 msgstr ""
 
-#: languages/vue.php:1839
+#: languages/vue.php:1840
 msgid "There is no need to refresh the browser (doing so won't have any effect)."
 msgstr ""
 
-#: languages/vue.php:1842
+#: languages/vue.php:1843
 msgid "Pageviews Per Minute"
 msgstr ""
 
-#: languages/vue.php:1845
+#: languages/vue.php:1846
 msgid "Top Pages"
 msgstr ""
 
-#: languages/vue.php:1848
+#: languages/vue.php:1849
 msgid "No pageviews currently."
 msgstr ""
 
-#: languages/vue.php:1851
+#: languages/vue.php:1852
 msgid "Page"
 msgstr ""
 
-#: languages/vue.php:1854
+#: languages/vue.php:1855
 msgid "Pageview Count"
 msgstr ""
 
-#: languages/vue.php:1857
+#: languages/vue.php:1858
 msgid "Percent of Total"
 msgstr ""
 
-#: languages/vue.php:1860
+#: languages/vue.php:1861
 msgid "This is the number of active users currently on your site."
 msgstr ""
 
-#: languages/vue.php:1863
+#: languages/vue.php:1864
 msgid "This graph shows the number of pageviews for each of the last 30 minutes."
 msgstr ""
 
-#: languages/vue.php:1866
+#: languages/vue.php:1867
 msgid "This list shows the top pages users are currently viewing on your site."
 msgstr ""
 
-#: languages/vue.php:1869
+#: languages/vue.php:1870
 msgid "View All Real-Time Pageviews"
 msgstr ""
 
-#: languages/vue.php:1872
+#: languages/vue.php:1873
 msgid "View All Real-Time Traffic Sources"
 msgstr ""
 
-#: languages/vue.php:1875
+#: languages/vue.php:1876
 msgid "View All Real-Time Traffic by Country"
 msgstr ""
 
-#: languages/vue.php:1878
+#: languages/vue.php:1879
 msgid "View All Real-Time Traffic by City"
 msgstr ""
 
-#: languages/vue.php:1881
+#: languages/vue.php:1882
 msgid "Show Overview Reports"
 msgstr ""
 
-#: languages/vue.php:1884
+#: languages/vue.php:1885
 msgid "Show Publishers Reports"
 msgstr ""
 
-#: languages/vue.php:1887
+#: languages/vue.php:1888
 msgid "Show eCommerce Reports"
 msgstr ""
 
-#: languages/vue.php:1890
+#: languages/vue.php:1891
 msgid "Settings Menu"
 msgstr ""
 
-#: languages/vue.php:1893
+#: languages/vue.php:1894
 msgid "Available in PRO version"
 msgstr ""
 
-#: languages/vue.php:1896
+#: languages/vue.php:1897
 msgid "Thank you for being a loyal MonsterInsights Lite user."
 msgstr ""
 
-#: languages/vue.php:1899
+#: languages/vue.php:1900
 msgid "Upgrade to MonsterInsights Pro and unlock all the awesome features."
 msgstr ""
 
 #. Translators: Gets replaced with the coupon code.
-#: languages/vue.php:1903
+#: languages/vue.php:1904
 msgid "Use coupon code %s to get 50%% off."
 msgstr ""
 
-#: languages/vue.php:1906
+#: languages/vue.php:1907
 msgid "Dashboard widget"
 msgstr ""
 
-#: languages/vue.php:1909
+#: languages/vue.php:1910
 msgid "Affiliate Links"
 msgstr ""
 
-#: languages/vue.php:1912
+#: languages/vue.php:1913
 msgid "Enhanced Ecommerce"
 msgstr ""
 
-#: languages/vue.php:1915
+#: languages/vue.php:1916
 msgid "Banner Ads"
 msgstr ""
 
-#: languages/vue.php:1918
+#: languages/vue.php:1919
 msgid "Google AMP"
 msgstr ""
 
-#: languages/vue.php:1921
+#: languages/vue.php:1922
 msgid "SEO Score Tracking"
 msgstr ""
 
-#: languages/vue.php:1924
+#: languages/vue.php:1926
 msgid "Activating..."
 msgstr ""
 
-#: languages/vue.php:1927
+#: languages/vue.php:1929
 msgid "Deactivating..."
 msgstr ""
 
-#: languages/vue.php:1930
+#: languages/vue.php:1932
 msgid "Deactivate"
 msgstr ""
 
 #. Translators: The status of the addon (installed/active/inactive).
-#: languages/vue.php:1934
+#: languages/vue.php:1936
 msgid "Status: %s"
 msgstr ""
 
-#: languages/vue.php:1937
+#: languages/vue.php:1939
 msgid "Not Installed"
 msgstr ""
 
-#: languages/vue.php:1940
+#: languages/vue.php:1942
 msgid "Network Active"
 msgstr ""
 
-#: languages/vue.php:1943
+#: languages/vue.php:1945
 msgid "Active"
 msgstr ""
 
-#: languages/vue.php:1946
+#: languages/vue.php:1948
 msgid "Inactive"
 msgstr ""
 
 #. Translators: Adds a link to the general settings tab.
-#: languages/vue.php:1950
+#: languages/vue.php:1952
 msgid "It looks like you added a Google Analytics tracking code in the custom code area, this can potentially prevent proper tracking. If you want to use a manual UA please use the setting in the %1$sGeneral%2$s tab."
 msgstr ""
 
-#: languages/vue.php:1953
+#: languages/vue.php:1955
 msgid "Export PDF Reports"
 msgstr ""
 
-#: languages/vue.php:1956
+#: languages/vue.php:1958
 msgid "Permissions"
 msgstr ""
 
-#: languages/vue.php:1959
+#: languages/vue.php:1961
 msgid "Allow These User Roles to See Reports"
 msgstr ""
 
-#: languages/vue.php:1962
+#: languages/vue.php:1964
 msgid "Users that have at least one of these roles will be able to view the reports."
 msgstr ""
 
-#: languages/vue.php:1965
+#: languages/vue.php:1967
 msgid "Users that have at least one of these roles will be able to view the reports, along with any user with the manage_options capability."
 msgstr ""
 
-#: languages/vue.php:1968
+#: languages/vue.php:1970
 msgid "Allow These User Roles to Save Settings"
 msgstr ""
 
-#: languages/vue.php:1971
+#: languages/vue.php:1973
 msgid "Users that have at least one of these roles will be able to view and save the settings panel."
 msgstr ""
 
-#: languages/vue.php:1974
+#: languages/vue.php:1976
 msgid "Users that have at least one of these roles will be able to view and save the settings panel, along with any user with the manage_options capability."
 msgstr ""
 
-#: languages/vue.php:1977
+#: languages/vue.php:1979
 msgid "Exclude These User Roles From Tracking"
 msgstr ""
 
-#: languages/vue.php:1980
+#: languages/vue.php:1982
 msgid "Users that have at least one of these roles will not be tracked into Google Analytics."
 msgstr ""
 
-#: languages/vue.php:1983
+#: languages/vue.php:1985
 msgid "Performance"
 msgstr ""
 
-#: languages/vue.php:1986
+#: languages/vue.php:1988
 msgid "Custom code"
 msgstr ""
 
 #. Translators: Adds a link to the Google reference.
-#: languages/vue.php:1990
+#: languages/vue.php:1992
 msgid "Not for the average user: this allows you to add a line of code, to be added before the %1$spageview is sent%2$s."
 msgstr ""
 
-#: languages/vue.php:1996
+#: languages/vue.php:1998
 msgid "You must have the \"unfiltered_html\" capability to view/edit this setting."
 msgstr ""
 
-#: languages/vue.php:1999
+#: languages/vue.php:2001
 msgid "Hide Admin Bar Reports"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2003
+#: languages/vue.php:2005
 msgid "Enabled %1$s- Show reports and dashboard widget.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2007
+#: languages/vue.php:2009
 msgid "Dashboard Widget Only %1$s- Disable reports, but show dashboard widget.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2011
+#: languages/vue.php:2013
 msgid "Disabled %1$s- Hide reports and dashboard widget.%2$s"
 msgstr ""
 
-#: languages/vue.php:2014
+#: languages/vue.php:2016
 msgid "View notifications"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2018
+#: languages/vue.php:2020
 msgid "Can't load settings. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2022
+#: languages/vue.php:2024
 msgid "You appear to be offline."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2026
+#: languages/vue.php:2028
 msgid "Can't save settings. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2029
+#: languages/vue.php:2031
 msgid "Network error encountered. Settings not saved."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2033
+#: languages/vue.php:2035
 msgid "Can't deactivate the license. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2037
+#: languages/vue.php:2039
 msgid "Can't upgrade to PRO please try again. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2041
+#: languages/vue.php:2043
 msgid "Can't load license details. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2044
+#: languages/vue.php:2046
 msgid "Error loading license details"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2048
+#: languages/vue.php:2050
 msgid "Can't verify the license. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2052
+#: languages/vue.php:2054
 msgid "Can't validate the license. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2056
+#: languages/vue.php:2058
 msgid "Can't deauthenticate. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2060
+#: languages/vue.php:2062
 msgid "Can't load authentication details. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2063
+#: languages/vue.php:2065
 msgid "You appear to be offline. Settings not saved."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2067
+#: languages/vue.php:2069
 msgid "Can't authenticate. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2071
+#: languages/vue.php:2073
 msgid "Can't reauthenticate. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2075
+#: languages/vue.php:2077
 msgid "Can't verify credentials. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2078
+#: languages/vue.php:2080
 msgid "Proceed"
 msgstr ""
 
-#: languages/vue.php:2081
+#: languages/vue.php:2083
 msgid "Connection Information"
 msgstr ""
 
-#: languages/vue.php:2084
+#: languages/vue.php:2086
 msgid "To perform the requested action, WordPress needs to access your web server. Please enter your FTP credentials to proceed. If you do not remember your credentials, you should contact your web host."
 msgstr ""
 
-#: languages/vue.php:2087
+#: languages/vue.php:2089
 msgid "Hostname"
 msgstr ""
 
-#: languages/vue.php:2090
+#: languages/vue.php:2092
 msgid "FTP Username"
 msgstr ""
 
-#: languages/vue.php:2093
+#: languages/vue.php:2095
 msgid "FTP Password"
 msgstr ""
 
-#: languages/vue.php:2096
+#: languages/vue.php:2098
 msgid "This password will not be stored on the server."
 msgstr ""
 
-#: languages/vue.php:2099
+#: languages/vue.php:2101
 msgid "Connection Type"
 msgstr ""
 
-#: languages/vue.php:2102
+#: languages/vue.php:2104
 msgid "Cancel"
 msgstr ""
 
-#: languages/vue.php:2105
+#: languages/vue.php:2107
 msgid "You appear to be offline. WPForms not installed."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2109
+#: languages/vue.php:2111
 msgid "Can't activate addon. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2112
+#: languages/vue.php:2114
 msgid "You appear to be offline. Addon not activated."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2116
+#: languages/vue.php:2118
 msgid "Can't deactivate addon. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2119
+#: languages/vue.php:2121
 msgid "You appear to be offline. Addon not deactivated."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2123
+#: languages/vue.php:2125
 msgid "Can't install plugin. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2126
+#: languages/vue.php:2128
 msgid "You appear to be offline. Plugin not installed."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2130
+#: languages/vue.php:2132
 msgid "Can't install addon. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2133
+#: languages/vue.php:2135
 msgid "You appear to be offline. Addon not installed."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2137
+#: languages/vue.php:2139
 msgid "Can't install WPForms. Error: %1$s, %2$s"
 msgstr ""
 
 #. Translators: Example path (/go/).
-#: languages/vue.php:2141
+#: languages/vue.php:2144
 msgid "Path (example: %s)"
 msgstr ""
 
-#: languages/vue.php:2144
+#: languages/vue.php:2148
 msgid "Path has to start with a / and have no spaces"
 msgstr ""
 
 #. Translators: Example label (aff).
-#: languages/vue.php:2148
+#: languages/vue.php:2153
 msgid "Label (example: %s)"
 msgstr ""
 
-#: languages/vue.php:2151
+#: languages/vue.php:2157
 msgid "Label can't contain any spaces"
 msgstr ""
 
 #. Translators: Add links to documentation.
-#: languages/vue.php:2155
+#: languages/vue.php:2161
 msgid "This allows you to track custom affiliate links. A path of /go/ would match urls that start with that. The label is appended onto the end of the string \"outbound-link-\", to provide unique labels for these links in Google Analytics. Complete documentation on affiliate links is available %1$shere%2$s."
 msgstr ""
 
-#: languages/vue.php:2158
+#: languages/vue.php:2164
 msgid "Our affiliate link tracking works by setting path for internal links to track as outbound links."
 msgstr ""
 
-#: languages/vue.php:2161
+#: languages/vue.php:2167
 msgid "The MonsterInsights Headline Analyzer tool in the Gutenberg editor enables you to write irresistible SEO-friendly headlines that drive traffic, social media shares, and rank better in search results."
 msgstr ""
 
-#: languages/vue.php:2164
+#: languages/vue.php:2170
 msgid "Disable the Headline Analyzer"
 msgstr ""
 
-#: languages/vue.php:2167
+#: languages/vue.php:2173
 msgid "Warning: If you use a manual GA4 Measurement ID, you won't be able to use any of the reporting and some of the tracking features. Your Measurement ID should look like G-XXXXXXXXXX where the X's are numbers."
 msgstr ""
 
-#: languages/vue.php:2170
+#: languages/vue.php:2176
 msgid "Or manually enter UA code (limited functionality)"
 msgstr ""
 
-#: languages/vue.php:2173
+#: languages/vue.php:2179
 msgid "Dual Tracking Profile"
 msgstr ""
 
-#: languages/vue.php:2176
+#: languages/vue.php:2182
 msgid "The dual tracking feature allows you to continue tracking this site into an existing GAv3 property so you can continue to use the GA reports you are used to already. Learn more about this feature %1$shere%2$s."
 msgstr ""
 
-#: languages/vue.php:2179
+#: languages/vue.php:2185
 msgid "Your Universal Analytics code should look like UA-XXXXXXXXXX where the X's are numbers."
 msgstr ""
 
-#: languages/vue.php:2182
+#: languages/vue.php:2188
 msgid "The dual tracking feature allows you to begin tracking this site into a GAv4 property to take advantage of the new GAv4 analysis tools. Learn more about this feature %1$shere%2$s."
 msgstr ""
 
-#: languages/vue.php:2185
+#: languages/vue.php:2191
 msgid "Your Measurement ID should look like G-XXXXXXXXXX where the X's are numbers."
 msgstr ""
 
-#: languages/vue.php:2188
+#: languages/vue.php:2194
 msgid "Measurement Protocol API Secret"
 msgstr ""
 
-#: languages/vue.php:2191
+#: languages/vue.php:2197
 msgid "The Measurement Protocol API secret allows your site to send tracking data to Google Analytics. To retrieve your Measurement Protocol API Secret, follow %1$sthis guide%2$s."
 msgstr ""
 
-#: languages/vue.php:2194
+#: languages/vue.php:2200
 msgid "Force Deauthenticate"
 msgstr ""
 
-#: languages/vue.php:2197
+#: languages/vue.php:2203
 msgid "Disconnect MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:2200
+#: languages/vue.php:2206
 msgid "Authenticating"
 msgstr ""
 
-#: languages/vue.php:2203
+#: languages/vue.php:2209
 msgid "Verifying Credentials"
 msgstr ""
 
-#: languages/vue.php:2206
+#: languages/vue.php:2212
 msgid "Your site is connected to MonsterInsights!"
 msgstr ""
 
-#: languages/vue.php:2209
+#: languages/vue.php:2215
 msgid "Deauthenticating"
 msgstr ""
 
-#: languages/vue.php:2212
+#: languages/vue.php:2218
 msgid "You've disconnected your site from MonsterInsights. Your site is no longer being tracked by Google Analytics and you won't see reports anymore."
 msgstr ""
 
-#: languages/vue.php:2215
+#: languages/vue.php:2221
 msgid "Connect MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:2218
+#: languages/vue.php:2224
 msgid "Verify Credentials"
 msgstr ""
 
-#: languages/vue.php:2221
+#: languages/vue.php:2227
 msgid "Website Profile"
 msgstr ""
 
-#: languages/vue.php:2224
+#: languages/vue.php:2230
 msgid "Active Profile"
 msgstr ""
 
-#: languages/vue.php:2227
+#: languages/vue.php:2233
 msgid "Your website profile has been set at the network level of your WordPress Multisite."
 msgstr ""
 
-#: languages/vue.php:2230
+#: languages/vue.php:2236
 msgid "If you would like to use a different profile for this subsite, you can authenticate below."
 msgstr ""
 
-#: languages/vue.php:2233
+#: languages/vue.php:2239
 msgid "Manually enter your UA code"
 msgstr ""
 
-#: languages/vue.php:2236
+#: languages/vue.php:2242
 msgid "Warning: If you use a manual UA code, you won't be able to use any of the reporting and some of the tracking features. Your UA code should look like UA-XXXXXX-XX where the X's are numbers."
 msgstr ""
 
-#: languages/vue.php:2239
+#: languages/vue.php:2245
 msgid "Manually enter your GA4 Measurement ID"
 msgstr ""
 
-#: languages/vue.php:2242
+#: languages/vue.php:2248
 msgid "Enable Demographics and Interests Reports for Remarketing and Advertising"
 msgstr ""
 
-#: languages/vue.php:2245
+#: languages/vue.php:2251
 msgid "Anonymize IP Addresses"
 msgstr ""
 
-#: languages/vue.php:2248
+#: languages/vue.php:2254
 msgid "Link Attribution"
 msgstr ""
 
-#: languages/vue.php:2251
+#: languages/vue.php:2257
 msgid "Enable Enhanced Link Attribution"
 msgstr ""
 
-#: languages/vue.php:2254
+#: languages/vue.php:2260
 msgid "Enable Anchor Tracking"
 msgstr ""
 
-#: languages/vue.php:2257
+#: languages/vue.php:2263
 msgid "Enable allowAnchor"
 msgstr ""
 
-#: languages/vue.php:2260
+#: languages/vue.php:2266
 msgid "Enable allowLinker"
 msgstr ""
 
-#: languages/vue.php:2263
+#: languages/vue.php:2269
 msgid "Enable Tag Links in RSS"
 msgstr ""
 
-#: languages/vue.php:2266
+#: languages/vue.php:2272
 msgid "File Downloads"
 msgstr ""
 
-#: languages/vue.php:2269
+#: languages/vue.php:2275
 msgid "Extensions of Files to Track as Downloads"
 msgstr ""
 
-#: languages/vue.php:2272
+#: languages/vue.php:2278
 msgid "MonsterInsights will send an event to Google Analytics if a link to a file has one of the above extensions."
 msgstr ""
 
 #. Translators: Add links to the documentation.
-#: languages/vue.php:2276
+#: languages/vue.php:2282
 msgid "Enable this setting to add the Demographics and Remarketing features to your Google Analytics tracking code. Make sure to enable Demographics and Remarketing in your Google Analytics account. We have a guide for how to do that in our %1$sknowledge base%2$s. For more information about Remarketing, we refer you to %3$sGoogle's documentation%4$s. Note that usage of this function is affected by privacy and cookie laws around the world. Be sure to follow the laws that affect your target audience."
 msgstr ""
 
 #. Translators: Adds a link to the documentation.
-#: languages/vue.php:2280
+#: languages/vue.php:2286
 msgid "This adds %1$sanonymizeIp%2$s, telling Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage."
 msgstr ""
 
 #. Translators: Adds a link to the documentation.
-#: languages/vue.php:2284
+#: languages/vue.php:2290
 msgid "Adds the Enhanced Link Attribution (retain link) code to improve the accuracy of your In-Page Analytics report by automatically differentiating between multiple links to the same URL on a single page by using link element IDs."
 msgstr ""
 
-#: languages/vue.php:2287
+#: languages/vue.php:2293
 msgid "Many WordPress \"1-page\" style themes rely on anchor tags for navigation to show virtual pages. The problem is that to Google Analytics, these are all just a single page, and it makes it hard to get meaningful statistics about pages viewed. This feature allows proper tracking in those themes."
 msgstr ""
 
 #. Translators: Adds a link to the documentation.
-#: languages/vue.php:2291
+#: languages/vue.php:2297
 msgid "This adds %1$sallowAnchor%2$s to the create command of the pageview hit tracking code, and makes RSS link tagging use a # as well."
 msgstr ""
 
 #. Translators: Adds a link to the documentation.
-#: languages/vue.php:2295
+#: languages/vue.php:2301
 msgid "Enabling %1$scross-domain tracking (additional setup required)%2$s allows you to track users across multiple properties you own (such as example-1.com and example-2.com as a single session. It also allows you fix an issue so that when a user has to go to an off-site hosted payment gateway to finish a purchase it doesn't count it as referral traffic from that gateway but maintains the visit as part of the same session.) It is required that the other site includes a Google Analytics tracker with the same UA Code."
 msgstr ""
 
 #. Translators: Adds a link to the documentation.
-#: languages/vue.php:2299
+#: languages/vue.php:2305
 msgid "Do not use this feature if you use FeedBurner, as FeedBurner can do this automatically and better than this plugin can. Check this %1$shelp page%2$s for info on how to enable this feature in FeedBurner."
 msgstr ""
 
-#: languages/vue.php:2302
+#: languages/vue.php:2308
 msgid "Add domain"
 msgstr ""
 
 #. Translators: Example domain.
-#: languages/vue.php:2306
+#: languages/vue.php:2312
 msgid "Domain (example: %s)"
 msgstr ""
 
 #. Translators: Current site domain to be avoided.
-#: languages/vue.php:2310
+#: languages/vue.php:2316
 msgid "Please enter domain names only ( example: example.com not http://example.com ) and not current site domain ( %s )."
 msgstr ""
 
-#: languages/vue.php:2313
+#: languages/vue.php:2319
 msgid "Cross Domain Tracking"
 msgstr ""
 
 #. Translators: Adds a link to the documentation.
-#: languages/vue.php:2317
+#: languages/vue.php:2323
 msgid "Cross domain tracking makes it possible for Analytics to see sessions on two related sites as a single session. More info on specific setup steps can be found in our %1$sknowledge base%2$s."
 msgstr ""
 
 #. Translators: Number of days.
-#: languages/vue.php:2321
+#: languages/vue.php:2327
 msgid "vs. Previous Day"
 msgstr ""
 
-#: languages/vue.php:2324
+#: languages/vue.php:2330
 msgid "No change"
 msgstr ""
 
-#: languages/vue.php:2327
+#: languages/vue.php:2333
 msgid "Forms Tracking help you see who’s viewing your forms, so you can increase conversions."
 msgstr ""
 
-#: languages/vue.php:2330
+#: languages/vue.php:2336
 msgid "Custom Dimensions show you popular categories, best time to publish, focus keywords, etc."
 msgstr ""
 
-#: languages/vue.php:2333
+#: languages/vue.php:2339
 msgid "Make Google Analytics GDPR compliant with our EU Compliance addon."
 msgstr ""
 
-#: languages/vue.php:2336
+#: languages/vue.php:2342
 msgid "Get real-time Google Analytics report right inside your WordPress dashboard."
 msgstr ""
 
-#: languages/vue.php:2339
+#: languages/vue.php:2345
 msgid "Use Google Optimize to easily perform A/B split tests on your site."
 msgstr ""
 
-#: languages/vue.php:2342
+#: languages/vue.php:2348
 msgid "See all your important store metrics in one place with Enhanced Ecommerce Tracking."
 msgstr ""
 
-#: languages/vue.php:2345
+#: languages/vue.php:2351
 msgid "Unlock search console report to see your top performing keywords in Google."
 msgstr ""
 
-#: languages/vue.php:2348
+#: languages/vue.php:2354
 msgid "Get Page Insights to see important metrics for individual posts / pages in WordPress."
 msgstr ""
 
-#: languages/vue.php:2351
+#: languages/vue.php:2357
 msgid "Publishers Report shows your top performing pages, audience demographics, and more."
 msgstr ""
 
-#: languages/vue.php:2354
+#: languages/vue.php:2360
 msgid "Get Scroll-Depth tracking to see how far users scroll on your pages before leaving."
 msgstr ""
 
-#: languages/vue.php:2357
+#: languages/vue.php:2363
 msgid "Upgrade to Pro »"
 msgstr ""
 
-#: languages/vue.php:2360
+#: languages/vue.php:2366
 msgid "Pro Tip:"
 msgstr ""
 
-#: languages/vue.php:2363
+#: languages/vue.php:2369
 msgid "Show"
 msgstr ""
 
-#: languages/vue.php:2366
+#: languages/vue.php:2372
 msgid "Hide dashboard widget"
 msgstr ""
 
-#: languages/vue.php:2369
+#: languages/vue.php:2375
 msgid "Are you sure you want to hide the MonsterInsights Dashboard Widget? "
 msgstr ""
 
-#: languages/vue.php:2372
+#: languages/vue.php:2378
 msgid "Yes, hide it!"
 msgstr ""
 
-#: languages/vue.php:2375
+#: languages/vue.php:2381
 msgid "No, cancel!"
 msgstr ""
 
-#: languages/vue.php:2378
+#: languages/vue.php:2384
 msgid "MonsterInsights Widget Hidden"
 msgstr ""
 
-#: languages/vue.php:2381
+#: languages/vue.php:2387
 msgid "You can re-enable the MonsterInsights widget at any time using the \"Screen Options\" menu on the top right of this page"
 msgstr ""
 
-#: languages/vue.php:2388
+#: languages/vue.php:2394
 msgid "Usage Tracking"
 msgstr ""
 
-#: languages/vue.php:2391
+#: languages/vue.php:2397
 msgid "Allow Usage Tracking"
 msgstr ""
 
-#: languages/vue.php:2395
+#: languages/vue.php:2400
 msgid "By allowing us to track usage data we can better help you because we know with which WordPress configurations, themes and plugins we should test."
 msgstr ""
 
 #. Translators: Add links to documentation.
-#: languages/vue.php:2400
+#: languages/vue.php:2404
 msgid "Complete documentation on usage tracking is available %1$shere%2$s."
 msgstr ""
 
 #. Translators: Make text green and add smiley face.
-#: languages/vue.php:2404
+#: languages/vue.php:2408
 msgid "You're using %1$sMonsterInsights Lite%2$s - no license needed. Enjoy! %3$s"
 msgstr ""
 
 #. Translators: Add link to upgrade.
-#: languages/vue.php:2408
+#: languages/vue.php:2412
 msgid "To unlock more features consider %1$supgrading to PRO%2$s."
 msgstr ""
 
 #. Translators: Make text green.
-#: languages/vue.php:2412
+#: languages/vue.php:2416
 msgid "As a valued MonsterInsights Lite user you %1$sreceive 50%% off%2$s, automatically applied at checkout!"
 msgstr ""
 
-#: languages/vue.php:2415
+#: languages/vue.php:2419
 msgid "Unlock PRO Features Now"
 msgstr ""
 
-#: languages/vue.php:2419
+#: languages/vue.php:2422
 msgid "Paste your license key here"
 msgstr ""
 
-#: languages/vue.php:2423
+#: languages/vue.php:2425
 msgid "Verify"
 msgstr ""
 
 #. Translators: Add link to retrieve license from account area.
-#: languages/vue.php:2427
+#: languages/vue.php:2429
 msgid "Already purchased? Simply enter your license key below to connect with MonsterInsights PRO! %1$sRetrieve your license key%2$s."
 msgstr ""
 
-#: languages/vue.php:2431
+#: languages/vue.php:2432
 msgid "There was an error unlocking MonsterInsights PRO please try again or install manually."
 msgstr ""
 
 #. Translators: Error status and error text.
-#: languages/vue.php:2435
+#: languages/vue.php:2436
 msgid "Can't load errors. Error: %1$s, %2$s"
 msgstr ""
 
-#: languages/vue.php:2438
+#: languages/vue.php:2439
 msgid "No options available"
 msgstr ""
 
-#: languages/vue.php:2441
+#: languages/vue.php:2442
 msgid "%1$sAll-in-One SEO%2$s Makes SEO Simple. Gain Valuable Organic Traffic."
 msgstr ""
 
-#: languages/vue.php:2444
+#: languages/vue.php:2445
 msgid "Automatically migrate all of your SEO settings with just 1 click!"
 msgstr ""
 
-#: languages/vue.php:2447
+#: languages/vue.php:2448
 msgid "1,938"
 msgstr ""
 
-#: languages/vue.php:2450
+#: languages/vue.php:2451
 msgid "2+ Million Active Installs"
 msgstr ""
 
-#: languages/vue.php:2453
+#: languages/vue.php:2454
 msgid "AIOSEO is the DIY Solution for Managing your SEO"
 msgstr ""
 
-#: languages/vue.php:2456
+#: languages/vue.php:2457
 msgid "Set up the proper SEO foundations in less than 10 minutes."
 msgstr ""
 
-#: languages/vue.php:2459
+#: languages/vue.php:2460
 msgid "SEO Audit Checklist"
 msgstr ""
 
-#: languages/vue.php:2462
+#: languages/vue.php:2463
 msgid "Analyze your entire WordPress site to detect critical errors and get actionable insights to boost your SEO and get more traffic."
 msgstr ""
 
-#: languages/vue.php:2465
+#: languages/vue.php:2466
 msgid "Optimize Your Pages For Higher Rankings With TruSEO Score."
 msgstr ""
 
-#: languages/vue.php:2468
+#: languages/vue.php:2469
 msgid "TruSEO Score gives you a more in-depth analysis into your optimization efforts than just a pass or fail. Our actionable checklist helps you to unlock maximum traffic with each page."
 msgstr ""
 
-#: languages/vue.php:2471
+#: languages/vue.php:2472
 msgid "Get AIOSEO for WordPress"
 msgstr ""
 
-#: languages/vue.php:2474
+#: languages/vue.php:2475
 msgid "Get the #1 Most Powerful WordPress SEO Plugin Today"
 msgstr ""
 
-#: languages/vue.php:2477
+#: languages/vue.php:2478
 msgid "Try it out today, for free."
 msgstr ""
 
-#: languages/vue.php:2480
+#: languages/vue.php:2481
 msgid "Join 2,000,000+ Professionals who use AIOSEO to Improve Their Website Search Rankings."
 msgstr ""
 
-#: languages/vue.php:2483
+#: languages/vue.php:2484
 msgid "Activate and Install the Plugin with just one click!"
 msgstr ""
 
-#: languages/vue.php:2486
+#: languages/vue.php:2487
 msgid "Installing AIOSEO..."
 msgstr ""
 
-#: languages/vue.php:2489
+#: languages/vue.php:2490
 msgid "Congrats! All-in-One SEO Installed."
 msgstr ""
 
-#: languages/vue.php:2492
+#: languages/vue.php:2493
 msgid "Switch to AIOSEO"
 msgstr ""
 
-#: languages/vue.php:2495
+#: languages/vue.php:2496
 msgid "Installation Failed. Please refresh and try again."
 msgstr ""
 
-#: languages/vue.php:2498
+#: languages/vue.php:2499
 msgid "Activating AIOSEO..."
 msgstr ""
 
-#: languages/vue.php:2501
+#: languages/vue.php:2502
 msgid "Activate AIOSEO"
 msgstr ""
 
-#: languages/vue.php:2504
+#: languages/vue.php:2505
 msgid "Activation Failed. Please refresh and try again."
 msgstr ""
 
 #. Translators: The name of the field that is throwing a validation error.
-#: languages/vue.php:2508
+#: languages/vue.php:2509
 msgid "%s can't be empty."
 msgstr ""
 
-#: languages/vue.php:2511
+#: languages/vue.php:2512
 msgid "Duplicate values are not allowed."
 msgstr ""
 
-#: languages/vue.php:2514
+#: languages/vue.php:2515
 msgid "You can add maximum 5 items."
 msgstr ""
 
-#: languages/vue.php:2517
+#: languages/vue.php:2518
 msgid "At least 0 item required."
 msgstr ""
 
-#: languages/vue.php:2520
+#: languages/vue.php:2521
 msgid "Add Another Link Path"
 msgstr ""
 
-#: languages/vue.php:2523
+#: languages/vue.php:2524
 msgid "Remove row"
 msgstr ""
 
-#: languages/vue.php:2526
+#: languages/vue.php:2527
 msgid "New"
 msgstr ""
 
-#: languages/vue.php:2529
+#: languages/vue.php:2530
 msgid "Returning"
 msgstr ""
 
-#: languages/vue.php:2532
+#: languages/vue.php:2533
 msgid "Top 10 Countries"
 msgstr ""
 
-#: languages/vue.php:2535
+#: languages/vue.php:2536
 msgid "View Countries Report"
 msgstr ""
 
-#: languages/vue.php:2538
+#: languages/vue.php:2539
 msgid "Top 10 Referrals"
 msgstr ""
 
-#: languages/vue.php:2541
+#: languages/vue.php:2542
 msgid "View All Referral Sources"
 msgstr ""
 
-#: languages/vue.php:2544
+#: languages/vue.php:2545
 msgid "View Full Posts/Pages Report"
 msgstr ""
 
-#: languages/vue.php:2547
+#: languages/vue.php:2548
 msgid "Percentage of single-page visits (or web sessions). It is the number of visits in which a person leaves your website from the landing page without browsing any further."
 msgstr ""
 
-#: languages/vue.php:2550
+#: languages/vue.php:2551
 msgid "This list shows the top countries your website visitors are from."
 msgstr ""
 
-#: languages/vue.php:2553
+#: languages/vue.php:2554
 msgid "This list shows the top websites that send your website traffic, known as referral traffic."
 msgstr ""
 
-#: languages/vue.php:2556
+#: languages/vue.php:2557
 msgid "Export PDF Overview Report"
 msgstr ""
 
@@ -8702,1249 +8702,1253 @@ msgstr ""
 msgid "Error emptying the popular posts cache. Please try again."
 msgstr ""
 
-#: languages/vue.php:2787
+#: languages/vue.php:2786
 msgid "Choose Theme"
 msgstr ""
 
-#: languages/vue.php:2791
+#: languages/vue.php:2789
 msgid "Widget Styling"
 msgstr ""
 
-#: languages/vue.php:2795
+#: languages/vue.php:2792
 msgid "Choose how you want to determine the colors, font sizes and spacing of the widget."
 msgstr ""
 
-#: languages/vue.php:2799
+#: languages/vue.php:2795
 msgid "Sort By"
 msgstr ""
 
-#: languages/vue.php:2803
+#: languages/vue.php:2798
 msgid "Choose how you'd like the widget to determine your popular posts."
 msgstr ""
 
-#: languages/vue.php:2806
+#: languages/vue.php:2801
 msgid "Display Title"
 msgstr ""
 
-#: languages/vue.php:2812
+#: languages/vue.php:2807
 msgid "Title your widget and set its display preferences."
 msgstr ""
 
-#: languages/vue.php:2816
+#: languages/vue.php:2810
 msgid "Include in Post Types"
 msgstr ""
 
-#: languages/vue.php:2820
+#: languages/vue.php:2813
 msgid "Exclude from specific posts"
 msgstr ""
 
 #. Translators: Placeholders make the text bold.
-#: languages/vue.php:2825
+#: languages/vue.php:2817
 msgid "Choose which Post Types the widget %1$sWILL%2$s be placed."
 msgstr ""
 
 #. Translators: Placeholders make the text bold.
-#: languages/vue.php:2830
+#: languages/vue.php:2821
 msgid "Choose from which Posts the widget %1$sWILL NOT%2$s be placed."
 msgstr ""
 
-#: languages/vue.php:2834
+#: languages/vue.php:2824
 msgid "Loading Themes"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2839
+#: languages/vue.php:2828
 msgid "Default Styles %1$s- As seen above.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2844
+#: languages/vue.php:2832
 msgid "No Styles %1$s- Use your own CSS.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2849
+#: languages/vue.php:2836
 msgid "Comments %1$s- Randomly rotate your most commented on posts from the past 30 days.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2854
+#: languages/vue.php:2840
 msgid "SharedCount %1$s- Connect with your SharedCount account to determine popular posts by share count.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2859
+#: languages/vue.php:2844
 msgid "Curated %1$s- Choose the posts which will randomly rotate in the widget.%2$s"
 msgstr ""
 
-#: languages/vue.php:2862
+#: languages/vue.php:2847
 msgid "Placement"
 msgstr ""
 
-#: languages/vue.php:2865
+#: languages/vue.php:2850
 msgid "Choose how you'd like to place the widget."
 msgstr ""
 
-#: languages/vue.php:2868
+#: languages/vue.php:2853
 msgid "Insert After"
 msgstr ""
 
-#: languages/vue.php:2871
+#: languages/vue.php:2856
 msgid "Choose where in the post body the widget will be placed."
 msgstr ""
 
-#: languages/vue.php:2875
+#: languages/vue.php:2859
 msgid "Customize Design"
 msgstr ""
 
-#: languages/vue.php:2878
+#: languages/vue.php:2862
 msgid "words"
 msgstr ""
 
-#: languages/vue.php:2881
+#: languages/vue.php:2865
 msgid "Please select at least one post to display."
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2885
+#: languages/vue.php:2869
 msgid "Automatic %1$s- The widget is automatically placed inside the post body.%2$s"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:2889
+#: languages/vue.php:2873
 msgid "Manual %1$s- Manually place the widget using Gutenberg blocks or using our shortcode.%2$s"
 msgstr ""
 
-#: languages/vue.php:2892
+#: languages/vue.php:2876
 msgid "Facebook Instant Articles"
 msgstr ""
 
-#: languages/vue.php:2895
+#: languages/vue.php:2879
 msgid "Want to expand your website audience beyond your website with Facebook Instant Articles? Upgrade to MonsterInsights Pro."
 msgstr ""
 
-#: languages/vue.php:2898
+#: languages/vue.php:2882
 msgid "Want to use track users visiting your AMP pages? By upgrading to MonsterInsights Pro, you can enable AMP page tracking."
 msgstr ""
 
-#: languages/vue.php:2901
+#: languages/vue.php:2885
 msgid "Ads Tracking"
 msgstr ""
 
-#: languages/vue.php:2904
+#: languages/vue.php:2888
 msgid "Add Ads tracking to see who's clicking on your Google Ads, so you can increase your revenue."
 msgstr ""
 
-#: languages/vue.php:2907
+#: languages/vue.php:2891
 msgid "2,000,000+ use AIOSEO to Improve Their Website Search Rankings"
 msgstr ""
 
-#: languages/vue.php:2910
+#: languages/vue.php:2894
 msgid "All-in-One SEO is a great product. I have been using it on all my WP sites for several years. I highly recommend it."
 msgstr ""
 
-#: languages/vue.php:2913
+#: languages/vue.php:2897
 msgid "Jack Brown"
 msgstr ""
 
-#: languages/vue.php:2916
+#: languages/vue.php:2900
 msgid "PJB Internet Marketing"
 msgstr ""
 
-#: languages/vue.php:2919
+#: languages/vue.php:2903
 msgid "I’m a professional SEO and used many tools and extensions. Regarding simplicity, individuality and configurability All in One SEO Pro is by far the best SEO plugin out there for WordPress."
 msgstr ""
 
-#: languages/vue.php:2922
+#: languages/vue.php:2906
 msgid "Joel Steinmann"
 msgstr ""
 
-#: languages/vue.php:2925
+#: languages/vue.php:2909
 msgid "CEO, Solergo"
 msgstr ""
 
-#: languages/vue.php:2928
+#: languages/vue.php:2912
 msgid "Recommended Addons"
 msgstr ""
 
-#: languages/vue.php:2931
+#: languages/vue.php:2915
 msgid "To unlock more features consider upgrading to PRO. As a valued MonsterInsights Lite user you receive 50% off, automatically applied at checkout!"
 msgstr ""
 
-#: languages/vue.php:2934
+#: languages/vue.php:2918
 msgid "Other Addons"
 msgstr ""
 
-#: languages/vue.php:2937
+#: languages/vue.php:2921
 msgid "View all MonsterInsights addons"
 msgstr ""
 
-#: languages/vue.php:2940
+#: languages/vue.php:2924
 msgid "Scroll Tracking"
 msgstr ""
 
-#: languages/vue.php:2943
+#: languages/vue.php:2927
 msgid "Scroll depth tracking allows you to see how far your users scroll before they leave a page. This is great for publishers (bloggers), and eCommerce websites to boost conversions."
 msgstr ""
 
-#: languages/vue.php:2946
+#: languages/vue.php:2930
 msgid ""
 "The EU Compliance addon allows you to improve compliance with GDPR\n"
 " and other privacy regulations."
 msgstr ""
 
-#: languages/vue.php:2950
+#: languages/vue.php:2934
 msgid "EU Compliance"
 msgstr ""
 
-#: languages/vue.php:2953
+#: languages/vue.php:2937
 msgid "Compatibility mode"
 msgstr ""
 
-#: languages/vue.php:2956
+#: languages/vue.php:2940
 msgid "Enable _gtagTracker Compatibility"
 msgstr ""
 
 #. Translators: Placeholder gets replaced with default GA js function.
-#: languages/vue.php:2960
+#: languages/vue.php:2944
 msgid "This enables MonsterInsights to work with plugins that use %1$s and don't support %2$s"
 msgstr ""
 
 #. Translators: Page number of total pages. 1 & 2 make the first part of the text bold.
-#: languages/vue.php:2964
+#: languages/vue.php:2948
 msgid "%1$sPage %3$s%2$s of %4$s"
 msgstr ""
 
-#: languages/vue.php:2967
+#: languages/vue.php:2952
 #: lite/includes/popular-posts/class-popular-posts-widget-sidebar.php:257
 msgid "Theme Preview"
 msgstr ""
 
-#: languages/vue.php:2970
+#: languages/vue.php:2955
 msgid "Wide"
 msgstr ""
 
-#: languages/vue.php:2973
+#: languages/vue.php:2958
 msgid "Narrow"
 msgstr ""
 
-#: languages/vue.php:2976
+#: languages/vue.php:2962
 msgid "Title"
 msgstr ""
 
-#: languages/vue.php:2979
+#: languages/vue.php:2966
 msgid "Color"
 msgstr ""
 
-#: languages/vue.php:2982
+#: languages/vue.php:2970
 msgid "Size"
 msgstr ""
 
-#: languages/vue.php:2985
+#: languages/vue.php:2974
 msgid "Border"
 msgstr ""
 
-#: languages/vue.php:2988
+#: languages/vue.php:2977
 msgid "Author/Date"
 msgstr ""
 
-#: languages/vue.php:2991
+#: languages/vue.php:2981
 msgid "Label"
 msgstr ""
 
-#: languages/vue.php:2994
+#: languages/vue.php:2985
 msgid "Background"
 msgstr ""
 
-#: languages/vue.php:3006
+#: languages/vue.php:2997
 msgid "Choose which content you would like displayed in the widget."
 msgstr ""
 
-#: languages/vue.php:3018
+#: languages/vue.php:3009
 msgid "Comments"
 msgstr ""
 
-#: languages/vue.php:3024
+#: languages/vue.php:3015
 msgid "Choose how many posts you’d like displayed in the widget."
 msgstr ""
 
-#: languages/vue.php:3027
+#: languages/vue.php:3018
 msgid "Popular Posts data can be fetched correctly"
 msgstr ""
 
-#: languages/vue.php:3030
+#: languages/vue.php:3021
 msgid "Please note: depending on when you set up the Custom Dimensions settings, it may take up to 7 days to see relevant Popular Posts data loading from Google Analytics."
 msgstr ""
 
-#: languages/vue.php:3033
+#: languages/vue.php:3024
 msgid "Close"
 msgstr ""
 
-#: languages/vue.php:3036
+#: languages/vue.php:3027
 msgid "Add Top 5 Posts from Google Analytics"
 msgstr ""
 
-#: languages/vue.php:3039
+#: languages/vue.php:3030
 msgid "In order to load the top posts from Google Analytics you will need to enable the Custom Dimensions addon and set up the Post Type custom dimension in both MonsterInsights and Google Analytics settings."
 msgstr ""
 
-#: languages/vue.php:3042
+#: languages/vue.php:3033
 msgid "Test Automated Posts"
 msgstr ""
 
 #. Translators: Placeholder adds a link to the Popular Posts GA setup instructions doc.
-#: languages/vue.php:3046
+#: languages/vue.php:3037
 msgid "Click this button to run a series of checks that will confirm your setup is completed to load Popular Posts from Google Analytics."
 msgstr ""
 
-#: languages/vue.php:3049
+#: languages/vue.php:3040
 msgid "Automated + Curated"
 msgstr ""
 
 #. Translators: Placeholder adds a link to the Custom Dimensions settings.
-#: languages/vue.php:3053
+#: languages/vue.php:3044
 msgid "Automatically add the top 5 Posts from the past 30 days to your Curated list of Posts using %1$sCustom Dimensions%2$s. Also requires Sort By - Curated to be selected. Setup steps can be found in our %3$sknowledge base%4$s."
 msgstr ""
 
 #. Translators: Placeholder gets replaced with current license version.
-#: languages/vue.php:3057
+#: languages/vue.php:3048
 msgid "Pro version is required."
 msgstr ""
 
-#: languages/vue.php:3060
+#: languages/vue.php:3051
 msgid "Verifying Popular Posts data"
 msgstr ""
 
-#: languages/vue.php:3063
+#: languages/vue.php:3054
 msgid "Select posts/search"
 msgstr ""
 
-#: languages/vue.php:3066
+#: languages/vue.php:3057
 msgid "Oops! No posts found."
 msgstr ""
 
-#: languages/vue.php:3069
+#: languages/vue.php:3060
 msgid "Search by post title"
 msgstr ""
 
-#: languages/vue.php:3072
+#: languages/vue.php:3063
 msgid "Can't load posts."
 msgstr ""
 
-#: languages/vue.php:3075
+#: languages/vue.php:3066
 msgid "SharedCount API Key"
 msgstr ""
 
-#: languages/vue.php:3078
+#: languages/vue.php:3069
 msgid "Insert your sharedcount API key found in your %1$sSettings%2$s panel. After, click Start Indexing."
 msgstr ""
 
-#: languages/vue.php:3081
+#: languages/vue.php:3072
 msgid "Start Indexing"
 msgstr ""
 
-#: languages/vue.php:3084
+#: languages/vue.php:3075
 msgid "%1$sIndex Progress: %2$s%%.%3$s You may leave this page during indexing."
 msgstr ""
 
-#: languages/vue.php:3087
+#: languages/vue.php:3078
 msgid "Indexing completed, counts will update automatically every day."
 msgstr ""
 
-#: languages/vue.php:3090
+#: languages/vue.php:3082
 msgid "Sartorial taxidermy venmo you probably haven't heard of them, tofu fingerstache ethical pickled hella ramps vice snackwave seitan typewriter tofu."
 msgstr ""
 
-#: languages/vue.php:3093
+#: languages/vue.php:3086
 msgid "Austin typewriter heirloom distillery twee migas wayfarers. Fingerstache master cleanse quinoa humblebrag, iPhone taxidermy snackwave seitan typewriter tofu organic affogato kitsch. Artisan"
 msgstr ""
 
-#: languages/vue.php:3096
+#: languages/vue.php:3090
 msgid "Icon"
 msgstr ""
 
 #. Translators: Minimum and maximum number that can be used.
-#: languages/vue.php:3100
+#: languages/vue.php:3094
 msgid "Please enter a value between %1$s and %2$s"
 msgstr ""
 
 #. Translators: The minimum set value.
-#: languages/vue.php:3104
+#: languages/vue.php:3098
 msgid "Please enter a value higher than %s"
 msgstr ""
 
 #. Translators: The maximum set value.
-#: languages/vue.php:3108
+#: languages/vue.php:3102
 msgid "Please enter a value lower than %s"
 msgstr ""
 
-#: languages/vue.php:3111
+#: languages/vue.php:3105
 msgid "Please enter a number"
 msgstr ""
 
-#: languages/vue.php:3114
+#: languages/vue.php:3108
 msgid "Value has to be a round number"
 msgstr ""
 
-#: languages/vue.php:3117
+#: languages/vue.php:3111
 msgid "Export PDF Report"
 msgstr ""
 
-#: languages/vue.php:3120
+#: languages/vue.php:3114
 msgid "You can export PDF reports only in the PRO version."
 msgstr ""
 
-#: languages/vue.php:3123
+#: languages/vue.php:3117
 msgid "Upgrade to MonsterInsights Pro to Unlock More Actionable Insights"
 msgstr ""
 
-#: languages/vue.php:3126
+#: languages/vue.php:3120
 msgid "It's easy to double your traffic and sales when you know exactly how people find and use your website. MonsterInsights Pro shows you the stats that matter!"
 msgstr ""
 
-#: languages/vue.php:3129
+#: languages/vue.php:3123
 msgid "Upgrade to MonsterInsights Pro and Save 50% OFF!"
 msgstr ""
 
 #. Translators: Makes text bold.
-#: languages/vue.php:3133
+#: languages/vue.php:3127
 msgid "Use coupon code %1$sLITEUPGRADE%2$s"
 msgstr ""
 
 #. Translators: Make text green.
-#: languages/vue.php:3137
+#: languages/vue.php:3131
 msgid "Upgrade to Pro and unlock addons and other great features. %1$sSave 50%% automatically!%2$s"
 msgstr ""
 
 #. Translators: Placeholder adds a line break.
-#: languages/vue.php:3141
+#: languages/vue.php:3135
 msgid "You can customize your %sdate range only in the PRO version."
 msgstr ""
 
-#: languages/vue.php:3144
+#: languages/vue.php:3138
 msgid "Help Us Improve"
 msgstr ""
 
-#: languages/vue.php:3147
+#: languages/vue.php:3141
 msgid "Help us better understand our users and their website needs."
 msgstr ""
 
 #. Translators: Adds a link to the documentation.
-#: languages/vue.php:3151
+#: languages/vue.php:3145
 msgid "If enabled MonsterInsights will send some information about your WordPress site like what plugins and themes you use and which MonsterInsights settings you use to us so that we can improve our product. For a complete list of what we send and what we use it for, %1$svisit our website.%2$s"
 msgstr ""
 
-#: languages/vue.php:3154
+#: languages/vue.php:3148
 msgid "Website profile"
 msgstr ""
 
-#: languages/vue.php:3157
+#: languages/vue.php:3151
 msgid "Active profile"
 msgstr ""
 
-#: languages/vue.php:3160
+#: languages/vue.php:3154
 msgid "Skip and Keep Connection"
 msgstr ""
 
-#: languages/vue.php:3163
+#: languages/vue.php:3157
 msgid "This feature requires MonsterInsights Pro"
 msgstr ""
 
-#: languages/vue.php:3166
+#: languages/vue.php:3160
 msgid "By upgrading you will also get access to advanced eCommerce tracking, Custom Dimensions and more."
 msgstr ""
 
-#: languages/vue.php:3169
+#: languages/vue.php:3163
 msgid "Upgrade to Pro and Unlock Popular Products"
 msgstr ""
 
-#: languages/vue.php:3172
+#: languages/vue.php:3166
 msgid "View all Pro features"
 msgstr ""
 
-#: languages/vue.php:3175
+#: languages/vue.php:3169
 msgid "Days"
 msgstr ""
 
 #. Translators: placeholders make text small.
-#: languages/vue.php:3179
+#: languages/vue.php:3173
 msgid "7 days"
 msgstr ""
 
-#: languages/vue.php:3182
+#: languages/vue.php:3176
 msgid "30 days"
 msgstr ""
 
-#: languages/vue.php:3185
+#: languages/vue.php:3179
 msgid "Custom"
 msgstr ""
 
-#: languages/vue.php:3188
+#: languages/vue.php:3182
 msgid "Only Show Posts from These Categories"
 msgstr ""
 
-#: languages/vue.php:3191
+#: languages/vue.php:3185
 msgid "Choose from which categories posts will be displayed in the widget. All categories will be used if left empty."
 msgstr ""
 
-#: languages/vue.php:3194
+#: languages/vue.php:3188
 msgid "Multiple Entries"
 msgstr ""
 
-#: languages/vue.php:3197
+#: languages/vue.php:3191
 msgid "Total Number of Widgets to Show"
 msgstr ""
 
-#: languages/vue.php:3200
+#: languages/vue.php:3194
 msgid "Choose how many widgets will be placed in a single Post."
 msgstr ""
 
-#: languages/vue.php:3203
+#: languages/vue.php:3197
 msgid "Minimum Distance Between Widgets"
 msgstr ""
 
-#: languages/vue.php:3206
+#: languages/vue.php:3200
 msgid "Choose the distance between widgets."
 msgstr ""
 
-#: languages/vue.php:3209
+#: languages/vue.php:3203
 msgid "Minimum Word Count to Display Multiple Widgets"
 msgstr ""
 
-#: languages/vue.php:3212
+#: languages/vue.php:3206
 msgid "Choose the minimum word count for a Post to have multiple entries."
 msgstr ""
 
-#: languages/vue.php:3215
+#: languages/vue.php:3209
 msgid "Pro version is required"
 msgstr ""
 
 #. Translators: Placeholder adds a link to the Custom Dimensions settings.
-#: languages/vue.php:3219
+#: languages/vue.php:3213
 msgid "Automatically add the top 5 Posts from the past 30 days to your Curated list of Posts using Custom Dimensions (Pro version required. %1$sUpgrade now%2$s)."
 msgstr ""
 
-#: languages/vue.php:3222
+#: languages/vue.php:3216
 msgid "Unlock with %s"
 msgstr ""
 
-#: languages/vue.php:3225
+#: languages/vue.php:3219
 msgid "Automatic Placement"
 msgstr ""
 
-#: languages/vue.php:3228
+#: languages/vue.php:3222
 msgid "Display using Gutenberg Blocks"
 msgstr ""
 
-#: languages/vue.php:3231
+#: languages/vue.php:3225
 msgid "Embed Options"
 msgstr ""
 
-#: languages/vue.php:3234
+#: languages/vue.php:3228
 msgid "All Embed Options can be used in conjunction with one another."
 msgstr ""
 
-#: languages/vue.php:3238
+#: languages/vue.php:3231
 msgid "Using the Gutenberg Block"
 msgstr ""
 
-#: languages/vue.php:3241
+#: languages/vue.php:3234
 msgid "Using Automatic Embed"
 msgstr ""
 
-#: languages/vue.php:3244
+#: languages/vue.php:3237
 msgid "Learn how to insert the Popular Posts Widget into your posts and pages using Gutenberg Blocks. To style this widget, use the Gutenberg Block settings."
 msgstr ""
 
-#: languages/vue.php:3247
+#: languages/vue.php:3240
 msgid "Enabling Automatic Placement will include the Popular Posts Widget after the last paragraph of any and all posts that match your Behavior settings. To style this widget use the Customize Design panel above."
 msgstr ""
 
-#: languages/vue.php:3250
+#: languages/vue.php:3243
 msgid "Learn how to insert the Popular Posts Widget using a shortcode. To style this widget use the Customize Design panel above."
 msgstr ""
 
-#: languages/vue.php:3253
+#: languages/vue.php:3246
 msgid "%1$sWatch Video%2$s - How to Add the Popular Posts widget using Gutenberg"
 msgstr ""
 
-#: languages/vue.php:3257
+#: languages/vue.php:3249
 msgid "%1$sStep 1%2$s - Click the “Add Block” icon while editing a Post or Page."
 msgstr ""
 
-#: languages/vue.php:3260
+#: languages/vue.php:3252
 msgid "%1$sStep 2%2$s - Search for “Popular Posts”."
 msgstr ""
 
-#: languages/vue.php:3264
+#: languages/vue.php:3255
 msgid "%1$sStep 3%2$s - Style the widget using the Block Settings sidebar."
 msgstr ""
 
-#: languages/vue.php:3267
+#: languages/vue.php:3258
 msgid "%1$sStep 1%2$s - Navigate to your Appearance > Widgets page using the menu on the left side your screen. Must be logged in as Admin."
 msgstr ""
 
-#: languages/vue.php:3270
+#: languages/vue.php:3261
 msgid "%1$sStep 2%2$s - On the left, under Available Widgets, look for the Popular Posts - MonsterInsights widget and drag it into the desired Sidebar on the right."
 msgstr ""
 
-#: languages/vue.php:3273
+#: languages/vue.php:3264
 msgid "%1$sStep 3%2$s - The widget options should automatically expand allowing you to customize the design."
 msgstr ""
 
-#: languages/vue.php:3276
+#: languages/vue.php:3267
 msgid "Display using a Shortcode"
 msgstr ""
 
-#: languages/vue.php:3280
+#: languages/vue.php:3270
 msgid "Copy the shortcode and paste it into your Page and/or Post templates or using a shortcode plugin."
 msgstr ""
 
-#: languages/vue.php:3284
+#: languages/vue.php:3273
 msgid "Copy Shortcode"
 msgstr ""
 
-#: languages/vue.php:3287
+#: languages/vue.php:3276
 msgid "%1$sWatch Video%2$s - How to Add the Popular Posts widget using our Shortcode"
 msgstr ""
 
-#: languages/vue.php:3290
+#: languages/vue.php:3279
 msgid "Enable Automatic Placement"
 msgstr ""
 
-#: languages/vue.php:3293
+#: languages/vue.php:3282
 msgid "Display in a Sidebar"
 msgstr ""
 
-#: languages/vue.php:3296
+#: languages/vue.php:3285
 msgid "Learn how to insert the Popular Posts Widget into a Sidebar. To style this widget use the Customize Design panel above."
 msgstr ""
 
-#: languages/vue.php:3299
+#: languages/vue.php:3288
 msgid "Watch Video - How to Add the Popular Posts widget using Widgets"
 msgstr ""
 
-#: languages/vue.php:3302
+#: languages/vue.php:3291
 msgid "Display Method"
 msgstr ""
 
-#: languages/vue.php:3305
+#: languages/vue.php:3294
 msgid "There are two ways to manual include the widget in your posts."
 msgstr ""
 
-#: languages/vue.php:3308
+#: languages/vue.php:3297
 msgid "Using the Shortcode"
 msgstr ""
 
-#: languages/vue.php:3311
+#: languages/vue.php:3300
 msgid "Learn how to insert the widget using Gutenberg blocks."
 msgstr ""
 
-#: languages/vue.php:3314
+#: languages/vue.php:3303
 msgid "Learn how to insert the widget using out Shortcode."
 msgstr ""
 
-#: languages/vue.php:3317
+#: languages/vue.php:3306
 msgid "%1$sWatch Video%2$s - How to Add the Inline Popular Post widget using Gutenberg"
 msgstr ""
 
-#: languages/vue.php:3320
+#: languages/vue.php:3309
 msgid "%1$sStep 2%2$s - Search for “Inline Popular Posts by MonsterInsights”."
 msgstr ""
 
-#: languages/vue.php:3323
+#: languages/vue.php:3312
 msgid "Shortcode"
 msgstr ""
 
-#: languages/vue.php:3326
+#: languages/vue.php:3315
 msgid "%1$sWatch Video%2$s - How to Add the Inline Popular Post widget using our Shortcode"
 msgstr ""
 
-#: languages/vue.php:3329
+#: languages/vue.php:3318
 msgid "Facebook Instant Articleasdasdasds"
 msgstr ""
 
-#: languages/vue.php:3332
+#: languages/vue.php:3321
 msgid "Media"
 msgstr ""
 
-#: languages/vue.php:3335
+#: languages/vue.php:3324
 msgid "Track how your users interact with videos on your website. Upgrade to MonsterInsights Pro."
 msgstr ""
 
-#: languages/vue.php:3338
+#: languages/vue.php:3327
 msgid "Improve Your Conversion Rate With Insights Into Which Content Works Best."
 msgstr ""
 
-#: languages/vue.php:3341
+#: languages/vue.php:3330
 msgid "Top Affilliate Links"
 msgstr ""
 
-#: languages/vue.php:3344
+#: languages/vue.php:3333
 msgid "Scroll Depth"
 msgstr ""
 
-#: languages/vue.php:3347
+#: languages/vue.php:3336
 msgid "Increase Sales and Make More Money With Enhanced eCommerce Insights."
 msgstr ""
 
-#: languages/vue.php:3350
+#: languages/vue.php:3339
 msgid "10+ eCommerce Integrations"
 msgstr ""
 
-#: languages/vue.php:3353
+#: languages/vue.php:3342
 msgid "Average Order Value"
 msgstr ""
 
-#: languages/vue.php:3356
+#: languages/vue.php:3345
 msgid "Total Revenue"
 msgstr ""
 
-#: languages/vue.php:3359
+#: languages/vue.php:3348
 msgid "Number of Transactions"
 msgstr ""
 
-#: languages/vue.php:3362
+#: languages/vue.php:3351
 msgid "Increase Engagement and Unlock New Insights About Your Site."
 msgstr ""
 
-#: languages/vue.php:3365
+#: languages/vue.php:3354
 msgid "User ID Tracking"
 msgstr ""
 
-#: languages/vue.php:3368
+#: languages/vue.php:3357
 msgid "Post Types"
 msgstr ""
 
-#: languages/vue.php:3371
+#: languages/vue.php:3360
 msgid "Tag Tracking"
 msgstr ""
 
-#: languages/vue.php:3374
+#: languages/vue.php:3363
 msgid "Categories"
 msgstr ""
 
-#: languages/vue.php:3377
+#: languages/vue.php:3366
 msgid "SEO Scores"
 msgstr ""
 
-#: languages/vue.php:3380
+#: languages/vue.php:3369
 msgid "Publish Times"
 msgstr ""
 
-#: languages/vue.php:3383
+#: languages/vue.php:3372
 msgid "Focus Keywords"
 msgstr ""
 
-#: languages/vue.php:3386
+#: languages/vue.php:3375
 msgid "Track Every Type of Web Form and Gain Visibility Into Your Customer Journey."
 msgstr ""
 
-#: languages/vue.php:3389
+#: languages/vue.php:3378
 msgid "Conversion Counts"
 msgstr ""
 
-#: languages/vue.php:3392
+#: languages/vue.php:3381
 msgid "Impression Counts"
 msgstr ""
 
-#: languages/vue.php:3395
+#: languages/vue.php:3384
 msgid "Conversion Rates"
 msgstr ""
 
-#: languages/vue.php:3398
+#: languages/vue.php:3387
 msgid "See Exactly How Visitors Find Your Website From Google."
 msgstr ""
 
-#: languages/vue.php:3401
+#: languages/vue.php:3390
 msgid "Top Google Search Terms"
 msgstr ""
 
-#: languages/vue.php:3404
+#: languages/vue.php:3393
 msgid "Number of Clicks"
 msgstr ""
 
-#: languages/vue.php:3407
+#: languages/vue.php:3396
 msgid "Click-through Ratio"
 msgstr ""
 
-#: languages/vue.php:3410
+#: languages/vue.php:3399
 msgid "Average Results Position"
 msgstr ""
 
-#: languages/vue.php:3413
+#: languages/vue.php:3402
 msgid "Realtime Report"
 msgstr ""
 
-#: languages/vue.php:3416
+#: languages/vue.php:3405
 msgid "See Who And What is Happening on Your Website in Realtime."
 msgstr ""
 
-#: languages/vue.php:3419
+#: languages/vue.php:3408
 msgid "Top Page Views"
 msgstr ""
 
-#: languages/vue.php:3422
+#: languages/vue.php:3411
 msgid "Current Active Users"
 msgstr ""
 
-#: languages/vue.php:3425
+#: languages/vue.php:3414
 msgid "Top Referral Sources"
 msgstr ""
 
-#: languages/vue.php:3428
+#: languages/vue.php:3417
 msgid "Top Countries"
 msgstr ""
 
-#: languages/vue.php:3431
+#: languages/vue.php:3420
 msgid "Top Cities"
 msgstr ""
 
-#: languages/vue.php:3434
+#: languages/vue.php:3423
 msgid "Improve Your User Experience and Improve Search Engine Rankings."
 msgstr ""
 
-#: languages/vue.php:3437
+#: languages/vue.php:3426
 msgid "Overall Site Speed Score"
 msgstr ""
 
-#: languages/vue.php:3440
+#: languages/vue.php:3429
 msgid "Server Response Times"
 msgstr ""
 
-#: languages/vue.php:3443
+#: languages/vue.php:3432
 msgid "Mobile and Desktop Scores"
 msgstr ""
 
-#: languages/vue.php:3446
+#: languages/vue.php:3435
 msgid "First Contentful Paint"
 msgstr ""
 
-#: languages/vue.php:3449
+#: languages/vue.php:3438
 msgid "Automatic Recommendations"
 msgstr ""
 
-#: languages/vue.php:3452
+#: languages/vue.php:3441
 msgid "Total Blocking Time"
 msgstr ""
 
-#: languages/vue.php:3455
+#: languages/vue.php:3444
 msgid "On-Demand Audits"
 msgstr ""
 
-#: languages/vue.php:3458
+#: languages/vue.php:3447
 msgid "Time to Interactive"
 msgstr ""
 
-#: languages/vue.php:3461
+#: languages/vue.php:3450
 msgid "2021 Year in Review"
 msgstr ""
 
-#: languages/vue.php:3464
+#: languages/vue.php:3453
 msgid "Realtime"
 msgstr ""
 
 #. Translators: Placeholders are used for making text bold and adding a link.
-#: languages/vue.php:3468
+#: languages/vue.php:3457
 msgid "%1$sYou're using %2$s Lite%3$s. To unlock all reports, consider %4$supgrading to Pro%5$s."
 msgstr ""
 
-#: languages/vue.php:3471
+#: languages/vue.php:3460
 msgid "Featured"
 msgstr ""
 
-#: languages/vue.php:3474
+#: languages/vue.php:3463
 msgid "Traffic"
 msgstr ""
 
-#: languages/vue.php:3477
+#: languages/vue.php:3466
 msgid "Revenue"
 msgstr ""
 
-#: languages/vue.php:3480
+#: languages/vue.php:3469
 msgid "Guides & Resources"
 msgstr ""
 
-#: languages/vue.php:3483
+#: languages/vue.php:3472
 msgid "Upgrade and Unlock"
 msgstr ""
 
-#: languages/vue.php:3486
+#: languages/vue.php:3475
 msgid "What’s in the %1$s?"
 msgstr ""
 
-#: languages/vue.php:3489
+#: languages/vue.php:3478
 msgid "%1$sPlus%2$s, upgrading to Pro will unlock %1$sall%2$s advanced reports, tracking, and integrations. %3$sLearn more about Pro%4$s"
 msgstr ""
 
-#: languages/vue.php:3492
+#: languages/vue.php:3481
 msgid "Your 2021 Year in Review is still calculating. Please check back later to see how your website performed last year."
 msgstr ""
 
-#: languages/vue.php:3495
+#: languages/vue.php:3484
 msgid "Your 2021 Analytics Report"
 msgstr ""
 
-#: languages/vue.php:3501
+#: languages/vue.php:3490
 msgid "January 1, 2021 - December 31, 2021"
 msgstr ""
 
-#: languages/vue.php:3504
+#: languages/vue.php:3493
 msgid "A Tip for 2022"
 msgstr ""
 
-#: languages/vue.php:3507
+#: languages/vue.php:3496
 msgid "A Tip For 2022"
 msgstr ""
 
-#: languages/vue.php:3510
+#: languages/vue.php:3499
 msgid "Here's to an amazing 2022!"
 msgstr ""
 
-#: languages/vue.php:3513
+#: languages/vue.php:3502
 msgid "Try our other popular WordPress plugins to grow your website in 2022."
 msgstr ""
 
-#: languages/vue.php:3516
+#: languages/vue.php:3505
 msgid "Become a WordPress expert in 2022. Join our amazing communities and take your website to the next level."
 msgstr ""
 
-#: languages/vue.php:3519
+#: languages/vue.php:3508
 msgid "Copyright MonsterInsights, 2022"
 msgstr ""
 
 #. Translators: Number of minutes spent on site.
-#: languages/vue.php:3523
+#: languages/vue.php:3512
 msgid "Each visitor spent an average of %s minutes on your website in 2021."
 msgstr ""
 
-#: languages/vue.php:3526
+#: languages/vue.php:3515
 msgid "RafflePress"
 msgstr ""
 
-#: languages/vue.php:3529
+#: languages/vue.php:3518
 msgid "Launch giveaways and raffle campaigns to grow your email lists, increase traffic, and get more social media followers."
 msgstr ""
 
-#: languages/vue.php:3532
+#: languages/vue.php:3521
 msgid "Constant Contact"
 msgstr ""
 
-#: languages/vue.php:3535
+#: languages/vue.php:3524
 msgid "Create amazing email marketing campaigns with drag and drop simplicity. Exclusive Offer: Save 20%."
 msgstr ""
 
-#: languages/vue.php:3538
+#: languages/vue.php:3527
 msgid "SEMRUSH"
 msgstr ""
 
-#: languages/vue.php:3541
+#: languages/vue.php:3530
 msgid "Perform SEO and content marketing research, track keywords, and much more. Special Offer: First 30 Days Free."
 msgstr ""
 
-#: languages/vue.php:3544
+#: languages/vue.php:3533
 msgid "Engagement Tools"
 msgstr ""
 
-#: languages/vue.php:3547
+#: languages/vue.php:3536
 msgid "WPForms"
 msgstr ""
 
-#: languages/vue.php:3550
+#: languages/vue.php:3539
 msgid "The world’s most popular WordPress form builder, trusted by over 5 million websites. Easily build contact forms, payment forms, and more."
 msgstr ""
 
-#: languages/vue.php:3553
+#: languages/vue.php:3542
 msgid "OptinMonster"
 msgstr ""
 
-#: languages/vue.php:3556
+#: languages/vue.php:3545
 msgid "Convert and monetize more of your website traffic with engaging pop-up and gamified tools. Great for all types of websites."
 msgstr ""
 
-#: languages/vue.php:3559
+#: languages/vue.php:3548
 msgid "Smash Balloon - Facebook"
 msgstr ""
 
-#: languages/vue.php:3562
+#: languages/vue.php:3551
 msgid "Smash Balloon - Instagram"
 msgstr ""
 
-#: languages/vue.php:3565
+#: languages/vue.php:3554
 msgid "Quickly add social media feeds from Facebook, Instagram, Twitter, and others to your website, with no coding needed."
 msgstr ""
 
-#: languages/vue.php:3568
+#: languages/vue.php:3557
 msgid "Popular Posts by MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:3571
+#: languages/vue.php:3560
 msgid "Increase your visitor engagement by automatically embedding popular and related content from your website."
 msgstr ""
 
-#: languages/vue.php:3574
+#: languages/vue.php:3563
 msgid "Popular Products by MonsterInsights"
 msgstr ""
 
-#: languages/vue.php:3577
+#: languages/vue.php:3566
 msgid "Automatically show related products to increase conversion rates and increase cart sizes on your eCommerce website."
 msgstr ""
 
-#: languages/vue.php:3580
+#: languages/vue.php:3569
 msgid "Revenue Tools"
 msgstr ""
 
-#: languages/vue.php:3583
+#: languages/vue.php:3572
 msgid "SeedProd"
 msgstr ""
 
-#: languages/vue.php:3586
+#: languages/vue.php:3575
 msgid "Use the best drag-and-drop landing page builder for WordPress to instantly build coming soon pages, sales pages, opt-in pages, webinar pages, maintenance pages, and more. Includes 100+ free templates."
 msgstr ""
 
-#: languages/vue.php:3589
+#: languages/vue.php:3578
 msgid "Featured Tools"
 msgstr ""
 
-#: languages/vue.php:3592
+#: languages/vue.php:3581
 msgid "Easy Affiliate"
 msgstr ""
 
-#: languages/vue.php:3595
+#: languages/vue.php:3584
 msgid "Launch, grow, and manage an affiliate program, all right from your WordPress dashboard. Works automatically with MonsterInsights."
 msgstr ""
 
-#: languages/vue.php:3598
+#: languages/vue.php:3587
 msgid "SearchWP"
 msgstr ""
 
-#: languages/vue.php:3601
+#: languages/vue.php:3590
 msgid "Unlock better search results for your website.  Perfect for any information or eCommerce store to help users find exactly what content and products they’re looking for."
 msgstr ""
 
-#: languages/vue.php:3604
+#: languages/vue.php:3593
 msgid "Easily sell digital products like ebooks, plugins, and courses with WordPress. Built-in payment processing, coupons, shopping cart, detailed reporting, and more."
 msgstr ""
 
-#: languages/vue.php:3607
+#: languages/vue.php:3596
 msgid "Create a membership website. Works automatically with MonsterInsights, no coding needed."
 msgstr ""
 
-#: languages/vue.php:3610
+#: languages/vue.php:3599
 msgid "Thirsty Affiliates"
 msgstr ""
 
-#: languages/vue.php:3613
+#: languages/vue.php:3602
 msgid "Manage all your affiliate links with features designed to help make bloggers more money."
 msgstr ""
 
-#: languages/vue.php:3616
+#: languages/vue.php:3605
 msgid "Upgrade to unlock advanced reporting and features designed to help you get more traffic and make more money from your website.  Special Offer: Save 50% today."
 msgstr ""
 
-#: languages/vue.php:3619
+#: languages/vue.php:3608
 msgid "Advanced Coupons"
 msgstr ""
 
-#: languages/vue.php:3622
+#: languages/vue.php:3611
 msgid "Create coupons, reward loyal customers, and schedule promotions for your eCommerce store."
 msgstr ""
 
-#: languages/vue.php:3625
+#: languages/vue.php:3614
 msgid "PrettyLinks"
 msgstr ""
 
-#: languages/vue.php:3628
+#: languages/vue.php:3617
 msgid "Automatically monetize your website content with affiliate links added automatically to your content."
 msgstr ""
 
-#: languages/vue.php:3631
+#: languages/vue.php:3620
 msgid "Install Now"
 msgstr ""
 
-#: languages/vue.php:3634
+#: languages/vue.php:3623
 msgid "Online Marketing Guides & Resources"
 msgstr ""
 
-#: languages/vue.php:3637
+#: languages/vue.php:3626
 msgid "MonsterInsights Pro"
 msgstr ""
 
-#: languages/vue.php:3640
+#: languages/vue.php:3629
 msgid "Upgrade to unlock eCommerce tracking, Custom Dimensions, Form Tracking, and much more. Special Offer: Save 50% today."
 msgstr ""
 
-#: languages/vue.php:3643
+#: languages/vue.php:3632
 msgid "Traffic Tools"
 msgstr ""
 
-#: languages/vue.php:3646
+#: languages/vue.php:3635
 msgid "All in One SEO (AIOSEO)"
 msgstr ""
 
-#: languages/vue.php:3649
+#: languages/vue.php:3638
 msgid "The best WordPress SEO plugin that works automatically with MonsterInsights."
 msgstr ""
 
-#: languages/vue.php:3652
+#: languages/vue.php:3641
 msgid "PushEngage"
 msgstr ""
 
-#: languages/vue.php:3655
+#: languages/vue.php:3644
 msgid "Send push notifications to your visitors to drive more traffic and boost sales."
 msgstr ""
 
-#: languages/vue.php:3658
+#: languages/vue.php:3647
 msgid "With MonsterInsights Pro, you can easily measure individual affiliate performance inside Google Analytics, no coding needed. Track clicks, revenue, and more."
 msgstr ""
 
-#: languages/vue.php:3661
+#: languages/vue.php:3650
 msgid "Works automatically with WooCommerce, MemberPress, and EasyDigitalDownloads."
 msgstr ""
 
-#: languages/vue.php:3664
+#: languages/vue.php:3653
 msgid "Media Tracking"
 msgstr ""
 
-#: languages/vue.php:3667
+#: languages/vue.php:3656
 msgid "Get Started"
 msgstr ""
 
-#: languages/vue.php:3670
+#: languages/vue.php:3659
 msgid "Awesome! Tracking and Analytics are All Setup!"
 msgstr ""
 
-#: languages/vue.php:3673
+#: languages/vue.php:3662
 msgid "MonsterInsights is connected to Google Analytics and data is being collected."
 msgstr ""
 
-#: languages/vue.php:3676
+#: languages/vue.php:3665
 msgid "Complete Setup without Upgrading"
 msgstr ""
 
-#: languages/vue.php:3679
+#: languages/vue.php:3668
 msgid "Success"
 msgstr ""
 
-#: languages/vue.php:3682
+#: languages/vue.php:3671
 msgid "Connected to Google Analytics"
 msgstr ""
 
-#: languages/vue.php:3685
+#: languages/vue.php:3674
 msgid "Tracking Code Installed"
 msgstr ""
 
-#: languages/vue.php:3688
+#: languages/vue.php:3677
 msgid "Data Being Collected"
 msgstr ""
 
 #. Translators: Add link to retrieve license from account area.
-#: languages/vue.php:3692
+#: languages/vue.php:3681
 msgid "Already purchased? Simply enter your license key below to connect with MonsterInsights PRO!"
 msgstr ""
 
-#: languages/vue.php:3695
+#: languages/vue.php:3684
 msgid "Verify License Key"
 msgstr ""
 
-#: languages/vue.php:3698
+#: languages/vue.php:3687
 msgid "Upgrade to Unlock These Features"
 msgstr ""
 
-#: languages/vue.php:3701
+#: languages/vue.php:3690
 msgid "To unlock the selected features, please upgrade to Pro and enter your license key below."
 msgstr ""
 
-#: languages/vue.php:3704
+#: languages/vue.php:3693
 msgid "%1$sBonus:%2$s Upgrade today and save %3$s50%% on a Pro License!%4$s (auto-applied at checkout)"
 msgstr ""
 
-#: languages/vue.php:3707
+#: languages/vue.php:3696
 msgid "Verifying License..."
 msgstr ""
 
-#: languages/vue.php:3710
+#: languages/vue.php:3699
 msgid "Privacy Compliance Addon"
 msgstr ""
 
-#: languages/vue.php:3713
+#: languages/vue.php:3702
 msgid "Help Google Analytics become compliant with internet privacy laws like GDPR, PECR, and CCPA."
 msgstr ""
 
-#: languages/vue.php:3716
+#: languages/vue.php:3705
 msgid "Get access to advanced reports inside WordPress including search keywords report, real-time analytics dashboard, publishers / eCommerce report, custom dimensions, and more."
 msgstr ""
 
-#: languages/vue.php:3719
+#: languages/vue.php:3708
 msgid "Instantly enable enhanced eCommerce tracking, so you can measure conversions, sales, and revenue stats. Works with WooCommerce, Easy Digital Downloads, MemberPress, and more."
 msgstr ""
 
-#: languages/vue.php:3722
+#: languages/vue.php:3711
 msgid "20+ Advanced Tracking"
 msgstr ""
 
-#: languages/vue.php:3725
+#: languages/vue.php:3714
 msgid "Get access to advanced tracking features like form conversion tracking, author tracking, custom dimensions, scroll tracking, and more."
 msgstr ""
 
-#: languages/vue.php:3728
+#: languages/vue.php:3717
 msgid "Advanced Growth Tools"
 msgstr ""
 
-#: languages/vue.php:3731
+#: languages/vue.php:3720
 msgid "Get access to advanced growth tools such as popular posts addon, A/B testing tool, smart URL builder, and more."
 msgstr ""
 
-#: languages/vue.php:3734
+#: languages/vue.php:3723
 msgid "Track how your users interact with videos on your website."
 msgstr ""
 
-#: languages/vue.php:3737
+#: languages/vue.php:3726
 msgid "Error Processing"
 msgstr ""
 
-#: languages/vue.php:3740
+#: languages/vue.php:3729
 msgid "There was an error while processing some features. Please try again or you can skip this process for now"
 msgstr ""
 
-#: languages/vue.php:3743
+#: languages/vue.php:3732
 msgid "Which website features would you like to enable?"
 msgstr ""
 
-#: languages/vue.php:3746
+#: languages/vue.php:3735
 msgid "We’ve already selected our recommended features based on your site. "
 msgstr ""
 
-#: languages/vue.php:3749
+#: languages/vue.php:3738
 msgid "Continue"
 msgstr ""
 
-#: languages/vue.php:3752
+#: languages/vue.php:3741
 msgid "Standard Analytics & Reports"
 msgstr ""
 
-#: languages/vue.php:3755
+#: languages/vue.php:3744
 msgid "Get the reports and stats that matter right inside your WordPress Dashboard."
 msgstr ""
 
-#: languages/vue.php:3758
+#: languages/vue.php:3747
 msgid "Helps you see what links your users are clicking on your site."
 msgstr ""
 
-#: languages/vue.php:3761
+#: languages/vue.php:3750
 msgid "All In One SEO Toolkit"
 msgstr ""
 
-#: languages/vue.php:3764
+#: languages/vue.php:3753
 msgid "The best WordPress SEO plugin that works with MonsterInsights to boost your rankings."
 msgstr ""
 
-#: languages/vue.php:3767
+#: languages/vue.php:3756
 msgid "Smart Form Builder by WPForms"
 msgstr ""
 
-#: languages/vue.php:3770
+#: languages/vue.php:3759
 msgid "The most popular WordPress form plugin, trusted by over 5 million websites. Easily create contact forms, payment forms, surveys and more."
+msgstr ""
+
+#: languages/vue.php:3762
+msgid "The following plugins will be installed: "
 msgstr ""
 
 #: lite/includes/admin/connect.php:42
