@@ -1,9 +1,10 @@
 === Post SMTP Mailer/Email Log ===
-Contributors: yehudah
+Plugin URI: https://wpexperts.io/
+Contributors: wpexpertsio
 Tags: postman smtp, postman, smtp, email, mail, mailer, email log, oauth2, gmail, google apps, hotmail, yahoo, mandrill api, sendgrid api, elastic email, office365, mailgun
 Requires at least: 3.9
 Tested up to: 5.9
-Stable tag: 2.0.24
+Stable tag: 2.0.25
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -279,6 +280,18 @@ To avoid being flagged as spam, you need to prove your email isn't forged. On a 
 
 
 == Changelog ==
+
+= 2.0.25 - 2022-04-06 =
+* **Bug Fixes**
+* WP 5.9 Compatibility Ballon UI issue.
+* Uncaught Error: Class ‘PostmanAdminController’ not found.
+* Ajax error appearing due to Google API depreciated function.
+
+* **Improvements**
+* Code Optimization.
+* MIME version added to test mails to prevent emails from spam.
+* NEW Filter `postman_test_email_args` added to modify test email arguments.
+* NEW Action `wp_mail_succeeded` added to exectue on every success email delivery.
 
 = 2.0.24 - 2022-02-13
 * Update: THE FUTURE OF Post SMTP - https://postmansmtp.com/the-future-of-post-smtp/
