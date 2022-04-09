@@ -1,9 +1,9 @@
 /wp-content/advanced-cache.php
 /wp-content/index.php
-/wp-content/cache/
-/wp-content/upgrade/
-/wp-content/uploads/
-/wp-content/wflogs/
-/wp-content/wp-rocket-config/
-/wp-content/plugins/ptc-resources-server/logs/
-/wp-content/plugins/ptc-resources-server/resources/
+/wp-content/cache
+/wp-content/upgrade
+/wp-content/uploads
+/wp-content/wflogs
+/wp-content/wp-rocket-config
+/wp-content/plugins/ptc-resources-server/logs
+/wp-content/plugins/ptc-resources-server/resources
