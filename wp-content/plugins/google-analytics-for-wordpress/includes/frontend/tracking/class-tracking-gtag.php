@@ -161,6 +161,11 @@ class MonsterInsights_Tracking_Gtag extends MonsterInsights_Tracking_Abstract
             $options['page_path'] = "{$placeholder}location.pathname + location.search + location.hash{$placeholder}";
         }
 
+        if ( $type === 'v4' && monsterinsights_get_option( 'userid', false ) && is_user_logged_in() ) {
+            $value = get_current_user_id();
+            $options['wp_user_id'] = $value;
+        }
+
         $options = apply_filters('monsterinsights_frontend_tracking_options_gtag_end', $options, $type);
 
         if ($encoded) {
