@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . "/wfInvalidPathException.php";
+
 class wfFileUtils {
 
 	const CURRENT_DIRECTORY = '.';
@@ -72,6 +74,13 @@ class wfFileUtils {
 				return false;
 		}
 		return true;
+	}
+
+	public static function realPath($path) {
+		$realPath = realpath($path);
+		if ($realPath === false)
+			throw new wfInvalidPathException("Realpath resolution failed", $path);
+		return $realPath;
 	}
 
 }

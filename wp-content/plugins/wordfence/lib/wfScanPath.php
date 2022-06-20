@@ -14,7 +14,7 @@ class wfScanPath {
 	public function __construct($baseDirectory, $path, $wordpressPath = null, $expectedFiles = null) {
 		$this->baseDirectory = $baseDirectory;
 		$this->path = $path;
-		$this->realPath = realpath($path);
+		$this->realPath = wfFileUtils::realPath($path);
 		$this->wordpressPath = $wordpressPath;
 		$this->expectedFiles = is_array($expectedFiles) ? array_flip($expectedFiles) : null;
 	}
@@ -53,7 +53,7 @@ class wfScanPath {
 
 	public function createScanFile($relativePath) {
 		return new wfScanFile(
-			realpath(wfFileUtils::joinPaths($this->realPath, $relativePath)),
+			wfFileUtils::realPath(wfFileUtils::joinPaths($this->realPath, $relativePath)),
 			wfFileUtils::trimSeparators(wfFileUtils::joinPaths($this->wordpressPath, $relativePath), true, false)
 		);
 	}

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Wordfence Security plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Wordfence Security 7.5.10\n"
+"Project-Id-Version: Wordfence Security 7.5.11\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/src\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-17T14:17:20-04:00\n"
+"POT-Creation-Date: 2022-06-14T13:03:48-04:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: wordfence\n"
@@ -240,16 +240,16 @@ msgstr ""
 #: lib/wfScanEngine.php:699
 #: lib/wfScanEngine.php:722
 #: lib/wfScanEngine.php:797
-#: lib/wfScanEngine.php:1010
-#: lib/wfScanEngine.php:1011
-#: lib/wfScanEngine.php:1152
-#: lib/wfScanEngine.php:1289
-#: lib/wfScanEngine.php:1432
-#: lib/wfScanEngine.php:1796
-#: lib/wfScanEngine.php:2042
-#: lib/wfScanEngine.php:2081
-#: lib/wfScanEngine.php:2269
-#: lib/wfScanEngine.php:2311
+#: lib/wfScanEngine.php:1026
+#: lib/wfScanEngine.php:1027
+#: lib/wfScanEngine.php:1168
+#: lib/wfScanEngine.php:1305
+#: lib/wfScanEngine.php:1448
+#: lib/wfScanEngine.php:1812
+#: lib/wfScanEngine.php:2058
+#: lib/wfScanEngine.php:2097
+#: lib/wfScanEngine.php:2285
+#: lib/wfScanEngine.php:2327
 #: lib/wfVersionCheckController.php:68
 #: lib/wfVersionCheckController.php:91
 #: lib/wfVersionCheckController.php:167
@@ -280,10 +280,10 @@ msgstr ""
 #: lib/wordfenceClass.php:8237
 #: lib/wordfenceClass.php:8283
 #: lib/wordfenceClass.php:9005
-#: lib/wordfenceHash.php:515
-#: lib/wordfenceHash.php:562
-#: lib/wordfenceHash.php:636
-#: lib/wordfenceHash.php:750
+#: lib/wordfenceHash.php:521
+#: lib/wordfenceHash.php:568
+#: lib/wordfenceHash.php:642
+#: lib/wordfenceHash.php:756
 #: views/blocking/block-list.php:35
 #: views/blocking/blocking-create.php:179
 #: views/blocking/blocking-status.php:27
@@ -6654,560 +6654,572 @@ msgstr ""
 msgid "Check if your site is being Spamvertized is for paid members only"
 msgstr ""
 
-#: lib/wfScanEngine.php:954
+#: lib/wfScanEngine.php:937
+msgid "Ignoring invalid scan path: %s"
+msgstr ""
+
+#: lib/wfScanEngine.php:960
+msgid "Ignoring invalid expected scan file: %s"
+msgstr ""
+
+#: lib/wfScanEngine.php:965
 msgid "Wordfence could not read the content of your WordPress directory. This usually indicates your permissions are so strict that your web server can't read your WordPress directory."
 msgstr ""
 
-#: lib/wfScanEngine.php:972
+#: lib/wfScanEngine.php:974
+msgid "Ignoring invalid base scan file: %s"
+msgstr ""
+
+#: lib/wfScanEngine.php:988
 msgid "Checking for paths skipped due to scan settings"
 msgstr ""
 
 #. translators: Number of paths skipped in scan.
-#: lib/wfScanEngine.php:982
+#: lib/wfScanEngine.php:998
 msgid ", and %d more."
 msgstr ""
 
 #. translators: Number of paths skipped in scan.
-#: lib/wfScanEngine.php:1006
+#: lib/wfScanEngine.php:1022
 msgid "%d path was skipped for the malware scan due to scan settings"
 msgid_plural "%d paths were skipped for the malware scan due to scan settings"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: 1. Number of paths skipped in scan. 2. Support URL. 3. List of skipped paths.
-#: lib/wfScanEngine.php:1009
+#: lib/wfScanEngine.php:1025
 msgid "The option \"Scan files outside your WordPress installation\" is off by default, which means %1$d path and its file(s) will not be scanned for malware or unauthorized changes. To continue skipping this path, you may ignore this issue. Or to start scanning it, enable the option and subsequent scans will include it. Some paths may not be necessary to scan, so this is optional. <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More<span class=\"screen-reader-text\"> ("
 msgid_plural "The option \"Scan files outside your WordPress installation\" is off by default, which means %1$d paths and their file(s) will not be scanned for malware or unauthorized changes. To continue skipping these paths, you may ignore this issue. Or to start scanning them, enable the option and subsequent scans will include them. Some paths may not be necessary to scan, so this is optional. <a href=\"%2$s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More<span class=\"screen-reader-text\"> ("
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/wfScanEngine.php:1037
+#: lib/wfScanEngine.php:1053
 msgid "Including files that are outside the WordPress installation in the scan."
 msgstr ""
 
-#: lib/wfScanEngine.php:1040
+#: lib/wfScanEngine.php:1056
 msgid "Getting plugin list from WordPress"
 msgstr ""
 
 #. translators: Number of plugins.
-#: lib/wfScanEngine.php:1042
+#: lib/wfScanEngine.php:1058
 msgid "Found %d plugin"
 msgid_plural "Found %d plugins"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/wfScanEngine.php:1044
+#: lib/wfScanEngine.php:1060
 msgid "Getting theme list from WordPress"
 msgstr ""
 
 #. translators: Number of themes.
-#: lib/wfScanEngine.php:1046
+#: lib/wfScanEngine.php:1062
 msgid "Found %d theme"
 msgid_plural "Found %d themes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: lib/wfScanEngine.php:1063
+#: lib/wfScanEngine.php:1079
 msgid "Scanning file contents for infections and vulnerabilities"
 msgstr ""
 
-#: lib/wfScanEngine.php:1066
+#: lib/wfScanEngine.php:1082
 msgid "Skipping scan of file contents for infections and vulnerabilities"
 msgstr ""
 
-#: lib/wfScanEngine.php:1070
+#: lib/wfScanEngine.php:1086
 msgid "Scanning file contents for URLs on a domain blocklist"
 msgstr ""
 
-#: lib/wfScanEngine.php:1073
+#: lib/wfScanEngine.php:1089
 msgid "Skipping scan of file contents for URLs on a domain blocklist"
 msgstr ""
 
-#: lib/wfScanEngine.php:1078
+#: lib/wfScanEngine.php:1094
 msgid "Starting scan of file contents"
 msgstr ""
 
-#: lib/wfScanEngine.php:1094
+#: lib/wfScanEngine.php:1110
 msgid "Done file contents scan"
 msgstr ""
 
 #. translators: Scan result description.
-#: lib/wfScanEngine.php:1102
-#: lib/wfScanEngine.php:2271
-#: lib/wfScanEngine.php:2313
+#: lib/wfScanEngine.php:1118
+#: lib/wfScanEngine.php:2287
+#: lib/wfScanEngine.php:2329
 msgid "Adding issue: %s"
 msgstr ""
 
-#: lib/wfScanEngine.php:1135
+#: lib/wfScanEngine.php:1151
 msgid "Scanning for publicly accessible quarantined files"
 msgstr ""
 
 #. translators: File path.
-#: lib/wfScanEngine.php:1140
+#: lib/wfScanEngine.php:1156
 msgid "Testing accessibility of: %s"
 msgstr ""
 
 #. translators: File path.
-#: lib/wfScanEngine.php:1149
+#: lib/wfScanEngine.php:1165
 msgid "Publicly accessible quarantined file found: %s"
 msgstr ""
 
 #. translators: URL to publicly accessible file.
-#: lib/wfScanEngine.php:1152
+#: lib/wfScanEngine.php:1168
 msgid "<a href=\"%1$s\" target=\"_blank\" rel=\"noopener noreferrer\">%1$s<span class=\"screen-reader-text\"> ("
 msgstr ""
 
-#: lib/wfScanEngine.php:1176
+#: lib/wfScanEngine.php:1192
 msgid "Scanning posts for URLs on a domain blocklist"
 msgstr ""
 
 #. translators: Number of posts left to scan.
-#: lib/wfScanEngine.php:1199
+#: lib/wfScanEngine.php:1215
 msgid "Scanning posts with %d left to scan."
 msgstr ""
 
-#: lib/wfScanEngine.php:1221
+#: lib/wfScanEngine.php:1237
 msgid "Post title contains suspicious code"
 msgstr ""
 
-#: lib/wfScanEngine.php:1222
+#: lib/wfScanEngine.php:1238
 msgid "This post contains code that is suspicious. Please check the title of the post and confirm that the code in the title is not malicious."
 msgstr ""
 
-#: lib/wfScanEngine.php:1245
+#: lib/wfScanEngine.php:1261
 msgid "Examining URLs found in posts we scanned for dangerous websites"
 msgstr ""
 
-#: lib/wfScanEngine.php:1247
-#: lib/wfScanEngine.php:2234
+#: lib/wfScanEngine.php:1263
+#: lib/wfScanEngine.php:2250
 msgid "Done examining URLs"
 msgstr ""
 
 #. translators: 1. WordPress Post type. 2. URL.
-#: lib/wfScanEngine.php:1283
-#: lib/wfScanEngine.php:1303
+#: lib/wfScanEngine.php:1299
+#: lib/wfScanEngine.php:1319
 msgid "%1$s contains a suspected malware URL: %2$s"
 msgstr ""
 
 #. translators: 1. WordPress Post type. 2. URL. 3. URL.
 #. translators: 1. WordPress post type. 2. URL. 3. URL.
-#: lib/wfScanEngine.php:1289
-#: lib/wfScanEngine.php:1432
+#: lib/wfScanEngine.php:1305
+#: lib/wfScanEngine.php:1448
 msgid "This %1$s contains a suspected malware URL listed on Google's list of malware sites. The URL is: %2$s - More info available at <a href=\"http://safebrowsing.clients.google.com/safebrowsing/diagnostic?site=%3$s&client=googlechrome&hl=en-US\" target=\"_blank\" rel=\"noopener noreferrer\">Google Safe Browsing diagnostic page<span class=\"screen-reader-text\"> ("
 msgstr ""
 
 #. translators: 1. WordPress Post type. 2. URL.
-#: lib/wfScanEngine.php:1295
+#: lib/wfScanEngine.php:1311
 msgid "%1$s contains a suspected phishing site URL: %2$s"
 msgstr ""
 
 #. translators: 1. WordPress Post type. 2. URL.
 #. translators: 1. WordPress post type. 2. URL.
-#: lib/wfScanEngine.php:1298
-#: lib/wfScanEngine.php:1441
+#: lib/wfScanEngine.php:1314
+#: lib/wfScanEngine.php:1457
 msgid "This %1$s contains a URL that is a suspected phishing site that is currently listed on Google's list of known phishing sites. The URL is: %2$s"
 msgstr ""
 
 #. translators: 1. WordPress Post type. 2. URL.
 #. translators: 1. WordPress post type. 2. URL.
-#: lib/wfScanEngine.php:1306
-#: lib/wfScanEngine.php:1449
+#: lib/wfScanEngine.php:1322
+#: lib/wfScanEngine.php:1465
 msgid "This %1$s contains a URL that is currently listed on Wordfence's domain blocklist. The URL is: %2$s"
 msgstr ""
 
 #. translators: Scan result description.
-#: lib/wfScanEngine.php:1315
+#: lib/wfScanEngine.php:1331
 msgid "Adding issue: %1$s"
 msgstr ""
 
-#: lib/wfScanEngine.php:1351
+#: lib/wfScanEngine.php:1367
 msgid "Scanning comments for URLs on a domain blocklist"
 msgstr ""
 
 #. translators: Number of comments left to scan.
-#: lib/wfScanEngine.php:1375
+#: lib/wfScanEngine.php:1391
 msgid "Scanning comments with %d left to scan."
 msgstr ""
 
 #. translators: 1. WordPress post type. 2. WordPress author username.
-#: lib/wfScanEngine.php:1429
+#: lib/wfScanEngine.php:1445
 msgid "%1$s with author %2$s contains a suspected malware URL."
 msgstr ""
 
 #. translators: WordPress post type.
-#: lib/wfScanEngine.php:1438
+#: lib/wfScanEngine.php:1454
 msgid "%s contains a suspected phishing site URL."
 msgstr ""
 
 #. translators: URL.
-#: lib/wfScanEngine.php:1446
+#: lib/wfScanEngine.php:1462
 msgid "%s contains a suspected malware URL."
 msgstr ""
 
 #. translators: WordPress username.
-#: lib/wfScanEngine.php:1494
+#: lib/wfScanEngine.php:1510
 msgid "Author: %s"
 msgstr ""
 
 #. translators: Email address.
-#: lib/wfScanEngine.php:1497
+#: lib/wfScanEngine.php:1513
 msgid "Email: %s"
 msgstr ""
 
 #. translators: IP address.
-#: lib/wfScanEngine.php:1499
+#: lib/wfScanEngine.php:1515
 msgid "Source IP: %s"
 msgstr ""
 
 #. translators: Comment description.
-#: lib/wfScanEngine.php:1500
+#: lib/wfScanEngine.php:1516
 msgid "Scanning comment with %s"
 msgstr ""
 
 #. translators: Comment description.
-#: lib/wfScanEngine.php:1513
-#: lib/wfScanEngine.php:1519
+#: lib/wfScanEngine.php:1529
+#: lib/wfScanEngine.php:1535
 msgid "Marking comment as spam for containing a malware URL. Comment has %s"
 msgstr ""
 
 #. translators: Comment description.
-#: lib/wfScanEngine.php:1516
+#: lib/wfScanEngine.php:1532
 msgid "Marking comment as spam for containing a phishing URL. Comment has %s"
 msgstr ""
 
 #. translators: Comment description.
-#: lib/wfScanEngine.php:1526
+#: lib/wfScanEngine.php:1542
 msgid "Scanned comment with %s"
 msgstr ""
 
-#: lib/wfScanEngine.php:1577
+#: lib/wfScanEngine.php:1593
 msgid "Scanning for weak passwords"
 msgstr ""
 
-#: lib/wfScanEngine.php:1588
+#: lib/wfScanEngine.php:1604
 msgid "We were unable to generate the user list for your password check."
 msgstr ""
 
 #. translators: Number of users.
-#: lib/wfScanEngine.php:1604
+#: lib/wfScanEngine.php:1620
 msgid "Starting password strength check on %d user."
 msgid_plural "Starting password strength check on %d users."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: Number of users.
-#: lib/wfScanEngine.php:1613
+#: lib/wfScanEngine.php:1629
 msgid "Total of %d users left to process in password strength check."
 msgid_plural "Total of %d users left to process in password strength check."
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: WordPress user ID.
-#: lib/wfScanEngine.php:1648
+#: lib/wfScanEngine.php:1664
 msgid "Could not get username for user with ID %d when checking password strength."
 msgstr ""
 
 #. translators: 1. WordPress username. 2. WordPress user ID.
-#: lib/wfScanEngine.php:1654
+#: lib/wfScanEngine.php:1670
 msgid "Checking password strength of user '%1$s' with ID %2$d"
 msgstr ""
 
 #. translators: 1. WordPress username. 2. WordPress capability.
-#: lib/wfScanEngine.php:1662
+#: lib/wfScanEngine.php:1678
 msgid "User \"%1$s\" with \"%2$s\" access has an easy password."
 msgstr ""
 
 #. translators: WordPress capability.
-#: lib/wfScanEngine.php:1668
+#: lib/wfScanEngine.php:1684
 msgid "A user with the a role of '%s' has a password that is easy to guess. Please change this password yourself or ask the user to change it."
 msgstr ""
 
 #. translators: WordPress username.
-#: lib/wfScanEngine.php:1676
+#: lib/wfScanEngine.php:1692
 msgid "User \"%s\" with 'subscriber' access has a very easy password."
 msgstr ""
 
-#: lib/wfScanEngine.php:1677
+#: lib/wfScanEngine.php:1693
 msgid "A user with 'subscriber' access has a password that is very easy to guess. Please either change it or ask the user to change their password."
 msgstr ""
 
 #. translators: Scan result description.
-#: lib/wfScanEngine.php:1684
+#: lib/wfScanEngine.php:1700
 msgid "Adding issue %s"
 msgstr ""
 
 #. translators: WordPress username.
-#: lib/wfScanEngine.php:1701
+#: lib/wfScanEngine.php:1717
 msgid "Completed checking password strength of user '%s'"
 msgstr ""
 
-#: lib/wfScanEngine.php:1734
+#: lib/wfScanEngine.php:1750
 msgid "Scanning to check available disk space"
 msgstr ""
 
-#: lib/wfScanEngine.php:1741
+#: lib/wfScanEngine.php:1757
 msgid "Unable to access available disk space information"
 msgstr ""
 
 #. translators: 1. Number of bytes. 2. Number of bytes.
-#: lib/wfScanEngine.php:1750
+#: lib/wfScanEngine.php:1766
 msgid "Total disk space: %1$s -- Free disk space: %2$s"
 msgstr ""
 
 #. translators: Number of bytes.
-#: lib/wfScanEngine.php:1755
+#: lib/wfScanEngine.php:1771
 msgid "The disk has %s MB available"
 msgstr ""
 
 #. translators: Number of bytes.
-#: lib/wfScanEngine.php:1770
+#: lib/wfScanEngine.php:1786
 msgid "You have %s disk space remaining"
 msgstr ""
 
 #. translators: Number of bytes.
-#: lib/wfScanEngine.php:1771
+#: lib/wfScanEngine.php:1787
 msgid "You only have %s of your disk space remaining. Please free up disk space or your website may stop serving requests."
 msgstr ""
 
-#: lib/wfScanEngine.php:1784
+#: lib/wfScanEngine.php:1800
 msgid "Checking Web Application Firewall status"
 msgstr ""
 
-#: lib/wfScanEngine.php:1795
+#: lib/wfScanEngine.php:1811
 msgid "Web Application Firewall is disabled"
 msgstr ""
 
 #. translators: Support URL.
-#: lib/wfScanEngine.php:1796
+#: lib/wfScanEngine.php:1812
 msgid "Wordfence's Web Application Firewall has been unexpectedly disabled. If you see a notice at the top of the Wordfence admin pages that says \"The Wordfence Web Application Firewall cannot run,\" click the link in that message to rebuild the configuration. If this does not work, you may need to fix file permissions. <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">More Details<span class=\"screen-reader-text\"> ("
 msgstr ""
 
-#: lib/wfScanEngine.php:1811
+#: lib/wfScanEngine.php:1827
 msgid "Scanning for old themes, plugins and core files"
 msgstr ""
 
-#: lib/wfScanEngine.php:1897
+#: lib/wfScanEngine.php:1913
 msgid "Your WordPress version is out of date"
 msgstr ""
 
 #. translators: Software version.
-#: lib/wfScanEngine.php:1898
+#: lib/wfScanEngine.php:1914
 msgid "WordPress version %s is now available. Please upgrade immediately to get the latest security updates from WordPress."
 msgstr ""
 
 #. translators: 1. Plugin name. 2. Software version. 3. Software version.
-#: lib/wfScanEngine.php:1925
+#: lib/wfScanEngine.php:1941
 msgid "The Plugin \"%1$s\" needs an upgrade (%2$s -> %3$s)."
 msgstr ""
 
 #. translators: Theme name.
-#: lib/wfScanEngine.php:1932
-#: lib/wfScanEngine.php:1966
+#: lib/wfScanEngine.php:1948
+#: lib/wfScanEngine.php:1982
 msgid "You need to upgrade \"%s\" to the newest version to ensure you have any security fixes the developer has released."
 msgstr ""
 
 #. translators: 1. Theme name. 2. Software version. 3. Software version.
-#: lib/wfScanEngine.php:1959
+#: lib/wfScanEngine.php:1975
 msgid "The Theme \"%1$s\" needs an upgrade (%2$s -> %3$s)."
 msgstr ""
 
 #. translators: 1. Plugin name. 2. Software version. 3. Software version.
-#: lib/wfScanEngine.php:2010
+#: lib/wfScanEngine.php:2026
 msgid "The Plugin \"%1$s\" appears to be abandoned (updated %2$s, tested to WP %3$s)."
 msgstr ""
 
 #. translators: 1. Plugin name. 2. Software version.
-#: lib/wfScanEngine.php:2017
+#: lib/wfScanEngine.php:2033
 msgid "It was last updated %1$s ago and tested up to WordPress %2$s."
 msgstr ""
 
 #. translators: 1. Plugin name. 2. Software version.
-#: lib/wfScanEngine.php:2024
+#: lib/wfScanEngine.php:2040
 msgid "The Plugin \"%1$s\" appears to be abandoned (updated %2$s)."
 msgstr ""
 
 #. translators: Time duration.
-#: lib/wfScanEngine.php:2030
+#: lib/wfScanEngine.php:2046
 msgid "It was last updated %s ago."
 msgstr ""
 
-#: lib/wfScanEngine.php:2036
-#: lib/wfScanEngine.php:2075
+#: lib/wfScanEngine.php:2052
+#: lib/wfScanEngine.php:2091
 msgid "It has unpatched security issues and may have compatibility problems with the current version of WordPress."
 msgstr ""
 
-#: lib/wfScanEngine.php:2038
-#: lib/wfScanEngine.php:2077
+#: lib/wfScanEngine.php:2054
+#: lib/wfScanEngine.php:2093
 msgid "Plugins can be removed from wordpress.org for various reasons. This can include benign issues like a plugin author discontinuing development or moving the plugin distribution to their own site, but some might also be due to security issues. In any case, future updates may or may not be available, so it is worth investigating the cause and deciding whether to temporarily or permanently replace or remove the plugin."
 msgstr ""
 
 #. translators: Support URL.
-#: lib/wfScanEngine.php:2042
-#: lib/wfScanEngine.php:2081
-#: lib/wfScanEngine.php:2269
-#: lib/wfScanEngine.php:2311
+#: lib/wfScanEngine.php:2058
+#: lib/wfScanEngine.php:2097
+#: lib/wfScanEngine.php:2285
+#: lib/wfScanEngine.php:2327
 msgid "<a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Get more information.<span class=\"screen-reader-text\"> ("
 msgstr ""
 
 #. translators: Plugin name.
-#: lib/wfScanEngine.php:2073
+#: lib/wfScanEngine.php:2089
 msgid "The Plugin \"%s\" has been removed from wordpress.org."
 msgstr ""
 
-#: lib/wfScanEngine.php:2126
+#: lib/wfScanEngine.php:2142
 msgid "Scanning for admin users not created through WordPress"
 msgstr ""
 
 #. translators: WordPress username.
-#: lib/wfScanEngine.php:2148
+#: lib/wfScanEngine.php:2164
 msgid "An admin user with the username %s was created outside of WordPress."
 msgstr ""
 
 #. translators: WordPress username.
-#: lib/wfScanEngine.php:2149
+#: lib/wfScanEngine.php:2165
 msgid "An admin user with the username %s was created outside of WordPress. It's possible a plugin could have created the account, but if you do not recognize the user, we suggest you remove it."
 msgstr ""
 
 #. translators: WordPress username.
-#: lib/wfScanEngine.php:2175
+#: lib/wfScanEngine.php:2191
 msgid "An admin user with a suspicious username %s was found."
 msgstr ""
 
 #. translators: WordPress username.
-#: lib/wfScanEngine.php:2176
+#: lib/wfScanEngine.php:2192
 msgid "An admin user with a suspicious username %s was found. Administrators accounts with usernames similar to this are commonly seen created by hackers. It's possible a plugin could have created the account, but if you do not recognize the user, we suggest you remove it."
 msgstr ""
 
-#: lib/wfScanEngine.php:2197
+#: lib/wfScanEngine.php:2213
 msgid "Scanning for suspicious site options"
 msgstr ""
 
-#: lib/wfScanEngine.php:2232
+#: lib/wfScanEngine.php:2248
 msgid "Examining URLs found in the options we scanned for dangerous websites"
 msgstr ""
 
 #. translators: URL.
-#: lib/wfScanEngine.php:2256
-#: lib/wfScanEngine.php:2262
+#: lib/wfScanEngine.php:2272
+#: lib/wfScanEngine.php:2278
 msgid "Option contains a suspected malware URL: %s"
 msgstr ""
 
 #. translators: URL.
-#: lib/wfScanEngine.php:2257
+#: lib/wfScanEngine.php:2273
 msgid "This option contains a suspected malware URL listed on Google's list of malware sites. It may indicate your site is infected with malware. The URL is: %s"
 msgstr ""
 
 #. translators: URL.
-#: lib/wfScanEngine.php:2259
+#: lib/wfScanEngine.php:2275
 msgid "Option contains a suspected phishing site URL: %s"
 msgstr ""
 
 #. translators: URL.
-#: lib/wfScanEngine.php:2260
+#: lib/wfScanEngine.php:2276
 msgid "This option contains a URL that is a suspected phishing site that is currently listed on Google's list of known phishing sites. It may indicate your site is infected with malware. The URL is: %s"
 msgstr ""
 
 #. translators: URL.
-#: lib/wfScanEngine.php:2263
+#: lib/wfScanEngine.php:2279
 msgid "This option contains a URL that is currently listed on Wordfence's domain blocklist. It may indicate your site is infected with malware. The URL is: %s"
 msgstr ""
 
-#: lib/wfScanEngine.php:2303
+#: lib/wfScanEngine.php:2319
 msgid "Checking for future GeoIP support"
 msgstr ""
 
-#: lib/wfScanEngine.php:2308
+#: lib/wfScanEngine.php:2324
 msgid "PHP Update Needed for Country Blocking"
 msgstr ""
 
 #. translators: Software version.
-#: lib/wfScanEngine.php:2309
+#: lib/wfScanEngine.php:2325
 msgid "The GeoIP database that is required for country blocking has been updated to a new format. This new format requires sites to run PHP 5.4 or newer, and this site is on PHP %s. To ensure country blocking continues functioning, please update PHP."
 msgstr ""
 
-#: lib/wfScanEngine.php:2358
+#: lib/wfScanEngine.php:2374
 msgid "Previous scan was stopped successfully."
 msgstr ""
 
-#: lib/wfScanEngine.php:2359
+#: lib/wfScanEngine.php:2375
 msgid "Scan was stopped on administrator request."
 msgstr ""
 
-#: lib/wfScanEngine.php:2375
+#: lib/wfScanEngine.php:2391
 msgid "Entering start scan routine"
 msgstr ""
 
-#: lib/wfScanEngine.php:2378
+#: lib/wfScanEngine.php:2394
 msgid "A scan is already running. Use the stop scan button if you would like to terminate the current scan."
 msgstr ""
 
 #. translators: Support URL.
-#: lib/wfScanEngine.php:2396
+#: lib/wfScanEngine.php:2412
 msgid "Test result of scan start URL fetch: %s"
 msgstr ""
 
 #. translators: WordPress admin panel URL.
-#: lib/wfScanEngine.php:2405
+#: lib/wfScanEngine.php:2421
 msgid "Starting cron with normal ajax at URL %s"
 msgstr ""
 
 #. translators: Error message.
 #. translators: WordPress admin panel URL.
-#: lib/wfScanEngine.php:2427
-#: lib/wfScanEngine.php:2462
+#: lib/wfScanEngine.php:2443
+#: lib/wfScanEngine.php:2478
 msgid "There was an error starting the scan: %s."
 msgstr ""
 
-#: lib/wfScanEngine.php:2429
-#: lib/wfScanEngine.php:2464
+#: lib/wfScanEngine.php:2445
+#: lib/wfScanEngine.php:2480
 msgid "There was an unknown error starting the scan."
 msgstr ""
 
-#: lib/wfScanEngine.php:2436
-#: lib/wfScanEngine.php:2470
+#: lib/wfScanEngine.php:2452
+#: lib/wfScanEngine.php:2486
 msgid "Scan process ended after forking."
 msgstr ""
 
 #. translators: WordPress admin panel URL.
-#: lib/wfScanEngine.php:2440
+#: lib/wfScanEngine.php:2456
 msgid "Starting cron via proxy at URL %s"
 msgstr ""
 
 #. translators: Time in seconds.
-#: lib/wfScanEngine.php:2516
+#: lib/wfScanEngine.php:2532
 msgid "Got value from wf config maxExecutionTime: %s"
 msgstr ""
 
 #. translators: Time in seconds.
-#: lib/wfScanEngine.php:2520
+#: lib/wfScanEngine.php:2536
 msgid "getMaxExecutionTime() returning config value: %s"
 msgstr ""
 
 #. translators: PHP ini value.
-#: lib/wfScanEngine.php:2527
+#: lib/wfScanEngine.php:2543
 msgid "Got max_execution_time value from ini: %s"
 msgstr ""
 
 #. translators: 1. PHP ini setting. 2. Time in seconds.
-#: lib/wfScanEngine.php:2534
+#: lib/wfScanEngine.php:2550
 msgid "ini value of %1$d is higher than value for WORDFENCE_SCAN_MAX_INI_EXECUTION_TIME (%2$d), reducing"
 msgstr ""
 
 #. translators: PHP ini setting.
-#: lib/wfScanEngine.php:2544
+#: lib/wfScanEngine.php:2560
 msgid "getMaxExecutionTime() returning half ini value: %d"
 msgstr ""
 
-#: lib/wfScanEngine.php:2550
+#: lib/wfScanEngine.php:2566
 msgid "getMaxExecutionTime() returning default of: 15"
 msgstr ""
 
 #. translators: 1. HTTP status code.
-#: lib/wfScanEngine.php:2752
+#: lib/wfScanEngine.php:2768
 msgid "Got error response from Wordfence servers: %s"
 msgstr ""
 
-#: lib/wfScanEngine.php:2756
+#: lib/wfScanEngine.php:2772
 msgid "Invalid response from Wordfence servers."
 msgstr ""
 
@@ -9562,126 +9574,130 @@ msgstr ""
 msgid "This file's signature matches a known malware file. The title of the malware is '%s'. Immediately inspect this file using the 'View' option below and consider deleting it from your server."
 msgstr ""
 
+#: lib/wordfenceHash.php:281
+msgid "Ignoring invalid scan file child: %s"
+msgstr ""
+
 #. translators: File path.
-#: lib/wordfenceHash.php:285
-#: lib/wordfenceHash.php:314
+#: lib/wordfenceHash.php:291
+#: lib/wordfenceHash.php:320
 msgid "Found .suspected file: %s"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:294
-#: lib/wordfenceHash.php:323
+#: lib/wordfenceHash.php:300
+#: lib/wordfenceHash.php:329
 msgid "Skipping unneeded hash: %s"
 msgstr ""
 
 #. translators: Number of files.
-#: lib/wordfenceHash.php:350
+#: lib/wordfenceHash.php:356
 msgid "%d files indexed"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:387
+#: lib/wordfenceHash.php:393
 msgid "Forking during indexing: %s"
 msgstr ""
 
 #. translators: PHP max execution time.
-#: lib/wordfenceHash.php:390
+#: lib/wordfenceHash.php:396
 msgid "Calling fork() from wordfenceHash with maxExecTime: %s"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:427
+#: lib/wordfenceHash.php:433
 msgid "Skipping file larger than max size: %s"
 msgstr ""
 
 #. translators: 1. File path. 2. Memory in bytes.
-#: lib/wordfenceHash.php:432
+#: lib/wordfenceHash.php:438
 msgid "Scanning: %1$s (Mem:%2$s)"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:435
+#: lib/wordfenceHash.php:441
 msgid "Scanning: %s"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:475
+#: lib/wordfenceHash.php:481
 msgid "WordPress core file modified: %s"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:476
+#: lib/wordfenceHash.php:482
 msgid "This WordPress core file has been modified and differs from the original file distributed with this version of WordPress."
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:512
+#: lib/wordfenceHash.php:518
 msgid "Modified plugin file: %s"
 msgstr ""
 
 #. translators: 1. Plugin name. 2. Plugin version. 3. Support URL.
-#: lib/wordfenceHash.php:515
+#: lib/wordfenceHash.php:521
 msgid "This file belongs to plugin \"%1$s\" version \"%2$s\" and has been modified from the file that is distributed by WordPress.org for this version. Please use the link to see how the file has changed. If you have modified this file yourself, you can safely ignore this warning. If you see a lot of changed files in a plugin that have been made by the author, then try uninstalling and reinstalling the plugin to force an upgrade. Doing this is a workaround for plugin authors who don't manage their code correctly. <a href=\"%3$s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More<span class=\"screen-reader-text\"> ("
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:559
+#: lib/wordfenceHash.php:565
 msgid "Modified theme file: %s"
 msgstr ""
 
 #. translators: 1. Plugin name. 2. Plugin version. 3. Support URL.
-#: lib/wordfenceHash.php:562
+#: lib/wordfenceHash.php:568
 msgid "This file belongs to theme \"%1$s\" version \"%2$s\" and has been modified from the original distribution. It is common for site owners to modify their theme files, so if you have modified this file yourself you can safely ignore this warning. <a href=\"%3$s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More<span class=\"screen-reader-text\"> ("
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:596
+#: lib/wordfenceHash.php:602
 msgid "Old WordPress core file not removed during update: %s"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:597
+#: lib/wordfenceHash.php:603
 msgid "This file is in a WordPress core location but is from an older version of WordPress and not used with your current version. Hosting or permissions issues can cause these files to get left behind when WordPress is updated and they should be removed if possible."
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:614
-#: lib/wordfenceHash.php:635
+#: lib/wordfenceHash.php:620
+#: lib/wordfenceHash.php:641
 msgid "Unknown file in WordPress core: %s"
 msgstr ""
 
 #. translators: File path.
-#: lib/wordfenceHash.php:615
+#: lib/wordfenceHash.php:621
 msgid "This file is in a WordPress core location but is not distributed with this version of WordPress. This scan often includes files left over from a previous WordPress version, but it may also find files added by another plugin, files added by your host, or malicious files added by an attacker."
 msgstr ""
 
 #. translators: Support URL.
-#: lib/wordfenceHash.php:636
+#: lib/wordfenceHash.php:642
 msgid "This file is in a WordPress core location but is not distributed with this version of WordPress. This scan often includes files left over from a previous WordPress version, but it may also find files added by another plugin, files added by your host, or malicious files added by an attacker. <a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More<span class=\"screen-reader-text\"> ("
 msgstr ""
 
 #. translators: 1. Number of files. 2. Data in bytes.
-#: lib/wordfenceHash.php:665
+#: lib/wordfenceHash.php:671
 msgid "Analyzed %1$d files containing %2$s of data so far"
 msgstr ""
 
 #. translators: Number of scan results.
-#: lib/wordfenceHash.php:749
+#: lib/wordfenceHash.php:755
 msgid "(+ %d more)"
 msgstr ""
 
 #. translators: Number of files.
-#: lib/wordfenceHash.php:750
+#: lib/wordfenceHash.php:756
 msgid "%d more similar files were found."
 msgstr ""
 
 #. translators: Number of files.
-#: lib/wordfenceHash.php:750
+#: lib/wordfenceHash.php:756
 msgid "1 more similar file was found."
 msgstr ""
 
 #. translators: Number of files.
-#: lib/wordfenceHash.php:750
+#: lib/wordfenceHash.php:756
 msgid "<a href=\"%s\" target=\"_blank\" rel=\"noopener noreferrer\">Learn More<span class=\"screen-reader-text\"> ("
 msgstr ""
 
@@ -9787,7 +9803,7 @@ msgid "Asking Wordfence to check URLs against malware list."
 msgstr ""
 
 #: lib/wordfenceScanner.php:526
-#: lib/wordfenceScanner.php:568
+#: lib/wordfenceScanner.php:570
 msgid "File contains suspected malware URL: "
 msgstr ""
 
@@ -9796,24 +9812,24 @@ msgstr ""
 msgid "This file contains a suspected malware URL listed on Google's list of malware sites. Wordfence decodes %1$s when scanning files so the URL may not be visible if you view this file. The URL is: %2$s - More info available at <a href=\"http://safebrowsing.clients.google.com/safebrowsing/diagnostic?site=%3$s&client=googlechrome&hl=en-US\" target=\"_blank\" rel=\"noopener noreferrer\">Google Safe Browsing diagnostic page<span class=\"screen-reader-text\"> (opens in new tab)</span></a>."
 msgstr ""
 
-#: lib/wordfenceScanner.php:550
+#: lib/wordfenceScanner.php:551
 msgid "File contains suspected phishing URL: "
 msgstr ""
 
-#: lib/wordfenceScanner.php:551
+#: lib/wordfenceScanner.php:552
 msgid "This file contains a URL that is a suspected phishing site that is currently listed on Google's list of known phishing sites. The URL is: "
 msgstr ""
 
-#: lib/wordfenceScanner.php:569
+#: lib/wordfenceScanner.php:571
 msgid "This file contains a URL that is currently listed on Wordfence's domain blocklist. The URL is: "
 msgstr ""
 
-#: lib/wordfenceScanner.php:585
+#: lib/wordfenceScanner.php:588
 msgid "Finalizing malware scan results"
 msgstr ""
 
 #. translators: 1. Number of fils. 2. Seconds in millisecond precision.
-#: lib/wordfenceScanner.php:607
+#: lib/wordfenceScanner.php:610
 msgid "Scanned contents of %1$d additional files at %2$.2f per second"
 msgstr ""
 

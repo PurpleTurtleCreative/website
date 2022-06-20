@@ -925,11 +925,17 @@ class wfScanEngine {
 				if (!empty($path)) {
 					if ($constant === 'UPLOADS')
 						$path = ABSPATH . $path;
-					$scanPaths[] = new wfScanPath(
-						ABSPATH,
-						$path,
-						$wordpressPath
-					);
+					try {
+						$scanPaths[] = new wfScanPath(
+							ABSPATH,
+							$path,
+							$wordpressPath
+						);
+					}
+					catch (wfInvalidPathException $e) {
+						//Ignore invalid scan paths
+						wordfence::status(4, 'info', sprintf(__("Ignoring invalid scan path: %s", 'wordfence'), $e->getPath()));
+					}
 				}
 			}
 			$scanOutside = $this->scanController->scanOutsideWordPress();
@@ -939,14 +945,19 @@ class wfScanEngine {
 				if (!$scanOutside && $scanPath->hasExpectedFiles()) {
 					try {
 						foreach ($scanPath->getContents() as $fileName) {
-							$file = $scanPath->createScanFile($fileName);
-							if (wfUtils::fileTooBig($file->getRealPath()))
-								continue;
-							if ($scanPath->expectsFile($fileName) || wfFileUtils::isReadableFile($file->getRealPath())) {
-								$scanned[$file->getRealPath()] = $file;
+							try {
+								$file = $scanPath->createScanFile($fileName);
+								if (wfUtils::fileTooBig($file->getRealPath()))
+									continue;
+								if ($scanPath->expectsFile($fileName) || wfFileUtils::isReadableFile($file->getRealPath())) {
+									$scanned[$file->getRealPath()] = $file;
+								}
+								else {
+									$skipped[$file->getRealPath()] = $file;
+								}
 							}
-							else {
-								$skipped[$file->getRealPath()] = $file;
+							catch (wfInvalidPathException $e) {
+								wordfence::status(4, 'info', sprintf(__("Ignoring invalid expected scan file: %s", 'wordfence'), $e->getPath()));
 							}
 						}
 					}
@@ -955,8 +966,13 @@ class wfScanEngine {
 					}
 				}
 				else {
-					$file = $scanPath->createScanFile('/');
-					$scanned[$file->getRealPath()] = $file;
+					try {
+						$file = $scanPath->createScanFile('/');
+						$scanned[$file->getRealPath()] = $file;
+					}
+					catch (wfInvalidPathException $e) {
+						wordfence::status(4, 'info', sprintf(__("Ignoring invalid base scan file: %s", 'wordfence'), $e->getPath()));
+					}
 				}
 			}
 			$_cache = array(

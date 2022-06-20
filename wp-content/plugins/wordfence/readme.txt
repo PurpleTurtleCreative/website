@@ -4,7 +4,7 @@ Tags: security, firewall, malware scanner, web application firewall, two factor 
 Requires at least: 3.9
 Requires PHP: 5.3
 Tested up to: 6.0
-Stable tag: 7.5.10
+Stable tag: 7.5.11
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -184,6 +184,17 @@ Secure your website with Wordfence.
 9. Logging in is easy with Wordfence 2FA.
 
 == Changelog ==
+
+= 7.5.11 - June 14, 2022 =
+* Improvement: Added option to toggle display of last login column on WP Users page
+* Improvement: Improved autocomplete support for 2FA code on Apple devices
+* Improvement: Prevented Batcache from caching block pages
+* Improvement: Updated GeoIP database
+* Fix: Prevented extraneous scan results when non-existent paths are configured using UPLOADS and related constants
+* Fix: Corrected issue that prevented reCAPTCHA scores from being recorded
+* Fix: Prevented invalid JSON setting values from triggering fatal errors
+* Fix: Made text domains consistent for translation support
+* Fix: Clarified that allowlisted IP addresses also bypass reCAPTCHA
 
 = 7.5.10 - May 17, 2022 =
 * Improvement: Improved scan support for sites with non-standard directory structures

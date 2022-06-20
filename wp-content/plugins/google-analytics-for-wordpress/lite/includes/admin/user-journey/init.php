@@ -67,11 +67,15 @@ final class MonsterInsights_Lite_User_Journey_Admin {
     public function add_admin_scripts() {
         $current_screen = get_current_screen();
 
-		if ( is_object( $current_screen ) ) {
-			if ( in_array( $current_screen->id, $this->screens ) ) {
-				wp_enqueue_style( 'monsterinsights-lite-user-journey-admin', MONSTERINSIGHTS_PLUGIN_URL . 'lite/includes/admin/user-journey/assets/css/user-journey.css', MONSTERINSIGHTS_VERSION );
-			}
+		if ( ! is_object( $current_screen ) ) {
+			return;
 		}
+
+        if ( ! in_array( $current_screen->id, $this->screens, true ) ) {
+            return;
+        }
+
+        wp_enqueue_style( 'monsterinsights-lite-user-journey-admin', MONSTERINSIGHTS_PLUGIN_URL . 'lite/includes/admin/user-journey/assets/css/user-journey.css', MONSTERINSIGHTS_VERSION );
     }
 }
 // Initialize the class

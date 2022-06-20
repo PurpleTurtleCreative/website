@@ -274,7 +274,13 @@ class wordfenceHash {
 				if (wfFileUtils::isCurrentOrParentDirectory($child)) {
 					continue;
 				}
-				$child = $file->createChild($child);
+				try {
+					$child = $file->createChild($child);
+				}
+				catch (wfInvalidPathException $e) {
+					wordfence::status(4, 'info', sprintf(__("Ignoring invalid scan file child: %s", 'wordfence'), $e->getPath()));
+					continue;
+				}
 				if (is_file($child->getRealPath())) {
 					$relativeFile = $child->getWordpressPath();
 					if ($this->stoppedOnFile && $relativeFile != $this->stoppedOnFile) {

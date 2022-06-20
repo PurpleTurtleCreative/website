@@ -230,7 +230,7 @@ class wordfenceScanner {
 						}
 					}
 				}
-				if (!file_exists($this->path . $file)) {
+				if (!file_exists($record->realPath)) {
 					$record->markComplete();
 					continue;
 				}
@@ -277,7 +277,7 @@ class wordfenceScanner {
 						continue;
 					}
 				}
-				if(wfUtils::fileTooBig($this->path . $file)){ //We can't use filesize on 32 bit systems for files > 2 gigs
+				if(wfUtils::fileTooBig($record->realPath)){ //We can't use filesize on 32 bit systems for files > 2 gigs
 					//We should not need this check because files > 2 gigs are not hashed and therefore won't be received back as unknowns from the API server
 					//But we do it anyway to be safe.
 					wordfence::status(2, 'error', sprintf(/* translators: File path. */ __('Encountered file that is too large: %s - Skipping.', 'wordfence'), $file));
@@ -286,7 +286,7 @@ class wordfenceScanner {
 				}
 				wfUtils::beginProcessingFile($file);
 
-				$fsize = @filesize($this->path . $file); //Checked if too big above
+				$fsize = @filesize($record->realPath); //Checked if too big above
 				$fsize = wfUtils::formatBytes($fsize);
 				if (function_exists('memory_get_usage')) {
 					wordfence::status(4, 'info', sprintf(
@@ -306,7 +306,7 @@ class wordfenceScanner {
 				}
 
 				$stime = microtime(true);
-				$fh = @fopen($this->path . $file, 'r');
+				$fh = @fopen($record->realPath, 'r');
 				if (!$fh) {
 					$record->markComplete();
 					continue;
@@ -344,7 +344,7 @@ class wordfenceScanner {
 							$this->addResult(array(
 								'type' => 'file',
 								'severity' => wfIssues::SEVERITY_CRITICAL,
-								'ignoreP' => $this->path . $file,
+								'ignoreP' => $record->realPath,
 								'ignoreC' => $fileSum,
 								'shortMsg' => __('File is an old version of TimThumb which is vulnerable.', 'wordfence'),
 								'longMsg' => __('This file appears to be an old version of the TimThumb script which makes your system vulnerable to attackers. Please upgrade the theme or plugin that uses this or remove it.', 'wordfence') . $extraMsg,
@@ -412,7 +412,7 @@ class wordfenceScanner {
 										$this->addResult(array(
 											'type' => 'file',
 											'severity' => wfIssues::SEVERITY_CRITICAL,
-											'ignoreP' => $this->path . $file,
+											'ignoreP' => $record->realPath,
 											'ignoreC' => $fileSum,
 											'shortMsg' => sprintf(__('File appears to be malicious or unsafe: %s', 'wordfence'), esc_html($file)),
 											'longMsg' => $customMessage . ' ' . sprintf(__('The matched text in this file is: %s', 'wordfence'), '<strong style="color: #F00;" class="wf-split-word">' . wfUtils::potentialBinaryStringToHTML((wfUtils::strlen($matchString) > 200 ? wfUtils::substr($matchString, 0, 200) . '...' : $matchString)) . '</strong>') . ' ' . '<br><br>' . sprintf(/* translators: Scan result type. */ __('The issue type is: %s', 'wordfence'), '<strong>' . esc_html($rule[7]) . '</strong>') . '<br>' . sprintf(/* translators: Scan result description. */ __('Description: %s', 'wordfence'), '<strong>' . esc_html($rule[3]) . '</strong>') . $extraMsg,
@@ -454,7 +454,7 @@ class wordfenceScanner {
 								$this->addResult(array(
 									'type' => 'file',
 									'severity' => wfIssues::SEVERITY_CRITICAL,
-									'ignoreP' => $this->path . $file,
+									'ignoreP' => $record->realPath,
 									'ignoreC' => $fileSum,
 									'shortMsg' => __('This file may contain malicious executable code: ', 'wordfence') . esc_html($file),
 									'longMsg' => sprintf(/* translators: Malware signature matched text. */ __('This file is a PHP executable file and contains the word "eval" (without quotes) and the word "%s" (without quotes). The eval() function along with an encoding function like the one mentioned are commonly used by hackers to hide their code. If you know about this file you can choose to ignore it to exclude it from future scans. This file was detected because you have enabled HIGH SENSITIVITY scanning. This option is more aggressive than the usual scans, and may cause false positives.', 'wordfence'), '<span class="wf-split-word">' . esc_html($badStringFound) . '</span>'),
@@ -506,7 +506,7 @@ class wordfenceScanner {
 			
 			foreach($hooverResults as $file => $hresults){
 				$record = wordfenceMalwareScanFile::fileForPath($file);
-				$dataForFile = $this->dataForFile($file, $this->path . $file);
+				$dataForFile = $this->dataForFile($file, $record->realPath);
 	
 				foreach($hresults as $result){
 					if(preg_match('/wfBrowscapCache\.php$/', $file)){
@@ -521,8 +521,8 @@ class wordfenceScanner {
 						$this->addResult(array(
 							'type' => 'file',
 							'severity' => wfIssues::SEVERITY_CRITICAL,
-							'ignoreP' => $this->path . $file,
-							'ignoreC' => md5_file($this->path . $file),
+							'ignoreP' => $record->realPath,
+							'ignoreC' => md5_file($record->realPath),
 							'shortMsg' => __('File contains suspected malware URL: ', 'wordfence') . esc_html($file),
 							'longMsg' => wp_kses(sprintf(
 								/* translators: 1. Malware signature matched text. 2. Malicious URL. 3. Malicious URL. */
@@ -533,6 +533,7 @@ class wordfenceScanner {
 							), array('a'=>array('href'=>array(), 'target'=>array(), 'rel'=>array()), 'span'=>array('class'))),
 							'data' => array_merge(array(
 								'file' => $file,
+								'realFile' => $record->realPath,
 								'shac' => $record->SHAC,
 								'badURL' => $result['URL'],
 								'gsb' => 'goog-malware-shavar',
@@ -545,12 +546,13 @@ class wordfenceScanner {
 						$this->addResult(array(
 							'type' => 'file',
 							'severity' => wfIssues::SEVERITY_CRITICAL,
-							'ignoreP' => $this->path . $file,
-							'ignoreC' => md5_file($this->path . $file),
+							'ignoreP' => $record->realPath,
+							'ignoreC' => md5_file($record->realPath),
 							'shortMsg' => __('File contains suspected phishing URL: ', 'wordfence') . esc_html($file),
 							'longMsg' => __('This file contains a URL that is a suspected phishing site that is currently listed on Google\'s list of known phishing sites. The URL is: ', 'wordfence') . esc_html($result['URL']),
 							'data' => array_merge(array(
 								'file' => $file,
+								'realFile' => $record->realPath,
 								'shac' => $record->SHAC,
 								'badURL' => $result['URL'],
 								'gsb' => 'googpub-phish-shavar',
@@ -563,12 +565,13 @@ class wordfenceScanner {
 						$this->addResult(array(
 							'type' => 'file',
 							'severity' => wfIssues::SEVERITY_CRITICAL,
-							'ignoreP' => $this->path . $file,
-							'ignoreC' => md5_file($this->path . $file),
+							'ignoreP' => $record->realFile,
+							'ignoreC' => md5_file($record->realPath),
 							'shortMsg' => __('File contains suspected malware URL: ', 'wordfence') . esc_html($file),
 							'longMsg' => __('This file contains a URL that is currently listed on Wordfence\'s domain blocklist. The URL is: ', 'wordfence') . esc_html($result['URL']),
 							'data' => array_merge(array(
 								'file' => $file,
+								'realFile' => $record->realPath,
 								'shac' => $record->SHAC,
 								'badURL' => $result['URL'],
 								'gsb' => 'wordfence-dbl',

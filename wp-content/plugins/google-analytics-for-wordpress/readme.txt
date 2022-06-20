@@ -3,8 +3,8 @@ Contributors: chriscct7, smub
 Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: WordPress analytics, google analytics, google analytics dashboard, google analytics widget, WooCommerce stats, analytics dashboard, universal google analytics, statistics, tracking, stats, google, google analytics by yoast, ga, monster insights, monsterinsights, universal analytics, web stats, ecommerce, ecommerce tracking
 Requires at least: 4.8.0
-Tested up to: 5.9
-Stable tag: 8.5.3
+Tested up to: 6.0
+Stable tag: 8.6.0
 Requires PHP: 5.5
 License: GPL v3
 
@@ -141,9 +141,7 @@ At MonsterInsights, we always stay ahead of the curve in helping you integrate W
 >Analytics for PROs! This plugin brings it all, great features and helpful info to easily see what you are doing.<br>
 > Frank van der Sluijs
 
-= Google AdSense Tracking and Affiliate Link Tracking =
-
-With MonsterInsights Ads tracking addon, publishers can easily track the performance of their Google AdSense Ads inside their Google Analytics dashboard.
+= Google Affiliate Link Tracking =
 
 Our affiliate link tracking makes it easy for bloggers and affiliate marketers to track their affiliate links with Google Analytics.
 
@@ -212,8 +210,8 @@ We understand Google Analytics better than any other analytics plugin for WordPr
 * WooCommerce Google Analytics - Add Enhanced Ecommerce Tracking to your WooCommerce store.
 * WooCommerce User Journey - See exactly which pages a customer visited before before purchasing from your WooCommerce store.
 * Easy Digital Downloads Google Analytics - Add Enhanced Ecommerce Tracking to your EDD store.
-* Ads Tracking - Track your Google Adsense ads with Google Analytics.
 * Affiliate Link Tracking - Track your affiliate links and get stats that matter.
+* Google Ads Conversion Tracking - Automatically track Google Ads conversions for WooCommerce, Easy Digital Downloads, and MemberPress.
 * File Download Tracking - Enable file download stats with just a click.
 * Custom Link Tracking - Track your outbound link clicks with Google Analytics.
 * Events Tracking - Track custom button and banner clicks with Google Analytics.
@@ -300,6 +298,10 @@ You can also learn about other <a href="http://www.wpbeginner.com/category/plugi
 4. Want more features? <a href="https://www.monsterinsights.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase MonsterInsights Pro</a>!
 
 == Changelog ==
+= 8.6.0: Jun 13, 2022 =
+- Enhancement: We updated the User Journey display
+- Enhancement: We optimized the plugin activation process, popular posts, userID tracking, and onboarding
+
 = 8.5.3: May 18, 2022 =
 - Fix: We optimized the user ID custom dimension for GAv4
 - Fix: We optimized the affiliate events for GAv4
@@ -438,7 +440,7 @@ The MonsterInsights Google Analytics plugin is built for all types of websites, 
 
 Beyond simply providing a Google Analytics dashboard, our plugin makes configuring advanced features as easy as point-and-click that would otherwise still require a developer to implement.
 
-Our Google Analytics plugin also includes many features such as AdSense tracking, Google Optimize support, form conversion reporting, goal tracking, Search Console integration, Pagespeed insights, advanced eCommerce tracking, and more.
+Our Google Analytics plugin also includes many features such as Google Ads tracking, Google Optimize support, form conversion reporting, goal tracking, Search Console integration, Pagespeed insights, advanced eCommerce tracking, and more.
 
 There's a reason over 3 million users have trusted MonsterInsights to provide Google Analytics data to their website.
 

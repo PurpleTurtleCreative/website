@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf9c70700aeb4327cbd7e80a983a6cfa1
+class ComposerStaticInit4f749b93fa25217dc106781676f323e3
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -356,6 +356,7 @@ class ComposerStaticInitf9c70700aeb4327cbd7e80a983a6cfa1
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Admin\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Admin/Subscriber.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Controller\\Queue' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Controller/Queue.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Controller\\UsedCSS' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Controller/UsedCSS.php',
+        'WP_Rocket\\Engine\\Optimization\\RUCSS\\Cron\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Cron/Subscriber.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Database\\Queries\\ResourcesQuery' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Database/Queries/ResourcesQuery.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Database\\Queries\\UsedCSS' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Database/Queries/UsedCSS.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Database\\Row\\ResourceRow' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Database/Row/ResourceRow.php',
@@ -437,6 +438,7 @@ class ComposerStaticInitf9c70700aeb4327cbd7e80a983a6cfa1
         'WP_Rocket\\ThirdParty\\Plugins\\Ads\\Adthrive' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ads/Adthrive.php',
         'WP_Rocket\\ThirdParty\\Plugins\\ConvertPlug' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/ConvertPlug.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Ecommerce\\WooCommerceSubscriber' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ecommerce/WooCommerceSubscriber.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\InlineRelatedPosts' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/InlineRelatedPosts.php',
         'WP_Rocket\\ThirdParty\\Plugins\\ModPagespeed' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/ModPagespeed.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\AMP' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Optimization/AMP.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\Autoptimize' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Optimization/Autoptimize.php',
@@ -472,9 +474,9 @@ class ComposerStaticInitf9c70700aeb4327cbd7e80a983a6cfa1
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf9c70700aeb4327cbd7e80a983a6cfa1::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf9c70700aeb4327cbd7e80a983a6cfa1::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitf9c70700aeb4327cbd7e80a983a6cfa1::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit4f749b93fa25217dc106781676f323e3::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit4f749b93fa25217dc106781676f323e3::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4f749b93fa25217dc106781676f323e3::$classMap;
 
         }, null, ClassLoader::class);
     }
