@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: WordPress analytics, google analytics, google analytics dashboard, google analytics widget, WooCommerce stats, analytics dashboard, universal google analytics, statistics, tracking, stats, google, google analytics by yoast, ga, monster insights, monsterinsights, universal analytics, web stats, ecommerce, ecommerce tracking
 Requires at least: 4.8.0
 Tested up to: 6.0
-Stable tag: 8.6.0
+Stable tag: 8.7.0
 Requires PHP: 5.5
 License: GPL v3
 
@@ -298,6 +298,13 @@ You can also learn about other <a href="http://www.wpbeginner.com/category/plugi
 4. Want more features? <a href="https://www.monsterinsights.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase MonsterInsights Pro</a>!
 
 == Changelog ==
+= 8.7.0: Jul 11, 2022 =
+- Fix: We fixed the logged-in sessions data in our dimensions report.
+- Fix: We fixed the test mode detection PayPal Express Payment method when Smart Button is used.
+- Enhancement: We optimized our plugin's backend javascript.
+- Enhancement: We optimized the membership levels tracking for Restrict Content Pro integration.
+- Enhancement: We optimized the integration with EDD latest versions.
+
 = 8.6.0: Jun 13, 2022 =
 - Enhancement: We updated the User Journey display
 - Enhancement: We optimized the plugin activation process, popular posts, userID tracking, and onboarding

@@ -3,7 +3,7 @@
  * Plugin Name:  Code Syntax Block
  * Plugin URI:   https://github.com/mkaz/code-syntax-block
  * Description:  A plugin to extend Gutenberg code block with syntax highlighting
- * Version:      3.0.0
+ * Version:      3.1.1
  * Author:       Marcus Kazmierczak
  * Author URI:   https://mkaz.blog/
  * License:      GPL2
@@ -14,11 +14,17 @@
  */
 
 // version added, used in URL
-const MKAZ_CODE_SYNTAX_BLOCK_VERSION = '3.0.0';
+const MKAZ_CODE_SYNTAX_BLOCK_VERSION = '3.1.1';
 const MKAZ_CODE_SYNTAX_DEFAULT_SCHEME = 'prism-a11y-dark';
-const MKAZ_CODE_SYNTAX_COLOR_SCHEMES = ['prism-a11y-dark', 'prism-ghcolors', 'prism-nord', 'prism-onedark'];
+const MKAZ_CODE_SYNTAX_COLOR_SCHEMES = array(
+	'prism-a11y-dark' => 'A11y Dark',
+	'prism-ghcolors' => 'GitHub (Light)',
+	'prism-nord' => 'Nord',
+	'prism-onedark' => 'One Dark'
+);
+
 require dirname( __FILE__ ) . '/prism-languages.php';
-require dirname( __FILE__ ) . '/rest-api.php';
+require dirname( __FILE__ ) . '/settings.php';
 
 /**
  * Enqueue assets for editor portion of Gutenberg
@@ -47,16 +53,7 @@ add_action( 'enqueue_block_editor_assets', function() {
 		filemtime( plugin_dir_path( __FILE__ ) . $editor_style_path )
 	);
 
-	/**
-	 * Use the mkaz_code_syntax_default__lang filter to set a default language
-	 * When inserting a new code block, the language will automatically be set
-	 *
-	 * @since 1.1.0
-	 *
-	 * @param string $lang string
-	 */
-	$default_lang = apply_filters( 'mkaz_code_syntax_default_lang', '' );
-
+	$default_lang = get_option( 'mkaz-code-syntax-default-lang', '' );
 	wp_add_inline_script(
 		'mkaz-code-syntax',
 		implode(
