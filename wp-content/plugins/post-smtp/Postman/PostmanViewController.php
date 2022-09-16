@@ -220,6 +220,8 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 				$ready_messsage = PostmanTransportRegistry::getInstance()->getReadyMessage();
 				$statusMessage = $ready_messsage['message'];
 
+				$transport = PostmanTransportRegistry::getInstance()->getSelectedTransport();
+
 				if ( PostmanTransportRegistry::getInstance()->getActiveTransport()->isConfiguredAndReady() ) {
 
 					if ( $this->options->getRunMode() != PostmanOptions::RUN_MODE_PRODUCTION ) {
@@ -229,7 +231,8 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 							</div>', 
 							wp_kses_post( $statusMessage ) 
 						);
-					} else {
+					} 
+					else {
 						printf( 
 							'<div class="ps-config-bar">
 								<span>%s</span><span style="color: green" class="dashicons dashicons-yes-alt"></span>
@@ -242,7 +245,27 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 							esc_url( $this->getPageUrl( PostmanSendTestEmailController::EMAIL_TEST_SLUG ) )
 						);
 					}
-				} else {
+				}
+				elseif ( !$transport->has_granted() ) {
+
+					$notice = $transport->get_not_granted_notice();
+
+					printf( 
+						'<div class="ps-config-bar">
+							<span >%s</span>
+							<div class="ps-right">
+								<img src="%s" style="vertical-align: middle;width: 30px;" />
+								<a href="%s" class="ps-btn-orange">%s</a>
+							</div>
+						</div>',
+						esc_html( $notice['message'] ),
+						esc_url( POST_SMTP_ASSETS . 'images/icons/hand.png' ),
+						esc_attr( $notice['url'] ),
+						esc_html(  $notice['url_text'] )
+					);
+
+				}
+				else {
 					printf( 
 						'<div class="ps-config-bar">
 							<span >%s</span>
@@ -373,6 +396,18 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 						<a href="<?php echo esc_url( 'https://postmansmtp.com/extensions/the-better-email/' ); ?>" target="_blank">
 							<img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/finger.png' ) ?>" width="15" />	
 							<?php echo esc_html( 'Better Email Logger' ); ?>
+						</a>
+					</div>
+					<div>
+						<a href="<?php echo esc_url( 'https://postmansmtp.com/extensions/twilio-extension-pro/' ); ?>" target="_blank">
+							<img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/finger.png' ) ?>" width="15" />	
+							<?php echo esc_html( 'Twilio Notifications' ); ?>
+						</a>
+					</div>
+					<div>
+						<a href="<?php echo esc_url( 'https://postmansmtp.com/extensions/post-smtp-mail-control/' ); ?>" target="_blank">
+							<img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/finger.png' ) ?>" width="15" />	
+							<?php echo esc_html( 'Mail Control' ); ?>
 						</a>
 					</div>
 				</div>
@@ -675,9 +710,24 @@ if ( ! class_exists( 'PostmanViewController' ) ) {
 			<div class="notice notice-error is-dismissible ps-less-secure-notice">
 			<?php 
 				printf(
-					'<p>%1$s <br />%2$s <a href="%3$s" target="_blank">%4$s</a><br /><a href="" id="discard-less-secure-notification">%5$s</a></p>',
-					esc_html__( '"To help keep your account secure, starting May 30, 2022, ​​Google will no longer support the use of third-party apps or devices which ask you to sign in to your Google Account using only your username and password."', 'post-smtp' ),
-					esc_html__( 'You can switch to Auth 2.0 option to continue without any downtime.', 'post-smtp' ),
+					'<p>
+						%1$s
+						<a href="%2$s" target="blank">%3$s</a>
+						%4$s
+						<a href="%5$s" target="blank">%6$s</a>
+						%7$s
+						<br />
+						<a href="%8$s" target="_blank">%9$s</a>
+						<br />
+						<a href="" id="discard-less-secure-notification">%10$s</a>
+					</p>',
+					esc_html__( 'To help keep your account secure, Google will no longer support using third-party apps to sign in to your Google Account using only your username and primary password. You can ', 'post-smtp' ),
+					esc_url( 'https://postmansmtp.com/gmail-is-disabling-less-secure-apps-feature-soon/' ),
+					esc_html__( 'switch to the Auth 2.0', 'post-smtp' ),
+					esc_html__( 'alternative or use your ', 'post-smtp' ),
+					esc_url( 'https://postmansmtp.com/documentation/#setting-up-an-app-password-in-your-google-account' ),
+					esc_html__( 'App Password', 'post-smtp' ),
+					esc_html__( 'option to continue.	', 'post-smtp' ),
 					esc_url( 'https://postmansmtp.com/gmail-is-disabling-less-secure-apps' ),
 					esc_html__( 'Click here for more info', 'post-smtp' ),
 					esc_html__( 'I understand and would like to discard this notice', 'post-smtp' )

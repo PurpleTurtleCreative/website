@@ -223,6 +223,15 @@ class PostmanGetDiagnosticsViaAjax {
 
 	    check_admin_referer('post-smtp', 'security');
 
+		if( !current_user_can( Postman::MANAGE_POSTMAN_CAPABILITY_NAME ) ) {
+			wp_send_json_error( 
+				array(
+					'Message'	=>	'Unauthorized.'
+				), 
+				401
+			);
+		}
+
 	    $curl = curl_version();
 		$transportRegistry = PostmanTransportRegistry::getInstance();
         $this->addToDiagnostics( 'Mailer', PostmanOptions::getInstance()->getSmtpMailer() );
