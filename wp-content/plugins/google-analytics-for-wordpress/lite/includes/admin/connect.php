@@ -64,7 +64,7 @@ class MonsterInsights_Connect {
 			// Deactivate plugin.
 			deactivate_plugins( plugin_basename( MONSTERINSIGHTS_PLUGIN_FILE ), false, false );
 			wp_send_json_error( array(
-				'message' => esc_html__( 'You already have MonsterInsights Pro installed. .', 'google-analytics-for-wordpress' ),
+				'message' => esc_html__( 'You already have MonsterInsights Pro installed.', 'google-analytics-for-wordpress' ),
 				'reload'  => true,
 			) );
 		}

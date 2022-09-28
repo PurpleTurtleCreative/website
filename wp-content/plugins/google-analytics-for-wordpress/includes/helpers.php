@@ -22,7 +22,7 @@ function monsterinsights_is_page_reload() {
 	}
 
 	// IF the referrer is identical to the current page request, then it's a refresh
-	return ( parse_url( $_SERVER['HTTP_REFERER'], PHP_URL_PATH ) === parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ) );
+	return ( $_SERVER['HTTP_REFERER'] === home_url( $_SERVER['REQUEST_URI'] ) );
 }
 
 
@@ -2000,6 +2000,26 @@ function monsterinsights_is_installed_aioseo_pro() {
 
 	if ( array_key_exists( 'all-in-one-seo-pack-pro/all_in_one_seo_pack.php', $installed_plugins ) ) {
 		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Check if Cookiebot plugin functionality active.
+ *
+ * @since 8.9.0
+ *
+ * @return bool
+ */
+function monsterinsights_is_cookiebot_active() {
+
+	if ( function_exists( '\cybot\cookiebot\lib\cookiebot_active' ) ) {
+		return \cybot\cookiebot\lib\cookiebot_active();
+	}
+
+	if ( function_exists( 'cookiebot_active' ) ) {
+		return cookiebot_active();
 	}
 
 	return false;

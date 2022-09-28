@@ -363,7 +363,7 @@ class MonsterInsights_Rest_Routes {
 		);
 		// Cookiebot.
 		$parsed_addons['cookiebot'] = array(
-			'active' => function_exists( 'cookiebot_active' ) && cookiebot_active(),
+			'active' => function_exists( 'monsterinsights_is_cookiebot_active' ) && monsterinsights_is_cookiebot_active(),
 		);
 		// Cookie Notice.
 		$parsed_addons['cookie_notice'] = array(
@@ -396,24 +396,26 @@ class MonsterInsights_Rest_Routes {
 		$parsed_addons['affiliate_wp']   = array(
 			'active' => function_exists( 'affiliate_wp' ) && defined( 'AFFILIATEWP_VERSION' ),
 		);
+
 		// WPForms.
 		$parsed_addons['wpforms-lite'] = array(
 			'active'    => function_exists( 'wpforms' ),
 			'icon'      => plugin_dir_url( MONSTERINSIGHTS_PLUGIN_FILE ) . 'assets/images/plugin-wpforms.png',
 			'title'     => 'WPForms',
 			'excerpt'   => __( 'The best drag & drop WordPress form builder. Easily create beautiful contact forms, surveys, payment forms, and more with our 150+ form templates. Trusted by over 5 million websites as the best forms plugin. We also have 400+ form templates and over 100 million downloads for WPForms Lite.', 'google-analytics-for-wordpress' ),
-			'installed' => array_key_exists( 'wpforms-lite/wpforms.php', $installed_plugins ),
+			'installed' => array_key_exists( 'wpforms-lite/wpforms.php', $installed_plugins ) || array_key_exists( 'wpforms/wpforms.php', $installed_plugins ),
 			'basename'  => 'wpforms-lite/wpforms.php',
 			'slug'      => 'wpforms-lite',
 			'settings'  => admin_url( 'admin.php?page=wpforms-overview' ),
 		);
+
 		// AIOSEO.
 		$parsed_addons['aioseo'] = array(
 			'active'    => function_exists( 'aioseo' ),
 			'icon'      => plugin_dir_url( MONSTERINSIGHTS_PLUGIN_FILE ) . 'assets/images/plugin-all-in-one-seo.png',
 			'title'     => 'AIOSEO',
 			'excerpt'   => __( 'The original WordPress SEO plugin and toolkit that improves your website’s search rankings. Comes with all the SEO features like Local SEO, WooCommerce SEO, sitemaps, SEO optimizer, schema, and more.', 'google-analytics-for-wordpress' ),
-			'installed' => array_key_exists( 'all-in-one-seo-pack/all_in_one_seo_pack.php', $installed_plugins ),
+			'installed' => array_key_exists( 'all-in-one-seo-pack/all_in_one_seo_pack.php', $installed_plugins ) || array_key_exists( 'all-in-one-seo-pack-pro/all_in_one_seo_pack.php', $installed_plugins ),
 			'basename'  => ( monsterinsights_is_installed_aioseo_pro() ) ? 'all-in-one-seo-pack-pro/all_in_one_seo_pack.php' : 'all-in-one-seo-pack/all_in_one_seo_pack.php',
 			'slug'      => 'all-in-one-seo-pack',
 			'settings'  => admin_url( 'admin.php?page=aioseo' ),

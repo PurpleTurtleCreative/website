@@ -225,15 +225,16 @@ class Sentiment {
 		 */
 		$fn = "{$this->dataFolder}data.{$class}.php";
 
-		if ( file_exists( $fn ) ) {
+		if ( file_exists( $fn ) && is_readable( $fn ) ) {
 			$temp  = file_get_contents( $fn );
 			$words = unserialize( $temp );
 		} else {
 			echo 'File does not exist: ' . $fn;
+			$words = array();
 		}
 
 		//Loop through all of the entries
-		foreach ( $words as $word ) {
+		foreach ( (array) $words as $word ) {
 
 			$this->docCount ++;
 			$this->classDocCounts[ $class ] ++;

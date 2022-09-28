@@ -326,6 +326,7 @@ function monsterinsights_admin_setup_notices() {
 	// 8. Woo upsell
 	// 9. EDD upsell
 
+	$is_plugins_page = 'plugins' === get_current_screen()->id;
 
 	// 1. Google Analytics not authenticated
 	if ( ! is_network_admin() && ! monsterinsights_get_ua() && ! monsterinsights_get_v4_id() && ! defined( 'MONSTERINSIGHTS_DISABLE_TRACKING' ) ) {
@@ -670,7 +671,7 @@ function monsterinsights_admin_setup_notices() {
 	// }
 
 	// 8. WooUpsell
-	if ( ! monsterinsights_is_pro_version() && class_exists( 'WooCommerce' ) ) {
+	if ( ! monsterinsights_is_pro_version() && class_exists( 'WooCommerce' ) && $is_plugins_page ) {
 		if ( ! isset( $notices['monsterinsights_woocommerce_tracking_available'] ) ) {
 			echo '<div class="notice notice-success is-dismissible monsterinsights-notice monsterinsights-wooedd-upsell-row" data-notice="monsterinsights_woocommerce_tracking_available">';
 			echo '<div class="monsterinsights-wooedd-upsell-left">';
@@ -704,7 +705,7 @@ function monsterinsights_admin_setup_notices() {
 	}
 
 	// 9. EDDUpsell
-	if ( ! monsterinsights_is_pro_version() && class_exists( 'Easy_Digital_Downloads' ) ) {
+	if ( ! monsterinsights_is_pro_version() && class_exists( 'Easy_Digital_Downloads' ) && $is_plugins_page ) {
 		if ( ! isset( $notices['monsterinsights_edd_tracking_available'] ) ) {
 			echo '<div class="notice notice-success is-dismissible monsterinsights-notice monsterinsights-wooedd-upsell-row" data-notice="monsterinsights_edd_tracking_available">';
 			echo '<div class="monsterinsights-wooedd-upsell-left">';

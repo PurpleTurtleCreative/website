@@ -4,7 +4,7 @@ Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: WordPress analytics, google analytics, google analytics dashboard, google analytics widget, WooCommerce stats, analytics dashboard, universal google analytics, statistics, tracking, stats, google, google analytics by yoast, ga, monster insights, monsterinsights, universal analytics, web stats, ecommerce, ecommerce tracking
 Requires at least: 4.8.0
 Tested up to: 6.0
-Stable tag: 8.8.2
+Stable tag: 8.9.0
 Requires PHP: 5.6
 License: GPL v3
 
@@ -298,6 +298,12 @@ You can also learn about other <a href="http://www.wpbeginner.com/category/plugi
 4. Want more features? <a href="https://www.monsterinsights.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase MonsterInsights Pro</a>!
 
 == Changelog ==
+= 8.9.0: Sep 20, 2022 =
+- New: You can now show an MonsterInsights badge on your website!
+- Enhancement: We updated and tweaked many UI elements to better help with onboarding and plugin usage.
+- Enhancement: We now include our dashboard fonts locally.
+- Fix: We updated support for PHP 8 with our headline analyzer tool.
+
 = 8.8.2: Aug 26, 2022 =
 - Fix: We fixed the headline analyzer issues reported by our lite users.
 - Fix: We fixed the PHP errors reported by WordPress 4.8 users.

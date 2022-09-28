@@ -40,6 +40,7 @@ class MonsterInsights_Onboarding_Wizard {
 
 		add_action( 'monsterinsights_after_ajax_activate_addon', array( $this, 'disable_aioseo_onboarding_wizard' ) );
 		add_action( 'monsterinsights_after_ajax_activate_addon', array( $this, 'disable_wpforms_onboarding_wizard' ) );
+		add_action( 'monsterinsights_after_ajax_activate_addon', array( $this, 'disable_optin_monster_onboarding_wizard' ) );
 
 		// This will only be called in the Onboarding Wizard context because of previous checks.
 		add_filter( 'monsterinsights_maybe_authenticate_siteurl', array( $this, 'change_return_url' ) );
@@ -467,6 +468,22 @@ class MonsterInsights_Onboarding_Wizard {
 		}
 
 		delete_transient( 'wpforms_activation_redirect' );
+	}
+
+	public function disable_optin_monster_onboarding_wizard( $plugin ) {
+		if ( empty( $plugin ) ) {
+			return;
+		}
+
+		if ( 'optinmonster/optin-monster-wp-api.php' !== $plugin ) {
+			return;
+		}
+
+		if ( false === get_transient( 'optin_monster_api_activation_redirect' ) ){
+			return;
+		}
+
+		delete_transient( 'optin_monster_api_activation_redirect' );
 	}
 
 }

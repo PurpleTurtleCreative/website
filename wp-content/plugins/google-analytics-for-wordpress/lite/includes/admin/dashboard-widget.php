@@ -83,7 +83,7 @@ class MonsterInsights_Dashboard_Widget {
 		add_action( 'wp_ajax_monsterinsights_save_widget_state', array( $this, 'save_widget_state' ) );
 
 		// Reminder notice.
-		add_action( 'admin_footer', array( $this, 'load_notice' ) );
+//		add_action( 'admin_footer', array( $this, 'load_notice' ) );
 
 		add_action( 'wp_ajax_monsterinsights_mark_notice_closed', array( $this, 'mark_notice_closed' ) );
 	}
