@@ -27,8 +27,16 @@ jQuery(document).ready(function ($) {
 
 var submenu_item = document.querySelector('.monsterinsights-upgrade-submenu');
 if (null !== submenu_item) {
-  var li = submenu_item.parentNode.parentNode;
-  if (li) {
-    li.classList.add('monsterinsights-submenu-highlight');
+  var anchorTag = submenu_item.parentNode;
+
+  if ( anchorTag ) {
+    anchorTag.setAttribute("target", "_blank");
+    anchorTag.setAttribute("rel", "noopener");
+
+    var li = anchorTag.parentNode;
+
+    if (li) {
+      li.classList.add('monsterinsights-submenu-highlight');
+    }
   }
 }

@@ -4,7 +4,7 @@ Contributors: wpexpertsio
 Tags: email, mail, smtp, wordpress smtp, email log, postman smtp, postman, gmail, google apps, hotmail, yahoo, mandrill api, sendgrid api, elastic email, office365, mailgun
 Requires at least: 3.9
 Tested up to: 6.0.2
-Stable tag: 2.1.9
+Stable tag: 2.1.10
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -289,6 +289,15 @@ To avoid being flagged as spam, you need to prove your email isn't forged. On a 
 
 
 == Changelog ==
+
+= 2.1.10 - 2022-10-10 =
+* **FIXES**
+* Avoid redirection to wizard on activation
+* Issue in resend emails 
+* Made backend setting fields visible
+* **IMPROVEMENTS**
+* Email host message
+* Sendgrid message id to prevent spam emails
 
 = 2.1.9 - 2022-09-9 =
 * **FIX**

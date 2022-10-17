@@ -84,7 +84,21 @@ class MonsterInsightsHeadlineToolPlugin {
 		foreach ( $words as $wrd ) {
 			// check if $wrd is a phrase
 			if ( strpos( $wrd, ' ' ) !== false ) {
-				if ( strpos( $sentence, $wrd ) !== false ) {
+				$word_position = strpos( $sentence, $wrd );
+
+				// Word not found in the sentence.
+				if ( $word_position === false ) {
+					continue;
+				}
+
+				// Check this is the end of the sentence.
+				$is_end = strlen( $sentence ) === $word_position + 1;
+
+				// Check the next character is a space.
+				$is_space = " " === substr( $sentence, $word_position + strlen( $wrd ), 1 );
+
+				// If it is a phrase then the next character must end of sentence or a space.
+				if ( $is_end || $is_space ) {
 					$ret[] = $wrd;
 				}
 			} // if $wrd is a single word

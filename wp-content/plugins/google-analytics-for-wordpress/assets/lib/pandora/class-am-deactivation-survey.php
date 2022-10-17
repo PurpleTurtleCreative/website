@@ -55,7 +55,7 @@ if ( ! class_exists( 'AM_Deactivation_Survey' ) ) {
 				return;
 			}
 
-			add_action( 'admin_print_scripts', array( $this, 'js' ), 20 );
+			add_action( 'admin_print_scripts', array( $this, 'js' ), 99 );
 			add_action( 'admin_print_scripts', array( $this, 'css' ) );
 			add_action( 'admin_footer', array( $this, 'modal' ) );
 		}
@@ -73,46 +73,7 @@ if ( ! class_exists( 'AM_Deactivation_Survey' ) ) {
 			}
 
 			$url          = network_site_url( '/' );
-			$is_local_url = false;
-
-			// Trim it up
-			$url = strtolower( trim( $url ) );
-
-			// Need to get the host...so let's add the scheme so we can use parse_url
-			if ( false === strpos( $url, 'http://' ) && false === strpos( $url, 'https://' ) ) {
-				$url = 'http://' . $url;
-			}
-			$url_parts = parse_url( $url );
-			$host      = ! empty( $url_parts['host'] ) ? $url_parts['host'] : false;
-			if ( ! empty( $url ) && ! empty( $host ) ) {
-				if ( false !== ip2long( $host ) ) {
-					if ( ! filter_var( $host, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) ) {
-						$is_local_url = true;
-					}
-				} else if ( 'localhost' === $host ) {
-					$is_local_url = true;
-				}
-
-				$tlds_to_check = array( '.dev', '.local', ':8888' );
-				foreach ( $tlds_to_check as $tld ) {
-					if ( false !== strpos( $host, $tld ) ) {
-						$is_local_url = true;
-						continue;
-					}
-
-				}
-				if ( substr_count( $host, '.' ) > 1 ) {
-					$subdomains_to_check = array( 'dev.', '*.staging.', 'beta.', 'test.' );
-					foreach ( $subdomains_to_check as $subdomain ) {
-						$subdomain = str_replace( '.', '(.)', $subdomain );
-						$subdomain = str_replace( array( '*', '(.)' ), '(.*)', $subdomain );
-						if ( preg_match( '/^(' . $subdomain . ')/', $host ) ) {
-							$is_local_url = true;
-							continue;
-						}
-					}
-				}
-			}
+			$is_local_url = monsterinsights_is_dev_url( $url );
 
 			return $is_local_url;
 		}

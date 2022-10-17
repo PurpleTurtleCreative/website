@@ -2,6 +2,7 @@
 require_once(dirname(__FILE__) . '/wordfenceConstants.php');
 require_once(dirname(__FILE__) . '/wfScanEngine.php');
 require_once(dirname(__FILE__) . '/wfScan.php');
+require_once(dirname(__FILE__) . '/wfScanMonitor.php');
 require_once(dirname(__FILE__) . '/wfCrawl.php');
 require_once(dirname(__FILE__) . '/Diff.php');
 require_once(dirname(__FILE__) . '/Diff/Renderer/Html/SideBySide.php');
@@ -122,6 +123,7 @@ class wordfence {
 
 		//Remove all scheduled scans.
 		wfScanner::shared()->unscheduleAllScans();
+		wfScanMonitor::handleDeactivation();
 
 		// Remove cron for email summary
 		wfActivityReport::clearCronJobs();
@@ -1387,6 +1389,8 @@ SQL
 				return $translation;
 			}, 10, 3);
 		}
+
+		wfScanMonitor::registerActions();
 	}
 
 	public static function showDisabledApplicationPasswordsMessage() {
@@ -2126,69 +2130,60 @@ SQL
 				}
 				
 				if ($allowSync) {
-					if (version_compare(phpversion(), '5.4.0', '>=')) {
-						if (!class_exists('wfGeoIP2')) {
-							require_once(dirname(__FILE__) . '/../models/common/wfGeoIP2.php');
-						}
-						
-						try {
-							$wflogsGeoIP = @wfGeoIP2::shared(wfGeoIP2::DB_WFLOGS);
-							$bundledGeoIP = @wfGeoIP2::shared(wfGeoIP2::DB_BUNDLED);
-							
-							if ($wflogsGeoIP === false || $wflogsGeoIP->version() != $bundledGeoIP->version()) {
-								$source = dirname(__FILE__) . '/GeoLite2-Country.mmdb';
-								if (copy($source, $destination)) {
-									$shash = '';
-									$dhash = '';
-									
-									$sp = @fopen($source, "rb");
-									if ($sp) {
-										$scontext = hash_init('sha256');
-										while (!feof($sp)) {
-											$data = fread($sp, 65536);
-											if ($data === false) {
-												$scontext = false;
-												break;
-											}
-											hash_update($scontext, $data);
+					wfUtils::requireIpLocator();
+					try {
+						$wflogsLocator = wfIpLocator::getInstance(wfIpLocator::SOURCE_WFLOGS);
+						$bundledLocator = wfIpLocator::getInstance(wfIpLocator::SOURCE_BUNDLED);
+						if (!$wflogsLocator->isPreferred() || $wflogsLocator->getDatabaseVersion() !== $bundledLocator->getDatabaseVersion()) {
+							$source = dirname(__FILE__) . '/GeoLite2-Country.mmdb';
+							if (copy($source, $destination)) {
+								$shash = '';
+								$dhash = '';
+								$sp = @fopen($source, "rb");
+								if ($sp) {
+									$scontext = hash_init('sha256');
+									while (!feof($sp)) {
+										$data = fread($sp, 65536);
+										if ($data === false) {
+											$scontext = false;
+											break;
 										}
-										fclose($sp);
-										if ($scontext !== false) {
-											$shash = hash_final($scontext, false);
-										}
+										hash_update($scontext, $data);
 									}
-									
-									$dp = @fopen($destination, "rb");
-									if ($dp) {
-										$dcontext = hash_init('sha256');
-										while (!feof($dp)) {
-											$data = fread($dp, 65536);
-											if ($data === false) {
-												$dcontext = false;
-												break;
-											}
-											hash_update($dcontext, $data);
-										}
-										fclose($dp);
-										if ($scontext !== false) {
-											$dhash = hash_final($dcontext, false);
-										}
-									}
-									
-									if (hash_equals($shash, $dhash)) {
-										wfConfig::remove('needsGeoIPSync');
-										delete_transient('wfSyncGeoIPActive');
+									fclose($sp);
+									if ($scontext !== false) {
+										$shash = hash_final($scontext, false);
 									}
 								}
-							}
-							else {
-								wfConfig::remove('needsGeoIPSync');
-								delete_transient('wfSyncGeoIPActive');
+								$dp = @fopen($destination, "rb");
+								if ($dp) {
+									$dcontext = hash_init('sha256');
+									while (!feof($dp)) {
+										$data = fread($dp, 65536);
+										if ($data === false) {
+											$dcontext = false;
+											break;
+										}
+										hash_update($dcontext, $data);
+									}
+									fclose($dp);
+									if ($scontext !== false) {
+										$dhash = hash_final($dcontext, false);
+									}
+								}
+								if (hash_equals($shash, $dhash)) {
+									wfConfig::remove('needsGeoIPSync');
+									delete_transient('wfSyncGeoIPActive');
+								}
 							}
 						}
-						catch (Exception $e) {
-							//Ignore
+						else {
+							wfConfig::remove('needsGeoIPSync');
+							delete_transient('wfSyncGeoIPActive');
 						}
+					}
+					catch (Exception $e) {
+						//Ignore
 					}
 				}
 			}
@@ -2285,7 +2280,6 @@ SQL
 					'pluginABSPATH'	 => ABSPATH,
 					'serverIPs'		 => json_encode(wfUtils::serverIPs()),
 					'blockCustomText' => wpautop(wp_strip_all_tags(wfConfig::get('blockCustomText', ''))),
-					'betaThreatDefenseFeed' => !!wfConfig::get('betaThreatDefenseFeed'),
 					'disableWAFIPBlocking' => wfConfig::get('disableWAFIPBlocking'),
 					'wordpressVersion' => wfConfig::get('wordpressVersion'),
 					'wordpressPluginVersions' => wfConfig::get_ser('wordpressPluginVersions'),
@@ -3197,8 +3191,6 @@ SQL
 					require(dirname(__FILE__) . '/wfLockedOut.php');
 				}
 				set_transient($tKey, $tries, wfConfig::get('loginSec_countFailMins') * 60);
-			} else if(is_object($authUser) && get_class($authUser) == 'WP_User'){
-				delete_transient($tKey); //reset counter on success
 			}
 		}
 		if(is_wp_error($authUser)){
@@ -3950,7 +3942,7 @@ SQL
 			if($r['type'] == 'error'){
 				$content .= "\n";
 			}
-			$content .= date(DATE_RFC822, $r['ctime'] + $timeOffset) . '::' . sprintf('%.4f', $r['ctime']) . ':' . $r['level'] . ':' . $r['type'] . '::' . wp_kses_data( (string) $r['msg']) . "\n";
+			$content .= date(DATE_RFC822, intval($r['ctime']) + $timeOffset) . '::' . sprintf('%.4f', $r['ctime']) . ':' . $r['level'] . ':' . $r['type'] . '::' . wp_kses_data( (string) $r['msg']) . "\n";
 		}
 		$content .= "\n\n";
 		$content .= str_repeat('-', 80);
@@ -4984,8 +4976,20 @@ HTACCESS;
 				break;
 			case wfIssues::SCAN_FAILED_START_TIMEOUT:
 			case wfIssues::SCAN_FAILED_CALLBACK_TEST_FAILED:
+				$resumeAttempts = wfScanMonitor::getConfiguredResumeAttempts();
+				if ($resumeAttempts > 0) {
+					if ($resumeAttempts === 1)
+						$resumeMessage = __('Wordfence will make one attempt to resume each failed scan stage. This scan may recover if this attempt is successful.', 'wordfence');
+					else
+						$resumeMessage = sprintf(__('Wordfence will make up to %d attempts to resume each failed scan stage. This scan may recover if one of these attempts is successful.', 'wordfence'), $resumeAttempts);
+					$resumeMessage = " {$resumeMessage} ";
+				}
+				else {
+					$resumeMessage = '';
+				}
 				$scanFailedHTML = wfView::create('scanner/scan-failed', array(
-					'messageHTML' => __('The scan has failed to start. This is often because the site either cannot make outbound requests or is blocked from connecting to itself.', 'wordfence') . ' <a href="' . wfSupportController::esc_supportURL(wfSupportController::ITEM_SCAN_FAILED_START) . '" target="_blank" rel="noopener noreferrer">' . __('Click here for steps you can try.', 'wordfence') . '<span class="screen-reader-text"> (' . esc_html__('opens in new tab', 'wordfence') . ')</span></a>',
+					'messageTitle' => __('Scan Stage Failed', 'wordfence'),
+					'messageHTML' => __('A scan stage has failed to start. This is often because the site either cannot make outbound requests or is blocked from connecting to itself.', 'wordfence') . $resumeMessage . ' <a href="' . wfSupportController::esc_supportURL(wfSupportController::ITEM_SCAN_FAILED_START) . '" target="_blank" rel="noopener noreferrer">' . __('Click here for steps you can try.', 'wordfence') . '<span class="screen-reader-text"> (' . esc_html__('opens in new tab', 'wordfence') . ')</span></a>',
 					'buttonTitle' => __('Close', 'wordfence'),
 				))->render();
 				break;
@@ -5454,7 +5458,7 @@ HTACCESS;
 						$d['t'] = esc_html(wfUtils::makeTimeAgo(time() - $d['t']) . ' ago');
 					}
 					else {
-						$d['t'] = esc_html(date_i18n(get_option('date_format') . ' ' . get_option('time_format'), (int) $d['t']));
+						$d['t'] = esc_html(wfUtils::formatLocalTime(get_option('date_format') . ' ' . get_option('time_format'), (int) $d['t']));
 					}
 				}
 				return array('ok' => 1, 'data' => $data);

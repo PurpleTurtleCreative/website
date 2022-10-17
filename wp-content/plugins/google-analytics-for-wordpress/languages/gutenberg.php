@@ -350,13 +350,13 @@ $generated_i18n_strings = array(
 	// Reference: src/plugins/monsterinsights-Headline-Analyzer/components/HeadlineWordsBlock.js:6
 	__( 'Goal: ', 'google-analytics-for-wordpress' ),
 
-	// Reference: src/plugins/monsterinsights-Headline-Analyzer/index.js:21
+	// Reference: src/plugins/monsterinsights-Headline-Analyzer/index.js:24
 	__( 'Headline Analyzer', 'google-analytics-for-wordpress' ),
 
-	// Reference: src/plugins/monsterinsights-Headline-Analyzer/index.js:22
+	// Reference: src/plugins/monsterinsights-Headline-Analyzer/index.js:25
 	__( 'Write your post title to see the analyzer data. This Headline Analyzer tool enables you to write irresistible SEO headlines that drive traffic, shares, and rank better in search results.', 'google-analytics-for-wordpress' ),
 
-	// Reference: src/plugins/monsterinsights-Headline-Analyzer/index.js:27
+	// Reference: src/plugins/monsterinsights-Headline-Analyzer/index.js:30
 	__( 'This headline analyzer is part of MonsterInsights to help you increase your traffic. See your %1swebsite traffic reports%2s.', 'google-analytics-for-wordpress' )
 );
 /* THIS IS THE END OF THE GENERATED FILE */

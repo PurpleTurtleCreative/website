@@ -197,8 +197,7 @@ class wfAPI {
 		
 		return self::buildQuery(array(
 			'k' => $this->APIKey,
-			's' => wfUtils::base64url_encode(json_encode($values)),
-			'betaFeed'  => (int) wfConfig::get('betaThreatDefenseFeed'),
+			's' => wfUtils::base64url_encode(json_encode($values))
 		));
 	}
 
