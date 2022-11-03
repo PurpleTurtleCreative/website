@@ -446,6 +446,7 @@ return array(
     'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\Autoptimize' => $baseDir . '/inc/ThirdParty/Plugins/Optimization/Autoptimize.php',
     'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\Ezoic' => $baseDir . '/inc/ThirdParty/Plugins/Optimization/Ezoic.php',
     'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\Hummingbird' => $baseDir . '/inc/ThirdParty/Plugins/Optimization/Hummingbird.php',
+    'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\RocketLazyLoad' => $baseDir . '/inc/ThirdParty/Plugins/Optimization/RocketLazyLoad.php',
     'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\WPMeteor' => $baseDir . '/inc/ThirdParty/Plugins/Optimization/WPMeteor.php',
     'WP_Rocket\\ThirdParty\\Plugins\\PDFEmbedder' => $baseDir . '/inc/ThirdParty/Plugins/PDFEmbedder.php',
     'WP_Rocket\\ThirdParty\\Plugins\\PWA' => $baseDir . '/inc/ThirdParty/Plugins/PWA.php',

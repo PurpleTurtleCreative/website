@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit84b6e744a30fc559807abcb376a9247c
+class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -482,6 +482,7 @@ class ComposerStaticInit84b6e744a30fc559807abcb376a9247c
         'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\Autoptimize' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Optimization/Autoptimize.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\Ezoic' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Optimization/Ezoic.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\Hummingbird' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Optimization/Hummingbird.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\RocketLazyLoad' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Optimization/RocketLazyLoad.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Optimization\\WPMeteor' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Optimization/WPMeteor.php',
         'WP_Rocket\\ThirdParty\\Plugins\\PDFEmbedder' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/PDFEmbedder.php',
         'WP_Rocket\\ThirdParty\\Plugins\\PWA' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/PWA.php',
@@ -522,9 +523,9 @@ class ComposerStaticInit84b6e744a30fc559807abcb376a9247c
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit84b6e744a30fc559807abcb376a9247c::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit84b6e744a30fc559807abcb376a9247c::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit84b6e744a30fc559807abcb376a9247c::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit760f6e1694ce3414b09ab848ae854d72::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit760f6e1694ce3414b09ab848ae854d72::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit760f6e1694ce3414b09ab848ae854d72::$classMap;
 
         }, null, ClassLoader::class);
     }
