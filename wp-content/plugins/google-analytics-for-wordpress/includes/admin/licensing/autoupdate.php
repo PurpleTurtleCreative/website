@@ -145,12 +145,13 @@ function monsterinsights_automatic_updates( $update, $item ) {
 		return $update;
 	}
 
-	$version       = $is_free ? MONSTERINSIGHTS_LITE_VERSION : $item['old_version'];
-	$current_major = monsterinsights_get_major_version( $version );
-	$new_major     = monsterinsights_get_major_version( $item['new_version'] );
+	$current_version = $is_free ? MONSTERINSIGHTS_LITE_VERSION : $item['old_version'];
+	$new_version     = $item['new_version'];
+	$current_major   = monsterinsights_get_major_version( $current_version );
+	$new_major       = monsterinsights_get_major_version( $new_version );
 
 	// If the opt in update allows major updates but there is no major version update, return early.
-	if ( $current_major < $new_major ) {
+	if ( version_compare( $current_major, $new_major, '<' ) ) {
 		if ( $automatic_updates === 'all' ) {
 			return true;
 		} else {
@@ -159,7 +160,7 @@ function monsterinsights_automatic_updates( $update, $item ) {
 	}
 
 	// If the opt in update allows minor updates but there is no minor version update, return early.
-	if ( $current_major == $new_major ) {
+	if ( version_compare( $current_major, $new_major, '==' ) && version_compare( $current_version, $new_version, '<' ) ) {
 		if ( $automatic_updates === 'all' || $automatic_updates === 'minor' ) {
 			return true;
 		} else {
@@ -168,7 +169,7 @@ function monsterinsights_automatic_updates( $update, $item ) {
 	}
 
 	// All our checks have passed - this plugin can be updated!
-	return true;
+	return $update;
 }
 
 add_filter( 'auto_update_plugin', 'monsterinsights_automatic_updates', 10, 2 );
@@ -197,13 +198,7 @@ add_filter( 'auto_update_plugin', 'monsterinsights_automatic_updates', 10, 2 );
  * - Because WP's updater asks the OS if the file is writable, make sure you do not have any files/folders for the plugin you are trying to autoupdate open when testing.
  * - You may need to delete the plugin info transient to get it to hard refresh the plugin info.
  */
-
-
 function monsterinsights_get_major_version( $version ) {
 	$exploded_version = explode( '.', $version );
-	if ( isset( $exploded_version[2] ) ) {
-		return $exploded_version[0] . '.' . $exploded_version[1] . '.' . $exploded_version[2];
-	} else {
-		return $exploded_version[0] . '.' . $exploded_version[1] . '.0';
-	}
+	return $exploded_version[0] . '.' . $exploded_version[1];
 }

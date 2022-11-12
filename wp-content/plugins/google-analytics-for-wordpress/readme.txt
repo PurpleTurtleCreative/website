@@ -3,8 +3,8 @@ Contributors: chriscct7, smub
 Donate link: http://www.wpbeginner.com/wpbeginner-needs-your-help/
 Tags: WordPress analytics, google analytics, google analytics dashboard, google analytics widget, WooCommerce stats, analytics dashboard, universal google analytics, statistics, tracking, stats, google, google analytics by yoast, ga, monster insights, monsterinsights, universal analytics, web stats, ecommerce, ecommerce tracking
 Requires at least: 4.8.0
-Tested up to: 6.0
-Stable tag: 8.9.1
+Tested up to: 6.1
+Stable tag: 8.10.1
 Requires PHP: 5.6
 License: GPL v3
 
@@ -298,6 +298,15 @@ You can also learn about other <a href="http://www.wpbeginner.com/category/plugi
 4. Want more features? <a href="https://www.monsterinsights.com/?utm_source=wprepo&utm_medium=link&utm_campaign=liteversion">Purchase MonsterInsights Pro</a>!
 
 == Changelog ==
+= 8.10.1: Nov 09, 2022 =
+- Fix: We fixed a bug in our auto-update logic when it encounters double digit version numbers. 
+
+= 8.10.0: Nov 07, 2022 =
+- New: We created a new Media report available right inside WordPress Admin dashboard to view video plays and engagement
+- New: We added file download support for Pretty Links
+- Enhancement: We enhanced some UI elements within the plugin
+- Fix: We updated User Journey to work with older versions of Easy Digital Downloads
+
 = 8.9.1: Oct 11, 2022 =
 - Enhancement: Our UserJourney addon works with sequential orders
 - Enhancement: We updated some language inside the WordPress Admin area for GA4 reporting

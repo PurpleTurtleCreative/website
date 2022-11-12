@@ -1481,6 +1481,10 @@ function monsterinsights_custom_track_pretty_links_redirect( $url ) {
 	if ( ! function_exists( 'monsterinsights_mp_track_event_call' ) && ! function_exists( 'monsterinsights_mp_collect_v4' ) ) {
 		return;
 	}
+
+	// Track if it is a file.
+	monsterinsights_track_pretty_links_file_download_redirect( $url );
+
 	// Try to determine if click originated on the same site.
 	$referer = ! empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : '';
 	if ( ! empty( $referer ) ) {
@@ -1550,6 +1554,64 @@ function monsterinsights_custom_track_pretty_links_redirect( $url ) {
 }
 
 add_action( 'prli_before_redirect', 'monsterinsights_custom_track_pretty_links_redirect' );
+
+/**
+ * Track Pretty Links file download redirects with MonsterInsights.
+ *
+ * @param string $url The url to which users get redirected.
+ */
+function monsterinsights_track_pretty_links_file_download_redirect( $url ) {
+	$file_info = pathinfo( $url );
+
+	// If no extension in URL.
+	if ( ! isset( $file_info['extension'] ) ) {
+		return;
+	}
+
+	if ( ! $file_info['extension'] ) {
+		return;
+	}
+
+	// Get download extensions to track.
+	$download_extensions = monsterinsights_get_option( 'extensions_of_files', '' );
+
+	if ( ! $download_extensions ) {
+		return;
+	}
+
+	$download_extensions = explode( ',', str_replace( '.', '', $download_extensions ) );
+
+	if ( ! is_array( $download_extensions ) ) {
+		$download_extensions = array( $download_extensions );
+	}
+
+	// If current URL extension is not in settings.
+	if ( ! in_array( $file_info['extension'], $download_extensions ) ) {
+		return;
+	}
+
+	$url_components = parse_url( $url );
+
+	global $prli_link;
+	$pretty_link = $prli_link->get_one_by( 'url', $url );
+
+	$args = array(
+		'events' => array(
+			array(
+				'name'   => 'file_download',
+				'params' => array(
+					'link_text'      => $pretty_link->name,
+					'link_url'       => $url,
+					'link_domain'    => $url_components['host'],
+					'file_extension' => $file_info['extension'],
+					'file_name'      => $file_info['basename'],
+				)
+			)
+		),
+	);
+
+	monsterinsights_mp_collect_v4( $args );
+}
 
 /**
  * Get post type in admin side

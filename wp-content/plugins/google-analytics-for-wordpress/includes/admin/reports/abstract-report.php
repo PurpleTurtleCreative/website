@@ -262,6 +262,12 @@ class MonsterInsights_Report {
 				);
 			} else {
 				// Success
+
+				// Strip any HTML tags from API response
+				$ret['data'] = json_encode($ret['data']);
+				$ret['data'] = strip_tags($ret['data']);
+				$ret['data'] = json_decode($ret['data'], true);
+
 				$data = array(
 					'expires' => time() + $expiration,
 					'p'       => $p,
