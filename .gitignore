@@ -24,3 +24,6 @@ wp-content/themes/twenty*/
 # ignore system files
 Icon
 .DS_Store
+
+# allow GitHub files
+.github
