@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
+class ComposerStaticInita4496206ce658407a8c6e017fe4bf196
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -281,6 +281,7 @@ class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
         'WP_Rocket\\Engine\\CDN\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/CDN/Subscriber.php',
         'WP_Rocket\\Engine\\Cache\\AdminSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Cache/AdminSubscriber.php',
         'WP_Rocket\\Engine\\Cache\\AdvancedCache' => __DIR__ . '/../..' . '/inc/Engine/Cache/AdvancedCache.php',
+        'WP_Rocket\\Engine\\Cache\\Config\\ConfigSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Cache/Config/ConfigSubscriber.php',
         'WP_Rocket\\Engine\\Cache\\Purge' => __DIR__ . '/../..' . '/inc/Engine/Cache/Purge.php',
         'WP_Rocket\\Engine\\Cache\\PurgeActionsSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Cache/PurgeActionsSubscriber.php',
         'WP_Rocket\\Engine\\Cache\\PurgeExpired\\PurgeExpiredCache' => __DIR__ . '/../..' . '/inc/Engine/Cache/PurgeExpired/PurgeExpiredCache.php',
@@ -314,7 +315,6 @@ class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
         'WP_Rocket\\Engine\\Deactivation\\DeactivationInterface' => __DIR__ . '/../..' . '/inc/Engine/Deactivation/DeactivationInterface.php',
         'WP_Rocket\\Engine\\Deactivation\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/Deactivation/ServiceProvider.php',
         'WP_Rocket\\Engine\\HealthCheck\\ActionSchedulerCheck' => __DIR__ . '/../..' . '/inc/Engine/HealthCheck/ActionSchedulerCheck.php',
-        'WP_Rocket\\Engine\\HealthCheck\\CacheDirSizeCheck' => __DIR__ . '/../..' . '/inc/Engine/HealthCheck/CacheDirSizeCheck.php',
         'WP_Rocket\\Engine\\HealthCheck\\HealthCheck' => __DIR__ . '/../..' . '/inc/Engine/HealthCheck/HealthCheck.php',
         'WP_Rocket\\Engine\\HealthCheck\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/HealthCheck/ServiceProvider.php',
         'WP_Rocket\\Engine\\Heartbeat\\HeartbeatSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Heartbeat/HeartbeatSubscriber.php',
@@ -443,7 +443,6 @@ class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
         'WP_Rocket\\Subscriber\\Media\\Webp_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/Media/class-webp-subscriber.php',
         'WP_Rocket\\Subscriber\\Optimization\\Dequeue_JQuery_Migrate_Subscriber' => __DIR__ . '/../..' . '/inc/deprecated/subscriber/Optimization/class-dequeue-jquery-migrate-subscriber.php',
         'WP_Rocket\\Subscriber\\Optimization\\Minify_HTML_Subscriber' => __DIR__ . '/../..' . '/inc/deprecated/subscriber/admin/Optimization/class-minify-html-subscriber.php',
-        'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Ecommerce\\BigCommerce_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/ecommerce/class-bigcommerce-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Images\\Webp\\EWWW_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/Images/Webp/class-ewww-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Images\\Webp\\Imagify_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/Images/Webp/class-imagify-subscriber.php',
         'WP_Rocket\\Subscriber\\Third_Party\\Plugins\\Images\\Webp\\Optimus_Subscriber' => __DIR__ . '/../..' . '/inc/classes/subscriber/third-party/plugins/Images/Webp/class-optimus-subscriber.php',
@@ -468,11 +467,13 @@ class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
         'WP_Rocket\\ThirdParty\\Hostings\\ServiceProvider' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/ServiceProvider.php',
         'WP_Rocket\\ThirdParty\\Hostings\\SpinUpWP' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/SpinUpWP.php',
         'WP_Rocket\\ThirdParty\\Hostings\\WPEngine' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/WPEngine.php',
+        'WP_Rocket\\ThirdParty\\Hostings\\WPXCloud' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/WPXCloud.php',
         'WP_Rocket\\ThirdParty\\Hostings\\WordPressCom' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/WordPressCom.php',
         'WP_Rocket\\ThirdParty\\NullSubscriber' => __DIR__ . '/../..' . '/inc/ThirdParty/NullSubscriber.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Ads\\Adthrive' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ads/Adthrive.php',
         'WP_Rocket\\ThirdParty\\Plugins\\CDN\\Cloudflare' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/CDN/Cloudflare.php',
         'WP_Rocket\\ThirdParty\\Plugins\\ConvertPlug' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/ConvertPlug.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\Ecommerce\\BigCommerce' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ecommerce/BigCommerce.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Ecommerce\\WooCommerceSubscriber' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ecommerce/WooCommerceSubscriber.php',
         'WP_Rocket\\ThirdParty\\Plugins\\I18n\\WPML' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/I18n/WPML.php',
         'WP_Rocket\\ThirdParty\\Plugins\\InlineRelatedPosts' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/InlineRelatedPosts.php',
@@ -497,6 +498,7 @@ class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
         'WP_Rocket\\ThirdParty\\Plugins\\Security\\WordFenceCompatibility' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Security/WordFenceCompatibility.php',
         'WP_Rocket\\ThirdParty\\Plugins\\SimpleCustomCss' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/SimpleCustomCss.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Smush' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Smush.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\TheEventsCalendar' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/TheEventsCalendar.php',
         'WP_Rocket\\ThirdParty\\Plugins\\ThirstyAffiliates' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/ThirstyAffiliates.php',
         'WP_Rocket\\ThirdParty\\Plugins\\UnlimitedElements' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/UnlimitedElements.php',
         'WP_Rocket\\ThirdParty\\ReturnTypesTrait' => __DIR__ . '/../..' . '/inc/ThirdParty/ReturnTypesTrait.php',
@@ -509,7 +511,9 @@ class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
         'WP_Rocket\\ThirdParty\\Themes\\Jevelin' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Jevelin.php',
         'WP_Rocket\\ThirdParty\\Themes\\MinimalistBlogger' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/MinimalistBlogger.php',
         'WP_Rocket\\ThirdParty\\Themes\\Polygon' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Polygon.php',
+        'WP_Rocket\\ThirdParty\\Themes\\ServiceProvider' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/ServiceProvider.php',
         'WP_Rocket\\ThirdParty\\Themes\\ThirdpartyTheme' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/ThirdpartyTheme.php',
+        'WP_Rocket\\ThirdParty\\Themes\\Uncode' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Uncode.php',
         'WP_Rocket\\ThirdParty\\Themes\\Xstore' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Xstore.php',
         'WP_Rocket\\Traits\\Config_Updater' => __DIR__ . '/../..' . '/inc/classes/traits/trait-config-updater.php',
         'WP_Rocket\\Traits\\Memoize' => __DIR__ . '/../..' . '/inc/classes/traits/trait-memoize.php',
@@ -523,9 +527,9 @@ class ComposerStaticInit760f6e1694ce3414b09ab848ae854d72
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit760f6e1694ce3414b09ab848ae854d72::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit760f6e1694ce3414b09ab848ae854d72::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit760f6e1694ce3414b09ab848ae854d72::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita4496206ce658407a8c6e017fe4bf196::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita4496206ce658407a8c6e017fe4bf196::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita4496206ce658407a8c6e017fe4bf196::$classMap;
 
         }, null, ClassLoader::class);
     }
