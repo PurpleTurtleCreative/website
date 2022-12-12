@@ -668,7 +668,6 @@ function frmFrontFormJS() {
 				);
 			} else if ( Object.keys( response.errors ).length ) {
 				// errors were returned
-
 				removeSubmitLoading( jQuery( object ), 'enable' );
 
 				//show errors
@@ -700,7 +699,7 @@ function frmFrontFormJS() {
 					}
 				}
 
-				jQuery( object ).find( '.frm-g-recaptcha, .g-recaptcha' ).each( function() {
+				jQuery( object ).find( '.frm-g-recaptcha, .g-recaptcha, .h-captcha' ).each( function() {
 					var $recaptcha  = jQuery( this ),
 						recaptchaID = $recaptcha.data( 'rid' );
 
@@ -710,6 +709,9 @@ function frmFrontFormJS() {
 						} else {
 							grecaptcha.reset();
 						}
+					}
+					if ( typeof hcaptcha !== 'undefined' && hcaptcha ) {
+						hcaptcha.reset();
 					}
 				});
 
@@ -1129,9 +1131,9 @@ function frmFrontFormJS() {
 	 * @since 4.10.02
 	 */
 	function changeFocusWhenClickComboFieldLabel() {
-		let label;
+		var label;
 
-		const comboInputsContainer = document.querySelectorAll( '.frm_combo_inputs_container' );
+		var comboInputsContainer = document.querySelectorAll( '.frm_combo_inputs_container' );
 		comboInputsContainer.forEach( function( inputsContainer ) {
 			if ( ! inputsContainer.closest( '.frm_form_field' ) ) {
 				return;

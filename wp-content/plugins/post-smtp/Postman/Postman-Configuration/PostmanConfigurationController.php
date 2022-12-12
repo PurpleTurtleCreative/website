@@ -263,6 +263,12 @@ class PostmanConfigurationController {
         print '<div id="sendinblue_settings" class="authentication_setting non-basic non-oauth2">';
         do_settings_sections( PostmanSendinblueTransport::SENDINBLUE_AUTH_OPTIONS );
         print '</div>';
+        print '<div id="postmark_settings" class="authentication_setting non-basic non-oauth2">';
+        do_settings_sections( PostmanPostmarkTransport::POSTMARK_AUTH_OPTIONS );
+		print '</div>';
+		print '<div id="sparkpost_settings" class="authentication_setting non-basic non-oauth2">';
+        do_settings_sections( PostmanSparkPostTransport::SPARKPOST_AUTH_OPTIONS );
+        print '</div>';
 
 		do_action( 'post_smtp_settings_sections' );
 
@@ -890,7 +896,7 @@ class PostmanManageConfigurationAjaxHandler extends PostmanAbstractAjaxHandler {
 			$winningRecommendation = $this->getWin( $socket, $userSocketOverride, $userAuthOverride, $originalSmtpServer );
 			$this->logger->error( $socket->label );
 		}
-		
+
 		return $winningRecommendation;
 	}
 
@@ -923,7 +929,7 @@ class PostmanManageConfigurationAjaxHandler extends PostmanAbstractAjaxHandler {
 			}
 			$socket->label = $recommendation ['label'];
 		}
-		
+
 		return $winningRecommendation;
 	}
 
@@ -933,22 +939,51 @@ class PostmanManageConfigurationAjaxHandler extends PostmanAbstractAjaxHandler {
 	 * @return multitype:
 	 */
 	private function createOverrideMenus( $sockets, $winningRecommendation, $userSocketOverride, $userAuthOverride ) {
+		
 		$overrideMenu = array();
+		$last_items = array();
+
 		foreach ( $sockets as $socket ) {
+
 			$overrideItem = $this->createOverrideMenu( $socket, $winningRecommendation, $userSocketOverride, $userAuthOverride );
 			if ( $overrideItem != null ) {
-				$overrideMenu [ $socket->id ] = $overrideItem;
+				
+				$transport = PostmanTransportRegistry::getInstance()->getTransport( $socket->transport );
+
+				//If class has constant
+				if( defined( get_class( $transport ) . "::PRIORITY" ) ) {
+
+					$priority = $transport::PRIORITY;
+					$overrideMenu[$priority] = $overrideItem;
+
+				}
+				else {
+
+					$last_items[] = $overrideItem;
+
+				}
+
 			}
+
 		}
 
-		// sort
+		//Sort in DESC order
 		krsort( $overrideMenu );
-		$sortedMenu = array();
-		foreach ( $overrideMenu as $menu ) {
-			array_push( $sortedMenu, $menu );
-		}
+		
+		//Start Placing sockets in last, because they don't have there own priority.
+		foreach( $last_items as $item ) {
 
-		return $sortedMenu;
+			$overrideMenu[] = $item;
+
+		}
+		
+		$menu = array();
+		foreach ( $overrideMenu as $key ) {
+			array_push( $menu, $key );
+		}
+		
+		return $menu;
+		
 	}
 
 	/**

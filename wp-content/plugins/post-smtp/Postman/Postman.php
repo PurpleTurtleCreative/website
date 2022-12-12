@@ -64,6 +64,9 @@ class Postman {
 		require_once 'Postman-Mail/PostmanSendGridTransport.php';
 		require_once 'Postman-Mail/PostmanMailgunTransport.php';
         require_once 'Postman-Mail/PostmanSendinblueTransport.php';
+		require_once 'Postman-Suggest-Pro/PostmanSuggestProSocket.php';
+        require_once 'Postman-Mail/PostmanPostmarkTransport.php';
+        require_once 'Postman-Mail/PostmanSparkPostTransport.php';
         require_once 'PostmanOAuthToken.php';
 		require_once 'PostmanWpMailBinder.php';
 		require_once 'PostmanConfigTextHelper.php';
@@ -72,7 +75,7 @@ class Postman {
 		require_once 'Postman-Mail/PostmanContactForm7.php';
 		require_once 'Phpmailer/PostsmtpMailer.php';
 		//require_once 'Postman-Mail/PostmanWooCommerce.php';
-
+		require_once 'Postman-Mail/Services/PostmanServiceRequest.php';
 		// get plugin metadata - alternative to get_plugin_data
 		$this->pluginData = array(
 				'name' => __( 'Postman SMTP', 'post-smtp' ),
@@ -145,7 +148,8 @@ class Postman {
 				'on_plugins_loaded',
 		) );
 
-        add_filter( 'extra_plugin_headers', [ $this, 'add_extension_headers' ] );
+		//Conflicting with backupbuddy, will be removed soon 
+        //add_filter( 'extra_plugin_headers', [ $this, 'add_extension_headers' ] );
 
 		// hook on the wp_loaded event
 		add_action( 'wp_loaded', array(
@@ -441,6 +445,8 @@ class Postman {
         $postman_transport_registry->registerTransport( new PostmanSendGridTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanMailgunTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanSendinblueTransport( $rootPluginFilenameAndPath ) );
+        $postman_transport_registry->registerTransport( new PostmanPostmarkTransport( $rootPluginFilenameAndPath ) );
+        $postman_transport_registry->registerTransport( new PostmanSparkPostTransport( $rootPluginFilenameAndPath ) );
 
 		do_action( 'postsmtp_register_transport', $postman_transport_registry );
 	}
