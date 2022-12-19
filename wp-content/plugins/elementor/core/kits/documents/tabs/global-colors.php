@@ -21,7 +21,7 @@ class Global_Colors extends Tab_Base {
 	}
 
 	public function get_title() {
-		return esc_html__( 'Global Colors', 'elementor' );
+		return __( 'Global Colors', 'elementor' );
 	}
 
 	public function get_group() {
@@ -33,14 +33,14 @@ class Global_Colors extends Tab_Base {
 	}
 
 	public function get_help_url() {
-		return 'https://go.elementor.com/global-colors/';
+		return 'https://go.elementor.com/global-colors';
 	}
 
 	protected function register_tab_controls() {
 		$this->start_controls_section(
 			'section_global_colors',
 			[
-				'label' => esc_html__( 'Global Colors', 'elementor' ),
+				'label' => __( 'Global Colors', 'elementor' ),
 				'tab' => $this->get_id(),
 			]
 		);
@@ -62,6 +62,7 @@ class Global_Colors extends Tab_Base {
 			[
 				'type' => Controls_Manager::COLOR,
 				'label_block' => true,
+				'dynamic' => [],
 				'selectors' => [
 					'{{WRAPPER}}' => '--e-global-color-{{_id.VALUE}}: {{VALUE}}',
 				],
@@ -74,33 +75,25 @@ class Global_Colors extends Tab_Base {
 		$default_colors = [
 			[
 				'_id' => 'primary',
-				'title' => esc_html__( 'Primary', 'elementor' ),
+				'title' => __( 'Primary', 'elementor' ),
 				'color' => '#6EC1E4',
 			],
 			[
 				'_id' => 'secondary',
-				'title' => esc_html__( 'Secondary', 'elementor' ),
+				'title' => __( 'Secondary', 'elementor' ),
 				'color' => '#54595F',
 			],
 			[
 				'_id' => 'text',
-				'title' => esc_html__( 'Text', 'elementor' ),
+				'title' => __( 'Text', 'elementor' ),
 				'color' => '#7A7A7A',
 			],
 			[
 				'_id' => 'accent',
-				'title' => esc_html__( 'Accent', 'elementor' ),
+				'title' => __( 'Accent', 'elementor' ),
 				'color' => '#61CE70',
 			],
 		];
-
-		$this->add_control(
-			'heading_system_colors',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'System Colors', 'elementor' ),
-			]
-		);
 
 		$this->add_control(
 			'system_colors',
@@ -112,15 +105,6 @@ class Global_Colors extends Tab_Base {
 					'add' => false,
 					'remove' => false,
 				],
-				'separator' => 'after',
-			]
-		);
-
-		$this->add_control(
-			'heading_custom_colors',
-			[
-				'type' => Controls_Manager::HEADING,
-				'label' => esc_html__( 'Custom Colors', 'elementor' ),
 			]
 		);
 

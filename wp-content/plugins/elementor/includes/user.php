@@ -84,7 +84,7 @@ class User {
 			return false;
 		}
 
-		if ( 'trash' === get_post_status( $post->ID ) ) {
+		if ( 'trash' === get_post_status( $post_id ) ) {
 			return false;
 		}
 
@@ -99,11 +99,11 @@ class User {
 		}
 
 		$edit_cap = $post_type_object->cap->edit_post;
-		if ( ! current_user_can( $edit_cap, $post->ID ) ) {
+		if ( ! current_user_can( $edit_cap, $post_id ) ) {
 			return false;
 		}
 
-		if ( intval( get_option( 'page_for_posts' ) ) === $post->ID ) {
+		if ( get_option( 'page_for_posts' ) === $post_id ) {
 			return false;
 		}
 
@@ -290,20 +290,5 @@ class User {
 		}
 
 		return $user_introduction_meta;
-	}
-
-	/**
-	 * Get a user option with default value as fallback.
-	 *
-	 * @param string $option  - Option key.
-	 * @param int    $user_id - User ID
-	 * @param mixed  $default - Default fallback value.
-	 *
-	 * @return mixed
-	 */
-	public static function get_user_option_with_default( $option, $user_id, $default ) {
-		$value = get_user_option( $option, $user_id );
-
-		return ( false === $value ) ? $default : $value;
 	}
 }

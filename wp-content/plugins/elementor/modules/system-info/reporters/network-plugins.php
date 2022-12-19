@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 1.0.0
  */
-class Network_Plugins extends Base_Plugin {
+class Network_Plugins extends Base {
 
 	/**
 	 * Network plugins.

@@ -53,9 +53,7 @@ abstract class DB_Upgrades_Manager extends Background_Task_Manager {
 	public function on_runner_start() {
 		parent::on_runner_start();
 
-		if ( ! defined( 'IS_ELEMENTOR_UPGRADE' ) ) {
-			define( 'IS_ELEMENTOR_UPGRADE', true );
-		}
+		define( 'IS_ELEMENTOR_UPGRADE', true );
 	}
 
 	public function on_runner_complete( $did_tasks = false ) {
@@ -69,17 +67,13 @@ abstract class DB_Upgrades_Manager extends Background_Task_Manager {
 			],
 		] );
 
-		$this->clear_cache();
+		Plugin::$instance->files_manager->clear_cache();
 
 		$this->update_db_version();
 
 		if ( $did_tasks ) {
 			$this->add_flag( 'completed' );
 		}
-	}
-
-	protected function clear_cache() {
-		Plugin::$instance->files_manager->clear_cache();
 	}
 
 	public function admin_notice_start_upgrade() {
@@ -90,11 +84,11 @@ abstract class DB_Upgrades_Manager extends Background_Task_Manager {
 
 		$options = [
 			'title' => $this->get_updater_label(),
-			'description' => esc_html__( 'Your site database needs to be updated to the latest version.', 'elementor' ),
+			'description' => __( 'Your site database needs to be updated to the latest version.', 'elementor' ),
 			'type' => 'error',
 			'icon' => false,
 			'button' => [
-				'text' => esc_html__( 'Update Now', 'elementor' ),
+				'text' => __( 'Update Now', 'elementor' ),
 				'url' => $this->get_start_action_url(),
 				'class' => 'e-button e-button--cta',
 			],
@@ -111,11 +105,11 @@ abstract class DB_Upgrades_Manager extends Background_Task_Manager {
 
 		$options = [
 			'title' => $this->get_updater_label(),
-			'description' => esc_html__( 'Database update process is running in the background. Taking a while?', 'elementor' ),
+			'description' => __( 'Database update process is running in the background. Taking a while?', 'elementor' ),
 			'type' => 'warning',
 			'icon' => false,
 			'button' => [
-				'text' => esc_html__( 'Click here to run it now', 'elementor' ),
+				'text' => __( 'Click here to run it now', 'elementor' ),
 				'url' => $this->get_continue_action_url(),
 				'class' => 'e-button e-button--primary',
 			],
@@ -127,7 +121,7 @@ abstract class DB_Upgrades_Manager extends Background_Task_Manager {
 	public function admin_notice_upgrade_is_completed() {
 		$this->delete_flag( 'completed' );
 
-		$message = esc_html__( 'The database update process is now complete. Thank you for updating to the latest version!', 'elementor' );
+		$message = __( 'The database update process is now complete. Thank you for updating to the latest version!', 'elementor' );
 
 		/**
 		 * @var Admin_Notices $admin_notices
@@ -160,8 +154,6 @@ abstract class DB_Upgrades_Manager extends Background_Task_Manager {
 			return;
 		}
 
-		$this->clear_cache();
-
 		foreach ( $upgrade_callbacks as $callback ) {
 			$updater->push_to_queue( [
 				'callback' => $callback,
@@ -192,12 +184,6 @@ abstract class DB_Upgrades_Manager extends Background_Task_Manager {
 
 		foreach ( $upgrades_reflection->getMethods() as $method ) {
 			$method_name = $method->getName();
-
-			if ( '_on_each_version' === $method_name ) {
-				$callbacks[] = [ $upgrades_class, $method_name ];
-				continue;
-			}
-
 			if ( false === strpos( $method_name, $prefix ) ) {
 				continue;
 			}

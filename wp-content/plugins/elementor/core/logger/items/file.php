@@ -19,7 +19,6 @@ class File extends Base {
 		$this->line = empty( $args['line'] ) ? '' : $args['line'];
 	}
 
-	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		$json_arr = parent::jsonSerialize();
 		$json_arr['file'] = $this->file;

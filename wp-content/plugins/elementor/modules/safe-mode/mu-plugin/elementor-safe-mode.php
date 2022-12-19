@@ -60,8 +60,7 @@ class Safe_Mode {
 	}
 
 	public function is_editor_ajax() {
-		// PHPCS - There is already nonce verification in the Ajax Manager
-		return is_admin() && isset( $_POST['action'] ) && 'elementor_ajax' === $_POST['action']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		return is_admin() && isset( $_POST['action'] ) && 'elementor_ajax' === $_POST['action'];
 	}
 
 	public function add_hooks() {
@@ -101,7 +100,7 @@ class Safe_Mode {
 	public function plugin_row_meta( $plugin_meta, $plugin_file, $plugin_data, $status ) {
 		if ( basename( __FILE__ ) === $plugin_file ) {
 			$row_meta = [
-				'docs' => '<a href="https://go.elementor.com/safe-mode/" aria-label="' . esc_attr( esc_html__( 'Learn More', 'elementor' ) ) . '" target="_blank">' . esc_html__( 'Learn More', 'elementor' ) . '</a>',
+				'docs' => '<a href="https://go.elementor.com/safe-mode/" aria-label="' . esc_attr( __( 'Learn More', 'elementor' ) ) . '" target="_blank">' . __( 'Learn More', 'elementor' ) . '</a>',
 			];
 
 			$plugin_meta = array_merge( $plugin_meta, $row_meta );

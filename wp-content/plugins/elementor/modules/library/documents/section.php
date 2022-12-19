@@ -19,12 +19,21 @@ class Section extends Library_Document {
 		$properties = parent::get_properties();
 
 		$properties['support_kit'] = true;
-		$properties['show_in_finder'] = true;
 
 		return $properties;
 	}
 
-	public static function get_type() {
+	/**
+	 * Get document name.
+	 *
+	 * Retrieve the document name.
+	 *
+	 * @since 2.0.0
+	 * @access public
+	 *
+	 * @return string Document name.
+	 */
+	public function get_name() {
 		return 'section';
 	}
 
@@ -40,10 +49,6 @@ class Section extends Library_Document {
 	 * @return string Document title.
 	 */
 	public static function get_title() {
-		return esc_html__( 'Section', 'elementor' );
-	}
-
-	public static function get_plural_title() {
-		return esc_html__( 'Sections', 'elementor' );
+		return __( 'Section', 'elementor' );
 	}
 }

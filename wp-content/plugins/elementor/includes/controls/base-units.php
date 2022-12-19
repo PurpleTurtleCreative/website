@@ -72,21 +72,6 @@ abstract class Control_Base_Units extends Control_Base_Multiple {
 					'max' => 360,
 					'step' => 1,
 				],
-				'grad' => [
-					'min' => 0,
-					'max' => 400,
-					'step' => 1,
-				],
-				'rad' => [
-					'min' => 0,
-					'max' => 6.2832,
-					'step' => 0.0001,
-				],
-				'turn' => [
-					'min' => 0,
-					'max' => 1,
-					'step' => 0.01,
-				],
 				'vh' => [
 					'min' => 0,
 					'max' => 100,
@@ -96,16 +81,6 @@ abstract class Control_Base_Units extends Control_Base_Multiple {
 					'min' => 0,
 					'max' => 100,
 					'step' => 1,
-				],
-				's' => [
-					'min' => 0,
-					'max' => 3,
-					'step' => 0.1,
-				],
-				'ms' => [
-					'min' => 0,
-					'max' => 3000,
-					'step' => 100,
 				],
 			],
 		];

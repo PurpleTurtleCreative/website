@@ -43,7 +43,6 @@ class Base implements Log_Item_Interface {
 		return strtr( static::FORMAT, $vars );
 	}
 
-	#[\ReturnTypeWillChange]
 	public function jsonSerialize() {
 		return [
 			'class' => get_class( $this ),

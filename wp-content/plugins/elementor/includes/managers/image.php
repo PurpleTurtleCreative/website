@@ -1,8 +1,6 @@
 <?php
 namespace Elementor;
 
-use Elementor\Core\Utils\Collection;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -28,8 +26,7 @@ class Images_Manager {
 	 * @access public
 	 */
 	public function get_images_details() {
-		// PHPCS - Already validated by wp_ajax.
-		$items = $_POST['items']; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$items = $_POST['items'];
 		$urls  = [];
 
 		foreach ( $items as $item ) {
@@ -76,9 +73,6 @@ class Images_Manager {
 			if ( 0 === strpos( $size, 'custom_' ) ) {
 				preg_match( '/custom_(\d*)x(\d*)/', $size, $matches );
 
-				$matches[1] = (int) $matches[1];
-				$matches[2] = (int) $matches[2];
-
 				$instance = [
 					'image_size' => 'custom',
 					'image_custom_dimension' => [
@@ -87,23 +81,7 @@ class Images_Manager {
 					],
 				];
 
-				$url = Group_Control_Image_Size::get_attachment_image_src( $id, 'image', $instance );
-
-				$thumbs_path = BFITHUMB_UPLOAD_DIR . '/' . basename( $url );
-
-				$image_meta = wp_get_attachment_metadata( $id );
-
-				// Attach custom image to original.
-				$image_meta['sizes'][ 'elementor_' . $size ] = [
-					'file' => $thumbs_path,
-					'width' => $matches[1],
-					'height' => $matches[2],
-					'mime-type' => get_post_mime_type( $id ),
-				];
-
-				wp_update_attachment_metadata( $id, $image_meta );
-
-				$urls[ $size ] = $url;
+				$urls[ $size ] = Group_Control_Image_Size::get_attachment_image_src( $id, 'image', $instance );
 			} else {
 				$urls[ $size ] = wp_get_attachment_image_src( $id, $size )[0];
 			}
@@ -130,40 +108,22 @@ class Images_Manager {
 		$lightbox_title_src = $kit->get_settings( 'lightbox_title_src' );
 		$lightbox_description_src = $kit->get_settings( 'lightbox_description_src' );
 		$attachment = get_post( $id );
+		$image_data = [
+			'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
+			'caption' => $attachment->post_excerpt,
+			'description' => $attachment->post_content,
+			'title' => $attachment->post_title,
+		];
 
-		if ( $attachment ) {
-			$image_data = [
-				'alt' => get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true ),
-				'caption' => $attachment->post_excerpt,
-				'description' => $attachment->post_content,
-				'title' => $attachment->post_title,
-			];
+		if ( $lightbox_title_src && $image_data[ $lightbox_title_src ] ) {
+			$attributes['title'] = $image_data[ $lightbox_title_src ];
+		}
 
-			if ( $lightbox_title_src && $image_data[ $lightbox_title_src ] ) {
-				$attributes['title'] = $image_data[ $lightbox_title_src ];
-			}
-
-			if ( $lightbox_description_src && $image_data[ $lightbox_description_src ] ) {
-				$attributes['description'] = $image_data[ $lightbox_description_src ];
-			}
+		if ( $lightbox_description_src && $image_data[ $lightbox_description_src ] ) {
+			$attributes['description'] = $image_data[ $lightbox_description_src ];
 		}
 
 		return $attributes;
-	}
-
-	private function delete_custom_images( $post_id ) {
-		$image_meta = wp_get_attachment_metadata( $post_id );
-		if ( ! empty( $image_meta ) && ! empty( $image_meta['sizes'] ) ) {
-			( new Collection( $image_meta['sizes'] ) )
-			->filter( function ( $value, $key ) {
-				return ( 0 === strpos( $key, 'elementor_custom_' ) );
-			} )
-			->pluck( 'file' )
-			->each( function ( $path ) {
-				$base_dir = wp_get_upload_dir()['basedir'];
-				wp_delete_file( $base_dir . '/' . $path );
-			} );
-		}
 	}
 
 	/**
@@ -176,10 +136,5 @@ class Images_Manager {
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_elementor_get_images_details', [ $this, 'get_images_details' ] );
-
-		// Delete elementor thumbnail files on deleting its main image.
-		add_action( 'delete_attachment', function ( $post_id ) {
-			$this->delete_custom_images( $post_id );
-		} );
 	}
 }

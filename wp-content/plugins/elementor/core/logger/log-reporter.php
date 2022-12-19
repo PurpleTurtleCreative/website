@@ -21,30 +21,26 @@ class Log_Reporter extends Base {
 	const CLEAR_LOG_ACTION = 'elementor-clear-log';
 
 	public function get_title() {
-		return esc_html__( 'Log', 'elementor' );
-	}
+		$title = 'Log';
 
-	public function get_fields() {
-		return [
-			'log_entries' => '',
-		];
-	}
-
-	public function print_html_label( $log_label ) {
-		$title = $this->get_title();
-
-		if ( empty( $_GET[ self::CLEAR_LOG_ACTION ] ) ) { // phpcs:ignore -- nonce validation is not require here.
+		if ( 'html' === $this->_properties['format'] && empty( $_GET[ self::CLEAR_LOG_ACTION ] ) ) { // phpcs:ignore -- nonce validation is not require here.
 			$nonce = wp_create_nonce( self::CLEAR_LOG_ACTION );
 			$url = add_query_arg( [
 				self::CLEAR_LOG_ACTION => 1,
 				'_wpnonce' => $nonce,
 			] );
 
-			$title .= '<a href="' . esc_url( $url ) . '#elementor-clear-log" class="box-title-tool">' . esc_html__( 'Clear Log', 'elementor' ) . '</a>';
+			$title .= '<a href="' . esc_url( $url ) . '#elementor-clear-log" class="box-title-tool">' . __( 'Clear Log', 'elementor' ) . '</a>';
 			$title .= '<span id="elementor-clear-log"></span>';
 		}
 
-		parent::print_html_label( $title );
+		return $title;
+	}
+
+	public function get_fields() {
+		return [
+			'log_entries' => '',
+		];
 	}
 
 	public function get_log_entries() {

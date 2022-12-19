@@ -15,10 +15,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class User extends Base {
 
-	public function is_enabled() {
-		return (bool) wp_get_current_user()->ID;
-	}
-
 	/**
 	 * Get user reporter title.
 	 *

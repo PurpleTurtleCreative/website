@@ -77,31 +77,11 @@ class Compatibility_Tag_Report extends Base {
 			$this->plugins_to_check
 		);
 
-		return [
-			'value' => $compatibility_status,
-		];
-	}
-
-	public function get_html_report_data() {
-		$compatibility_status = $this->compatibility_tag_service->check(
-			$this->plugin_version,
-			$this->plugins_to_check
-		);
-
-		$compatibility_status = $this->get_html_from_compatibility_status( $compatibility_status );
-
-		return [
-			'value' => $compatibility_status,
-		];
-	}
-
-	public function get_raw_report_data() {
-		$compatibility_status = $this->compatibility_tag_service->check(
-			$this->plugin_version,
-			$this->plugins_to_check
-		);
-
-		$compatibility_status = $this->get_raw_from_compatibility_status( $compatibility_status );
+		if ( 'html' === $this->_properties['format'] ) {
+			$compatibility_status = $this->get_html_from_compatibility_status( $compatibility_status );
+		} elseif ( 'raw' === $this->_properties['format'] ) {
+			$compatibility_status = $this->get_raw_from_compatibility_status( $compatibility_status );
+		}
 
 		return [
 			'value' => $compatibility_status,
@@ -116,13 +96,9 @@ class Compatibility_Tag_Report extends Base {
 	 * @return Collection
 	 */
 	private function merge_compatibility_status_with_plugins( array $compatibility_status ) {
-		$labels = $this->get_report_labels();
-
 		$compatibility_status = ( new Collection( $compatibility_status ) )
-			->map( function ( $value ) use ( $labels ) {
-				$status = isset( $labels[ $value ] ) ? $labels[ $value ] : esc_html__( 'Unknown', 'elementor' );
-
-				return [ 'compatibility_status' => $status ];
+			->map( function ( $value ) {
+				return [ 'is_compatible' => $value ];
 			} );
 
 		return Plugin::$instance->wp
@@ -141,7 +117,7 @@ class Compatibility_Tag_Report extends Base {
 	private function get_html_from_compatibility_status( array $compatibility_status ) {
 		return $this->merge_compatibility_status_with_plugins( $compatibility_status )
 			->map( function ( array $plugin ) {
-				return "<tr><td> {$plugin['Name']} </td><td> {$plugin['compatibility_status']} </td></tr>";
+				return "<tr><td> {$plugin['Name']} </td><td> {$plugin['is_compatible']} </td></tr>";
 			} )
 			->implode( '' );
 	}
@@ -156,21 +132,8 @@ class Compatibility_Tag_Report extends Base {
 	private function get_raw_from_compatibility_status( array $compatibility_status ) {
 		return PHP_EOL . $this->merge_compatibility_status_with_plugins( $compatibility_status )
 			->map( function ( array $plugin ) {
-				return "\t{$plugin['Name']}: {$plugin['compatibility_status']}";
+				return "\t{$plugin['Name']}: {$plugin['is_compatible']}";
 			} )
 			->implode( PHP_EOL );
-	}
-
-	/**
-	 * @return array
-	 */
-	private function get_report_labels() {
-		return [
-			Compatibility_Tag::COMPATIBLE   => esc_html__( 'Compatible', 'elementor' ),
-			Compatibility_Tag::INCOMPATIBLE => esc_html__( 'Incompatible', 'elementor' ),
-			Compatibility_Tag::HEADER_NOT_EXISTS => esc_html__( 'Compatibility not specified', 'elementor' ),
-			Compatibility_Tag::INVALID_VERSION => esc_html__( 'Compatibility unknown', 'elementor' ),
-			Compatibility_Tag::PLUGIN_NOT_EXISTS => esc_html__( 'Error', 'elementor' ),
-		];
 	}
 }

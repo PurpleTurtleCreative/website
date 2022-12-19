@@ -38,7 +38,7 @@ abstract class PageBase extends Document {
 			'theme-elements',
 			[
 				'theme-elements-single' => [
-					'title' => esc_html__( 'Single', 'elementor' ),
+					'title' => __( 'Single', 'elementor' ),
 					'active' => false,
 				],
 			]
@@ -84,9 +84,9 @@ abstract class PageBase extends Document {
 		$document->add_control(
 			'hide_title',
 			[
-				'label' => esc_html__( 'Hide Title', 'elementor' ),
+				'label' => __( 'Hide Title', 'elementor' ),
 				'type' => Controls_Manager::SWITCHER,
-				'description' => esc_html__( 'Not working? You can set a different selector for the title in Site Settings > Layout', 'elementor' ),
+				'description' => __( 'Not working? You can set a different selector for the title in Site Settings > Layout', 'elementor' ),
 				'selectors' => [
 					':root' => '--page-title-display: none',
 				],
@@ -106,32 +106,8 @@ abstract class PageBase extends Document {
 		$document->start_controls_section(
 			'section_page_style',
 			[
-				'label' => esc_html__( 'Body Style', 'elementor' ),
+				'label' => __( 'Body Style', 'elementor' ),
 				'tab' => Controls_Manager::TAB_STYLE,
-			]
-		);
-
-		$document->add_responsive_control(
-			'margin',
-			[
-				'label' => esc_html__( 'Margin', 'elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}}' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
-				],
-			]
-		);
-
-		$document->add_responsive_control(
-			'padding',
-			[
-				'label' => esc_html__( 'Padding', 'elementor' ),
-				'type' => Controls_Manager::DIMENSIONS,
-				'size_units' => [ 'px', 'em', '%', 'rem' ],
-				'selectors' => [
-					'{{WRAPPER}}' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
-				],
 			]
 		);
 
@@ -139,7 +115,6 @@ abstract class PageBase extends Document {
 			Group_Control_Background::get_type(),
 			[
 				'name'  => 'background',
-				'separator' => 'before',
 				'fields_options' => [
 					'image' => [
 						// Currently isn't supported.
@@ -147,6 +122,18 @@ abstract class PageBase extends Document {
 							'active' => false,
 						],
 					],
+				],
+			]
+		);
+
+		$document->add_responsive_control(
+			'padding',
+			[
+				'label' => __( 'Padding', 'elementor' ),
+				'type' => Controls_Manager::DIMENSIONS,
+				'size_units' => [ 'px', 'em', '%' ],
+				'selectors' => [
+					'{{WRAPPER}}' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}',
 				],
 			]
 		);
@@ -174,7 +161,7 @@ abstract class PageBase extends Document {
 			$document->add_control(
 				'post_excerpt',
 				[
-					'label' => esc_html__( 'Excerpt', 'elementor' ),
+					'label' => __( 'Excerpt', 'elementor' ),
 					'type' => Controls_Manager::TEXTAREA,
 					'default' => $document->post->post_excerpt,
 				]
@@ -185,7 +172,7 @@ abstract class PageBase extends Document {
 			$document->add_control(
 				'post_featured_image',
 				[
-					'label' => esc_html__( 'Featured Image', 'elementor' ),
+					'label' => __( 'Featured Image', 'elementor' ),
 					'type' => Controls_Manager::MEDIA,
 					'default' => [
 						'id' => get_post_thumbnail_id(),

@@ -8,10 +8,6 @@ class Typography extends Base {
 		return 'typography';
 	}
 
-	public function get_format() {
-		return 'globals/typography/{id}';
-	}
-
 	protected function get_kit_items() {
 		$result = [];
 

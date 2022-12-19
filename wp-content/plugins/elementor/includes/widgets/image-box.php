@@ -42,7 +42,7 @@ class Widget_Image_Box extends Widget_Base {
 	 * @return string Widget title.
 	 */
 	public function get_title() {
-		return esc_html__( 'Image Box', 'elementor' );
+		return __( 'Image Box', 'elementor' );
 	}
 
 	/**
@@ -85,14 +85,14 @@ class Widget_Image_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_image',
 			[
-				'label' => esc_html__( 'Image Box', 'elementor' ),
+				'label' => __( 'Image Box', 'elementor' ),
 			]
 		);
 
 		$this->add_control(
 			'image',
 			[
-				'label' => esc_html__( 'Choose Image', 'elementor' ),
+				'label' => __( 'Choose Image', 'elementor' ),
 				'type' => Controls_Manager::MEDIA,
 				'dynamic' => [
 					'active' => true,
@@ -115,13 +115,13 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'title_text',
 			[
-				'label' => esc_html__( 'Title & Description', 'elementor' ),
+				'label' => __( 'Title & Description', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => esc_html__( 'This is the heading', 'elementor' ),
-				'placeholder' => esc_html__( 'Enter your title', 'elementor' ),
+				'default' => __( 'This is the heading', 'elementor' ),
+				'placeholder' => __( 'Enter your title', 'elementor' ),
 				'label_block' => true,
 			]
 		);
@@ -129,13 +129,13 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'description_text',
 			[
-				'label' => esc_html__( 'Content', 'elementor' ),
+				'label' => __( 'Content', 'elementor' ),
 				'type' => Controls_Manager::TEXTAREA,
 				'dynamic' => [
 					'active' => true,
 				],
-				'default' => esc_html__( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
-				'placeholder' => esc_html__( 'Enter your description', 'elementor' ),
+				'default' => __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.', 'elementor' ),
+				'placeholder' => __( 'Enter your description', 'elementor' ),
 				'separator' => 'none',
 				'rows' => 10,
 				'show_label' => false,
@@ -145,12 +145,12 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'link',
 			[
-				'label' => esc_html__( 'Link', 'elementor' ),
+				'label' => __( 'Link', 'elementor' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
 				],
-				'placeholder' => esc_html__( 'https://your-link.com', 'elementor' ),
+				'placeholder' => __( 'https://your-link.com', 'elementor' ),
 				'separator' => 'before',
 			]
 		);
@@ -158,20 +158,20 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'position',
 			[
-				'label' => esc_html__( 'Image Position', 'elementor' ),
+				'label' => __( 'Image Position', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'default' => 'top',
 				'options' => [
 					'left' => [
-						'title' => esc_html__( 'Left', 'elementor' ),
+						'title' => __( 'Left', 'elementor' ),
 						'icon' => 'eicon-h-align-left',
 					],
 					'top' => [
-						'title' => esc_html__( 'Top', 'elementor' ),
+						'title' => __( 'Top', 'elementor' ),
 						'icon' => 'eicon-v-align-top',
 					],
 					'right' => [
-						'title' => esc_html__( 'Right', 'elementor' ),
+						'title' => __( 'Right', 'elementor' ),
 						'icon' => 'eicon-h-align-right',
 					],
 				],
@@ -183,7 +183,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'title_size',
 			[
-				'label' => esc_html__( 'Title HTML Tag', 'elementor' ),
+				'label' => __( 'Title HTML Tag', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
 					'h1' => 'H1',
@@ -203,7 +203,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'view',
 			[
-				'label' => esc_html__( 'View', 'elementor' ),
+				'label' => __( 'View', 'elementor' ),
 				'type' => Controls_Manager::HIDDEN,
 				'default' => 'traditional',
 			]
@@ -214,7 +214,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_image',
 			[
-				'label' => esc_html__( 'Image', 'elementor' ),
+				'label' => __( 'Image', 'elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -222,9 +222,8 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_responsive_control(
 			'image_space',
 			[
-				'label' => esc_html__( 'Spacing', 'elementor' ),
+				'label' => __( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em', 'rem' ],
 				'default' => [
 					'size' => 15,
 				],
@@ -246,7 +245,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_responsive_control(
 			'image_size',
 			[
-				'label' => esc_html__( 'Width', 'elementor' ) . ' (%)',
+				'label' => __( 'Width', 'elementor' ) . ' (%)',
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 30,
@@ -271,24 +270,14 @@ class Widget_Image_Box extends Widget_Base {
 			]
 		);
 
-		$this->add_group_control(
-			Group_Control_Border::get_type(),
-			[
-				'name' => 'image_border',
-				'selector' => '{{WRAPPER}} .elementor-image-box-img img',
-				'separator' => 'before',
-			]
-		);
-
 		$this->add_responsive_control(
 			'image_border_radius',
 			[
-				'label' => esc_html__( 'Border Radius', 'elementor' ),
+				'label' => __( 'Border Radius', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
-				'size_units' => [ 'px', '%', 'em' ],
-				'separator' => 'after',
+				'size_units' => [ 'px', '%' ],
 				'selectors' => [
-					'{{WRAPPER}} .elementor-image-box-img img' => 'border-radius: {{SIZE}}{{UNIT}};',
+					'{{WRAPPER}} .elementor-image-box-wrapper img' => 'border-radius: {{SIZE}}{{UNIT}};',
 				],
 			]
 		);
@@ -296,7 +285,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'hover_animation',
 			[
-				'label' => esc_html__( 'Hover Animation', 'elementor' ),
+				'label' => __( 'Hover Animation', 'elementor' ),
 				'type' => Controls_Manager::HOVER_ANIMATION,
 			]
 		);
@@ -305,7 +294,7 @@ class Widget_Image_Box extends Widget_Base {
 
 		$this->start_controls_tab( 'normal',
 			[
-				'label' => esc_html__( 'Normal', 'elementor' ),
+				'label' => __( 'Normal', 'elementor' ),
 			]
 		);
 
@@ -320,7 +309,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'image_opacity',
 			[
-				'label' => esc_html__( 'Opacity', 'elementor' ),
+				'label' => __( 'Opacity', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -338,7 +327,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'background_hover_transition',
 			[
-				'label' => esc_html__( 'Transition Duration', 'elementor' ),
+				'label' => __( 'Transition Duration', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'default' => [
 					'size' => 0.3,
@@ -359,7 +348,7 @@ class Widget_Image_Box extends Widget_Base {
 
 		$this->start_controls_tab( 'hover',
 			[
-				'label' => esc_html__( 'Hover', 'elementor' ),
+				'label' => __( 'Hover', 'elementor' ),
 			]
 		);
 
@@ -374,7 +363,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'image_opacity_hover',
 			[
-				'label' => esc_html__( 'Opacity', 'elementor' ),
+				'label' => __( 'Opacity', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -398,7 +387,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_style_content',
 			[
-				'label' => esc_html__( 'Content', 'elementor' ),
+				'label' => __( 'Content', 'elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -406,23 +395,23 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_responsive_control(
 			'text_align',
 			[
-				'label' => esc_html__( 'Alignment', 'elementor' ),
+				'label' => __( 'Alignment', 'elementor' ),
 				'type' => Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => esc_html__( 'Left', 'elementor' ),
+						'title' => __( 'Left', 'elementor' ),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__( 'Center', 'elementor' ),
+						'title' => __( 'Center', 'elementor' ),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__( 'Right', 'elementor' ),
+						'title' => __( 'Right', 'elementor' ),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => esc_html__( 'Justified', 'elementor' ),
+						'title' => __( 'Justified', 'elementor' ),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -435,12 +424,12 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'content_vertical_alignment',
 			[
-				'label' => esc_html__( 'Vertical Alignment', 'elementor' ),
+				'label' => __( 'Vertical Alignment', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'options' => [
-					'top' => esc_html__( 'Top', 'elementor' ),
-					'middle' => esc_html__( 'Middle', 'elementor' ),
-					'bottom' => esc_html__( 'Bottom', 'elementor' ),
+					'top' => __( 'Top', 'elementor' ),
+					'middle' => __( 'Middle', 'elementor' ),
+					'bottom' => __( 'Bottom', 'elementor' ),
 				],
 				'default' => 'top',
 				'prefix_class' => 'elementor-vertical-align-',
@@ -450,7 +439,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'heading_title',
 			[
-				'label' => esc_html__( 'Title', 'elementor' ),
+				'label' => __( 'Title', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -459,7 +448,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_responsive_control(
 			'title_bottom_space',
 			[
-				'label' => esc_html__( 'Spacing', 'elementor' ),
+				'label' => __( 'Spacing', 'elementor' ),
 				'type' => Controls_Manager::SLIDER,
 				'range' => [
 					'px' => [
@@ -476,7 +465,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => esc_html__( 'Color', 'elementor' ),
+				'label' => __( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -500,14 +489,6 @@ class Widget_Image_Box extends Widget_Base {
 		);
 
 		$this->add_group_control(
-			Group_Control_Text_Stroke::get_type(),
-			[
-				'name' => 'title_stroke',
-				'selector' => '{{WRAPPER}} .elementor-image-box-title',
-			]
-		);
-
-		$this->add_group_control(
 			Group_Control_Text_Shadow::get_type(),
 			[
 				'name' => 'title_shadow',
@@ -518,7 +499,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'heading_description',
 			[
-				'label' => esc_html__( 'Description', 'elementor' ),
+				'label' => __( 'Description', 'elementor' ),
 				'type' => Controls_Manager::HEADING,
 				'separator' => 'before',
 			]
@@ -527,7 +508,7 @@ class Widget_Image_Box extends Widget_Base {
 		$this->add_control(
 			'description_color',
 			[
-				'label' => esc_html__( 'Color', 'elementor' ),
+				'label' => __( 'Color', 'elementor' ),
 				'type' => Controls_Manager::COLOR,
 				'default' => '',
 				'selectors' => [
@@ -581,8 +562,15 @@ class Widget_Image_Box extends Widget_Base {
 		}
 
 		if ( ! empty( $settings['image']['url'] ) ) {
+			$this->add_render_attribute( 'image', 'src', $settings['image']['url'] );
+			$this->add_render_attribute( 'image', 'alt', Control_Media::get_image_alt( $settings['image'] ) );
+			$this->add_render_attribute( 'image', 'title', Control_Media::get_image_title( $settings['image'] ) );
 
-			$image_html = wp_kses_post( Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image' ) );
+			if ( $settings['hover_animation'] ) {
+				$this->add_render_attribute( 'image', 'class', 'elementor-animation-' . $settings['hover_animation'] );
+			}
+
+			$image_html = Group_Control_Image_Size::get_attachment_image_html( $settings, 'thumbnail', 'image' );
 
 			if ( ! empty( $settings['link']['url'] ) ) {
 				$image_html = '<a ' . $this->get_render_attribute_string( 'link' ) . '>' . $image_html . '</a>';
@@ -621,7 +609,7 @@ class Widget_Image_Box extends Widget_Base {
 
 		$html .= '</div>';
 
-		Utils::print_unescaped_internal_string( $html );
+		echo $html;
 	}
 
 	/**

@@ -78,8 +78,7 @@ abstract class Settings_Page {
 	 * @access public
 	 */
 	public function __construct() {
-		// PHPCS - The user data is not used.
-		if ( ! empty( $_POST['option_page'] ) && static::PAGE_ID === $_POST['option_page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		if ( ! empty( $_POST['option_page'] ) && static::PAGE_ID === $_POST['option_page'] ) {
 			add_action( 'admin_init', [ $this, 'register_settings_fields' ] );
 		}
 	}
@@ -293,11 +292,11 @@ abstract class Settings_Page {
 		$tabs = $this->get_tabs();
 		?>
 		<div class="wrap">
-			<h1 class="wp-heading-inline"><?php echo esc_html( $this->get_page_title() ); ?></h1>
+			<h1><?php echo $this->get_page_title(); ?></h1>
 			<div id="elementor-settings-tabs-wrapper" class="nav-tab-wrapper">
 				<?php
 				foreach ( $tabs as $tab_id => $tab ) {
-					if ( ! $this->should_render_tab( $tab ) ) {
+					if ( empty( $tab['sections'] ) ) {
 						continue;
 					}
 
@@ -307,11 +306,7 @@ abstract class Settings_Page {
 						$active_class = ' nav-tab-active';
 					}
 
-					$sanitized_tab_id = esc_attr( $tab_id );
-					$sanitized_tab_label = esc_html( $tab['label'] );
-
-					// PHPCS - Escaped the relevant strings above.
-					echo "<a id='elementor-settings-tab-{$sanitized_tab_id}' class='nav-tab{$active_class}' href='#tab-{$sanitized_tab_id}'>{$sanitized_tab_label}</a>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo "<a id='elementor-settings-tab-{$tab_id}' class='nav-tab{$active_class}' href='#tab-{$tab_id}'>{$tab['label']}</a>";
 				}
 				?>
 			</div>
@@ -320,7 +315,7 @@ abstract class Settings_Page {
 				settings_fields( static::PAGE_ID );
 
 				foreach ( $tabs as $tab_id => $tab ) {
-					if ( ! $this->should_render_tab( $tab ) ) {
+					if ( empty( $tab['sections'] ) ) {
 						continue;
 					}
 
@@ -330,16 +325,13 @@ abstract class Settings_Page {
 						$active_class = ' elementor-active';
 					}
 
-					$sanitized_tab_id = esc_attr( $tab_id );
-
-					// PHPCS - $active_class is a non-dynamic string and $sanitized_tab_id is escaped above.
-					echo "<div id='tab-{$sanitized_tab_id}' class='elementor-settings-form-page{$active_class}'>"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo "<div id='tab-{$tab_id}' class='elementor-settings-form-page{$active_class}'>";
 
 					foreach ( $tab['sections'] as $section_id => $section ) {
 						$full_section_id = 'elementor_' . $section_id . '_section';
 
 						if ( ! empty( $section['label'] ) ) {
-							echo '<h2>' . esc_html( $section['label'] ) . '</h2>';
+							echo "<h2>{$section['label']}</h2>";
 						}
 
 						if ( ! empty( $section['callback'] ) ) {
@@ -366,12 +358,12 @@ abstract class Settings_Page {
 	public function get_usage_fields() {
 		return [
 			'allow_tracking' => [
-				'label' => esc_html__( 'Usage Data Sharing', 'elementor' ),
+				'label' => __( 'Usage Data Sharing', 'elementor' ),
 				'field_args' => [
 					'type' => 'checkbox',
 					'value' => 'yes',
 					'default' => '',
-					'sub_desc' => esc_html__( 'Become a super contributor by opting in to share non-sensitive plugin data and to receive periodic email updates from us.', 'elementor' ) . sprintf( ' <a href="%1$s" target="_blank">%2$s</a>', 'https://go.elementor.com/usage-data-tracking/', esc_html__( 'Learn more.', 'elementor' ) ),
+					'sub_desc' => __( 'Become a super contributor by opting in to share non-sensitive plugin data and to receive periodic email updates from us.', 'elementor' ) . sprintf( ' <a href="%1$s" target="_blank">%2$s</a>', 'https://go.elementor.com/usage-data-tracking/', __( 'Learn more.', 'elementor' ) ),
 				],
 				'setting_args' => [ __NAMESPACE__ . '\Tracker', 'check_for_settings_optin' ],
 			],
@@ -406,17 +398,5 @@ abstract class Settings_Page {
 			 */
 			do_action( "elementor/admin/after_create_settings/{$page_id}", $this );
 		}
-	}
-
-	/**
-	 * Should it render the settings tab
-	 *
-	 * @param $tab
-	 *
-	 * @return bool
-	 */
-	private function should_render_tab( $tab ) {
-		// BC - When 'show_if' prop is not exists, it actually should render the tab.
-		return ! empty( $tab['sections'] ) && ( ! isset( $tab['show_if'] ) || $tab['show_if'] );
 	}
 }

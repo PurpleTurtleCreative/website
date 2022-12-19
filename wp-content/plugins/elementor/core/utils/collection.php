@@ -53,17 +53,6 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 	}
 
 	/**
-	 * Union the collection with the given items.
-	 *
-	 * @param array $items
-	 *
-	 * @return $this
-	 */
-	public function union( array $items ) {
-		return new static( $this->all() + $items );
-	}
-
-	/**
 	 * Merge array recursively
 	 *
 	 * @param $items
@@ -76,21 +65,6 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 		}
 
 		return new static( array_merge_recursive( $this->items, $items ) );
-	}
-
-	/**
-	 * Replace array recursively
-	 *
-	 * @param $items
-	 *
-	 * @return $this
-	 */
-	public function replace_recursive( $items ) {
-		if ( $items instanceof Collection ) {
-			$items = $items->all();
-		}
-
-		return new static( array_replace_recursive( $this->items, $items ) );
 	}
 
 	/**
@@ -116,38 +90,6 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 		$items = array_map( $callback, $this->items, $keys );
 
 		return new static( array_combine( $keys, $items ) );
-	}
-
-	/**
-	 * Run a callback over each of the items.
-	 *
-	 * @param callable $callback
-	 * @return void
-	 */
-	public function each( callable $callback ) {
-		foreach ( $this->items as $key => $value ) {
-			if ( false === $callback( $value, $key ) ) {
-				break;
-			}
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param callable $callback
-	 * @param null     $initial
-	 *
-	 * @return mixed|null
-	 */
-	public function reduce( callable $callback, $initial = null ) {
-		$result = $initial;
-
-		foreach ( $this->all() as $key => $value ) {
-			$result = $callback( $result, $value, $key );
-		}
-
-		return $result;
 	}
 
 	/**
@@ -205,8 +147,12 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 	public function pluck( $key ) {
 		$result = [];
 
-		foreach ( $this->items as $item ) {
-			$result[] = $this->get_item_value( $item, $key );
+		foreach ( $this->items as $value ) {
+			if ( is_object( $value ) && isset( $value->{$key} ) ) {
+				$result[] = $value->{$key};
+			} elseif ( is_array( $value ) && isset( $value[ $key ] ) ) {
+				$result[] = $value[ $key ];
+			}
 		}
 
 		return new static( $result );
@@ -222,32 +168,19 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 	public function group_by( $group_by ) {
 		$result = [];
 
-		foreach ( $this->items as $item ) {
-			$group_key = $this->get_item_value( $item, $group_by, 0 );
+		foreach ( $this->items as $value ) {
+			$group_key = 0;
 
-			$result[ $group_key ][] = $item;
+			if ( is_object( $value ) && isset( $value->{$group_by} ) ) {
+				$group_key = $value->{$group_by};
+			} elseif ( is_array( $value ) && isset( $value[ $group_by ] ) ) {
+				$group_key = $value[ $group_by ];
+			}
+
+			$result[ $group_key ][] = $value;
 		}
 
 		return new static( $result );
-	}
-
-	/**
-	 * Sort keys
-	 *
-	 * @param false $descending
-	 *
-	 * @return $this
-	 */
-	public function sort_keys( $descending = false ) {
-		$items = $this->items;
-
-		if ( $descending ) {
-			krsort( $items );
-		} else {
-			ksort( $items );
-		}
-
-		return new static( $items );
 	}
 
 	/**
@@ -284,66 +217,14 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 	}
 
 	/**
-	 * Find an element from the items.
-	 *
-	 * @param callable $callback
-	 * @param null     $default
-	 *
-	 * @return mixed|null
-	 */
-	public function find( callable $callback, $default = null ) {
-		foreach ( $this->all() as $key => $item ) {
-			if ( $callback( $item, $key ) ) {
-				return $item;
-			}
-		}
-
-		return $default;
-	}
-
-	/**
 	 * Make sure all the values inside the array are uniques.
-	 *
-	 * @param null|string|string[] $keys
 	 *
 	 * @return $this
 	 */
-	public function unique( $keys = null ) {
-		if ( ! $keys ) {
-			return new static(
-				array_unique( $this->items )
-			);
-		}
-
-		if ( ! is_array( $keys ) ) {
-			$keys = [ $keys ];
-		}
-
-		$exists = [];
-
-		return $this->filter( function ( $item ) use ( $keys, &$exists ) {
-			$value = null;
-
-			foreach ( $keys as $key ) {
-				$current_value = $this->get_item_value( $item, $key );
-
-				$value .= "{$key}:{$current_value};";
-			}
-
-			// If no value for the specific key return the item.
-			if ( null === $value ) {
-				return true;
-			}
-
-			// If value is not exists, add to the exists array and return the item.
-			if ( ! in_array( $value, $exists, true ) ) {
-				$exists[] = $value;
-
-				return true;
-			}
-
-			return false;
-		} );
+	public function unique() {
+		return new static(
+			array_unique( $this->items )
+		);
 	}
 
 	/**
@@ -375,88 +256,45 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 	}
 
 	/**
-	 * Support only one level depth.
-	 *
-	 * @return $this
-	 */
-	public function flatten() {
-		$result = [];
-
-		foreach ( $this->all() as $item ) {
-			$item = $item instanceof Collection ? $item->all() : $item;
-
-			if ( ! is_array( $item ) ) {
-				$result[] = $item;
-			} else {
-				$values = array_values( $item );
-
-				foreach ( $values as $value ) {
-					$result[] = $value;
-				}
-			}
-		}
-
-		return new static( $result );
-	}
-
-	/**
-	 * @param ...$values
-	 *
-	 * @return $this
-	 */
-	public function push( ...$values ) {
-		foreach ( $values as $value ) {
-			$this->items[] = $value;
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param mixed $offset
+	 * @param mixed $key
 	 *
 	 * @return bool
 	 */
-	#[\ReturnTypeWillChange]
-	public function offsetExists( $offset ) {
-		return isset( $this->items[ $offset ] );
+	public function offsetExists( $key ) {
+		return isset( $this->items[ $key ] );
 	}
 
 	/**
-	 * @param mixed $offset
+	 * @param mixed $key
 	 *
 	 * @return mixed
 	 */
-	#[\ReturnTypeWillChange]
-	public function offsetGet( $offset ) {
-		return $this->items[ $offset ];
+	public function offsetGet( $key ) {
+		return $this->items[ $key ];
 	}
 
 	/**
-	 * @param mixed $offset
+	 * @param mixed $key
 	 * @param mixed $value
 	 */
-	#[\ReturnTypeWillChange]
-	public function offsetSet( $offset, $value ) {
-		if ( is_null( $offset ) ) {
+	public function offsetSet( $key, $value ) {
+		if ( is_null( $key ) ) {
 			$this->items[] = $value;
 		} else {
-			$this->items[ $offset ] = $value;
+			$this->items[ $key ] = $value;
 		}
 	}
 
 	/**
-	 * @param mixed $offset
+	 * @param mixed $key
 	 */
-	#[\ReturnTypeWillChange]
-	public function offsetUnset( $offset ) {
-		unset( $this->items[ $offset ] );
+	public function offsetUnset( $key ) {
+		unset( $this->items[ $key ] );
 	}
 
 	/**
 	 * @return \ArrayIterator|\Traversable
 	 */
-	#[\ReturnTypeWillChange]
 	public function getIterator() {
 		return new \ArrayIterator( $this->items );
 	}
@@ -464,27 +302,7 @@ class Collection implements \ArrayAccess, \Countable, \IteratorAggregate {
 	/**
 	 * @return int|void
 	 */
-	#[\ReturnTypeWillChange]
 	public function count() {
 		return count( $this->items );
-	}
-
-	/**
-	 * @param      $item
-	 * @param      $key
-	 * @param null $default
-	 *
-	 * @return mixed|null
-	 */
-	private function get_item_value( $item, $key, $default = null ) {
-		$value = $default;
-
-		if ( is_object( $item ) && isset( $item->{$key} ) ) {
-			$value = $item->{$key};
-		} elseif ( is_array( $item ) && isset( $item[ $key ] ) ) {
-			$value = $item[ $key ];
-		}
-
-		return $value;
 	}
 }

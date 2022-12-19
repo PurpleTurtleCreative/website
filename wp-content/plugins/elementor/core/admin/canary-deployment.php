@@ -8,7 +8,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-// TODO: Move this class to pro version for better architecture.
 class Canary_Deployment extends Module {
 
 	const CURRENT_VERSION = ELEMENTOR_VERSION;

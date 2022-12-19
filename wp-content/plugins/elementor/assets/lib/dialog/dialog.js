@@ -1,5 +1,5 @@
 /*!
- * Dialogs Manager v4.9.0
+ * Dialogs Manager v4.8.1
  * https://github.com/kobizz/dialogs-manager
  *
  * Copyright Kobi Zaltzberg
@@ -295,7 +295,7 @@
 				}
 
 				const $button = $('<div>', settings.closeButtonOptions.attributes),
-					$buttonIcon = $(settings.closeButtonOptions.iconElement).addClass(settings.closeButtonOptions.iconClass);
+					$buttonIcon = $('<i>', {class: settings.closeButtonOptions.iconClass});
 
 				$button.append($buttonIcon);
 
@@ -342,7 +342,6 @@
 				closeButtonOptions: {
 					iconClass: parentSettings.classPrefix + '-close-button-icon',
 					attributes: {},
-					iconElement: '<i>',
 				},
 				position: {
 					element: 'widget',
@@ -1001,5 +1000,5 @@
 	global.DialogsManager = DialogsManager;
 })(
 	typeof jQuery !== 'undefined' ? jQuery : typeof require === 'function' && require('jquery'),
-	(typeof module !== 'undefined' && typeof module.exports !== 'undefined') ? module.exports : window
+	typeof module !== 'undefined' ? module.exports : window
 );
