@@ -42,7 +42,6 @@ add_action(
 			'manage_options',
 			'ptc-tools',
 			function() {
-
 				if ( current_user_can( 'manage_options' ) ) {
 					echo '<div style="margin:4rem 2rem;">';
 					require_once PLUGIN_PATH . 'src/tools/database-cleanup.php';
