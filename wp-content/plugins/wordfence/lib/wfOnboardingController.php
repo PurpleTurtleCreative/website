@@ -128,20 +128,22 @@ class wfOnboardingController {
 			echo wfView::create('onboarding/plugin-header')->render();
 		}
 	}
+
+	private static function needsApiKey() {
+		$key = wfConfig::get('apiKey');
+		return empty($key);
+	}
 	
 	public static function shouldShowAttempt2() { //Header on plugin page
 		if (wfConfig::get('onboardingAttempt3') == self::ONBOARDING_LICENSE) {
 			return false;
 		}
 		
-		$alertEmails = wfConfig::getAlertEmails();
-		$show = !wfConfig::get('onboardingAttempt2') && empty($alertEmails); //Unset defaults to true, all others false
-		return $show;
+		return !wfConfig::get('onboardingAttempt2') && self::needsApiKey();
 	}
 	
 	public static function shouldShowAttempt3($dismissable = false) {
-		$key = wfConfig::get('apiKey');
-		if (empty($key)) {
+		if (self::needsApiKey()) {
 			if (!$dismissable)
 				return true;
 			$delayedAt = (int) wfConfig::get('onboardingDelayedAt', 0);
