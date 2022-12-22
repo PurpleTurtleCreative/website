@@ -9,7 +9,6 @@
  *
  * @wordpress-plugin
  * Plugin Name:       PTC Tools
- * Plugin URI:        https://wordpress.org/plugins/grouped-content/
  * Description:       Quick scripts and tools for Purple Turtle Creative.
  * Version:           1.0.0
  * Author:            Purple Turtle Creative
