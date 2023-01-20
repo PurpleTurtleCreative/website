@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitd9d643b16c851590e54e4ed19bdf64dc
+class ComposerStaticInita9a3a96e670bf58ac4dde9996f742c3d
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -254,6 +254,8 @@ class ComposerStaticInitd9d643b16c851590e54e4ed19bdf64dc
         'WP_Rocket\\Engine\\Activation\\Activation' => __DIR__ . '/../..' . '/inc/Engine/Activation/Activation.php',
         'WP_Rocket\\Engine\\Activation\\ActivationInterface' => __DIR__ . '/../..' . '/inc/Engine/Activation/ActivationInterface.php',
         'WP_Rocket\\Engine\\Activation\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/Activation/ServiceProvider.php',
+        'WP_Rocket\\Engine\\Admin\\API\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/Admin/API/ServiceProvider.php',
+        'WP_Rocket\\Engine\\Admin\\API\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Admin/API/Subscriber.php',
         'WP_Rocket\\Engine\\Admin\\ActionSchedulerSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Admin/ActionSchedulerSubscriber.php',
         'WP_Rocket\\Engine\\Admin\\Beacon\\Beacon' => __DIR__ . '/../..' . '/inc/Engine/Admin/Beacon/Beacon.php',
         'WP_Rocket\\Engine\\Admin\\Beacon\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Engine/Admin/Beacon/ServiceProvider.php',
@@ -462,6 +464,7 @@ class ComposerStaticInitd9d643b16c851590e54e4ed19bdf64dc
         'WP_Rocket\\ThirdParty\\Hostings\\Kinsta' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/Kinsta.php',
         'WP_Rocket\\ThirdParty\\Hostings\\LiteSpeed' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/LiteSpeed.php',
         'WP_Rocket\\ThirdParty\\Hostings\\O2Switch' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/O2Switch.php',
+        'WP_Rocket\\ThirdParty\\Hostings\\OneCom' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/OneCom.php',
         'WP_Rocket\\ThirdParty\\Hostings\\Pressable' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/Pressable.php',
         'WP_Rocket\\ThirdParty\\Hostings\\Savvii' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/Savvii.php',
         'WP_Rocket\\ThirdParty\\Hostings\\ServiceProvider' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/ServiceProvider.php',
@@ -527,9 +530,9 @@ class ComposerStaticInitd9d643b16c851590e54e4ed19bdf64dc
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitd9d643b16c851590e54e4ed19bdf64dc::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitd9d643b16c851590e54e4ed19bdf64dc::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitd9d643b16c851590e54e4ed19bdf64dc::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita9a3a96e670bf58ac4dde9996f742c3d::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita9a3a96e670bf58ac4dde9996f742c3d::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita9a3a96e670bf58ac4dde9996f742c3d::$classMap;
 
         }, null, ClassLoader::class);
     }
