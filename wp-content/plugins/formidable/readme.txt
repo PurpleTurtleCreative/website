@@ -5,7 +5,7 @@ Tags: forms, form builder, survey, free, custom form, contact form, form maker, 
 Requires at least: 5.2
 Tested up to: 6.1.1
 Requires PHP: 5.6
-Stable tag: 5.5.6
+Stable tag: 6.1.2
 
 The most advanced WordPress forms plugin. Go beyond contact forms with our drag and drop form builder for surveys, quizzes, and more.
 
@@ -441,6 +441,63 @@ Using our Zapier integration, you can easily connect your website with over 5,00
 See all <a href="https://zapier.com/apps/formidable/integrations">Formidable Zapier Integrations</a>.
 
 == Changelog ==
+= 6.1.2 =
+* New: The active filtered form type will be used when searching forms. Previously form searching would only check active forms.
+* Fix: It was not possible to scroll a Polylang translation page.
+* Fix: The page layout of the legacy views editor was broken.
+* Fix: The add new entry/import buttons would appear incorrectly when Pro wasn't installed.
+* Fix: Long button translations, like for German, would cause buttons in the header to overflow into multiple lines.
+* Fix: A CAPTCHA field in a form without any keys set would trigger an error when Pro wasn't installed.
+* Fix: Form blocks would break when using newer versions of the Gutenberg plugin.
+* Fix: Added additional validation to confirmation actions so empty redirect URLs and deleted page content will be handled more gracefully.
+* Fix: The submit button wouldn't properly reload as an Update button after submitting an entry, and following attempts to update the entry would result in an error message.
+
+= 6.1.1 =
+* Fix: Redirects weren't happening after submit in forms without the new Confirmation form actions.
+* Fix: The email message box was difficult to resize manually.
+* Fix: There was extra space showing on the edit style page.
+
+= 6.1 =
+* Security: Added a new global setting to use custom headers when retrieving IPs with submissions. This is disabled by default to avoid IP spoofing but required when using a reverse proxy as all IP addresses may appear identical. This setting is hidden when the GDPR IP option is enabled, but can still be enabled with a new frm_use_custom_header_ip filter using __return_true.
+* New: Full screen pages are now conditionally full screen based on the WordPress fullscreen mode user preference setting.
+* New: Success messages when updating an entry will now use the message from a confirmation action that triggers on entry updates.
+* Fix: Forms with redirect confirmation actions were redirecting when saving a draft entry.
+* Fix: An extra comma was causing the editor for views to break in PHP versions 7.2 and lower.
+* Fix: Formidable settings have been updated to avoid PHP 8.2 deprecation messages.
+* Fix: Label position styles were being applied to all fields in styler previews, not just fields with the default label position setting.
+* Fix: The sidebar has been moved back to below the entry details when printing an entry.
+* Fix: A 99 limit would always get applied when getting actions without a specified limit. Now the limit is based off of the action type. This fixes issues with Quiz outcomes not matching when beyond the 99 limit.
+
+= 6.0.1 =
+* Fix: Custom CSS was not properly migrating to global settings, appearing empty instead.
+
+= 6.0 =
+* New: Added a new style tab when editing a form that links to the visual styler. Now a form can be previewed with a style in real time without the need to update it.
+* New: Added additional logic to clean up invalid RGB color values in the styler.
+* New: Destructive actions, like deleting, now use red confirmation buttons on admin pages.
+* New: An exported form with no name will now export with key included in the file name instead of just exporting as -form.xml.
+* New: On submit behaviour including messages, redirect, and page content have been changed to a new Confirmation form action type, allowing them to work with conditional logic.
+* New: The styler will now show a pop up when exiting with unsaved changes.
+* New: Updated the UI to make it more modern and consistent between all the Formidable pages
+* Fix: Color pickers were not visibly resetting after a styler reset action.
+* Fix: Styler icon dropdowns were not visibly appearing as reset after resetting a style in older versions.
+* Fix: The success message would always show 1 form restored when undoing a delete action instead of the proper count.
+* Fix: A field dragged near the top or bottom of the field list wouldn't automatically cause the list to scroll.
+* Full screen pages no longer include the WordPress admin bar to prevent page scrolling issues when dragging.
+* Several style options have been reset and rename. These have no been added added to the dropdown for each style in the new list view of the visual styler. Custom CSS and Manage styles have been moved to Global Settings. The style name setting is now at the bottom of the General section in the edit page.
+* The frm_style_settings_top hook is no longer used.
+* Star rating fields are no longer blue in builder and entries list pages.
+* The Styling & Buttons category has been changed to a Buttons category.
+* Custom CSS is no longer merged on import.
+* The styler sample has been made more accessible.
+
+= 5.5.7 =
+* Security: Additional validation has been added when deleting entries on admin pages.
+* Fix: reCAPTCHA fields were including an additional = character in the HTML. This may have caused conflicts with other libraries.
+* Fix: Embed icons would not always prompt the embed modal when clicked in specific areas of the icon.
+* Fix: The document body would become scrollable unintentionally after some modals were closed.
+* Repeater forms have been added back to the list of export options when exporting in CSV format.
+
 = 5.5.6 =
 * Fix: Duplicating a form action without a rich text editor would trigger a JavaScript error after succeeding.
 * Fix: Submit button style rules were not applying when using the Twenty Twenty One theme.

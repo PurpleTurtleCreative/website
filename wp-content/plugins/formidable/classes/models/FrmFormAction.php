@@ -94,6 +94,7 @@ class FrmFormAction {
 			'tooltip'     => $name,
 			'group'       => $id_base,
 			'color'       => '',
+			'keywords'    => '',
 		);
 
 		$action_options          = apply_filters( 'frm_' . $id_base . '_action_options', $action_options );
@@ -549,7 +550,12 @@ class FrmFormAction {
 	}
 
 	public function get_all( $form_id = false, $atts = array() ) {
+		if ( is_array( $atts ) && ! isset( $atts['limit'] ) && $this->action_options['limit'] > 99 ) {
+			$atts['limit'] = $this->action_options['limit'];
+		}
+
 		self::prepare_get_action( $atts, 'any' );
+
 		$limit = $atts['limit'];
 
 		if ( $form_id ) {

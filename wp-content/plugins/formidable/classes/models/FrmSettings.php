@@ -3,6 +3,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'You are not allowed to call this page directly.' );
 }
 
+#[\AllowDynamicProperties]
 class FrmSettings {
 	public $option_name = 'frm_options';
 	public $menu;
@@ -38,8 +39,16 @@ class FrmSettings {
 	public $re_multi;
 
 	public $no_ips;
+	public $custom_header_ip;
 	public $current_form = 0;
 	public $tracking;
+
+	/**
+	 * @since 6.0
+	 *
+	 * @var string|false|null
+	 */
+	public $custom_css;
 
 	public function __construct( $args = array() ) {
 		if ( ! defined( 'ABSPATH' ) ) {
@@ -112,9 +121,14 @@ class FrmSettings {
 			'login_msg'        => __( 'You do not have permission to view this form.', 'formidable' ),
 			'admin_permission' => __( 'You do not have permission to do that', 'formidable' ),
 
-			'email_to' => '[admin_email]',
-			'no_ips'   => 0,
-			'tracking' => FrmAppHelper::pro_is_installed(),
+			'email_to'         => '[admin_email]',
+			'no_ips'           => 0,
+			'custom_header_ip' => false, // Use false by default. We show a warning when this is unset. Once global settings have been saved, this gets saved
+			'tracking'         => FrmAppHelper::pro_is_installed(),
+
+			// Normally custom CSS is a string. A false value is used when nothing has been set.
+			// When it is false, we try to use the old custom_key value from the default style's post_content array.
+			'custom_css' => false,
 		);
 	}
 
@@ -149,6 +163,7 @@ class FrmSettings {
 
 	/**
 	 * @param array $params
+	 * @return void
 	 */
 	public function fill_with_defaults( $params = array() ) {
 		$settings    = $this->default_options();
@@ -174,12 +189,35 @@ class FrmSettings {
 				$this->{$setting} = $default;
 			}
 
-			if ( $filter_html && in_array( $setting, $filter_keys, true ) ) {
-				$this->{$setting} = FrmAppHelper::kses( $this->{$setting}, 'all' );
-			}
-
+			$this->{$setting} = $this->maybe_sanitize_global_setting( $this->{$setting}, $setting, $filter_keys );
 			unset( $setting, $default );
 		}
+	}
+
+	/**
+	 * Handle sanitizing for a target global setting key.
+	 *
+	 * @since 6.0
+	 *
+	 * @param mixed  $value       The unsanitized global setting value.
+	 * @param string $key         The key of the global setting being saved.
+	 * @param array  $filter_keys These keys that are filtered with kses.
+	 * @return mixed
+	 */
+	private function maybe_sanitize_global_setting( $value, $key, $filter_keys ) {
+		if ( 'custom_css' === $key ) {
+			if ( false === $value ) {
+				// Avoid changing the false default value to an empty string.
+				return $value;
+			}
+			return sanitize_textarea_field( $value );
+		}
+
+		if ( in_array( $key, $filter_keys, true ) ) {
+			return FrmAppHelper::kses( $value, 'all' );
+		}
+
+		return $value;
 	}
 
 	private function fill_captcha_settings() {
@@ -271,7 +309,7 @@ class FrmSettings {
 		do_action( 'frm_update_settings', $params );
 
 		if ( function_exists( 'get_filesystem_method' ) ) {
-			// save styling settings in case fallback setting changes
+			// Save styling settings in case fallback setting changes.
 			$frm_style = new FrmStyle();
 			$frm_style->update( 'default' );
 		}
@@ -287,10 +325,11 @@ class FrmSettings {
 		$this->re_lang          = $params['frm_re_lang'];
 		$this->re_threshold     = floatval( $params['frm_re_threshold'] );
 		$this->load_style       = $params['frm_load_style'];
+		$this->custom_css       = $params['frm_custom_css'];
 
-		$checkboxes = array( 'mu_menu', 're_multi', 'use_html', 'jquery_css', 'accordion_js', 'fade_form', 'no_ips', 'tracking', 'admin_bar' );
+		$checkboxes = array( 'mu_menu', 're_multi', 'use_html', 'jquery_css', 'accordion_js', 'fade_form', 'no_ips', 'custom_header_ip', 'tracking', 'admin_bar' );
 		foreach ( $checkboxes as $set ) {
-			$this->$set = isset( $params[ 'frm_' . $set ] ) ? $params[ 'frm_' . $set ] : 0;
+			$this->$set = isset( $params[ 'frm_' . $set ] ) ? absint( $params[ 'frm_' . $set ] ) : 0;
 		}
 	}
 

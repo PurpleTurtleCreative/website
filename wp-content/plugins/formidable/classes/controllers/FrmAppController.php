@@ -60,7 +60,13 @@ class FrmAppController {
 		}
 
 		if ( FrmAppHelper::is_full_screen() ) {
-			$classes .= apply_filters( 'frm_admin_full_screen_class', ' frm-full-screen folded' );
+			$full_screen_on = self::get_full_screen_setting();
+			$add_class = '';
+			if ( $full_screen_on ) {
+				$add_class = ' frm-full-screen is-fullscreen-mode';
+				wp_enqueue_style( 'wp-edit-post' ); // Load the CSS for .is-fullscreen-mode.
+			}
+			$classes .= apply_filters( 'frm_admin_full_screen_class', $add_class );
 		}
 
 		if ( ! FrmAppHelper::pro_is_installed() ) {
@@ -68,6 +74,25 @@ class FrmAppController {
 		}
 
 		return $classes;
+	}
+
+	/**
+	 * Get the full screen mode setting from the block editor.
+	 *
+	 * @since 6.1
+	 *
+	 * @return bool
+	 */
+	private static function get_full_screen_setting() {
+		global $wpdb;
+		$meta_key = $wpdb->get_blog_prefix() . 'persisted_preferences';
+
+		$prefs = get_user_meta( get_current_user_id(), $meta_key, true );
+		if ( $prefs && isset( $prefs['core/edit-post']['fullscreenMode'] ) ) {
+			return $prefs['core/edit-post']['fullscreenMode'];
+		}
+
+		return true;
 	}
 
 	/**
@@ -94,6 +119,7 @@ class FrmAppController {
 			'formidable',
 			'formidable-entries',
 			'formidable-views',
+			'formidable-views-editor',
 			'formidable-pro-upgrade',
 			'formidable-addons',
 			'formidable-import',
@@ -168,6 +194,13 @@ class FrmAppController {
 				'label'      => __( 'Build', 'formidable' ),
 				'current'    => array( 'edit', 'new', 'duplicate' ),
 				'page'       => 'formidable',
+				'permission' => 'frm_edit_forms',
+			),
+			array(
+				'link'       => FrmStylesHelper::get_list_url( $id ),
+				'label'      => __( 'Style', 'formidable' ),
+				'current'    => array(),
+				'page'       => 'formidable-styles',
 				'permission' => 'frm_edit_forms',
 			),
 			array(
@@ -438,6 +471,11 @@ class FrmAppController {
 			FrmFormsController::duplicate();
 		}
 
+		if ( FrmAppHelper::is_style_editor_page() && 'save' === FrmAppHelper::get_param( 'frm_action' ) ) {
+			// Hook in earlier than FrmStylesController::route so we can redirect before the headers have been sent.
+			FrmStylesController::save_style();
+		}
+
 		new FrmPersonalData(); // register personal data hooks
 
 		if ( ! FrmAppHelper::doing_ajax() && self::needs_update() ) {
@@ -459,6 +497,67 @@ class FrmAppController {
 
 			FrmInbox::maybe_disable_screen_options();
 		}
+
+		self::maybe_add_ip_warning();
+	}
+
+	/**
+	 * Show a warning for the IP address setting if it hasn't been set.
+	 *
+	 * @since 6.1
+	 *
+	 * @return void
+	 */
+	private static function maybe_add_ip_warning() {
+		$settings = FrmAppHelper::get_settings();
+		if ( false !== $settings->custom_header_ip ) {
+			// The setting has been changed from the false default (to either 1 or 0), so stop showing the message.
+			return;
+		}
+
+		if ( ! self::is_behind_proxy() ) {
+			// This message is only applicable when where is a reverse proxy.
+			return;
+		}
+
+		if ( FrmAppHelper::get_post_param( 'frm_action', '', 'sanitize_text_field' ) ) {
+			// Avoid the message on a POST action. We don't want to show the message if we're saving global settings.
+			return;
+		}
+
+		add_filter(
+			'frm_message_list',
+			function( $show_messages ) {
+				$global_settings_link = admin_url( 'admin.php?page=formidable-settings' ) . '#frm_custom_header_ip';
+				$show_messages['ip_msg'] = 'IP addresses in form submissions may no longer be accurate! If you are experiencing issues, we recommend going to <a href="' . esc_url( $global_settings_link ) . '">Global Settings</a> and enabling the "Use custom headers when retrieving IPs with form submissions." setting.';
+				return $show_messages;
+			}
+		);
+	}
+
+	/**
+	 * Check if any reverse proxy headers are set.
+	 *
+	 * @since 6.1
+	 *
+	 * @return bool
+	 */
+	private static function is_behind_proxy() {
+		$custom_headers = FrmAppHelper::get_custom_header_keys_for_ip();
+		foreach ( $custom_headers as $header ) {
+			if ( 'REMOTE_ADDR' === $header ) {
+				// We want to check every key but REMOTE_ADDR. REMOTE_ATTR is not unique to reverse proxy servers.
+				continue;
+			}
+
+			$ip = trim( FrmAppHelper::get_server_value( $header ) );
+			// Return true for anything that isn't empty but ignoring values like ::1.
+			if ( $ip && 0 !== strpos( $ip, '::' ) ) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**
@@ -480,6 +579,7 @@ class FrmAppController {
 		wp_register_script( 'formidable_embed', $plugin_url . '/js/admin/embed.js', array( 'formidable_dom', 'jquery-ui-autocomplete' ), $version, true );
 		self::register_popper1();
 		wp_register_script( 'bootstrap_tooltip', $plugin_url . '/js/bootstrap.min.js', array( 'jquery', 'popper' ), '4.6.1', true );
+		wp_register_script( 'formidable_settings', $plugin_url . '/js/admin/settings.js', array(), $version, true );
 
 		$page = FrmAppHelper::simple_get( 'page', 'sanitize_title' );
 
@@ -502,7 +602,8 @@ class FrmAppController {
 			'formidable_embed',
 		);
 
-		if ( FrmAppHelper::is_style_editor_page() ) {
+		if ( FrmAppHelper::is_style_editor_page( 'edit' ) ) {
+			// We only need to load the color picker when editing styles.
 			$dependencies[] = 'wp-color-picker';
 		}
 
@@ -557,17 +658,50 @@ class FrmAppController {
 			}
 
 			if ( $post_type === 'frm_display' ) {
-				wp_enqueue_style( 'formidable-grids' );
-				wp_enqueue_script( 'jquery-ui-draggable' );
-				self::maybe_deregister_popper2();
-				wp_enqueue_script( 'formidable_admin' );
-				wp_enqueue_style( 'formidable-admin' );
-				FrmAppHelper::localize_script( 'admin' );
-				self::include_info_overlay();
+				self::enqueue_legacy_views_assets();
 			}
 		}
 
 		self::maybe_force_formidable_block_on_gutenberg_page();
+	}
+
+	/**
+	 * Enqueue required assets for the Legacy Views editor (Views v4.x).
+	 *
+	 * @since 6.1.2
+	 *
+	 * @return void
+	 */
+	private static function enqueue_legacy_views_assets() {
+		wp_enqueue_style( 'formidable-grids' );
+		wp_enqueue_script( 'jquery-ui-draggable' );
+		self::maybe_deregister_popper2();
+		wp_enqueue_script( 'formidable_admin' );
+		wp_add_inline_style(
+			'formidable-admin',
+			'
+			.frm-white-body.post-type-frm_display .columns-2 {
+				display: block;
+				overflow: visible;
+			}
+
+			.frm-white-body.post-type-frm_display .columns-2 > div {
+				overflow-y: hidden;
+			}
+
+			.frm-white-body.post-type-frm_display #titlediv #title-prompt-text {
+				padding: 3px 0 0 10px;
+			}
+
+			.post-type-frm_display #field-search-input,
+			.post-type-frm_display #advanced-search-input {
+				flex: 1;
+			}
+			'
+		);
+		wp_enqueue_style( 'formidable-admin' );
+		FrmAppHelper::localize_script( 'admin' );
+		self::include_info_overlay();
 	}
 
 	/**
