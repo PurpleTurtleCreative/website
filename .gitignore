@@ -26,4 +26,4 @@ Icon
 .DS_Store
 
 # allow GitHub files
-.github
+!.github

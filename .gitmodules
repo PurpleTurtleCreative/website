@@ -10,3 +10,6 @@
 [submodule "wp-content/plugins/ptc-resources-server"]
 	path = wp-content/plugins/ptc-resources-server
 	url = https://github.com/PurpleTurtleCreative/ptc-resources-server.git
+[submodule "wp-content/plugins/completionist-pro"]
+	path = wp-content/plugins/completionist-pro
+	url = https://github.com/PurpleTurtleCreative/completionist-pro.git
