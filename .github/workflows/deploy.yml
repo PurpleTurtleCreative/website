@@ -28,6 +28,9 @@ jobs:
           submodules: recursive
           token: ${{ secrets.PTC_GITHUB_PAT }}
 
+      # Build Completionist within Completionist Pro.
+      - name: Build Completionist Pro - Base plugin
+        uses: ./wp-content/plugins/completionist-pro/completionist
       # Build Completionist Pro.
       - name: Build Completionist Pro
         uses: ./wp-content/plugins/completionist-pro
