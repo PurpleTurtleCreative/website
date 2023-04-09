@@ -1530,7 +1530,10 @@ class FrmFormsController {
 	}
 
 	/**
-	 * Insert the form class setting into the form
+	 * Insert the form class setting into the form.
+	 *
+	 * @param stdClass $form
+	 * @return void
 	 */
 	public static function form_classes( $form ) {
 		if ( isset( $form->options['form_class'] ) ) {
@@ -1540,6 +1543,10 @@ class FrmFormsController {
 		if ( ! empty( $form->options['js_validate'] ) ) {
 			echo ' frm_js_validate ';
 			self::add_js_validate_form_to_global_vars( $form );
+		}
+
+		if ( ! FrmFormsHelper::should_use_pro_for_ajax_submit() && FrmForm::is_ajax_on( $form ) ) {
+			echo ' frm_ajax_submit ';
 		}
 	}
 
@@ -2046,6 +2053,9 @@ class FrmFormsController {
 		$handle_process_here = $params['action'] === 'create' && $params['posted_form_id'] == $form->id && $_POST; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 
 		if ( ! $handle_process_here ) {
+			FrmFormState::set_initial_value( 'title', $title );
+			FrmFormState::set_initial_value( 'description', $description );
+
 			do_action( 'frm_display_form_action', $params, $fields, $form, $title, $description );
 			if ( apply_filters( 'frm_continue_to_new', true, $form->id, $params['action'] ) ) {
 				self::show_form_after_submit( $pass_args );
@@ -2266,16 +2276,20 @@ class FrmFormsController {
 				continue;
 			}
 
-			if ( 'redirect' === FrmOnSubmitHelper::get_action_type( $action ) ) {
+			$action_type = FrmOnSubmitHelper::get_action_type( $action );
+
+			if ( 'redirect' === $action_type ) {
 				if ( $has_redirect ) { // Do not process because we run the first redirect action only.
 					continue;
 				}
-
-				$has_redirect = true;
 			}
 
-			if ( ! self::is_valid_on_submit_action( $action ) ) {
+			if ( ! self::is_valid_on_submit_action( $action, $args, $event ) ) {
 				continue;
+			}
+
+			if ( 'redirect' === $action_type ) {
+				$has_redirect = true;
 			}
 
 			$met_actions[] = $action;
@@ -2304,16 +2318,26 @@ class FrmFormsController {
 	/**
 	 * Checks if a Confirmation action has the valid data.
 	 *
-	 * @since 6.x
+	 * @since 6.1.2
 	 *
 	 * @param object $action Form action object.
+	 * @param array  $args   See {@see FrmFormsController::run_success_action()}.
+	 * @param string $event  Form event. Default is `create`.
 	 * @return bool
 	 */
-	private static function is_valid_on_submit_action( $action ) {
+	private static function is_valid_on_submit_action( $action, $args, $event = 'create' ) {
 		$action_type = FrmOnSubmitHelper::get_action_type( $action );
 
-		if ( 'redirect' === $action_type && empty( $action->post_content['success_url'] ) ) {
-			return false;
+		if ( 'redirect' === $action_type ) {
+			// Run through frm_redirect_url filter. This is used for the valid action check.
+			$action->post_content['success_url'] = apply_filters(
+				'frm_redirect_url',
+				$action->post_content['success_url'],
+				$args['form'],
+				$args + array( 'action' => $event )
+			);
+
+			return ! empty( $action->post_content['success_url'] );
 		}
 
 		if ( 'page' === $action_type ) {
@@ -2960,27 +2984,11 @@ class FrmFormsController {
 	}
 
 	/**
-	 * @deprecated 1.07.05
-	 * @codeCoverageIgnore
-	 */
-	public static function add_default_templates( $path, $default = true, $template = true ) {
-		FrmDeprecated::add_default_templates( $path, $default, $template );
-	}
-
-	/**
 	 * @deprecated 3.0
 	 * @codeCoverageIgnore
 	 */
 	public static function bulk_create_template( $ids ) {
 		return FrmDeprecated::bulk_create_template( $ids );
-	}
-
-	/**
-	 * @deprecated 2.03
-	 * @codeCoverageIgnore
-	 */
-	public static function register_pro_scripts() {
-		FrmDeprecated::register_pro_scripts();
 	}
 
 	/**

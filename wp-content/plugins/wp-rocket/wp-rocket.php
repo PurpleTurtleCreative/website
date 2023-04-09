@@ -3,8 +3,8 @@
  * Plugin Name: WP Rocket
  * Plugin URI: https://wp-rocket.me
  * Description: The best WordPress performance plugin.
- * Version: 3.12.5.1
- * Requires at least: 5.6
+ * Version: 3.13.0.1
+ * Requires at least: 5.7
  * Requires PHP: 7.2
  * Code Name: Iego
  * Author: WP Media
@@ -14,19 +14,19 @@
  * Text Domain: rocket
  * Domain Path: languages
  *
- * Copyright 2013-2022 WP Rocket
+ * Copyright 2013-2023 WP Rocket
  */
 
 defined( 'ABSPATH' ) || exit;
 
 // Rocket defines.
-define( 'WP_ROCKET_VERSION',               '3.12.5.1' );
-define( 'WP_ROCKET_WP_VERSION',            '5.6' );
+define( 'WP_ROCKET_VERSION',               '3.13.0.1' );
+define( 'WP_ROCKET_WP_VERSION',            '5.7' );
 define( 'WP_ROCKET_WP_VERSION_TESTED',     '5.9' );
 define( 'WP_ROCKET_PHP_VERSION',           '7.2' );
-define( 'WP_ROCKET_PRIVATE_KEY'         , 'cac32d133bc3682a3a1f2d614f2a98f8');
+define( 'WP_ROCKET_PRIVATE_KEY',           false );
 define( 'WP_ROCKET_SLUG',                  'wp_rocket_settings' );
-define( 'WP_ROCKET_WEB_MAIN'            , 'https://wp-rocket.me/');
+define( 'WP_ROCKET_WEB_MAIN',              'https://wp-rocket.me/' );
 define( 'WP_ROCKET_WEB_API',               WP_ROCKET_WEB_MAIN . 'api/wp-rocket/' );
 define( 'WP_ROCKET_WEB_CHECK',             WP_ROCKET_WEB_MAIN . 'check_update.php' );
 define( 'WP_ROCKET_WEB_VALID',             WP_ROCKET_WEB_MAIN . 'valid_key.php' );
@@ -80,7 +80,7 @@ if ( ! defined( 'CHMOD_WP_ROCKET_CACHE_DIRS' ) ) {
 	define( 'CHMOD_WP_ROCKET_CACHE_DIRS', 0755 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals
 }
 if ( ! defined( 'WP_ROCKET_LASTVERSION' ) ) {
-	define( 'WP_ROCKET_LASTVERSION', '3.11.5' );
+	define( 'WP_ROCKET_LASTVERSION', '3.12.6.1' );
 }
 
 /**
