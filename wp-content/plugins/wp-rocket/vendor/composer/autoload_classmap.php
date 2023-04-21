@@ -438,6 +438,7 @@ return array(
     'WP_Rocket\\ThirdParty\\Hostings\\O2Switch' => $baseDir . '/inc/ThirdParty/Hostings/O2Switch.php',
     'WP_Rocket\\ThirdParty\\Hostings\\OneCom' => $baseDir . '/inc/ThirdParty/Hostings/OneCom.php',
     'WP_Rocket\\ThirdParty\\Hostings\\Pressable' => $baseDir . '/inc/ThirdParty/Hostings/Pressable.php',
+    'WP_Rocket\\ThirdParty\\Hostings\\ProIsp' => $baseDir . '/inc/ThirdParty/Hostings/ProIsp.php',
     'WP_Rocket\\ThirdParty\\Hostings\\Savvii' => $baseDir . '/inc/ThirdParty/Hostings/Savvii.php',
     'WP_Rocket\\ThirdParty\\Hostings\\ServiceProvider' => $baseDir . '/inc/ThirdParty/Hostings/ServiceProvider.php',
     'WP_Rocket\\ThirdParty\\Hostings\\SpinUpWP' => $baseDir . '/inc/ThirdParty/Hostings/SpinUpWP.php',
