@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       PTC Tools
  * Description:       Quick scripts and tools for Purple Turtle Creative.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            Purple Turtle Creative
  * Author URI:        https://purpleturtlecreative.com/
  * License:           GPL v3 or later
@@ -28,12 +28,11 @@ defined( 'ABSPATH' ) || die();
  */
 define( __NAMESPACE__ . '\PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 
-/* <<<<<<< CODE REGISTRATION >>>>>>> */
+/* ------- CODE REGISTRATION ------- */
 
 add_action(
 	'admin_menu',
 	function() {
-
 		add_submenu_page(
 			'tools.php',
 			'Tools &mdash; Purple Turtle Creative',
@@ -44,6 +43,7 @@ add_action(
 				if ( current_user_can( 'manage_options' ) ) {
 					echo '<div style="margin:4rem 2rem;">';
 					require_once PLUGIN_PATH . 'src/tools/database-cleanup.php';
+					require_once PLUGIN_PATH . 'src/tools/cron-audit.php';
 					echo '</div>';
 				} else {
 					echo '<p><strong>You do not have the proper permissions to access this page.</strong></p>';

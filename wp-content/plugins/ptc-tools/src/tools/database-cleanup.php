@@ -18,7 +18,7 @@ defined( 'ABSPATH' ) || die();
 if ( empty( $_POST ) ) :
 	?>
 
-	<form method="POST">
+	<form method="POST" style="margin:1em;">
 		<input class="button" type="submit" name="ptc_tool_audit_db" value="Audit Database" />
 	</form>
 
