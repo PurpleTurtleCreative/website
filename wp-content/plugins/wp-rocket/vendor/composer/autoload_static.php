@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720
+class ComposerStaticInitd6b81bdaec1e6a156cd0983c13fc7881
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -41,7 +41,19 @@ class ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720
         ),
     );
 
+    public static $prefixesPsr0 = array (
+        'C' => 
+        array (
+            'CloudFlare\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src',
+            ),
+        ),
+    );
+
     public static $classMap = array (
+        'CloudFlare\\IpRewrite' => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src/CloudFlare/IpRewrite.php',
+        'CloudFlare\\IpUtils' => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src/CloudFlare/IpUtils.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Imagify_Partner' => __DIR__ . '/../..' . '/inc/vendors/classes/class-imagify-partner.php',
         'Minify_CSS_UriRewriter' => __DIR__ . '/../..' . '/inc/vendors/classes/class-minify-css-urirewriter.php',
@@ -172,14 +184,19 @@ class ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720
         'Psr\\Log\\Test\\DummyTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/DummyTest.php',
         'Psr\\Log\\Test\\LoggerInterfaceTest' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/LoggerInterfaceTest.php',
         'Psr\\Log\\Test\\TestLogger' => __DIR__ . '/..' . '/psr/log/Psr/Log/Test/TestLogger.php',
-        'WPMedia\\Cloudflare\\APIClient' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/APIClient.php',
-        'WPMedia\\Cloudflare\\AuthenticationException' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/AuthenticationException.php',
-        'WPMedia\\Cloudflare\\Cloudflare' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Cloudflare.php',
-        'WPMedia\\Cloudflare\\Subscriber' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Subscriber.php',
-        'WPMedia\\Cloudflare\\UnauthorizedException' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/UnauthorizedException.php',
+        'WPMedia\\Cloudflare\\Auth\\APIKeyFactory' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Auth/APIKeyFactory.php',
+        'WPMedia\\Cloudflare\\Auth\\AuthFactoryInterface' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Auth/AuthFactoryInterface.php',
         'WP_Rocket\\Abstract_Render' => __DIR__ . '/../..' . '/inc/classes/class-abstract-render.php',
         'WP_Rocket\\Addon\\Busting\\BustingFactory' => __DIR__ . '/../..' . '/inc/deprecated/Engine/Addon/Busting/BustingFactory.php',
         'WP_Rocket\\Addon\\Busting\\FileBustingTrait' => __DIR__ . '/../..' . '/inc/deprecated/Engine/Addon/Busting/FileBustingTrait.php',
+        'WP_Rocket\\Addon\\Cloudflare\\API\\Client' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/API/Client.php',
+        'WP_Rocket\\Addon\\Cloudflare\\API\\Endpoints' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/API/Endpoints.php',
+        'WP_Rocket\\Addon\\Cloudflare\\Admin\\Subscriber' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Admin/Subscriber.php',
+        'WP_Rocket\\Addon\\Cloudflare\\Auth\\APIKey' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Auth/APIKey.php',
+        'WP_Rocket\\Addon\\Cloudflare\\Auth\\AuthInterface' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Auth/AuthInterface.php',
+        'WP_Rocket\\Addon\\Cloudflare\\Cloudflare' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Cloudflare.php',
+        'WP_Rocket\\Addon\\Cloudflare\\ServiceProvider' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/ServiceProvider.php',
+        'WP_Rocket\\Addon\\Cloudflare\\Subscriber' => __DIR__ . '/../..' . '/inc/Addon/Cloudflare/Subscriber.php',
         'WP_Rocket\\Addon\\FacebookTracking\\Subscriber' => __DIR__ . '/../..' . '/inc/deprecated/Engine/Addon/FacebookTracking/Subscriber.php',
         'WP_Rocket\\Addon\\GoogleTracking\\GoogleAnalytics' => __DIR__ . '/../..' . '/inc/deprecated/Engine/Addon/GoogleTracking/GoogleAnalytics.php',
         'WP_Rocket\\Addon\\GoogleTracking\\GoogleTagManager' => __DIR__ . '/../..' . '/inc/deprecated/Engine/Addon/GoogleTracking/GoogleTagManager.php',
@@ -484,9 +501,11 @@ class ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720
         'WP_Rocket\\ThirdParty\\NullSubscriber' => __DIR__ . '/../..' . '/inc/ThirdParty/NullSubscriber.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Ads\\Adthrive' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ads/Adthrive.php',
         'WP_Rocket\\ThirdParty\\Plugins\\CDN\\Cloudflare' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/CDN/Cloudflare.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\CDN\\CloudflareFacade' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/CDN/CloudflareFacade.php',
         'WP_Rocket\\ThirdParty\\Plugins\\ConvertPlug' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/ConvertPlug.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Ecommerce\\BigCommerce' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ecommerce/BigCommerce.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Ecommerce\\WooCommerceSubscriber' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ecommerce/WooCommerceSubscriber.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\I18n\\TranslatePress' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/I18n/TranslatePress.php',
         'WP_Rocket\\ThirdParty\\Plugins\\I18n\\WPML' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/I18n/WPML.php',
         'WP_Rocket\\ThirdParty\\Plugins\\InlineRelatedPosts' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/InlineRelatedPosts.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Jetpack' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Jetpack.php',
@@ -515,6 +534,7 @@ class ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720
         'WP_Rocket\\ThirdParty\\Plugins\\TheEventsCalendar' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/TheEventsCalendar.php',
         'WP_Rocket\\ThirdParty\\Plugins\\ThirstyAffiliates' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/ThirstyAffiliates.php',
         'WP_Rocket\\ThirdParty\\Plugins\\UnlimitedElements' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/UnlimitedElements.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\WPGeotargeting' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/WPGeotargeting.php',
         'WP_Rocket\\ThirdParty\\ReturnTypesTrait' => __DIR__ . '/../..' . '/inc/ThirdParty/ReturnTypesTrait.php',
         'WP_Rocket\\ThirdParty\\ServiceProvider' => __DIR__ . '/../..' . '/inc/ThirdParty/ServiceProvider.php',
         'WP_Rocket\\ThirdParty\\SubscriberFactoryInterface' => __DIR__ . '/../..' . '/inc/ThirdParty/SubscriberFactoryInterface.php',
@@ -526,6 +546,7 @@ class ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720
         'WP_Rocket\\ThirdParty\\Themes\\MinimalistBlogger' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/MinimalistBlogger.php',
         'WP_Rocket\\ThirdParty\\Themes\\Polygon' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Polygon.php',
         'WP_Rocket\\ThirdParty\\Themes\\ServiceProvider' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/ServiceProvider.php',
+        'WP_Rocket\\ThirdParty\\Themes\\Themify' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Themify.php',
         'WP_Rocket\\ThirdParty\\Themes\\ThirdpartyTheme' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/ThirdpartyTheme.php',
         'WP_Rocket\\ThirdParty\\Themes\\Uncode' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Uncode.php',
         'WP_Rocket\\ThirdParty\\Themes\\Xstore' => __DIR__ . '/../..' . '/inc/ThirdParty/Themes/Xstore.php',
@@ -541,9 +562,10 @@ class ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit1ef0fc1b13e2bc13d9151b56ecd99720::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitd6b81bdaec1e6a156cd0983c13fc7881::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitd6b81bdaec1e6a156cd0983c13fc7881::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitd6b81bdaec1e6a156cd0983c13fc7881::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitd6b81bdaec1e6a156cd0983c13fc7881::$classMap;
 
         }, null, ClassLoader::class);
     }

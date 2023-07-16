@@ -3,8 +3,8 @@ Plugin URI: https://wpexperts.io/
 Contributors: wpexpertsio
 Tags: email, mail, smtp, wordpress smtp, email log, postman smtp, postman, gmail, google apps, hotmail, yahoo, mandrill api, sendgrid api, elastic email, office365, mailgun
 Requires at least: 5.6.0
-Tested up to: 6.2
-Stable tag: 2.4.9
+Tested up to: 6.2.2
+Stable tag: 2.5.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -71,7 +71,7 @@ Simple Mail Transfer Protocol or SMTP is the protocol used for sending emails ov
 In essence, SMTP is a set of commands that authenticates and directs the transfer of electronic mail. When configuring your email program, you will typically need to set the SMTP server to your local ISP's SMTP settings.
 
 = Looking for Post SMTP Pro Extensions? = 
-[Post SMTP Pro Extensions](https://postmansmtp.com/extensions/) are everything you need to enhance your WordPress email deliverability experience. Check our extensions for Amazon SES, Better Email Logger and Office365.
+[Post SMTP Pro Extensions](https://postmansmtp.com/extensions/) are everything you need to enhance your WordPress email deliverability experience. Check our extensions for Amazon SES, Advanced Email Delivery and Logs, and Office365.
 
 **Office365 API delivery**
 [Office365 Pro Extension](https://postmansmtp.com/extensions/office-365-extension-for-post-smtp/) allows you to connect PostSMTP with your Outlook and Microsoft 365 accounts to improve email deliverability.
@@ -91,6 +91,8 @@ In essence, SMTP is a set of commands that authenticates and directs the transfe
 **Mail Control Pro Extension**
 [Mail Control Pro Extension](https://postmansmtp.com/extensions/post-smtp-mail-control/) allows you to control Post SMTP's email actions like sending email alerts to authors, webmasters, and new users. 
 
+**Advanced Email Delivery and Logs Extension**
+With the [Advanced Email Delivery and Logs Extension](https://postmansmtp.com/extensions/advanced-email-delivery/), boost your email efficiency and improve deliverability. Also, implement effective email quota management and streamlined log storage for optimal email communication.
 = Post SMTP Membership Plans = 
 [Post SMTP membership plans](https://postmansmtp.com/membership-plan/) offer access to all pro extensions along with other benefits including 1-year extension updates and support, Email Reporting, Logging, and Tracking, all other SMTP Services and a 30-day money-back guarantee.
 
@@ -226,6 +228,9 @@ To use OAuth, your website needs it's own Client ID. The Client ID is used to co
 * If you have a Microsoft Live account, from the [Microsoft account Developer Center](https://account.live.com/developers/applications/index), select the Application and choose Delete Application.
 * If you have a Yahoo Account, from the [Yahoo Developer Network My Apps](https://developer.yahoo.com/apps/), select the Application and choose Delete App.
 
+= How can I report security bugs? =
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/woocommerce)
+
 == Grant OAuth permission error messages ==
 
 Please note that the Client ID and Client Secret fields are NOT for your username and password. They are for OAuth Credentials only.
@@ -301,12 +306,85 @@ To avoid being flagged as spam, you need to prove your email isn't forged. On a 
 
 == Changelog ==
 
+= 2.5.8 - 2023-07-11 =
+**IMPROVEMENTS**
+
+* Added function to escape backend email content popup HTML. 
+* Added Failed/success labels for better visibility. 
+* Displayed error message on hover and in the popup to simplify the interface and UX in the log section.
+* Updated Feedback SDK to the latest version
+
+**FIXES**
+
+* Fix: Pagination was getting reset on resending emails.
+
+= 2.5.7 - 2023-06-21 =
+**IMPROVEMENTS**
+
+* Enhance code quality and strengthen security measures.
+
+= 2.5.6 - 2023-06-08 =
+**FIXES**
+
+* Critical error was being thrown when reseting the plugin.
+
+= 2.5.5 - 2023-05-29 =
+**FIXES**
+
+* Some of logs were overriding log page CSS.
+
+**IMPROVEMENTS**
+
+* Added title on log status for better user experience.
+* Translation string improvement.
+
+= 2.5.4 - 2023-05-24 =
+**FIXES**
+
+* Logs were not created in some cases.
+
+= 2.5.3 2023-05-16 =
+**FIXES**
+
+* Fixed E_WARNING appearing on activation in some cases.
+
+= 2.5.2 - 2023-05-12 =
+**FIXES**
+
+* Fixed the issue where users were getting stuck in the initial migration stage.
+
+**IMPROVEMENTS** 
+
+* On completing the migration process, limit the notice to the logs section only to delete old logs.
+* Added an option to disable migration notifications for seven days on clicking the cross icon on notice.
+* Added a new feature that allows users to revert a migration. This way, they can retry the migration process or switch back to the old logs interface if required.
+* Added an option to skip the migration process for those who do not wish to transfer their old logs and want to switch to the new interface.
+* Added permission check before creating/writing error log during migration.
+
+= 2.5.1 - 2023-05-10 =
+**NEW**
+
+* Added a link to learn more about migration.
+* Added a condition to initiate the migration and logging only if the new custom table exists.
+
+**IMPROVEMENTS**
+
+* Improved database migration process to handle potential failures.
+
+= 2.5.0 - 2023-05-09 =
+**NEW**
+
+* Introducing a new log section that is both lightweight and optimized, capable of accommodating millions of entries.
+* Added a migration wizard to help move existing logs to new custom tables from the old version.
+
 = 2.4.9 - 2023-04-27 =
 **FIXES**
+
 * Uncaught Error: Cannot use object of type WP_Error as array
 * Fixed deprecation notice for PHP Version > 8.0
 
 **IMPROVEMENTS**
+
 * Added condition for notice on how to fix broken emails
 
 = 2.4.8 - 2023-04-17 =
