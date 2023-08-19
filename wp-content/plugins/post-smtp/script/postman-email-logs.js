@@ -94,6 +94,11 @@ jQuery(document).ready(function($) {
 				jQuery( status ).addClass( 'ps-email-log-status-success' );
 
 			}
+			else if( data['success'] == '<span title="In Queue">In Queue</span>' ) {
+
+				jQuery( status ).addClass( 'ps-email-log-status-queued' );
+
+			}
 			else {
 
 				jQuery( status ).addClass( 'ps-email-log-status-failed' );
@@ -114,6 +119,7 @@ jQuery(document).ready(function($) {
 		<div class="ps-email-log-date-filter">
 			<label>From <input type="date" class="ps-email-log-from" /></label>
 			<label>To <input type="date" class="ps-email-log-to" /></label>
+			<span class="ps-refresh-logs" title="refresh logs"><span class="dashicons dashicons-image-rotate"></span></span>
 		</div>
 	` );
 
@@ -346,7 +352,7 @@ jQuery(document).ready(function($) {
 		toDo = ( toDo ) ? 'original_message' : 'session_transcript';
 		var heading = ( toDo == 'original_message' ) ? 'Email Message' : 'Session Transcript';
 		jQuery( '.ps-popup-container' ).html( `
-			<h1>${heading}</h1>
+			<h1 style="margin: 0; padding: 0;"></h1>
 			<h4>Loading...</h4>
 		` );
 
@@ -433,9 +439,26 @@ jQuery(document).ready(function($) {
 							</table>
 							<hr />
 							<div>
-								${response.data.original_message}
+								<iframe src="${response.data.log_url}" width="100%" height="310px"></iframe>
 							</div>
 						`;
+
+						//Show Attachments
+						if( response.data.attachments !== undefined ) {
+
+							popupContent += `
+									<hr />
+									<div>`;
+
+							jQuery.each( response.data.attachments, function( i, attachment ) {
+
+								popupContent += `<a href='${response.data.path}${attachment}' target="_blank">${attachment}</a><br />`;
+
+							} );
+
+							popupContent += `</div>`;
+
+						}
 
 						jQuery( '.ps-popup-container' ).find( 'h1' ).after( popupContent );
 
@@ -452,6 +475,14 @@ jQuery(document).ready(function($) {
 			}
 
 		} );
+
+	} );
+
+	//Refresh Logs
+	jQuery( document ).on( 'click', '.ps-refresh-logs', function( e ) {
+
+		e.preventDefault();
+		logsDT.ajax.reload();
 
 	} );
 
@@ -578,7 +609,7 @@ jQuery(document).ready(function($) {
 
 		e.preventDefault();
 		var _details = jQuery( this ).siblings( 'span' ).attr( 'title' );
-		jQuery( '.ps-popup-container' ).html( `<h1>Details</h1>${_details}` );
+		jQuery( '.ps-popup-container' ).html( `<h1 style="margin: 0; padding: 0;"></h1>${_details}` );
 
 	} );
 

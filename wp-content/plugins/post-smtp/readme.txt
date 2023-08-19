@@ -3,8 +3,8 @@ Plugin URI: https://wpexperts.io/
 Contributors: wpexpertsio
 Tags: email, mail, smtp, wordpress smtp, email log, postman smtp, postman, gmail, google apps, hotmail, yahoo, mandrill api, sendgrid api, elastic email, office365, mailgun
 Requires at least: 5.6.0
-Tested up to: 6.2.2
-Stable tag: 2.5.8
+Tested up to: 6.3
+Stable tag: 2.5.9.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -229,7 +229,7 @@ To use OAuth, your website needs it's own Client ID. The Client ID is used to co
 * If you have a Yahoo Account, from the [Yahoo Developer Network My Apps](https://developer.yahoo.com/apps/), select the Application and choose Delete App.
 
 = How can I report security bugs? =
-You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vdp/woocommerce)
+You can report security bugs through the Patchstack Vulnerability Disclosure Program. The Patchstack team help validate, triage and handle any security vulnerabilities. [Report a security vulnerability.](https://patchstack.com/database/vulnerability/post-smtp)
 
 == Grant OAuth permission error messages ==
 
@@ -305,6 +305,32 @@ To avoid being flagged as spam, you need to prove your email isn't forged. On a 
 1. Email Log Filter
 
 == Changelog ==
+
+= 2.5.9.3 - 2023-08-17 =
+
+* Minor Tweaks
+
+= 2.5.9.2 - 2023-08-16 =
+* Compatible & Tested up to WordPress v6.3
+
+= 2.5.9.1 =
+**NEW**
+
+* Added option to refresh recent logs in the dashboard without loading the page.
+* Added new hooks in the code to make the functionality extendable.
+
+= 2.5.9 - 2023-07-18 =
+**IMPROVEMENTS**
+
+* Improved email log popup content
+
+**FIX**
+
+* Reverted support for HTML view in email content popup with proper checks to avoid CSS conflicts.
+
+**NEW**
+
+* Added new filter post_smtp_before_view_log to extend log section view.
 
 = 2.5.8 - 2023-07-11 =
 **IMPROVEMENTS**
