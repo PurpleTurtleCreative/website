@@ -1122,7 +1122,7 @@ p.patchstack-upsell {
     font-size: 15px;
     line-height: 24px;
     color: #ACACAC;
-    margin-top: 64px;
+    margin-top: 32px;
 }
 
 p.patchstack-upsell a {
@@ -1133,14 +1133,6 @@ p.patchstack-upsell a {
 p.patchstack-upsell img {
     position: relative;
     top: 7px;
-}
-
-.patchstack-active-tab-multisite {
-    max-width: 35rem !important;
-}
-
-.multisite .patchstack-active-tab-hardening {
-    max-width: 35rem !important;
 }
 
 .patchstack-status {
@@ -1239,4 +1231,15 @@ p.patchstack-resync {
     color: #B2D675;
     margin-top: 32px;
     text-align: center;
+}
+
+p.patchstack-error {
+    color: #ED645E;
+    font-size: 11.20px;
+    font-family: Faktum;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: 0.22px;
+    word-wrap: break-word;
+    margin-bottom: 32px;
 }

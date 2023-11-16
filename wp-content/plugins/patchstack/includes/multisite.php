@@ -57,7 +57,7 @@ class P_Multisite extends P_Core {
 		}
 
 		// Determine which sites are already activated and skip those.
-		$activate = array();
+		$activate = [];
 		$sites    = get_sites();
 		foreach ( $sites as $site ) {
 			if ( in_array( $site->siteurl, $_POST['sites'] ) && get_blog_option( $site->id, 'patchstack_clientid' ) == '' ) {
@@ -72,7 +72,7 @@ class P_Multisite extends P_Core {
 		}
 
 		// Add the site to the app and retrieve the license for each site.
-		$licenses = $this->plugin->api->get_site_licenses( array( 'sites' => $activate ) );
+		$licenses = $this->plugin->api->get_site_licenses( [ 'sites' => $activate ] );
 
 		// Did an error happen during the multisite license activation?
 		if ( isset( $licenses['error'] ) ) {
@@ -98,25 +98,25 @@ class P_Multisite extends P_Core {
 		switch ( $_POST['option_page'] ) {
 			// Save hardening options
 			case 'patchstack_hardening_settings_group':
-				$options = array( 'patchstack_auto_update', 'patchstack_json_is_disabled', 'patchstack_register_email_blacklist', 'patchstack_move_logs', 'patchstack_basicscanblock', 'patchstack_userenum', 'patchstack_hidewpversion', 'patchstack_activity_log_is_enabled', 'patchstack_activity_log_failed_logins', 'patchstack_xmlrpc_is_disabled', 'patchstack_captcha_on_comments', 'patchstack_captcha_login_form', 'patchstack_captcha_registration_form', 'patchstack_captcha_reset_pwd_form', 'patchstack_captcha_type', 'patchstack_captcha_public_key', 'patchstack_captcha_public_key_v3', 'patchstack_captcha_public_key_v3_new', 'patchstack_captcha_private_key', 'patchstack_captcha_private_key_v3', 'patchstack_captcha_private_key_v3_new', 'patchstack_application_passwords_disabled' );
+				$options = [ 'patchstack_auto_update', 'patchstack_json_is_disabled', 'patchstack_register_email_blacklist', 'patchstack_move_logs', 'patchstack_basicscanblock', 'patchstack_userenum', 'patchstack_hidewpversion', 'patchstack_activity_log_is_enabled', 'patchstack_activity_log_failed_logins', 'patchstack_xmlrpc_is_disabled', 'patchstack_captcha_on_comments', 'patchstack_captcha_login_form', 'patchstack_captcha_registration_form', 'patchstack_captcha_reset_pwd_form', 'patchstack_captcha_type', 'patchstack_captcha_public_key', 'patchstack_captcha_public_key_v3', 'patchstack_captcha_public_key_v3_new', 'patchstack_captcha_private_key', 'patchstack_captcha_private_key_v3', 'patchstack_captcha_private_key_v3_new', 'patchstack_application_passwords_disabled' ];
 				$this->save_options( $options );
 				break;
 
 			// Save firewall settings
 			case 'patchstack_firewall_settings_group':
-				$options = array( 'patchstack_geo_block_countries', 'patchstack_geo_block_enabled', 'patchstack_geo_block_inverse', 'patchstack_ip_block_list', 'patchstack_basic_firewall', 'patchstack_autoblock_blocktime', 'patchstack_autoblock_attempts', 'patchstack_autoblock_minutes', 'patchstack_basic_firewall_roles', 'patchstack_disable_htaccess', 'patchstack_add_security_headers', 'patchstack_prevent_default_file_access', 'patchstack_block_debug_log_access', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking', 'patchstack_firewall_custom_rules', 'patchstack_firewall_custom_rules_loc', 'patchstack_blackhole_log', 'patchstack_whitelist', 'patchstack_firewall_ip_header' );
+				$options = [ 'patchstack_geo_block_countries', 'patchstack_geo_block_enabled', 'patchstack_geo_block_inverse', 'patchstack_ip_block_list', 'patchstack_basic_firewall', 'patchstack_autoblock_blocktime', 'patchstack_autoblock_attempts', 'patchstack_autoblock_minutes', 'patchstack_basic_firewall_roles', 'patchstack_disable_htaccess', 'patchstack_add_security_headers', 'patchstack_prevent_default_file_access', 'patchstack_block_debug_log_access', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking', 'patchstack_firewall_custom_rules', 'patchstack_firewall_custom_rules_loc', 'patchstack_blackhole_log', 'patchstack_whitelist' ];
 				$this->save_options( $options );
 				break;
 
 			// Save login settings
 			case 'patchstack_login_settings_group':
-				$options = array( 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_block_bruteforce_ips', 'patchstack_anti_bruteforce_blocktime', 'patchstack_anti_bruteforce_attempts', 'patchstack_anti_bruteforce_minutes', 'patchstack_login_time_block', 'patchstack_login_time_start', 'patchstack_login_time_end', 'patchstack_login_2fa', 'patchstack_login_whitelist' );
+				$options = [ 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_block_bruteforce_ips', 'patchstack_anti_bruteforce_blocktime', 'patchstack_anti_bruteforce_attempts', 'patchstack_anti_bruteforce_minutes', 'patchstack_login_time_block', 'patchstack_login_time_start', 'patchstack_login_time_end', 'patchstack_login_2fa', 'patchstack_login_whitelist' ];
 				$this->save_options( $options );
 				break;
 
 			// Save cookie notice settings
 			case 'patchstack_cookienotice_settings_group':
-				$options = array( 'patchstack_enable_cookie_notice_message', 'patchstack_cookie_notice_message', 'patchstack_cookie_notice_accept_text', 'patchstack_cookie_notice_backgroundcolor', 'patchstack_cookie_notice_textcolor', 'patchstack_cookie_notice_privacypolicy_enable', 'patchstack_cookie_notice_privacypolicy_text', 'patchstack_cookie_notice_privacypolicy_link', 'patchstack_cookie_notice_cookie_expiration', 'patchstack_cookie_notice_opacity', 'patchstack_cookie_notice_credits' );
+				$options = [ 'patchstack_enable_cookie_notice_message', 'patchstack_cookie_notice_message', 'patchstack_cookie_notice_accept_text', 'patchstack_cookie_notice_backgroundcolor', 'patchstack_cookie_notice_textcolor', 'patchstack_cookie_notice_privacypolicy_enable', 'patchstack_cookie_notice_privacypolicy_text', 'patchstack_cookie_notice_privacypolicy_link', 'patchstack_cookie_notice_cookie_expiration', 'patchstack_cookie_notice_opacity', 'patchstack_cookie_notice_credits' ];
 				$this->save_options( $options );
 				break;
 		}

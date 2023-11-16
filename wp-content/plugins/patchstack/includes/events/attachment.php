@@ -16,9 +16,9 @@ class P_Event_Attachment extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'add_attachment', array( &$this, 'addAttachment' ) );
-		add_action( 'edit_attachment', array( &$this, 'editAttachment' ) );
-		add_action( 'delete_attachment', array( &$this, 'deleteAttachment' ) );
+		add_action( 'add_attachment', [ &$this, 'addAttachment' ] );
+		add_action( 'edit_attachment', [ &$this, 'editAttachment' ] );
+		add_action( 'delete_attachment', [ &$this, 'deleteAttachment' ] );
 	}
 
 	/**
@@ -31,12 +31,12 @@ class P_Event_Attachment extends P_Event_Log {
 	protected function _addLogAttachment( $action, $attachment_id ) {
 		$attachment = get_post( $attachment_id );
 		$this->insert(
-			array(
+			[
 				'action'      => $action,
 				'object'      => 'attachment',
 				'object_id'   => $attachment_id,
 				'object_name' => esc_html( get_the_title( $attachment->ID ) ),
-			)
+			]
 		);
 	}
 

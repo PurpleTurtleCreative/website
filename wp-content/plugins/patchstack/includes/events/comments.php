@@ -16,14 +16,14 @@ class P_Event_Comments extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'wp_insert_comment', array( &$this, 'handleCommentLog' ), 10, 2 );
-		add_action( 'edit_comment', array( &$this, 'handleCommentLog' ) );
-		add_action( 'trash_comment', array( &$this, 'handleCommentLog' ) );
-		add_action( 'untrash_comment', array( &$this, 'handleCommentLog' ) );
-		add_action( 'spam_comment', array( &$this, 'handleCommentLog' ) );
-		add_action( 'unspam_comment', array( &$this, 'handleCommentLog' ) );
-		add_action( 'delete_comment', array( &$this, 'handleCommentLog' ) );
-		add_action( 'transition_comment_status', array( &$this, 'transitionCommentStatus' ), 10, 3 );
+		add_action( 'wp_insert_comment', [ &$this, 'handleCommentLog' ], 10, 2 );
+		add_action( 'edit_comment', [ &$this, 'handleCommentLog' ] );
+		add_action( 'trash_comment', [ &$this, 'handleCommentLog' ] );
+		add_action( 'untrash_comment', [ &$this, 'handleCommentLog' ] );
+		add_action( 'spam_comment', [ &$this, 'handleCommentLog' ] );
+		add_action( 'unspam_comment', [ &$this, 'handleCommentLog' ] );
+		add_action( 'delete_comment', [ &$this, 'handleCommentLog' ] );
+		add_action( 'transition_comment_status', [ &$this, 'transitionCommentStatus' ], 10, 3 );
 
 	}
 
@@ -41,12 +41,12 @@ class P_Event_Comments extends P_Event_Log {
 		}
 
 		$this->insert(
-			array(
+			[
 				'action'      => $action,
 				'object'      => 'comment',
 				'object_id'   => $id,
 				'object_name' => esc_html( get_the_title( $comment->comment_post_ID ) ),
-			)
+			]
 		);
 	}
 

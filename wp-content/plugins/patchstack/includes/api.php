@@ -24,8 +24,8 @@ class P_Api extends P_Core {
 	public function __construct( $core ) {
 		parent::__construct( $core );
 		$this->blog_id = get_current_blog_id();
-		add_action( 'patchstack_update_license_status', array( $this, 'update_license_status' ) );
-		add_action( 'patchstack_send_ping', array( $this, 'ping' ) );
+		add_action( 'patchstack_update_license_status', [ $this, 'update_license_status' ] );
+		add_action( 'patchstack_send_ping', [ $this, 'ping' ] );
 	}
 
 	/**
@@ -51,10 +51,10 @@ class P_Api extends P_Core {
 			$this->update_blog_option(
 				$this->blog_id,
 				'patchstack_api_token',
-				array(
+				[
 					'token'     => $response->message,
 					'expiresin' => $response->expiresin,
-				)
+				]
 			);
 			return $response->message;
 		}
@@ -69,15 +69,15 @@ class P_Api extends P_Core {
 	 *
 	 * @param string $clientid The API client ID.
 	 * @param string $secretkey The API secret key.
-	 * @return string|array|object
+	 * @return string|array
 	 */
 	public function fetch_access_token( $clientid = '', $secretkey = '' ) {
 		// Skeleton for the response data.
-		$response_data = (object) array(
+		$response_data = (object) [
 			'result'    => '',
 			'message'   => '',
 			'expiresin' => '',
-		);
+		];
 
 		// Determine if the license id/key is set.
 		$client_id = $this->get_blog_option( $this->blog_id, 'patchstack_clientid', $clientid );
@@ -99,20 +99,20 @@ class P_Api extends P_Core {
 		// Send a request to our server to obtain the access token.
 		$response = wp_remote_post(
 			$this->plugin->auth_url . '/oauth/token',
-			array(
+			[
 				'method'      => 'POST',
 				'timeout'     => 60,
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'blocking'    => true,
-				'headers'     => array(),
-				'body'        => array(
+				'headers'     => [],
+				'body'        => [
 					'client_id'     => $client_id,
 					'client_secret' => $client_secret,
 					'grant_type'    => 'client_credentials',
-				),
-				'cookies'     => array(),
-			)
+				],
+				'cookies'     => [],
+			]
 		);
 
 		// Stop if we received an error from the API.
@@ -190,6 +190,15 @@ class P_Api extends P_Core {
 			$this->update_blog_option( $this->blog_id, 'patchstack_last_license_check', time() );
 		}
 
+		if ( isset( $response['managed'], $response['managed_string'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_managed', $response['managed'] );
+			$this->update_blog_option( $this->blog_id, 'patchstack_managed_text', $response['managed_string'] );
+		}
+
+		if ( isset( $response['site_id'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_site_id', $response['site_id'] );
+		}
+
 		return $response;
 	}
 
@@ -201,7 +210,7 @@ class P_Api extends P_Core {
 	 * @param array  $data
 	 * @return void|array If successful array, otherwise void.
 	 */
-	public function send_request( $url, $request, $data = array() ) {
+	public function send_request( $url, $request, $data = [] ) {
 		// Attempt to get the access token.
 		$token = $this->get_access_token();
 		if ( empty( $token ) ) {
@@ -211,20 +220,20 @@ class P_Api extends P_Core {
 		// Send the remote request using the WordPress built-in method.
 		$response = wp_remote_request(
 			$this->plugin->api_url . $url,
-			array(
+			[
 				'method'      => $request,
 				'timeout'     => 60,
 				'redirection' => 5,
 				'httpversion' => '1.0',
 				'blocking'    => true,
-				'headers'     => array(
+				'headers'     => [
 					'Authorization' => 'Bearer ' . $token,
 					'LicenseID'     => $this->get_blog_option( $this->blog_id, 'patchstack_clientid', 0 ),
 					'Source-Host'   => get_site_url(),
-				),
+				],
 				'body'        => $data,
-				'cookies'     => array(),
-			)
+				'cookies'     => [],
+			]
 		);
 
 		// Check error or status code.
@@ -252,21 +261,21 @@ class P_Api extends P_Core {
 			// Tell our API.
 			wp_remote_request(
 				$this->plugin->api_url . '/api/header',
-				array(
+				[
 					'method'      => 'POST',
 					'timeout'     => 60,
 					'redirection' => 5,
 					'httpversion' => '1.0',
 					'blocking'    => true,
-					'headers'     => array(
+					'headers'     => [
 						'Source-Host'   => get_site_url(),
-					),
-					'body'        => array(
+					],
+					'body'        => [
 						'token' => $ott,
 						'url' => get_site_url()
-					),
-					'cookies'     => array(),
-				)
+					],
+					'cookies'     => [],
+				]
 			);
 		}
 	}
@@ -277,12 +286,7 @@ class P_Api extends P_Core {
 	 * @return array The firewall rules.
 	 */
 	public function post_firewall_rule_json() {
-		// If the request is coming from the API, fetch fresh rules.
-		if ( isset( $_POST['webarx_refresh_rules'] ) ) {
-			return $this->send_request( '/api/get-rules/2?bypass=cache', 'POST' );
-		}
-
-		return $this->send_request( '/api/get-rules/2', 'POST' );
+		return $this->send_request( '/api/get-rules/3', 'POST' );
 	}
 
 	/**
@@ -374,6 +378,6 @@ class P_Api extends P_Core {
 	 * @return void
 	 */
 	public function ping() {
-		$this->send_request( '/api/ping', 'POST', array( 'firewall' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ? 1 : 0 ) );
+		$this->send_request( '/api/ping', 'POST', [ 'firewall' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ? 1 : 0 ] );
 	}
 }

@@ -28,7 +28,7 @@ class P_Event_Log extends P_Core {
 		}
 
 		// Include all the different event loggers.
-		foreach ( array( 'posts', 'plugins', 'core', 'options', 'users', 'comments', 'attachment' ) as $event ) {
+		foreach ( [ 'posts', 'plugins', 'core', 'options', 'users', 'comments', 'attachment' ] as $event ) {
 			require_once dirname( __FILE__ ) . '/events/' . $event . '.php';
 			$class = 'P_Event_' . ucfirst( $event );
 			new $class();
@@ -68,7 +68,7 @@ class P_Event_Log extends P_Core {
 			global $wpdb;
 			$wpdb->insert(
 				$wpdb->prefix . 'patchstack_event_log',
-				array(
+				[
 					'author'      => $author,
 					'ip'          => $this->get_ip(),
 					'object'      => isset( $args['object'] ) ? $args['object'] : '',
@@ -77,8 +77,8 @@ class P_Event_Log extends P_Core {
 					'object_name' => isset( $args['object_name'] ) ? $args['object_name'] : '',
 					'date'        => current_time( 'mysql' ),
 					'flag'        => '',
-				),
-				array( '%s', '%s', '%s', '%d', '%s', '%s', '%s' )
+				],
+				[ '%s', '%s', '%s', '%d', '%s', '%s', '%s' ]
 			);
 		}
 	}

@@ -1,9 +1,10 @@
 <?php
 /**
  * Plugin Name: Patchstack Security
- * Plugin URI:  https://patchstack.com
+ * Plugin URI:  https://patchstack.com/?utm_medium=wp&utm_source=dashboard&utm_campaign=patchstack%20plugin
+ * Author URI: https://patchstack.com/?utm_medium=wp&utm_source=dashboard&utm_campaign=patchstack%20plugin
  * Description: Patchstack identifies security vulnerabilities in WordPress plugins, themes, and core.
- * Version: 2.1.25
+ * Version: 2.2.3
  * Author: Patchstack
  * License: GPLv3
  * Text Domain: patchstack
@@ -33,7 +34,7 @@ if ( ! function_exists( 'patchstack_autoload_classes' ) ) {
 		// Set up our filename.
 		$file_name = strtolower( str_replace( '_', '-', substr( $class_name, strlen( 'P_' ) ) ) );
 		$dir       = trailingslashit( dirname( __FILE__ ) ) . 'includes/';
-		$target    = array( $dir . $file_name . '.php', $dir . 'admin/' . str_replace( 'admin-', '', $file_name ) . '.php' );
+		$target    = [ $dir . $file_name . '.php', $dir . 'admin/' . str_replace( 'admin-', '', $file_name ) . '.php' ];
 
 		// Attempt each target and load if it exists.
 		foreach ( $target as $file ) {
@@ -58,7 +59,7 @@ if ( ! class_exists( 'patchstack' ) ) {
 		 *
 		 * @var string
 		 */
-		const VERSION = '2.1.25';
+		const VERSION = '2.2.3';
 
 		/**
 		 * API URL of Patchstack to communicate with.
@@ -79,14 +80,14 @@ if ( ! class_exists( 'patchstack' ) ) {
 		 *
 		 * @var string
 		 */
-		const CLIENT_ID = '153231';
+		const CLIENT_ID = 'PATCHSTACK_CLIENT_ID';
 
 		/**
 		 * Client private key, this is only set when freshly downloaded from the app.
 		 *
 		 * @var string
 		 */
-		const PRIVATE_KEY = '1ANLVjxTe6qlAt0XpeZhSxocR9dsRug6XMceyMvL';
+		const PRIVATE_KEY = 'PATCHSTACK_PRIVATE_KEY';
 
 		/**
 		 * URL of the plugin directory.
@@ -114,7 +115,7 @@ if ( ! class_exists( 'patchstack' ) ) {
 		 *
 		 * @var array
 		 */
-		protected $activation_errors = array();
+		protected $activation_errors = [];
 
 		/**
 		 * Singleton instance of plugin.
@@ -184,7 +185,7 @@ if ( ! class_exists( 'patchstack' ) ) {
 		 */
 		public function plugin_classes() {
 			// Define the array of the classes.
-			foreach ( array(
+			foreach ( [
 				'admin_options' => 'P_Admin_Options',
 				'cron'          => 'P_Cron',
 				'api'           => 'P_Api',
@@ -204,10 +205,11 @@ if ( ! class_exists( 'patchstack' ) ) {
 				'admin_ajax'    => 'P_Admin_Ajax',
 				'admin_general' => 'P_Admin_General',
 				'admin_menu'    => 'P_Admin_Menu',
-			) as $var => $class ) {
+			] as $var => $class ) {
 				$this->$var = new $class( $this );
 			}
 
+			// Load firewall base functionality.
 			$this->firewall_base = new P_Firewall( true, $this, true );
 		}
 
@@ -263,16 +265,7 @@ if ( ! class_exists( 'patchstack' ) ) {
 		}
 
 		/**
-		 * Boot Patchstack and its classes.
-		 *
-		 * @return void
-		 */
-		public function hooks() {
-			add_action( 'init', array( $this, 'init' ), ~PHP_INT_MAX );
-		}
-
-		/**
-		 * Boot Patchstack
+		 * Boot Patchstack.
 		 *
 		 * @return void
 		 */
@@ -291,7 +284,7 @@ if ( ! class_exists( 'patchstack' ) ) {
 				$this->api->update_license_status();
 			}
 
-			// Determine if the license is activated and not expired.
+			// Run firewall if not disabled and license activated.
 			if ( get_option( 'patchstack_license_activated', 0 ) == 1 && get_option( 'patchstack_basic_firewall', 0 ) == 1 && get_option( 'patchstack_license_free', 0 ) == 0 ) {
 				$this->firewall = new P_Firewall( true, $this );
 			}
@@ -348,7 +341,7 @@ if ( ! function_exists( 'patchstack_uninstall' ) ) {
 	 */
 	function patchstack_uninstall() {
 		// Delete most of the Patchstack options.
-		$options = array( 'patchstack_eventlog_lastid', 'patchstack_api_token', 'patchstack_dashboardlock', 'patchstack_pluginedit', 'patchstack_move_logs', 'patchstack_userenum', 'patchstack_basicscanblock', 'patchstack_hidewpcontent', 'patchstack_hidewpversionk', 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_known_blacklist', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_bad_query_strings', 'patchstack_advanced_character_string_filter', 'patchstack_advanced_blacklist_firewall', 'patchstack_forbid_rfi', 'patchstack_image_hotlinking', 'patchstack_add_security_headers', 'patchstack_firewall_log_lastid', 'patchstack_user_log_lastid', 'patchstack_captcha_public_key', 'patchstack_captcha_private_key', 'patchstack_scan_interval', 'patchstack_scan_day', 'patchstack_scan_time', 'patchstack_hackers_log', 'patchstack_users_log', 'patchstack_visitors_log', 'external_updates-webarx', 'patchstack_wp_stats', 'patchstack_captcha_login_form', 'patchstack_license_activated', 'patchstack_license_expiry', 'patchstack_software_data_hash', 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_googledrive_backup_is_running', 'patchstack_googledrive_upload_state', 'patchstack_googledrive_access_token', 'patchstack_googledrive_refresh_token', 'patchstack_cron_offset', 'patchstack_htaccess_rules_hash' );
+		$options = [ 'patchstack_eventlog_lastid', 'patchstack_api_token', 'patchstack_dashboardlock', 'patchstack_pluginedit', 'patchstack_move_logs', 'patchstack_userenum', 'patchstack_basicscanblock', 'patchstack_hidewpcontent', 'patchstack_hidewpversionk', 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_known_blacklist', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_bad_query_strings', 'patchstack_advanced_character_string_filter', 'patchstack_advanced_blacklist_firewall', 'patchstack_forbid_rfi', 'patchstack_image_hotlinking', 'patchstack_add_security_headers', 'patchstack_firewall_log_lastid', 'patchstack_user_log_lastid', 'patchstack_captcha_public_key', 'patchstack_captcha_private_key', 'patchstack_scan_interval', 'patchstack_scan_day', 'patchstack_scan_time', 'patchstack_hackers_log', 'patchstack_users_log', 'patchstack_visitors_log', 'external_updates-webarx', 'patchstack_wp_stats', 'patchstack_captcha_login_form', 'patchstack_license_activated', 'patchstack_license_expiry', 'patchstack_software_data_hash', 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_googledrive_backup_is_running', 'patchstack_googledrive_upload_state', 'patchstack_googledrive_access_token', 'patchstack_googledrive_refresh_token', 'patchstack_cron_offset', 'patchstack_htaccess_rules_hash' ];
 		foreach ( $options as $option ) {
 			delete_option( $option );
 
@@ -359,7 +352,7 @@ if ( ! function_exists( 'patchstack_uninstall' ) ) {
 
 		// Drop all Patchstack tables.
 		global $wpdb;
-		$tables = array( 'patchstack_user_log', 'patchstack_visitor_log', 'patchstack_firewall_log', 'patchstack_file_hashes', 'patchstack_logic', 'patchstack_ip', 'patchstack_event_log' );
+		$tables = [ 'patchstack_user_log', 'patchstack_visitor_log', 'patchstack_firewall_log', 'patchstack_file_hashes', 'patchstack_logic', 'patchstack_ip', 'patchstack_event_log' ];
 		foreach ( $tables as $table ) {
 			$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . $table );
 		}
@@ -378,9 +371,9 @@ if ( ! function_exists( 'patchstack' ) ) {
 }
 
 // Kick it off.
-add_action( 'plugins_loaded', array( patchstack(), 'hooks' ) );
+add_action( 'plugins_loaded', [ patchstack(), 'init' ] );
 
 // Activation and deactivation hooks.
-register_activation_hook( __FILE__, array( patchstack(), 'activate' ) );
-register_deactivation_hook( __FILE__, array( patchstack(), 'deactivate' ) );
+register_activation_hook( __FILE__, [ patchstack(), 'activate' ] );
+register_deactivation_hook( __FILE__, [ patchstack(), 'deactivate' ] );
 register_uninstall_hook( __FILE__, 'patchstack_uninstall' );

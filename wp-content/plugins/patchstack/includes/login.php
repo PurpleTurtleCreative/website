@@ -23,19 +23,19 @@ class P_Login extends P_Core {
 			return;
 		}
 
-		add_action( 'login_init', array( $this, 'add_captcha' ) );
-		add_action( 'login_init', array( $this, 'check_ipban' ) );
-		add_action( 'login_init', array( $this, 'check_logonhours' ) );
-		add_action( 'login_head', array( $this, 'add_captcha' ) );
-		add_action( 'login_enqueue_scripts', array( $this, 'login_enqueue_scripts' ), 1 );
+		add_action( 'login_init', [ $this, 'add_captcha' ] );
+		add_action( 'login_init', [ $this, 'check_ipban' ] );
+		add_action( 'login_init', [ $this, 'check_logonhours' ] );
+		add_action( 'login_head', [ $this, 'add_captcha' ] );
+		add_action( 'login_enqueue_scripts', [ $this, 'login_enqueue_scripts' ], 1 );
 
 		// 2FA related actions.
 		if ( $this->get_option( 'patchstack_login_2fa', 0 ) ) {
-			add_action( 'login_form', array( $this, 'tfa_login_form' ) );
-			add_action( 'authenticate', array( $this, 'tfa_authenticate' ), 30, 3 );
-			add_action( 'profile_personal_options', array( $this, 'tfa_profile_personal_options' ) );
-			add_action( 'personal_options_update', array( $this, 'tfa_personal_options_update' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'tfa_admin_enqueue_scripts' ) );
+			add_action( 'login_form', [ $this, 'tfa_login_form' ] );
+			add_action( 'authenticate', [ $this, 'tfa_authenticate' ], 30, 3 );
+			add_action( 'profile_personal_options', [ $this, 'tfa_profile_personal_options' ] );
+			add_action( 'personal_options_update', [ $this, 'tfa_personal_options_update' ] );
+			add_action( 'admin_enqueue_scripts', [ $this, 'tfa_admin_enqueue_scripts' ] );
 		}
 	}
 
@@ -120,7 +120,7 @@ class P_Login extends P_Core {
 	 * @return void
 	 */
 	public function tfa_admin_enqueue_scripts() {
-		wp_register_script( 'patchstack_qrcode', $this->plugin->url . '/assets/js/qrcode.min.js', array(), $this->plugin->version );
+		wp_register_script( 'patchstack_qrcode', $this->plugin->url . '/assets/js/qrcode.min.js', [], $this->plugin->version );
 		wp_enqueue_script( 'patchstack_qrcode' );
 	}
 
@@ -178,7 +178,7 @@ class P_Login extends P_Core {
 		// Check if X failed login attempts were made.
 		global $wpdb;
 		$results = $wpdb->get_results(
-			$wpdb->prepare( 'SELECT COUNT(*) AS numIps FROM ' . $wpdb->prefix . "patchstack_event_log WHERE ip = '%s' AND action = 'failed login' AND date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE)", array( $ip, $time ) ),
+			$wpdb->prepare( 'SELECT COUNT(*) AS numIps FROM ' . $wpdb->prefix . "patchstack_event_log WHERE ip = '%s' AND action = 'failed login' AND date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE)", [ $ip, $time ] ),
 			OBJECT
 		);
 
@@ -281,20 +281,20 @@ class P_Login extends P_Core {
 
 		// reCAPTCHA on the login page.
 		if ( $this->get_option( 'patchstack_captcha_login_form' ) ) {
-			add_filter( 'login_form', array( $this->plugin->hardening, 'captcha_display' ) );
-			add_filter( 'wp_authenticate_user', array( $this, 'login_captcha_check' ), 10, 2 );
+			add_filter( 'login_form', [ $this->plugin->hardening, 'captcha_display' ] );
+			add_filter( 'wp_authenticate_user', [ $this, 'login_captcha_check' ], 10, 2 );
 		}
 
 		// reCAPTCHA on the registration form.
 		if ( $this->get_option( 'patchstack_captcha_registration_form' ) ) {
-			add_action( 'register_form', array( $this->plugin->hardening, 'captcha_display' ) );
-			add_action( 'registration_errors', array( $this, 'general_captcha_check' ) );
+			add_action( 'register_form', [ $this->plugin->hardening, 'captcha_display' ] );
+			add_action( 'registration_errors', [ $this, 'general_captcha_check' ] );
 		}
 
 		// reCAPTCHA on the reset password form.
 		if ( $this->get_option( 'patchstack_captcha_reset_pwd_form' ) ) {
-			add_action( 'lostpassword_form', array( $this->plugin->hardening, 'captcha_display' ) );
-			add_action( 'allow_password_reset', array( $this, 'general_captcha_check' ) );
+			add_action( 'lostpassword_form', [ $this->plugin->hardening, 'captcha_display' ] );
+			add_action( 'allow_password_reset', [ $this, 'general_captcha_check' ] );
 		}
 	}
 

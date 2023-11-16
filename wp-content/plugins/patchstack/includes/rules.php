@@ -18,9 +18,9 @@ class P_Rules extends P_Core {
 	 */
 	public function __construct( $core ) {
 		parent::__construct( $core );
-		add_action( 'patchstack_post_firewall_rules', array( $this, 'post_firewall_rules' ) );
-		add_action( 'patchstack_post_firewall_htaccess_rules', array( $this, 'post_firewall_htaccess_rules' ) );
-		add_action( 'patchstack_post_dynamic_firewall_rules', array( $this, 'dynamic_firewall_rules' ) );
+		add_action( 'patchstack_post_firewall_rules', [ $this, 'post_firewall_rules' ] );
+		add_action( 'patchstack_post_firewall_htaccess_rules', [ $this, 'post_firewall_htaccess_rules' ] );
+		add_action( 'patchstack_post_dynamic_firewall_rules', [ $this, 'dynamic_firewall_rules' ] );
 	}
 
 	/**
@@ -36,7 +36,7 @@ class P_Rules extends P_Core {
 
 		$rules    = $this->plugin->htaccess->get_firewall_rule_settings();
 		$settings = json_encode( $rules );
-		$results  = $this->plugin->api->post_firewall_rule( array( 'settings' => $settings ) );
+		$results  = $this->plugin->api->post_firewall_rule( [ 'settings' => $settings ] );
 
 		// If no rules returned, we assume all settings are turned off.
 		if ( empty( $results ) ) {
@@ -90,15 +90,43 @@ class P_Rules extends P_Core {
 			return;
 		}
 
+		// Separate the new firewall engine rules from the old ones.
+		$rules = $results['firewall'];
+		$newRules = [];
+		$oldRules = [];
+		foreach ( $rules as $rule ) {
+			if ( isset( $rule['rule_v2'] ) ) {
+				$rule['rules'] = $rule['rule_v2'];
+				unset($rule['rule_v2']);
+				$newRules[] = $rule;
+			} else {
+				$oldRules[] = $rule;
+			}
+		}
+
 		// Update firewall rules.
-		update_option( 'patchstack_firewall_rules', json_encode( $results['firewall'] ) );
+		update_option( 'patchstack_firewall_rules', json_encode( $oldRules ) );
+		update_option( 'patchstack_firewall_rules_v3', json_encode( $newRules ) );
+
+		// Separate the new firewall engine rules from the old ones.
+		$rules = $results['whitelists'];
+		$newRules = [];
+		$oldRules = [];
+		foreach ( $rules as $rule ) {
+			if ( isset( $rule['rule_v2'] ) ) {
+				$rule['rules'] = $rule['rule_v2'];
+				unset($rule['rule_v2']);
+				$newRules[] = $rule;
+			} else {
+				$oldRules[] = $rule;
+			}
+		}
 
 		// Update whitelist rules.
-		update_option( 'patchstack_whitelist_rules', json_encode( $results['whitelists'] ) );
+		update_option( 'patchstack_whitelist_rules', json_encode( $oldRules ) );
+		update_option( 'patchstack_whitelist_rules_v3', json_encode( $newRules ) );
 
-		// Update secondary whitelist rules.
-		if ( isset( $results['whitelist_keys'] ) ) {
-			update_option( 'patchstack_whitelist_keys_rules', json_encode( $results['whitelist_keys'] ) );
-		}
+		// Update the whitelisted keys.
+		update_option( 'patchstack_whitelist_keys_rules', json_encode( $results['whitelist_keys'] ) );
 	}
 }

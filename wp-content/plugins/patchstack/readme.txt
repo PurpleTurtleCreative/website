@@ -4,11 +4,11 @@ Tags: security, wordpress security, plugin security, theme security, virtual pat
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 4.4
-Tested up to: 6.2
-Stable tag: 2.1.25
+Tested up to: 6.4
+Stable tag: 2.2.3
 Requires PHP: 5.6
 
-Patchstack identifies security vulnerabilities in WordPress plugins, themes, and core.
+Patchstack automatically identifies & mitigates security vulnerabilities in WordPress plugins, themes, and core.
 
 == Description ==
 

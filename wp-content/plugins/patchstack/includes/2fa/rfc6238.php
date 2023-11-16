@@ -53,7 +53,7 @@ class TokenAuth6238 {
 	 * @return string
 	 */
 	private static function oath_hotp( $key, $counter ) {
-		$cur_counter = array( 0, 0, 0, 0, 0, 0, 0, 0 );
+		$cur_counter = [ 0, 0, 0, 0, 0, 0, 0, 0 ];
 
 		for ( $i = 7; $i >= 0; $i-- ) { // C for unsigned char, * for  repeating to the end of the input data
 			$cur_counter[ $i ] = pack( 'C*', $counter );

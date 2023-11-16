@@ -24,7 +24,7 @@ class P_Htaccess extends P_Core {
 			return;
 		}
 
-		add_action( 'updated_option', array( $this, 'update_option_extras' ), 10, 3 );
+		add_action( 'updated_option', [ $this, 'update_option_extras' ], 10, 3 );
 	}
 
 	/**
@@ -36,7 +36,7 @@ class P_Htaccess extends P_Core {
 	 * @return void
 	 */
 	public function update_option_extras( $option_name, $old_value, $value ) {
-		if ( in_array( $option_name, array( 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_pingback_protection', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_trace_and_track', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking', 'patchstack_firewall_custom_rules' ) ) ) {
+		if ( in_array( $option_name, [ 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_pingback_protection', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_trace_and_track', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking', 'patchstack_firewall_custom_rules' ] ) ) {
 			$this->plugin->rules->post_firewall_rules();
 		}
 	}
@@ -47,8 +47,8 @@ class P_Htaccess extends P_Core {
 	 * @return array
 	 */
 	public function get_firewall_rule_settings() {
-		$settings = array();
-		$options  = array( 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking', 'patchstack_basicscanblock' );
+		$settings = [];
+		$options  = [ 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking', 'patchstack_basicscanblock' ];
 		foreach ( $options as $option ) {
 			if ( get_site_option( $option ) ) {
 				$settings[] = ( $option == 'patchstack_basicscanblock' ? 'webarx_wpscan_block' : str_replace( 'patchstack_', 'webarx_', $option ) );
@@ -66,14 +66,14 @@ class P_Htaccess extends P_Core {
 	public function firewall() {
 		// Get the firewall state.
 		$sum_of_firewall = 0;
-		foreach ( array( 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_pingback_protection', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_trace_and_track', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking' ) as $option ) {
+		foreach ( [ 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_pingback_protection', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_trace_and_track', 'patchstack_proxy_comment_posting', 'patchstack_image_hotlinking' ] as $option ) {
 			$value = get_site_option( $option, 0 );
 			$sum_of_firewall  += empty( $value ) ? 0 : 1;
 		}
 
 		// Update the options.
 		$onoff           = $sum_of_firewall > 1 ? 0 : 1;
-		foreach ( array( 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_block_debug_log_access', 'patchstack_index_views', 'patchstack_proxy_comment_posting' ) as $option ) {
+		foreach ( [ 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_block_debug_log_access', 'patchstack_index_views', 'patchstack_proxy_comment_posting' ] as $option ) {
 			update_site_option( $option, $onoff );
 		}
 		update_site_option( 'patchstack_block_fake_bots', 0 );
@@ -163,8 +163,8 @@ class P_Htaccess extends P_Core {
 	 * @return boolean
 	 */
 	public function is_server_supported() {
-		$server = strtolower( filter_var( $_SERVER['SERVER_SOFTWARE'], FILTER_SANITIZE_STRING ) );
-		foreach ( array( 'apache', 'nginx', 'litespeed' ) as $webserver ) {
+		$server = strtolower( $_SERVER['SERVER_SOFTWARE'] );
+		foreach ( [ 'apache', 'nginx', 'litespeed' ] as $webserver ) {
 			if ( strstr( $server, $webserver ) ) {
 				return true;
 			}

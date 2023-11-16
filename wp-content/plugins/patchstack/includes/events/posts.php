@@ -16,8 +16,8 @@ class P_Event_Posts extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'transition_post_status', array( &$this, 'transition_post_status' ), 10, 3 );
-		add_action( 'delete_post', array( &$this, 'delete_post' ) );
+		add_action( 'transition_post_status', [ &$this, 'transition_post_status' ], 10, 3 );
+		add_action( 'delete_post', [ &$this, 'delete_post' ] );
 	}
 
 	/**
@@ -68,12 +68,12 @@ class P_Event_Posts extends P_Event_Log {
 		}
 
 		$this->insert(
-			array(
+			[
 				'object'      => 'post',
 				'object_id'   => $post->ID,
 				'action'      => $action,
 				'object_name' => $this->_draft_or_post_title( $post->ID ),
-			)
+			]
 		);
 	}
 
@@ -89,7 +89,7 @@ class P_Event_Posts extends P_Event_Log {
 		}
 
 		$post = get_post( $post_id );
-		if ( in_array( $post->post_status, array( 'auto-draft', 'inherit' ) ) ) {
+		if ( in_array( $post->post_status, [ 'auto-draft', 'inherit' ] ) ) {
 			return;
 		}
 
@@ -99,12 +99,12 @@ class P_Event_Posts extends P_Event_Log {
 		}
 
 		$this->insert(
-			array(
+			[
 				'object'      => 'post',
 				'object_id'   => $post->ID,
 				'action'      => 'deleted',
 				'object_name' => $this->_draft_or_post_title( $post->ID ),
-			)
+			]
 		);
 	}
 }

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit41e63f7289eb78a40170f5fa8234743e
+class ComposerStaticInit176d692dd5ea8f1811ce3c93b418e115
 {
     public static $prefixLengthsPsr4 = array (
         'W' => 
@@ -326,6 +326,8 @@ class ComposerStaticInit41e63f7289eb78a40170f5fa8234743e
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Admin\\OptionSubscriber' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Admin/OptionSubscriber.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Admin\\Settings' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Admin/Settings.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Admin\\Subscriber' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Admin/Subscriber.php',
+        'WP_Rocket\\Engine\\Optimization\\RUCSS\\Context\\RUCSSContext' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Context/RUCSSContext.php',
+        'WP_Rocket\\Engine\\Optimization\\RUCSS\\Context\\RUCSSOptimizeContext' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Context/RUCSSOptimizeContext.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Controller\\Filesystem' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Controller/Filesystem.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Controller\\Queue' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Controller/Queue.php',
         'WP_Rocket\\Engine\\Optimization\\RUCSS\\Controller\\UsedCSS' => __DIR__ . '/../..' . '/inc/Engine/Optimization/RUCSS/Controller/UsedCSS.php',
@@ -412,6 +414,7 @@ class ComposerStaticInit41e63f7289eb78a40170f5fa8234743e
         'WP_Rocket\\ThirdParty\\Hostings\\O2Switch' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/O2Switch.php',
         'WP_Rocket\\ThirdParty\\Hostings\\OneCom' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/OneCom.php',
         'WP_Rocket\\ThirdParty\\Hostings\\Pressable' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/Pressable.php',
+        'WP_Rocket\\ThirdParty\\Hostings\\Pressidium' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/Pressidium.php',
         'WP_Rocket\\ThirdParty\\Hostings\\ProIsp' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/ProIsp.php',
         'WP_Rocket\\ThirdParty\\Hostings\\Savvii' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/Savvii.php',
         'WP_Rocket\\ThirdParty\\Hostings\\ServiceProvider' => __DIR__ . '/../..' . '/inc/ThirdParty/Hostings/ServiceProvider.php',
@@ -428,6 +431,7 @@ class ComposerStaticInit41e63f7289eb78a40170f5fa8234743e
         'WP_Rocket\\ThirdParty\\Plugins\\Ecommerce\\WooCommerceSubscriber' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Ecommerce/WooCommerceSubscriber.php',
         'WP_Rocket\\ThirdParty\\Plugins\\I18n\\TranslatePress' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/I18n/TranslatePress.php',
         'WP_Rocket\\ThirdParty\\Plugins\\I18n\\WPML' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/I18n/WPML.php',
+        'WP_Rocket\\ThirdParty\\Plugins\\I18n\\Weglot' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/I18n/Weglot.php',
         'WP_Rocket\\ThirdParty\\Plugins\\InlineRelatedPosts' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/InlineRelatedPosts.php',
         'WP_Rocket\\ThirdParty\\Plugins\\Jetpack' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/Jetpack.php',
         'WP_Rocket\\ThirdParty\\Plugins\\ModPagespeed' => __DIR__ . '/../..' . '/inc/ThirdParty/Plugins/ModPagespeed.php',
@@ -484,10 +488,10 @@ class ComposerStaticInit41e63f7289eb78a40170f5fa8234743e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit41e63f7289eb78a40170f5fa8234743e::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit41e63f7289eb78a40170f5fa8234743e::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit41e63f7289eb78a40170f5fa8234743e::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit41e63f7289eb78a40170f5fa8234743e::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit176d692dd5ea8f1811ce3c93b418e115::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit176d692dd5ea8f1811ce3c93b418e115::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit176d692dd5ea8f1811ce3c93b418e115::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit176d692dd5ea8f1811ce3c93b418e115::$classMap;
 
         }, null, ClassLoader::class);
     }

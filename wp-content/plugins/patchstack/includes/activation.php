@@ -19,7 +19,7 @@ class P_Activation extends P_Core {
 	 */
 	public function __construct( $core ) {
 		parent::__construct( $core );
-		add_action( 'activated_plugin', array( $this, 'redirect_activation' ), 10, 2 );
+		add_action( 'activated_plugin', [ $this, 'redirect_activation' ], 10, 2 );
 	}
 
 	/**
@@ -57,7 +57,7 @@ class P_Activation extends P_Core {
 		}
 
 		// Add a dashboard notice.
-		add_action( 'all_admin_notices', array( $this, 'requirements_not_met_notice' ) );
+		add_action( 'all_admin_notices', [ $this, 'requirements_not_met_notice' ] );
 		return false;
 	}
 
@@ -70,11 +70,11 @@ class P_Activation extends P_Core {
 		// Check to see if we can access the API.
 		$response = wp_remote_request(
 			$this->plugin->api_url,
-			array(
+			[
 				'method'      => 'GET',
 				'timeout'     => 10,
 				'redirection' => 5,
-			)
+			]
 		);
 
 		// Check if we can access the API.
@@ -144,7 +144,7 @@ class P_Activation extends P_Core {
 
 			// Deactivate the plugin.
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
-			deactivate_plugins( array( 'webarx/webarx.php' ) );
+			deactivate_plugins( [ 'webarx/webarx.php' ] );
 			update_option( 'patchstack_license_free', '0' );
 		}
 
@@ -165,8 +165,8 @@ class P_Activation extends P_Core {
 		$api   = new P_Api( $core );
 		$token = $api->get_access_token();
 		if ( ! empty( $token ) ) {
-			$api->update_firewall_status( array( 'status' => 1 ) );
-			$api->update_url( array( 'plugin_url' => get_option( 'siteurl' ) ) );
+			$api->update_firewall_status( [ 'status' => 1 ] );
+			$api->update_url( [ 'plugin_url' => get_option( 'siteurl' ) ] );
 		}
 
 		// Immediately send software data to our server to set firewall as enabled.
@@ -179,6 +179,36 @@ class P_Activation extends P_Core {
 
 		// One time actions should be placed here.
 		$this->plugin->hardening->delete_readme();
+
+		// Try to create the mu-plugins folder/file.
+		// No need to do this if it already exists.
+		if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' )) {
+			return;
+		}
+	
+		// The mu-plugin does not exist, try to create it.
+		@include_once ABSPATH . 'wp-admin/includes/file.php';
+		$wpfs = WP_Filesystem();
+
+		// Failed to initialize WP_Filesystem.
+		if ( ! $wpfs ) {
+			return;
+		}
+
+		if ( ! is_dir( WPMU_PLUGIN_DIR ) ) {
+			wp_mkdir_p( WPMU_PLUGIN_DIR );
+		}
+
+		// Failed to create the mu-plugin folder.
+		if ( ! is_dir( WPMU_PLUGIN_DIR ) ) {
+			return;
+		}
+
+		// Create the mu-plugin file in the folder.
+		if ( is_writable( WPMU_PLUGIN_DIR ) ) {
+			$php = @file_get_contents( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'mu-plugin.php' );
+			@file_put_contents( trailingslashit( WPMU_PLUGIN_DIR ) . 'patchstack.php', $php );
+		}
 	}
 
 	/**
@@ -208,8 +238,8 @@ class P_Activation extends P_Core {
 		// Activate the license and update firewall status after activating the plugin.
 		$token = $this->plugin->api->get_access_token( $license['id'], $license['secret'], true );
 		if ( ! empty( $token ) ) {
-			$this->plugin->api->update_firewall_status( array( 'status' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ) );
-			$this->plugin->api->update_url( array( 'plugin_url' => get_blog_option( $site->id, 'siteurl' ) ) );
+			$this->plugin->api->update_firewall_status( [ 'status' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ] );
+			$this->plugin->api->update_url( [ 'plugin_url' => get_blog_option( $site->id, 'siteurl' ) ] );
 
 			// If we have an access token, tell our API that the firewall is activated
 			// and the current URL of the site.
@@ -217,7 +247,7 @@ class P_Activation extends P_Core {
 			$this->plugin->api->update_license_status();
 
 			// This will trigger the software synchronization action.
-			wp_remote_get( get_site_url( $site->id ), array( 'sslverify' => false ) );
+			wp_remote_get( get_site_url( $site->id ), [ 'sslverify' => false ] );
 		}
 
 		// Make sure to switch back to the current blog id.
@@ -256,7 +286,7 @@ class P_Activation extends P_Core {
 	 */
 	public function migrate_check() {
 		// Only perform migrations if we have any to execute.
-		$versions = array('3.0.0', '3.0.1', '3.0.2');
+		$versions = ['3.0.0', '3.0.1', '3.0.2', '3.0.3'];
 		if ( count( $versions ) == 0 ) {
 			return;
 		}
@@ -277,20 +307,28 @@ class P_Activation extends P_Core {
 	 */
 	public function deactivate() {
 		// Update firewall status after de-activating plugin
-		$api   = new P_Api( $this );
-		$token = $api->get_access_token();
-		if ( ! empty( $token ) ) {
-			$api->update_firewall_status( array( 'status' => 0 ) );
+		try {
+			$token = $this->plugin->api->get_access_token();
+			if ( ! empty( $token ) ) {
+				$this->plugin->api->update_firewall_status( [ 'status' => 0 ] );
+			}
+		} catch (\Exception $e) {
+			//
 		}
 
 		// Clear all Patchstack scheduled tasks.
-		$tasks = array( 'patchstack_zip_backup', 'patchstack_send_software_data', 'patchstack_send_hacker_logs', 'patchstack_send_visitor_logs', 'patchstack_send_event_logs', 'patchstack_reset_blocked_attacks', 'patchstack_post_firewall_rules', 'patchstack_post_firewall_htaccess_rules', 'patchstack_post_dynamic_firewall_rules', 'patchstack_update_license_status', 'patchstack_update_plugins', 'patchstack_send_ping', 'puc_cron_check_updates-webarx' );
+		$tasks = [ 'patchstack_zip_backup', 'patchstack_send_software_data', 'patchstack_send_hacker_logs', 'patchstack_send_visitor_logs', 'patchstack_send_event_logs', 'patchstack_reset_blocked_attacks', 'patchstack_post_firewall_rules', 'patchstack_post_firewall_htaccess_rules', 'patchstack_post_dynamic_firewall_rules', 'patchstack_update_license_status', 'patchstack_update_plugins', 'patchstack_send_ping', 'puc_cron_check_updates-webarx' ];
 		foreach ( $tasks as $task ) {
 			wp_clear_scheduled_hook( $task );
 		}
 
 		// Cleanup the .htaccess file.
 		$this->plugin->htaccess->cleanup_htaccess_file();
+
+		// Remove the mu-plugin file if it exists.
+		if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' )) {
+			wp_delete_file( WPMU_PLUGIN_DIR . '/patchstack.php' );
+		}
 	}
 
 	/**
@@ -318,10 +356,10 @@ class P_Activation extends P_Core {
 			if ( ! $api_result ) {
 				update_option( 'patchstack_clientid', $tmp_id );
 				$this->set_secret_key( $tmp_key );
-				return array(
+				return [
 					'result'  => 'error',
 					'message' => 'Cannot activate license!',
-				);
+				];
 			}
 
 			// If we have an access token, tell our API that the firewall is activated
@@ -337,23 +375,24 @@ class P_Activation extends P_Core {
 					$this->header();
 				}
 
-				$this->plugin->api->update_firewall_status( array( 'status' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ) );
-				$this->plugin->api->update_url( array( 'plugin_url' => get_option( 'siteurl' ) ) );
+				$this->plugin->api->update_firewall_status( [ 'status' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ] );
+				$this->plugin->api->update_url( [ 'plugin_url' => get_option( 'siteurl' ) ] );
+				$this->plugin->api->ping();
 			}
-			return array(
+			return [
 				'result'  => 'success',
 				'message' => 'License activated!',
-			);
+			];
 		}
 
 		// Deactivate the license.
 		if ( $action == 'deactivate' ) {
 			update_option( 'patchstack_api_token', '' );
 			update_option( 'patchstack_license_activated', '0' );
-			return array(
+			return [
 				'result'  => 'success',
 				'message' => 'License deactivated!',
-			);
+			];
 		}
 	}
 
@@ -375,21 +414,21 @@ class P_Activation extends P_Core {
 			// Tell our API.
 			wp_remote_request(
 				$this->plugin->api_url . '/api/header',
-				array(
+				[
 					'method'      => 'POST',
 					'timeout'     => 60,
 					'redirection' => 5,
 					'httpversion' => '1.0',
 					'blocking'    => true,
-					'headers'     => array(
+					'headers'     => [
 						'Source-Host'   => get_site_url(),
-					),
-					'body'        => array(
+					],
+					'body'        => [
 						'token' => $ott,
 						'url' => get_site_url()
-					),
-					'cookies'     => array(),
-				)
+					],
+					'cookies'     => [],
+				]
 			);
 		}
 	}

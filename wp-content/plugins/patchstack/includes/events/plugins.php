@@ -16,9 +16,9 @@ class P_Event_Plugins extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'activated_plugin', array( &$this, 'activated_plugin' ) );
-		add_action( 'deactivated_plugin', array( &$this, 'deactivated_plugin' ) );
-		add_action( 'upgrader_process_complete', array( &$this, 'plugin_install_or_update' ), 10, 2 );
+		add_action( 'activated_plugin', [ &$this, 'activated_plugin' ] );
+		add_action( 'deactivated_plugin', [ &$this, 'deactivated_plugin' ] );
+		add_action( 'upgrader_process_complete', [ &$this, 'plugin_install_or_update' ], 10, 2 );
 	}
 
 	/**
@@ -38,12 +38,12 @@ class P_Event_Plugins extends P_Event_Log {
 		}
 
 		$this->insert(
-			array(
+			[
 				'action'      => $action,
 				'object'      => 'plugin',
 				'object_id'   => 0,
 				'object_name' => esc_html( $plugin_name ),
-			)
+			]
 		);
 	}
 
@@ -100,7 +100,7 @@ class P_Event_Plugins extends P_Event_Log {
 					return;
 				}
 
-				$slugs = array( $upgrader->skin->plugin );
+				$slugs = [ $upgrader->skin->plugin ];
 			}
 
 			// Loop through all updated plugins.

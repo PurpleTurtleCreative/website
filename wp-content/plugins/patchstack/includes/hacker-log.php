@@ -19,8 +19,8 @@ class P_Hacker_Log extends P_Core {
 	 */
 	public function __construct( $core ) {
 		parent::__construct( $core );
-		add_filter( 'query_vars', array( $this, 'query_vars' ) );
-		add_action( 'parse_request', array( $this, 'parse_request' ) );
+		add_filter( 'query_vars', [ $this, 'query_vars' ] );
+		add_action( 'parse_request', [ $this, 'parse_request' ] );
 	}
 
 	/**

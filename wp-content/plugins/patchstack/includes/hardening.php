@@ -20,7 +20,7 @@ class P_Hardening extends P_Core {
 		parent::__construct( $core );
 
 		// Auto update plugins.
-		add_action( 'patchstack_update_plugins', array( $this, 'update_vulnerable_plugins' ) );
+		add_action( 'patchstack_update_plugins', [ $this, 'update_vulnerable_plugins' ] );
 
 		// The hardening features can only be used on an activated license.
 		if ( ! $this->license_is_active() || $this->get_option( 'patchstack_license_free', 0 ) == 1 || $this->is_community() ) {
@@ -33,17 +33,17 @@ class P_Hardening extends P_Core {
 		}
 
 		// Set security headers
-		add_filter( 'wp_headers', array( $this, 'set_security_headers' ), 10, 1 );
+		add_filter( 'wp_headers', [ $this, 'set_security_headers' ], 10, 1 );
 
 		// When country blocking is set.
-		if ( $this->get_option( 'patchstack_geo_block_enabled', false ) && ! empty( $this->get_option( 'patchstack_geo_block_countries', array() ) ) ) {
+		if ( $this->get_option( 'patchstack_geo_block_enabled', false ) && ! empty( $this->get_option( 'patchstack_geo_block_countries', [] ) ) ) {
 			add_action( 'init', array( $this, 'geo_block_check' ), ~PHP_INT_MAX );
 		}
 
 		// Apply comment captcha?
 		if ( $this->get_option( 'patchstack_captcha_on_comments', 0 ) && ! is_user_logged_in() ) {
-			add_action( 'comment_form_after_fields', array( $this, 'captcha_display' ) );
-			add_filter( 'preprocess_comment', array( $this, 'verify_recaptcha' ) );
+			add_action( 'comment_form_after_fields', [ $this, 'captcha_display' ] );
+			add_filter( 'preprocess_comment', [ $this, 'verify_recaptcha' ] );
 		}
 
 		// Disable the application passwords feature?
@@ -58,28 +58,28 @@ class P_Hardening extends P_Core {
 
 		// Block unauthorized wp-json requests?
 		if ( $this->get_option( 'patchstack_json_is_disabled', false ) ) {
-			add_filter( 'rest_authentication_errors', array( $this, 'disable_wpjson' ) );
+			add_filter( 'rest_authentication_errors', [ $this, 'disable_wpjson' ] );
 		}
 
 		// Prevent user enumeration?
 		if ( $this->get_option( 'patchstack_userenum' ) ) {
-			add_action( 'init', array( $this, 'stop_user_enum' ), 1 );
+			add_action( 'init', [ $this, 'stop_user_enum' ], 1 );
 		}
 
 		// Attempt to hide the WordPress version?
 		if ( $this->get_option( 'patchstack_hidewpversion' ) ) {
 			remove_action( 'wp_head', 'wp_generator' );
-			add_filter( 'the_generator', array( $this, 'remove_generator' ) );
+			add_filter( 'the_generator', [ $this, 'remove_generator' ] );
 		}
 
 		// Block email registration patterns?
 		if ( $this->get_option( 'patchstack_register_email_blacklist', '' ) != '' ) {
-			add_filter( 'registration_errors', array( $this, 'check_email_pattern' ), 1, 3 );
-			add_filter( 'wpmu_validate_user_signup', array( $this, 'check_email_pattern_wpmu' ), 1, 1 );
+			add_filter( 'registration_errors', [ $this, 'check_email_pattern' ], 1, 3 );
+			add_filter( 'wpmu_validate_user_signup', [ $this, 'check_email_pattern_wpmu' ], 1, 1 );
 		}
 
 		// Auto update software?
-		$update = get_site_option( 'patchstack_auto_update', array() );
+		$update = get_site_option( 'patchstack_auto_update', [] );
 		if ( is_array( $update ) ) {
 			foreach ( $update as $type ) {
 				if ( $type != 'vulnerable' ) {
@@ -98,13 +98,13 @@ class P_Hardening extends P_Core {
 	 */
 	public function update_vulnerable_plugins() {
 		// Is the auto update setting for vulnerable plugins enabled?
-		$update = get_site_option( 'patchstack_auto_update', array() );
+		$update = get_site_option( 'patchstack_auto_update', [] );
 		if ( ! is_array( $update ) || ! in_array( 'vulnerable', $update ) ) {
 			return;
 		}
 
 		// Do we even have any vulnerable plugins to auto update?
-		$plugins = get_site_option( 'patchstack_vulnerable_plugins', array() );
+		$plugins = get_site_option( 'patchstack_vulnerable_plugins', [] );
 		if ( ! is_array( $plugins ) || count( $plugins ) == 0 ) {
 			return;
 		}
@@ -125,7 +125,7 @@ class P_Hardening extends P_Core {
 		$all_plugins = get_plugins();
 
 		// New array with all available plugins and the ones we want to upgrade.
-		$upgrade = array();
+		$upgrade = [];
 		foreach ( $all_plugins as $path => $data ) {
 			if ( in_array( $path, $plugins ) ) {
 				array_push( $upgrade, $path );
@@ -137,7 +137,7 @@ class P_Hardening extends P_Core {
 		$upgrader->bulk_upgrade( $upgrade );
 
 		// Reset the option that holds the vulnerable plugins.
-		update_site_option( 'patchstack_vulnerable_plugins', array() );
+		update_site_option( 'patchstack_vulnerable_plugins', [] );
 
 		// Resend the sofware data to the API.
 		do_action( 'patchstack_send_software_data' );
@@ -149,7 +149,7 @@ class P_Hardening extends P_Core {
 	 * @return void
 	 */
 	public function geo_block_check() {
-		$countries = $this->get_option( 'patchstack_geo_block_countries', array() );
+		$countries = $this->get_option( 'patchstack_geo_block_countries', [] );
 		$ip        = $this->get_ip();
 
 		// Don't block Patchstack.
@@ -192,7 +192,7 @@ class P_Hardening extends P_Core {
 	public function disable_wpjson() {
 		// Some default exceptions.
 		$path = parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH );
-		$whitelists = array( '/wp-json/contact-form-7/' );
+		$whitelists = [ '/wp-json/contact-form-7/' ];
 		foreach ( $whitelists as $whitelist ) {
 			if ( stripos( $path, $whitelist ) !== false ) {
 				return;
@@ -202,7 +202,7 @@ class P_Hardening extends P_Core {
 		// Block unauthorized users.
 		if ( ! is_user_logged_in() ) {
 			$msg = apply_filters( 'disable_wp_rest_api_error', __( 'The WP REST API cannot be accessed by unauthorized users.', 'disable-wp-rest-api' ) );
-			return new WP_Error( 'rest_authorization_required', $msg, array( 'status' => rest_authorization_required_code() ) );
+			return new WP_Error( 'rest_authorization_required', $msg, [ 'status' => rest_authorization_required_code() ] );
 		}
 	}
 
@@ -286,31 +286,31 @@ class P_Hardening extends P_Core {
 		}
 
 		if ( ! $secret_key || ! $site_key ) {
-			return array(
+			return [
 				'response' => false,
 				'reason'   => 'ERROR_NO_KEYS',
-			);
+			];
 		}
 
 		if ( ! isset( $_POST['g-recaptcha-response'] ) || empty( $_POST['g-recaptcha-response'] ) ) {
-			return array(
+			return [
 				'response' => false,
 				'reason'   => 'RECAPTCHA_EMPTY_RESPONSE',
-			);
+			];
 		}
 
 		$response = $this->get_captcha_response( $secret_key );
 		if ( isset( $response['success'] ) && ! empty( $response['success'] ) ) {
-			return array(
+			return [
 				'response' => true,
 				'reason'   => '',
-			);
+			];
 		}
 
-		return array(
+		return [
 			'response' => false,
 			'reason'   => 'VERIFICATION_FAILED',
-		);
+		];
 	}
 
 	/**
@@ -320,13 +320,13 @@ class P_Hardening extends P_Core {
 	 * @return array
 	 */
 	public function get_captcha_response( $privatekey ) {
-		$args = array(
-			'body'      => array(
+		$args = [
+			'body'      => [
 				'secret'   => $privatekey,
 				'response' => $_POST['g-recaptcha-response'],
-			),
+			],
 			'sslverify' => false,
-		);
+		];
 		$resp = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', $args );
 		return json_decode( wp_remote_retrieve_body( $resp ), true );
 	}

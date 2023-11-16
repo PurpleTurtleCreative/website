@@ -16,12 +16,12 @@ class P_Event_Users extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'wp_login', array( &$this, 'login' ), 10, 2 );
-		add_action( 'delete_user', array( &$this, 'deleteUser' ) );
-		add_action( 'user_register', array( &$this, 'register' ) );
-		add_action( 'profile_update', array( &$this, 'profileUpdate' ) );
-		add_action( 'validate_password_reset', array( &$this, 'resetPassword' ), 10, 2 );
-		add_filter( 'wp_login_failed', array( &$this, 'wrongPassword' ) );
+		add_action( 'wp_login', [ &$this, 'login' ], 10, 2 );
+		add_action( 'delete_user', [ &$this, 'deleteUser' ] );
+		add_action( 'user_register', [ &$this, 'register' ] );
+		add_action( 'profile_update', [ &$this, 'profileUpdate' ] );
+		add_action( 'validate_password_reset', [ &$this, 'resetPassword' ], 10, 2 );
+		add_filter( 'wp_login_failed', [ &$this, 'wrongPassword' ] );
 	}
 
 	/**
@@ -33,12 +33,12 @@ class P_Event_Users extends P_Event_Log {
 	 */
 	public function login( $user_login, $user ) {
 		$this->insert(
-			array(
+			[
 				'action'      => 'logged in',
 				'object'      => 'user',
 				'object_id'   => $user->ID,
 				'object_name' => esc_html( $user->user_nicename ),
-			)
+			]
 		);
 	}
 
@@ -51,12 +51,12 @@ class P_Event_Users extends P_Event_Log {
 	public function register( $user_id ) {
 		$user = get_user_by( 'id', $user_id );
 		$this->insert(
-			array(
+			[
 				'action'      => 'registered',
 				'object'      => 'user',
 				'object_id'   => $user->ID,
 				'object_name' => esc_html( $user->user_nicename ),
-			)
+			]
 		);
 	}
 
@@ -69,12 +69,12 @@ class P_Event_Users extends P_Event_Log {
 	public function deleteUser( $user_id ) {
 		$user = get_user_by( 'id', $user_id );
 		$this->insert(
-			array(
+			[
 				'action'      => 'deleted',
 				'object'      => 'user',
 				'object_id'   => $user->ID,
 				'object_name' => esc_html( $user->user_nicename ),
-			)
+			]
 		);
 	}
 
@@ -87,12 +87,12 @@ class P_Event_Users extends P_Event_Log {
 	public function profileUpdate( $user_id ) {
 		$user = get_user_by( 'id', $user_id );
 		$this->insert(
-			array(
+			[
 				'action'      => 'updated',
 				'object'      => 'user',
 				'object_id'   => $user->ID,
 				'object_name' => esc_html( $user->user_nicename ),
-			)
+			]
 		);
 	}
 
@@ -104,12 +104,12 @@ class P_Event_Users extends P_Event_Log {
 	 */
 	public function wrongPassword( $username ) {
 		$this->insert(
-			array(
+			[
 				'action'      => 'failed login',
 				'object'      => 'user',
 				'object_id'   => 0,
 				'object_name' => esc_html( $username ),
-			)
+			]
 		);
 	}
 
@@ -123,12 +123,12 @@ class P_Event_Users extends P_Event_Log {
 	public function resetPassword( $errors, $user ) {
 		if ( is_a( $user, 'WP_User' ) ) {
 			$this->insert(
-				array(
+				[
 					'action'      => 'password reset',
 					'object'      => 'user',
 					'object_id'   => 0,
 					'object_name' => esc_html( $user->user_login ),
-				)
+				]
 			);
 		}
 	}

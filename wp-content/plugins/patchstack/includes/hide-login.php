@@ -33,8 +33,8 @@ class P_Hide_Login extends P_Core {
 		}
 
 		// Register the filters and actions for the functionality.
-		add_action( 'init', array( $this, 'init' ) );
-		add_action( 'wp_logout', array( $this, 'wp_logout' ) );
+		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'wp_logout', [ $this, 'wp_logout' ] );
 	}
 
 	/**
@@ -81,12 +81,12 @@ class P_Hide_Login extends P_Core {
 	 */
 	private function is_whitelisted() {
 		// Process the whitelist, and remove old ones.
-		$whitelist = get_site_option( 'patchstack_rename_wp_login_whitelist', array() );
-		$new_whitelist = array();
+		$whitelist = get_site_option( 'patchstack_rename_wp_login_whitelist', [] );
+		$new_whitelist = [];
 		$allow = false;
 
 		// Only continue if there are actually any whitelist entries.
-		if ( is_array( $whitelist ) && count( $whitelist ) != 0 ) {
+		if ( is_array( $whitelist ) && count( $whitelist ) != 0 ){
 			$ip = $this->get_ip();
 			foreach ( $whitelist as $entry ) {
 
@@ -113,8 +113,8 @@ class P_Hide_Login extends P_Core {
 	 * @return void
 	 */
 	private function whitelist_ip() {
-		$whitelist = get_site_option( 'patchstack_rename_wp_login_whitelist', array() );
-		$new_whitelist = array();
+		$whitelist = get_site_option( 'patchstack_rename_wp_login_whitelist', [] );
+		$new_whitelist = [];
 
 		// If the IP address is already whitelisted, reset the timestamp.
 		if ( is_array( $whitelist ) && count( $whitelist ) != 0 ) {
@@ -123,7 +123,7 @@ class P_Hide_Login extends P_Core {
 			foreach ( $whitelist as $entry ) {
 				// Determine if we should extend the whitelist time or ignore if already whitelisted.
 				if ( $ip === $entry[0] ) {
-					$new_whitelist[] = array( $ip, time() );
+					$new_whitelist[] = [ $ip, time() ];
 					$whitelisted = true;
 				} else {
 					$new_whitelist[] = $entry;
@@ -132,12 +132,12 @@ class P_Hide_Login extends P_Core {
 
 			// Whitelist the IP address.
 			if ( ! $whitelisted ) {
-				$new_whitelist[] = array( $ip, time() );
+				$new_whitelist[] = [ $ip, time() ];
 			}
 
 			update_site_option( 'patchstack_rename_wp_login_whitelist', $new_whitelist );
 		} else {
-			update_site_option( 'patchstack_rename_wp_login_whitelist', array( array( $this->get_ip(), time() ) ) );
+			update_site_option( 'patchstack_rename_wp_login_whitelist', [ [ $this->get_ip(), time() ] ] );
 		}
 	}
 }

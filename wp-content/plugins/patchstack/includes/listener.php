@@ -21,7 +21,7 @@ class P_Listener extends P_Core {
 
 		// Only hook into the action if the authentication is set and valid.
 		if ( isset( $_POST['webarx_secret'] ) && $this->verifyToken( $_POST['webarx_secret'] ) ) {
-			add_action( 'init', array( $this, 'handleRequest' ) );
+			add_action( 'init', [ $this, 'handleRequest' ] );
 		}
 
 		// OTT action.
@@ -40,7 +40,7 @@ class P_Listener extends P_Core {
 	 */
 	public function handleRequest() {
 		// Loop through all possible actions.
-		foreach ( array(
+		foreach ( [
 			'webarx_remote_users'      => 'listUsers',
 			'webarx_firewall_switch'   => 'switchFirewallStatus',
 			'webarx_wordpress_upgrade' => 'wordpressCoreUpgrade',
@@ -61,7 +61,7 @@ class P_Listener extends P_Core {
 			'webarx_debug_info'        => 'debugInfo',
 			'webarx_set_ip_header'	   => 'setIpHeader',
 			'webarx_refresh_license'   => 'refreshLicense'
-		) as $key => $action ) {
+		] as $key => $action ) {
 			// Special case for Patchstack plugin upgrade.
 			if ( isset( $_POST[ $key ] ) ) {
 				$this->$action();
@@ -96,10 +96,10 @@ class P_Listener extends P_Core {
 	 */
 	private function returnResults( $thing, $success = '', $fail = '' ) {
 		if ( ! is_wp_error( $thing ) && $thing !== false ) {
-			wp_send_json( array( 'success' => $success ) );
+			wp_send_json( [ 'success' => $success ] );
 		}
 
-		wp_send_json( array( 'error' => $fail ) );
+		wp_send_json( [ 'error' => $fail ] );
 	}
 
 	/**
@@ -109,11 +109,7 @@ class P_Listener extends P_Core {
 	 */
 	private function sendPing() {
 		do_action( 'patchstack_send_ping' );
-		wp_send_json(
-			array(
-				'firewall' => $this->get_option( 'patchstack_basic_firewall' ) == 1,
-			)
-		);
+		wp_send_json( [ 'firewall' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ] );
 	}
 
 	/**
@@ -123,10 +119,10 @@ class P_Listener extends P_Core {
 	 */
 	private function listUsers() {
 		// Only fetch data we actually need.
-		$users = get_users( array( 'role__in' => array( 'administrator', 'editor', 'author', 'contributor' ) ) );
+		$users = get_users( [ 'role__in' => [ 'administrator', 'editor', 'author', 'contributor' ] ] );
 		$roles = wp_roles();
 		$roles = $roles->get_names();
-		$data  = array();
+		$data  = [];
 
 		// Loop through all users.
 		foreach ( $users as $user ) {
@@ -144,16 +140,16 @@ class P_Listener extends P_Core {
 			// Push to array that we will eventually output.
 			array_push(
 				$data,
-				array(
+				[
 					'id'       => $user->data->ID,
 					'username' => $user->data->user_login,
 					'email'    => $user->data->user_email,
 					'roles'    => substr( $text, 0, -2 ),
-				)
+				]
 			);
 		}
 
-		wp_send_json( array( 'users' => $data ) );
+		wp_send_json( [ 'users' => $data ] );
 	}
 
 	/**
@@ -196,11 +192,11 @@ class P_Listener extends P_Core {
 		$upgrader = new Core_Upgrader( $skin );
 		$result   = $upgrader->upgrade(
 			$core->updates[0],
-			array(
+			[
 				'attempt_rollback'             => true,
 				'do_rollback'                  => true,
 				'allow_relaxed_file_ownership' => true,
-			)
+			]
 		);
 		if ( ! $result ) {
 			$this->returnResults( false, null, 'The WordPress core could not be upgraded, most likely because of invalid filesystem connection information.' );
@@ -235,7 +231,7 @@ class P_Listener extends P_Core {
 		// Upgrade the theme.
 		$skin     = new Automatic_Upgrader_Skin();
 		$upgrader = new Theme_Upgrader( $skin );
-		$result   = $upgrader->upgrade( $theme, array( 'allow_relaxed_file_ownership' => true ) );
+		$result   = $upgrader->upgrade( $theme, [ 'allow_relaxed_file_ownership' => true ] );
 		if ( ! $result ) {
 			$this->returnResults( false, null, 'The theme could not be upgraded, most likely because of invalid filesystem connection information.' );
 		}
@@ -269,7 +265,7 @@ class P_Listener extends P_Core {
 		if ( file_exists( ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php' ) ) {
 			@include_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
 		}
-		@include_once ABSPATH . 'wp-admin/class-automatic-upgrader-skin.php';
+		@include_once ABSPATH . 'wp-admin/includes/class-automatic-upgrader-skin.php';
 
 		@include_once ABSPATH . 'wp-admin/includes/plugin.php';
 		@include_once ABSPATH . 'wp-admin/includes/misc.php';
@@ -279,7 +275,7 @@ class P_Listener extends P_Core {
 		$all_plugins = get_plugins();
 
 		// New array with all available plugins and the ones we want to upgrade.
-		$upgrade = array();
+		$upgrade = [];
 		foreach ( $all_plugins as $path => $data ) {
 			$t = explode( '/', $path );
 			if ( in_array( $t[0], $plugins ) ) {
@@ -295,7 +291,7 @@ class P_Listener extends P_Core {
 		// Upgrade the plugins.
 		$skin     = new Automatic_Upgrader_Skin();
 		$upgrader = new Plugin_Upgrader( $skin );
-		$result   = $upgrader->bulk_upgrade( $upgrade, array( 'allow_relaxed_file_ownership' => true ) );
+		$result   = $upgrader->bulk_upgrade( $upgrade, [ 'allow_relaxed_file_ownership' => true ] );
 		if ( ! $result ) {
 			$this->returnResults( false, null, 'The plugins could not be upgraded, most likely because of invalid filesystem connection information.' );
 		}
@@ -329,7 +325,7 @@ class P_Listener extends P_Core {
 		$all_plugins = get_plugins();
 
 		// New array with all available plugins and the ones we want to toggle.
-		$toggle = array();
+		$toggle = [];
 		foreach ( $all_plugins as $path => $data ) {
 			$t = explode( '/', $path );
 
@@ -392,7 +388,7 @@ class P_Listener extends P_Core {
 		$all_plugins = get_plugins();
 
 		// New array with all available plugins and the ones we want to toggle.
-		$delete = array();
+		$delete = [];
 		foreach ( $all_plugins as $path => $data ) {
 			$t = explode( '/', $path );
 
@@ -434,7 +430,7 @@ class P_Listener extends P_Core {
 		}
 
 		// Loop through the options and update their value.
-		$exclude_filter = array( 'patchstack_firewall_custom_rules', 'patchstack_whitelist' );
+		$exclude_filter = ['patchstack_firewall_custom_rules'];
 		foreach ( $options as $key => $value ) {
 			if ( array_key_exists( $key, $this->plugin->admin_options->options ) ) {
 
@@ -459,20 +455,20 @@ class P_Listener extends P_Core {
 		// Get all options and filter by the Patchstack prefix.
 		global $wpdb;
 		$options  = $wpdb->get_results( "SELECT option_name, option_value FROM " . $wpdb->options . " WHERE option_name LIKE 'patchstack_%'" );
-		$settings = array();
-		$found = array();
+		$settings = [];
+		$found = [];
 		foreach ( $options as $option ) {
 			array_push( $found, $option->option_name );
 			$settings[] = (array) $option;
 		}
 
 		// Check for potential missing options and add them to the output.
-		foreach( array( 'patchstack_firewall_custom_rules' ) as $slug ) {
+		foreach( [ 'patchstack_firewall_custom_rules' ] as $slug ) {
 			if ( ! isset ( $found[$slug] ) ) {
-				$settings[] = array(
+				$settings[] = [
 					'option_name'  => $slug,
 					'option_value' => $this->get_option( $slug, '' )
-				);
+				];
 			}
 		}
 
@@ -480,20 +476,20 @@ class P_Listener extends P_Core {
 		// User roles available for whitelisting.
 		$roles           = wp_roles();
 		$roles           = $roles->get_names();
-		$roles_available = array();
+		$roles_available = [];
 		foreach ( $roles as $key => $role ) {
 			$roles_available[ $key ] = $role;
 		}
-		$settings[] = array(
+		$settings[] = [
 			'option_name'  => 'patchstack_basic_firewall_roles_available',
 			'option_value' => serialize( $roles_available ),
-		);
+		];
 
 		// Whether or not auto-updates are disabled in the code.
-		$settings[] = array(
+		$settings[] = [
 			'option_name'  => 'patchstack_auto_updates_disabled',
 			'option_value' => defined( 'AUTOMATIC_UPDATER_DISABLED' ) && AUTOMATIC_UPDATER_DISABLED,
-		);
+		];
 
 		wp_send_json( $settings );
 	}
@@ -525,11 +521,11 @@ class P_Listener extends P_Core {
 
 		global $wpdb;
 		$results = $wpdb->get_results(
-			$wpdb->prepare( 'SELECT ip FROM ' . $wpdb->prefix . "patchstack_firewall_log WHERE apply_ban = 1 AND log_date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE) GROUP BY ip", array( $time ) ),
+			$wpdb->prepare( 'SELECT ip FROM ' . $wpdb->prefix . "patchstack_firewall_log WHERE apply_ban = 1 AND log_date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE) GROUP BY ip", [ $time ] ),
 			OBJECT
 		);
 
-		$out = array();
+		$out = [];
 		foreach ( $results as $result ) {
 			if ( isset( $result->ip ) ) {
 				array_push( $out, $result->ip );
@@ -550,7 +546,7 @@ class P_Listener extends P_Core {
 		}
 
 		global $wpdb;
-		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'patchstack_firewall_log SET apply_ban = 0 WHERE ip = %s', array( $_POST['webarx_ip'] ) ) );
+		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'patchstack_firewall_log SET apply_ban = 0 WHERE ip = %s', [ $_POST['webarx_ip'] ] ) );
 		$this->returnResults( null, 'The IP has been unbanned.' );
 	}
 
@@ -593,12 +589,12 @@ class P_Listener extends P_Core {
 		// Check if X failed login attempts were made.
 		global $wpdb;
 		$results = $wpdb->get_results(
-			$wpdb->prepare( 'SELECT id, ip, date FROM ' . $wpdb->prefix . "patchstack_event_log WHERE action = 'failed login' AND date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE) GROUP BY ip HAVING COUNT(ip) >= %d ORDER BY date DESC", array( $time, $this->get_option( 'patchstack_anti_bruteforce_attempts', 10 ) ) ),
+			$wpdb->prepare( 'SELECT id, ip, date FROM ' . $wpdb->prefix . "patchstack_event_log WHERE action = 'failed login' AND date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE) GROUP BY ip HAVING COUNT(ip) >= %d ORDER BY date DESC", [ $time, $this->get_option( 'patchstack_anti_bruteforce_attempts', 10 ) ] ),
 			OBJECT
 		);
 
 		// Return the banned IP addresses.
-		wp_send_json( array( 'banned' => $results ) );
+		wp_send_json( [ 'banned' => $results ] );
 	}
 
 	/**
@@ -617,13 +613,13 @@ class P_Listener extends P_Core {
 		if ( $_POST['type'] == 'unblock' ) {
 			// First get the IP address to unblock.
 			$result = $wpdb->get_results(
-				$wpdb->prepare( 'SELECT ip FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE id = %d', array( (int) $_POST['id'] ) )
+				$wpdb->prepare( 'SELECT ip FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE id = %d', [ (int) $_POST['id'] ] )
 			);
 
 			// Unblock the IP address.
 			if ( isset( $result[0], $result[0]->ip ) && filter_var( $result[0]->ip, FILTER_VALIDATE_IP ) ) {
 				$wpdb->query(
-					$wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE ip = %s', array( $result[0]->ip ) )
+					$wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE ip = %s', [ $result[0]->ip ] )
 				);
 			}
 		}
@@ -632,14 +628,14 @@ class P_Listener extends P_Core {
 		if ( $_POST['type'] == 'unblock_whitelist' ) {
 			// First get the IP address to whitelist.
 			$result = $wpdb->get_results(
-				$wpdb->prepare( 'SELECT ip FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE id = %d', array( (int) $_POST['id'] ) )
+				$wpdb->prepare( 'SELECT ip FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE id = %d', [ (int) $_POST['id'] ] )
 			);
 
 			// Whitelist and unblock the IP address.
 			if ( isset( $result[0], $result[0]->ip ) && filter_var( $result[0]->ip, FILTER_VALIDATE_IP )  ) {
 				update_option( 'patchstack_login_whitelist', $this->get_option( 'patchstack_login_whitelist', '' ) . "\n" . $result[0]->ip );
 				$wpdb->query(
-					$wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE ip = %s', array( $result[0]->ip ) )
+					$wpdb->prepare( 'DELETE FROM ' . $wpdb->prefix . 'patchstack_event_log WHERE ip = %s', [ $result[0]->ip ] )
 				);
 			}
 		}
@@ -653,10 +649,10 @@ class P_Listener extends P_Core {
 	 * @return void
 	 */
 	private function debugInfo() {
-		$debug = array(
+		$debug = [
 			'server' 	=> $_SERVER,
 			'php' 		=> phpversion()
-		);
+		];
 
 		wp_send_json( $debug );
 	}
@@ -671,7 +667,7 @@ class P_Listener extends P_Core {
 			return;
 		}
 
-		$ips = ! is_array ( $_POST['ip'] ) ? array( $_POST['ip'] ) : $_POST['ip'];
+		$ips = ! is_array ( $_POST['ip'] ) ? [ $_POST['ip'] ] : $_POST['ip'];
 
 		// REMOTE_ADDR?
 		foreach ( $ips as $ip ) {
@@ -679,19 +675,19 @@ class P_Listener extends P_Core {
 				update_option( 'patchstack_firewall_ip_header', 'REMOTE_ADDR' );
 				update_option( 'patchstack_ip_header_computed', 1 );
 				update_option( 'patchstack_ott_action', '' );
-				wp_send_json( array( 'success' => true, 'header' => 'REMOTE_ADDR' ) );
+				wp_send_json( [ 'success' => true, 'header' => 'REMOTE_ADDR' ] );
 			}
 		}
 
 		// IP address headers in order of priority.
-		$priority = array( 'REMOTE_ADDR', 'HTTP_CF_CONNECTING_IP', 'HTTP_X_SUCURI_CLIENTIP',  'HTTP_X_REAL_IP', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'SUCURI_RIP' );
+		$priority = [ 'REMOTE_ADDR', 'HTTP_CF_CONNECTING_IP', 'HTTP_X_SUCURI_CLIENTIP',  'HTTP_X_REAL_IP', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'HTTP_X_FORWARDED', 'HTTP_FORWARDED_FOR', 'HTTP_FORWARDED', 'SUCURI_RIP' ];
 		foreach ( $ips as $ip ) {
 			foreach ( $priority as $header ) {
 				if ( isset( $_SERVER[ $header ] ) && $_SERVER[ $header ] == $ip ) {
 					update_option( 'patchstack_firewall_ip_header', $header );
 					update_option( 'patchstack_ip_header_computed', 1 );
 					update_option( 'patchstack_ott_action', '' );
-					wp_send_json( array( 'success' => true,  'header' => $header ) );
+					wp_send_json( [ 'success' => true,  'header' => $header ] );
 				}
 			}
 		}
@@ -703,13 +699,13 @@ class P_Listener extends P_Core {
 					update_option( 'patchstack_firewall_ip_header', $key );
 					update_option( 'patchstack_ip_header_computed', 1 );
 					update_option( 'patchstack_ott_action', '' );
-					wp_send_json( array( 'success' => true,  'header' => $key ) );
+					wp_send_json( [ 'success' => true,  'header' => $key ] );
 				}
 			}
 		}
 
 		update_option( 'patchstack_ott_action', '' );
-		wp_send_json( array( 'success' => false, 'header' => 'unknown' ) );
+		wp_send_json( [ 'success' => false, 'header' => 'unknown' ] );
 	}
 
 	/**

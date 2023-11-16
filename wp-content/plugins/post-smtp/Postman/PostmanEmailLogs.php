@@ -61,6 +61,15 @@ class PostmanEmailLogs {
             $msg = $log['original_message'];
             $msg = preg_replace( "/<script\b[^>]*>(.*?)<\/script>/s", '', $msg );
 
+            // Strip <xml> and comment tags.
+            $msg = preg_replace( '/<xml\b[^>]*>(.*?)<\/xml>/is', '', $msg );
+            $msg = preg_replace( '/<!--(.*?)-->/', '', $msg );
+
+            $allowed_html = wp_kses_allowed_html( 'post' );
+            $allowed_html['style'][''] = true;
+
+            $msg = wp_kses( $msg, $allowed_html );
+
             echo '<pre>' . $msg . '</pre>';
 
             die;
@@ -247,7 +256,7 @@ class PostmanEmailLogs {
      * @version 1.0.0
      */
     public function save( $data, $id = '' ) {
-
+        
         $data['time'] = !isset( $data['time'] ) ? current_time( 'timestamp' ) : $data['time'];
 
         if( !empty( $id ) ) {
@@ -673,6 +682,7 @@ class PostmanEmailLogs {
             $email_query_log = new PostmanEmailQueryLog();
             $log = $email_query_log->get_log( $id );
             $to = '';
+            $headers = '';
 
             if( $log ) {
 
@@ -688,6 +698,12 @@ class PostmanEmailLogs {
 
                 }
 
+                if( $log['original_headers'] ){
+
+					$headers = is_serialized( $log['original_headers'] ) ? unserialize( $log['original_headers'] ) : $log['original_headers'];
+
+				}
+
                 /**
                  * Fires before resending email
                  * 
@@ -697,7 +713,7 @@ class PostmanEmailLogs {
                  */
                 $attachments = apply_filters( 'post_smtp_resend_attachments', array(), $id );
 
-                $success = wp_mail( $to, $log['original_subject'], $log['original_message'], $log['original_headers'], $attachments );
+                $success = wp_mail( $to, $log['original_subject'], $log['original_message'], $headers, $attachments );
 
                 // Postman API: retrieve the result of sending this message from Postman
                 $result = apply_filters( 'postman_wp_mail_result', null );

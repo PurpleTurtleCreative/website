@@ -19,7 +19,7 @@ class P_Admin_Options extends P_Core {
 	 */
 	public function __construct( $core ) {
 		parent::__construct( $core );
-		add_action( 'admin_init', array( $this, 'settings_init' ) );
+		add_action( 'admin_init', [ $this, 'settings_init' ] );
 	}
 
 	/**
@@ -27,7 +27,7 @@ class P_Admin_Options extends P_Core {
 	 *
 	 * @var array
 	 */
-	public $options = array(
+	public $options = [
 		// Hardening options.
 		'patchstack_pluginedit'                         => 1,
 		'patchstack_userenum'                           => 1,
@@ -53,17 +53,19 @@ class P_Admin_Options extends P_Core {
 		'patchstack_prevent_default_file_access'        => 1,
 		'patchstack_register_email_blacklist'           => '',
 		'patchstack_json_is_disabled'                   => 0,
-		'patchstack_auto_update'                        => array(),
+		'patchstack_auto_update'                        => [],
 		'patchstack_application_passwords_disabled'     => 1,
 
 		// The firewall and whitelist rules.
 		'patchstack_firewall_rules'                     => '',
+		'patchstack_firewall_rules_v3'                  => '[]',
 		'patchstack_whitelist_rules'                    => '',
+		'patchstack_whitelist_rules_v3'                 => '[]',
 		'patchstack_whitelist_keys_rules'               => '',
 
 		// Firewall options.
 		'patchstack_basic_firewall'                     => 1,
-		'patchstack_basic_firewall_roles'               => array( 'administrator', 'editor', 'author', 'contributor' ),
+		'patchstack_basic_firewall_roles'               => [ 'administrator', 'editor', 'author', 'contributor' ],
 		'patchstack_firewall_ip_header'                 => '',
 		'patchstack_ip_header_computed'					=> 0,
 		'patchstack_disable_htaccess'                   => 0,
@@ -84,7 +86,7 @@ class P_Admin_Options extends P_Core {
 		'patchstack_ip_block_list'                      => '',
 		'patchstack_geo_block_enabled'                  => 0,
 		'patchstack_geo_block_inverse'                  => 0,
-		'patchstack_geo_block_countries'                => array(),
+		'patchstack_geo_block_countries'                => [],
 
 		// Cookie notice options.
 		'patchstack_enable_cookie_notice_message'		=> 0,
@@ -131,12 +133,16 @@ class P_Admin_Options extends P_Core {
 		'patchstack_eventlog_lastid'                    => 0,
 		'patchstack_ott_action'							=> '',
 		'patchstack_enc_nonce'							=> '',
+		'patchstack_managed'							=> false,
+		'patchstack_managed_text'						=> '',
+		'patchstack_latest_vulnerable'					=> [],
+		'patchstack_site_id'							=> 0,
 
 		// Admin page rename options.
 		'patchstack_mv_wp_login'                        => 0,
 		'patchstack_rename_wp_login'                    => 'swlogin',
-		'patchstack_rename_wp_login_whitelist'			=> array()
-	);
+		'patchstack_rename_wp_login_whitelist'			=> []
+	];
 
 	/**
 	 * Register all the options, if not set already.
@@ -183,87 +189,87 @@ class P_Admin_Options extends P_Core {
 
 		// Hardening.
 		if ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) {
-			add_settings_field( 'patchstack_rm_readme', __( 'Remove readme.html', 'patchstack' ), array( $this, 'patchstack_rm_readme_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-			add_settings_field( 'patchstack_auto_update', __( 'Auto Update Software', 'patchstack' ), array( $this, 'patchstack_auto_update_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+			add_settings_field( 'patchstack_rm_readme', __( 'Remove readme.html', 'patchstack' ), [ $this, 'patchstack_rm_readme_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+			add_settings_field( 'patchstack_auto_update', __( 'Auto Update Software', 'patchstack' ), [ $this, 'patchstack_auto_update_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
 		}
-		add_settings_field( 'patchstack_basicscanblock', __( 'Stop readme.txt Scans', 'patchstack' ), array( $this, 'patchstack_basicscanblock_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_pluginedit', __( 'Disable theme editor', 'patchstack' ), array( $this, 'patchstack_pluginedit_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_userenum', __( 'Disable user enumeration', 'patchstack' ), array( $this, 'patchstack_userenum_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_hidewpversion', __( 'Hide WordPress version', 'patchstack' ), array( $this, 'patchstack_hidewpversion_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_activity_log_is_enabled', __( 'Enable activity log', 'patchstack' ), array( $this, 'patchstack_activity_log_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_activity_log_failed_logins', __( 'Log failed logins', 'patchstack' ), array( $this, 'patchstack_activity_log_failed_logins_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_activity_log_failed_logins_db', __( 'Upload failed logins to Patchstack', 'patchstack' ), array( $this, 'patchstack_activity_log_failed_logins_db_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_application_passwords_disabled', __( 'Block Application Passwords', 'patchstack' ), array( $this, 'patchstack_application_passwords_disabled_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_xmlrpc_is_disabled', __( 'Restrict XML-RPC Access', 'patchstack' ), array( $this, 'patchstack_xmlrpc_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_json_is_disabled', __( 'Restrict WP REST API Access', 'patchstack' ), array( $this, 'patchstack_json_is_disabled_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_register_email_blacklist', __( 'Registration Email Blacklist', 'patchstack' ), array( $this, 'patchstack_register_email_blacklist_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_basicscanblock', __( 'Stop readme.txt Scans', 'patchstack' ), [ $this, 'patchstack_basicscanblock_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_pluginedit', __( 'Disable theme editor', 'patchstack' ), [ $this, 'patchstack_pluginedit_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_userenum', __( 'Disable user enumeration', 'patchstack' ), [ $this, 'patchstack_userenum_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_hidewpversion', __( 'Hide WordPress version', 'patchstack' ), [ $this, 'patchstack_hidewpversion_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_activity_log_is_enabled', __( 'Enable activity log', 'patchstack' ), [ $this, 'patchstack_activity_log_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_activity_log_failed_logins', __( 'Log failed logins', 'patchstack' ), [ $this, 'patchstack_activity_log_failed_logins_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_activity_log_failed_logins_db', __( 'Upload failed logins to Patchstack', 'patchstack' ), [ $this, 'patchstack_activity_log_failed_logins_db_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_application_passwords_disabled', __( 'Block Application Passwords', 'patchstack' ), [ $this, 'patchstack_application_passwords_disabled_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_xmlrpc_is_disabled', __( 'Restrict XML-RPC Access', 'patchstack' ), [ $this, 'patchstack_xmlrpc_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_json_is_disabled', __( 'Restrict WP REST API Access', 'patchstack' ), [ $this, 'patchstack_json_is_disabled_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_register_email_blacklist', __( 'Registration Email Blacklist', 'patchstack' ), [ $this, 'patchstack_register_email_blacklist_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
 
 		// reCAPTCHA.
-		add_settings_field( 'patchstack_captcha_on_comments', __( 'Post comments form', 'patchstack' ), array( $this, 'patchstack_captcha_on_comments_callback' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_login_form', __( 'Login form', 'patchstack' ), array( $this, 'patchstack_captcha_login_form_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_registration_form', __( 'Registration form', 'patchstack' ), array( $this, 'patchstack_captcha_registration_form_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_reset_pwd_form', __( 'Password reset form', 'patchstack' ), array( $this, 'patchstack_captcha_reset_pwd_form_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_type', __( 'reCAPTCHA version (invisible/normal)' ), array( $this, 'patchstack_captcha_type_callback' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_public_key', __( 'Site Key ', 'patchstack' ), array( $this, 'patchstack_captcha_public_key_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_private_key', __( 'Secret Key', 'patchstack' ), array( $this, 'patchstack_captcha_private_key_input' ), 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_on_comments', __( 'Post comments form', 'patchstack' ), [ $this, 'patchstack_captcha_on_comments_callback' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_login_form', __( 'Login form', 'patchstack' ), [ $this, 'patchstack_captcha_login_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_registration_form', __( 'Registration form', 'patchstack' ), [ $this, 'patchstack_captcha_registration_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_reset_pwd_form', __( 'Password reset form', 'patchstack' ), [ $this, 'patchstack_captcha_reset_pwd_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_type', __( 'reCAPTCHA version (invisible/normal)' ), [ $this, 'patchstack_captcha_type_callback' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_public_key', __( 'Site Key ', 'patchstack' ), [ $this, 'patchstack_captcha_public_key_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_private_key', __( 'Secret Key', 'patchstack' ), [ $this, 'patchstack_captcha_private_key_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
 
 		// Firewall.
-		add_settings_field( 'patchstack_basic_firewall', __( 'Enable firewall', 'patchstack' ), array( $this, 'patchstack_basic_firewall_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
-		add_settings_field( 'patchstack_basic_firewall_roles', __( 'Firewall user role whitelist', 'patchstack' ), array( $this, 'patchstack_basic_firewall_roles_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
+		add_settings_field( 'patchstack_basic_firewall', __( 'Enable firewall', 'patchstack' ), [ $this, 'patchstack_basic_firewall_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
+		add_settings_field( 'patchstack_basic_firewall_roles', __( 'Firewall user role whitelist', 'patchstack' ), [ $this, 'patchstack_basic_firewall_roles_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
 		
 		if ( ! $is_community ) {
-			add_settings_field( 'patchstack_basic_firewall_geo_enabled', __( 'Country Blocking Enabled', 'patchstack' ), array( $this, 'patchstack_basic_firewall_geo_enabled_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
-			add_settings_field( 'patchstack_basic_firewall_geo_inverse', __( 'Inversed Check', 'patchstack' ), array( $this, 'patchstack_basic_firewall_geo_inverse_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
-			add_settings_field( 'patchstack_basic_firewall_geo_countries', __( 'Countries To Block', 'patchstack' ), array( $this, 'patchstack_basic_firewall_geo_countries_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
+			add_settings_field( 'patchstack_basic_firewall_geo_enabled', __( 'Country Blocking Enabled', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_enabled_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
+			add_settings_field( 'patchstack_basic_firewall_geo_inverse', __( 'Inversed Check', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_inverse_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
+			add_settings_field( 'patchstack_basic_firewall_geo_countries', __( 'Countries To Block', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_countries_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
 		}
 
-		add_settings_field( 'patchstack_firewall_ip_header', __( 'IP Address Header Override', 'patchstack' ), array( $this, 'patchstack_firewall_ip_header_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
+		add_settings_field( 'patchstack_firewall_ip_header', __( 'IP Address Header Override', 'patchstack' ), [ $this, 'patchstack_firewall_ip_header_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
 
 		if ( ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) && ! $is_community ) {
-			add_settings_field( 'patchstack_disable_htaccess', __( 'Disable .htaccess features', 'patchstack' ), array( $this, 'patchstack_disable_htaccess_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_add_security_headers', __( 'Add security headers', 'patchstack' ), array( $this, 'patchstack_add_security_headers_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_prevent_default_file_access', __( 'Prevent default WordPress file access', 'patchstack' ), array( $this, 'patchstack_prevent_default_file_access_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_block_debug_log_access', __( 'Block access to debug.log file', 'patchstack' ), array( $this, 'patchstack_block_debug_log_access_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_index_views', __( 'Disable index views', 'patchstack' ), array( $this, 'patchstack_index_views_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_proxy_comment_posting', __( 'Forbid proxy comment posting', 'patchstack' ), array( $this, 'patchstack_proxy_comment_posting_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_image_hotlinking', __( 'Prevent image hotlinking', 'patchstack' ), array( $this, 'patchstack_image_hotlinking_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_firewall_custom_rules', __( 'Add custom .htaccess rules here', 'patchstack' ), array( $this, 'patchstack_firewall_custom_rules_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_firewall_custom_rules_loc', __( 'Custom .htaccess rules location', 'patchstack' ), array( $this, 'patchstack_firewall_custom_rules_loc_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_disable_htaccess', __( 'Disable .htaccess features', 'patchstack' ), [ $this, 'patchstack_disable_htaccess_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_add_security_headers', __( 'Add security headers', 'patchstack' ), [ $this, 'patchstack_add_security_headers_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_prevent_default_file_access', __( 'Prevent default WordPress file access', 'patchstack' ), [ $this, 'patchstack_prevent_default_file_access_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_block_debug_log_access', __( 'Block access to debug.log file', 'patchstack' ), [ $this, 'patchstack_block_debug_log_access_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_index_views', __( 'Disable index views', 'patchstack' ), [ $this, 'patchstack_index_views_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_proxy_comment_posting', __( 'Forbid proxy comment posting', 'patchstack' ), [ $this, 'patchstack_proxy_comment_posting_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_image_hotlinking', __( 'Prevent image hotlinking', 'patchstack' ), [ $this, 'patchstack_image_hotlinking_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_firewall_custom_rules', __( 'Add custom .htaccess rules here', 'patchstack' ), [ $this, 'patchstack_firewall_custom_rules_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_firewall_custom_rules_loc', __( 'Custom .htaccess rules location', 'patchstack' ), [ $this, 'patchstack_firewall_custom_rules_loc_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
 		}
-		add_settings_field( 'patchstack_blackhole_log', __( 'Block IP List', 'patchstack' ), array( $this, 'patchstack_blackhole_log_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
-		add_settings_field( 'patchstack_whitelist', __( 'Whitelist', 'patchstack' ), array( $this, 'patchstack_whitelist_input' ), 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
+		add_settings_field( 'patchstack_blackhole_log', __( 'Block IP List', 'patchstack' ), [ $this, 'patchstack_blackhole_log_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
+		add_settings_field( 'patchstack_whitelist', __( 'Whitelist', 'patchstack' ), [ $this, 'patchstack_whitelist_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
 
 		// Login protection.
-		if ( ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) ) {
-			add_settings_field( 'patchstack_mv_wp_login', __( 'Block access to wp-login.php', 'patchstack' ), array( $this, 'patchstack_hidewplogin_input' ), 'patchstack_login_settings', 'patchstack_settings_section_login' );
-			add_settings_field( 'patchstack_rename_wp_login', '', array( $this, 'patchstack_hidewplogin_rename_input' ), 'patchstack_login_settings', 'patchstack_settings_section_login' );
+		if ( ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) && floatval( substr( phpversion(), 0, 5 ) ) > 5.5 ) {
+			add_settings_field( 'patchstack_mv_wp_login', __( 'Block access to wp-login.php', 'patchstack' ), [ $this, 'patchstack_hidewplogin_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
+			add_settings_field( 'patchstack_rename_wp_login', '', [ $this, 'patchstack_hidewplogin_rename_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
 		}
-		add_settings_field( 'patchstack_block_bruteforce_ips', __( 'Automatic brute-force IP ban', 'patchstack' ), array( $this, 'patchstack_block_bruteforce_ips_input' ), 'patchstack_login_settings', 'patchstack_settings_section_login' );
-		add_settings_field( 'patchstack_login_time_block', __( 'Logon hours', 'patchstack' ), array( $this, 'patchstack_login_time_block_input' ), 'patchstack_login_settings', 'patchstack_settings_section_login' );
-		add_settings_field( 'patchstack_login_2fa', __( 'Two Factor Authentication', 'patchstack' ), array( $this, 'patchstack_login_2fa_input' ), 'patchstack_login_settings', 'patchstack_settings_section_login_2fa' );
-		add_settings_field( 'patchstack_login_blocked', __( 'Blocked', 'patchstack' ), array( $this, 'patchstack_login_blocked_input' ), 'patchstack_login_settings', 'patchstack_settings_section_login_blocked' );
-		add_settings_field( 'patchstack_login_whitelist', __( 'Whitelist', 'patchstack' ), array( $this, 'patchstack_login_whitelist_input' ), 'patchstack_login_settings', 'patchstack_settings_section_login_whitelist' );
+		add_settings_field( 'patchstack_block_bruteforce_ips', __( 'Automatic brute-force IP ban', 'patchstack' ), [ $this, 'patchstack_block_bruteforce_ips_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
+		add_settings_field( 'patchstack_login_time_block', __( 'Logon hours', 'patchstack' ), [ $this, 'patchstack_login_time_block_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
+		add_settings_field( 'patchstack_login_2fa', __( 'Two Factor Authentication', 'patchstack' ), [ $this, 'patchstack_login_2fa_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_2fa' );
+		add_settings_field( 'patchstack_login_blocked', __( 'Blocked', 'patchstack' ), [ $this, 'patchstack_login_blocked_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_blocked' );
+		add_settings_field( 'patchstack_login_whitelist', __( 'Whitelist', 'patchstack' ), [ $this, 'patchstack_login_whitelist_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_whitelist' );
 
 		// Cookie notice.
-		add_settings_field( 'patchstack_enable_cookie_notice_message', 'Enable Cookie Notice', array( $this, 'patchstack_enable_cookie_notice_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_message', 'Enter message for displaying', array( $this, 'patchstack_cookie_notice_message_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_accept_text', 'Cookie acceptance button text', array( $this, 'patchstack_cookie_notice_accept_text_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_backgroundcolor', 'Background color (HEX)', array( $this, 'patchstack_cookie_notice_backgroundcolor_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_textcolor', 'Text color (HEX)', array( $this, 'patchstack_cookie_notice_textcolor_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_privacypolicy_enable', 'Enable Policy Link', array( $this, 'patchstack_cookie_notice_privacypolicy_enable_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_privacypolicy_text', 'Enter Policy Text', array( $this, 'patchstack_cookie_notice_privacypolicy_text_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_privacypolicy_link', 'Enter Policy Link', array( $this, 'patchstack_cookie_notice_privacypolicy_link_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_cookie_expiration', 'When to ask user permission again', array( $this, 'patchstack_cookie_notice_cookie_expiration_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_opacity', 'Background opacity (in percentage)', array( $this, 'patchstack_cookie_notice_opacity_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_credits', 'Display Patchstack credits', array( $this, 'patchstack_cookie_notice_credits_callback' ), 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_enable_cookie_notice_message', 'Enable Cookie Notice', [ $this, 'patchstack_enable_cookie_notice_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_message', 'Enter message for displaying', [ $this, 'patchstack_cookie_notice_message_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_accept_text', 'Cookie acceptance button text', [ $this, 'patchstack_cookie_notice_accept_text_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_backgroundcolor', 'Background color (HEX)', [ $this, 'patchstack_cookie_notice_backgroundcolor_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_textcolor', 'Text color (HEX)', [ $this, 'patchstack_cookie_notice_textcolor_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_privacypolicy_enable', 'Enable Policy Link', [ $this, 'patchstack_cookie_notice_privacypolicy_enable_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_privacypolicy_text', 'Enter Policy Text', [ $this, 'patchstack_cookie_notice_privacypolicy_text_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_privacypolicy_link', 'Enter Policy Link', [ $this, 'patchstack_cookie_notice_privacypolicy_link_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_cookie_expiration', 'When to ask user permission again', [ $this, 'patchstack_cookie_notice_cookie_expiration_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_opacity', 'Background opacity (in percentage)', [ $this, 'patchstack_cookie_notice_opacity_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_cookie_notice_credits', 'Display Patchstack credits', [ $this, 'patchstack_cookie_notice_credits_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
 
 		// Register the group settings.
-		$settings = array(
-			'hardening'    => array( 'patchstack_auto_update', 'patchstack_json_is_disabled', 'patchstack_register_email_blacklist', 'patchstack_pluginedit', 'patchstack_basicscanblock', 'patchstack_userenum', 'patchstack_rm_readme', 'patchstack_hidewpcontent', 'patchstack_hidewpversion', 'patchstack_activity_log_is_enabled', 'patchstack_activity_log_failed_logins', 'patchstack_activity_log_failed_logins_db', 'patchstack_movewpconfig', 'patchstack_captcha_on_comments', 'patchstack_captcha_login_form', 'patchstack_captcha_registration_form', 'patchstack_captcha_reset_pwd_form', 'patchstack_captcha_public_key', 'patchstack_captcha_private_key', 'patchstack_captcha_type', 'patchstack_captcha_public_key_v3', 'patchstack_captcha_private_key_v3', 'patchstack_captcha_public_key_v3_new', 'patchstack_captcha_private_key_v3_new', 'patchstack_xmlrpc_is_disabled', 'patchstack_application_passwords_disabled' ),
-			'firewall'     => array( 'patchstack_geo_block_enabled', 'patchstack_geo_block_inverse', 'patchstack_basic_firewall_geo_countries', 'patchstack_ip_block_list', 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_firewall_ip_header', 'patchstack_basic_firewall_roles', 'patchstack_disable_htaccess', 'patchstack_add_security_headers', 'patchstack_known_blacklist', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_bad_query_strings', 'patchstack_advanced_character_string_filter', 'patchstack_advanced_blacklist_firewall', 'patchstack_forbid_rfi', 'patchstack_image_hotlinking', 'patchstack_firewall_custom_rules', 'patchstack_firewall_custom_rules_loc', 'patchstack_blackhole_log', 'patchstack_whitelist', 'patchstack_autoblock_blocktime', 'patchstack_autoblock_attempts', 'patchstack_autoblock_minutes' ),
-			'cookienotice' => array( 'patchstack_enable_cookie_notice_message', 'patchstack_cookie_notice_message', 'patchstack_cookie_notice_backgroundcolor', 'patchstack_cookie_notice_textcolor', 'patchstack_cookie_notice_privacypolicy_enable', 'patchstack_cookie_notice_privacypolicy_text', 'patchstack_cookie_notice_privacypolicy_link', 'patchstack_cookie_notice_cookie_expiration', 'patchstack_cookie_notice_opacity', 'patchstack_cookie_notice_accept_text', 'patchstack_cookie_notice_credits' ),
-			'login'        => array( 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_block_bruteforce_ips', 'patchstack_anti_bruteforce_attempts', 'patchstack_anti_bruteforce_minutes', 'patchstack_anti_bruteforce_blocktime', 'patchstack_login_time_block', 'patchstack_login_time_start', 'patchstack_login_time_end', 'patchstack_login_2fa', 'patchstack_login_blocked', 'patchstack_login_whitelist' ),
-		);
+		$settings = [
+			'hardening'    => [ 'patchstack_auto_update', 'patchstack_json_is_disabled', 'patchstack_register_email_blacklist', 'patchstack_pluginedit', 'patchstack_basicscanblock', 'patchstack_userenum', 'patchstack_rm_readme', 'patchstack_hidewpcontent', 'patchstack_hidewpversion', 'patchstack_activity_log_is_enabled', 'patchstack_activity_log_failed_logins', 'patchstack_activity_log_failed_logins_db', 'patchstack_movewpconfig', 'patchstack_captcha_on_comments', 'patchstack_captcha_login_form', 'patchstack_captcha_registration_form', 'patchstack_captcha_reset_pwd_form', 'patchstack_captcha_public_key', 'patchstack_captcha_private_key', 'patchstack_captcha_type', 'patchstack_captcha_public_key_v3', 'patchstack_captcha_private_key_v3', 'patchstack_captcha_public_key_v3_new', 'patchstack_captcha_private_key_v3_new', 'patchstack_xmlrpc_is_disabled', 'patchstack_application_passwords_disabled' ],
+			'firewall'     => [ 'patchstack_geo_block_enabled', 'patchstack_geo_block_inverse', 'patchstack_basic_firewall_geo_countries', 'patchstack_ip_block_list', 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_firewall_ip_header', 'patchstack_basic_firewall_roles', 'patchstack_disable_htaccess', 'patchstack_add_security_headers', 'patchstack_known_blacklist', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_bad_query_strings', 'patchstack_advanced_character_string_filter', 'patchstack_advanced_blacklist_firewall', 'patchstack_forbid_rfi', 'patchstack_image_hotlinking', 'patchstack_firewall_custom_rules', 'patchstack_firewall_custom_rules_loc', 'patchstack_blackhole_log', 'patchstack_whitelist', 'patchstack_autoblock_blocktime', 'patchstack_autoblock_attempts', 'patchstack_autoblock_minutes' ],
+			'cookienotice' => [ 'patchstack_enable_cookie_notice_message', 'patchstack_cookie_notice_message', 'patchstack_cookie_notice_backgroundcolor', 'patchstack_cookie_notice_textcolor', 'patchstack_cookie_notice_privacypolicy_enable', 'patchstack_cookie_notice_privacypolicy_text', 'patchstack_cookie_notice_privacypolicy_link', 'patchstack_cookie_notice_cookie_expiration', 'patchstack_cookie_notice_opacity', 'patchstack_cookie_notice_accept_text', 'patchstack_cookie_notice_credits' ],
+			'login'        => [ 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_block_bruteforce_ips', 'patchstack_anti_bruteforce_attempts', 'patchstack_anti_bruteforce_minutes', 'patchstack_anti_bruteforce_blocktime', 'patchstack_login_time_block', 'patchstack_login_time_start', 'patchstack_login_time_end', 'patchstack_login_2fa', 'patchstack_login_blocked', 'patchstack_login_whitelist' ],
+		];
 
 		foreach ( $settings as $key => $setting ) {
 			foreach ( $setting as $option ) {
@@ -278,14 +284,14 @@ class P_Admin_Options extends P_Core {
 			return;
 		}
 
-		$selected = get_site_option( 'patchstack_auto_update', array() );
-		$selected = ! is_array( $selected ) ? array() : $selected;
-		$options  = array(
+		$selected = get_site_option( 'patchstack_auto_update', [] );
+		$selected = ! is_array( $selected ) ? [] : $selected;
+		$options  = [
 			'core'       => 'WordPress Core',
 			'plugin'     => 'Plugins',
 			'theme'      => 'Themes',
 			'vulnerable' => 'Vulnerable Plugins',
-		);
+		];
 		$out      = '';
 		foreach ( $options as $option => $text ) {
 			$out .= '<input type="checkbox" id="patchstack_auto_update_' . $option . '" name="patchstack_auto_update[]" value="' . $option . '" ' . checked( 1, in_array( $option, $selected ), false ) . '/>'
@@ -308,7 +314,7 @@ class P_Admin_Options extends P_Core {
 
 	public function patchstack_basic_firewall_geo_countries_input() {
 		$string1 = __( 'Specify which countries should be blocked.<br />Note that this will also block any type of (legitimate) bot traffic coming from this country. IP to country resolution might also not be 100% accurate.', 'patchstack' );
-		$countries    = $this->get_option( 'patchstack_geo_block_countries', array() );
+		$countries    = $this->get_option( 'patchstack_geo_block_countries', [] );
 		$country_list = '';
 		if ( ! empty( $countries ) ) {
 			foreach ( $countries as $country ) {
@@ -473,8 +479,8 @@ class P_Admin_Options extends P_Core {
 	}
 
 	public function patchstack_basic_firewall_roles_input() {
-		$selected = $this->get_option( 'patchstack_basic_firewall_roles', array( 'administrator', 'editor', 'author' ) );
-		$selected = ! is_array( $selected ) ? array() : $selected;
+		$selected = $this->get_option( 'patchstack_basic_firewall_roles', [ 'administrator', 'editor', 'author' ] );
+		$selected = ! is_array( $selected ) ? [] : $selected;
 		$roles    = wp_roles();
 		$roles    = $roles->get_names();
 		$text     = '';
@@ -544,7 +550,7 @@ class P_Admin_Options extends P_Core {
 		// Check if X failed login attempts were made.
 		global $wpdb;
 		$results = $wpdb->get_results(
-			$wpdb->prepare( 'SELECT id, ip, date FROM ' . $wpdb->prefix . "patchstack_event_log WHERE action = 'failed login' AND date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE) GROUP BY ip HAVING COUNT(ip) >= %d ORDER BY date DESC", array( $time, $this->get_option( 'patchstack_anti_bruteforce_attempts', 10 ) ) ),
+			$wpdb->prepare( 'SELECT id, ip, date FROM ' . $wpdb->prefix . "patchstack_event_log WHERE action = 'failed login' AND date >= ('" . current_time( 'mysql' ) . "' - INTERVAL %d MINUTE) GROUP BY ip HAVING COUNT(ip) >= %d ORDER BY date DESC", [ $time, $this->get_option( 'patchstack_anti_bruteforce_attempts', 10 ) ] ),
 			OBJECT
 		);
 
@@ -556,17 +562,17 @@ class P_Admin_Options extends P_Core {
 			$nonce = wp_create_nonce( 'patchstack-nonce-alter-ips' );
 			foreach ( $results as $result ) {
 				$rows .= '<tr><td>' . esc_html( $result->ip ) . '</td><td>' . ( isset( $result->log_date ) ? $result->log_date : $result->date ) . '</td><td><a href="' . esc_url( add_query_arg(
-					array(
+					[
 						'PatchstackNonce' => $nonce,
 						'action'          => 'patchstack_unblock',
 						'id'              => $result->id,
-					)
+					]
 				) ) . '">Unblock</a></td><td><a href="' . esc_url( add_query_arg(
-					array(
+					[
 						'PatchstackNonce' => $nonce,
 						'action'          => 'patchstack_unblock_whitelist',
 						'id'              => $result->id,
-					)
+					]
 				) ) . '">Unblock &amp; Whitelist</a></td></tr>';
 			}
 		}

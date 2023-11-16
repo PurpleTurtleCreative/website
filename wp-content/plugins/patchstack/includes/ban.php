@@ -24,7 +24,7 @@ class P_Ban extends P_Core {
 			return;
 		}
 
-		add_action( 'init', array( $this, 'ip_ban' ), ~PHP_INT_MAX + 1 );
+		add_action( 'init', [ $this, 'ip_ban' ], ~PHP_INT_MAX + 1 );
 	}
 
 	/**

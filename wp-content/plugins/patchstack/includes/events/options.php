@@ -16,7 +16,7 @@ class P_Event_Options extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'updated_option', array( &$this, 'updatedOption' ), 10, 3 );
+		add_action( 'updated_option', [ &$this, 'updatedOption' ], 10, 3 );
 	}
 
 	/**
@@ -44,7 +44,7 @@ class P_Event_Options extends P_Event_Log {
 		// Options that will be logged.
 		if ( in_array(
 			$option,
-			array(
+			[
 				// General
 				'blogname',
 				'blogdescription',
@@ -120,14 +120,14 @@ class P_Event_Options extends P_Event_Log {
 
 				// Widgets
 				'sidebars_widgets',
-			)
+			]
 		) ) {
 			$this->insert(
-				array(
+				[
 					'action'      => 'updated',
 					'object'      => 'option',
 					'object_name' => $option . ' from "' . $old_value . '" to "' . $new_value . '"',
-				)
+				]
 			);
 		}
 	}

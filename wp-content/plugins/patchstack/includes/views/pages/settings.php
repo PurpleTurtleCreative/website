@@ -6,13 +6,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Determine the active tab and account activation state.
-$tabs 		   = array( 'hardening', 'firewall', 'login', 'cookienotice', 'logs', 'license', 'multisite' );
-$active_tab    = isset( $_GET['tab'] ) && in_array( $_GET['tab'], $tabs ) ? esc_attr( $_GET['tab'] ) : 'firewall'; // default active tab
+$tabs 		   = [ 'hardening', 'firewall', 'login', 'cookienotice', 'logs', 'license', 'multisite' ];
+$active_tab    = isset( $_GET['tab'] ) && in_array( $_GET['tab'], $tabs ) ? esc_attr( $_GET['tab'] ) : 'license'; // default active tab
 $activated     = ( ( isset( $_GET['activated'] ) && $_GET['activated'] == 1 ) || ( isset( $_GET['active'] ) && $_GET['active'] == 1 ) );
 $status        = ( get_option( 'patchstack_license_expiry', '' ) == '' || time() >= strtotime( get_option( 'patchstack_license_expiry', '' ) ) );
 $show_settings = $this->get_option( 'patchstack_show_settings', 0 ) == 1 && !isset($_GET['tab']) || isset($_GET['tab']) && $_GET['tab'] != 'license';
 $is_free = $this->get_option( 'patchstack_license_free', 0 ) == 1;
 $class = get_option( 'patchstack_subscription_class', '' );
+$managed = get_option( 'patchstack_managed', false );
+$managed_text = get_option( 'patchstack_managed_text', '' );
 
 if ( ( ! $show_settings && $_GET['page'] != 'patchstack-multisite-settings' ) || ( $status && $active_tab != 'license' && $_GET['page'] != 'patchstack-multisite-settings' ) ) {
 	$_GET['tab'] = $active_tab = 'license';
@@ -20,6 +22,10 @@ if ( ( ! $show_settings && $_GET['page'] != 'patchstack-multisite-settings' ) ||
 
 if ( ( $is_free || ! $is_free && $status ) && $active_tab != 'license' && $_GET['page'] == 'patchstack-multisite-settings' ) {
 	$_GET['tab'] = $active_tab = 'multisite';
+}
+
+if ($active_tab == 'license') {
+	$show_settings = false;
 }
 
 // Determine the URL's.
@@ -36,9 +42,8 @@ $page = $_GET['page'] == 'patchstack-multisite-settings' ? 'patchstack-multisite
 		>
 			<img src="<?php echo esc_url( $this->plugin->url ); ?>assets/images/logo.svg" alt="">
 		</div>
-		<h1 <?php echo !$this->is_connected() || $show_settings ? 'style="display: none;"' : ''; ?>>
-			<a href="https://app.patchstack.com/apps/overview" target="_blank"><?php echo __( 'Log in', 'patchstack' ); ?></a>
-			<?php echo __( 'to our App to access our catalogue of features and settings.', 'patchstack' ); ?>
+		<h1 <?php echo $show_settings || !$managed ? 'style="display: none;"' : ''; ?>>
+			<?php echo $managed_text; ?>
 		</h1>
 		<?php
 		if ( $_GET['page'] != 'patchstack-multisite-settings' && $show_settings && is_multisite() ) {

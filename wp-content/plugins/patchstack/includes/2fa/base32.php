@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  **/
 class Base32Static {
 
-	private static $map = array(
+	private static $map = [
 		'A',
 		'B',
 		'C',
@@ -49,9 +49,9 @@ class Base32Static {
 		'6',
 		'7', // 31
 		'=',  // padding character
-	);
+	];
 
-	private static $flipped_map = array(
+	private static $flipped_map = [
 		'A' => '0',
 		'B' => '1',
 		'C' => '2',
@@ -84,7 +84,7 @@ class Base32Static {
 		'5' => '29',
 		'6' => '30',
 		'7' => '31',
-	);
+	];
 
 	/**
 	 * Use padding false when encoding for urls
@@ -134,7 +134,7 @@ class Base32Static {
 		}
 
 		$padding_char_count = substr_count( $input, self::$map[32] );
-		$allowed_values     = array( 6, 4, 3, 1, 0 );
+		$allowed_values     = [ 6, 4, 3, 1, 0 ];
 
 		if ( ! in_array( $padding_char_count, $allowed_values ) ) {
 			return false;

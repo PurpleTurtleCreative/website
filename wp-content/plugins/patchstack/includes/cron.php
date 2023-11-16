@@ -18,8 +18,8 @@ class P_Cron extends P_Core {
 	 */
 	public function __construct( $core ) {
 		parent::__construct( $core );
-		add_action( 'init', array( $this, 'schedule_events' ) );
-		add_filter( 'cron_schedules', array( $this, 'cron_schedules' ) );
+		add_action( 'init', [ $this, 'schedule_events' ] );
+		add_filter( 'cron_schedules', [ $this, 'cron_schedules' ] );
 	}
 
 	/**
@@ -30,30 +30,30 @@ class P_Cron extends P_Core {
 	 */
 	public function cron_schedules( $schedules ) {
 		// Define the scheduled tasks.
-		$schedules['patchstack_15minute'] = array(
+		$schedules['patchstack_15minute'] = [
 			'interval' => ( 60 * 15 ),
 			'display'  => __( 'Every 15 Minutes' ),
-		);
+		];
 
-		$schedules['patchstack_hourly'] = array(
+		$schedules['patchstack_hourly'] = [
 			'interval' => ( 60 * 60 ),
 			'display'  => __( 'Every Hour' ),
-		);
+		];
 
-		$schedules['patchstack_trihourly'] = array(
+		$schedules['patchstack_trihourly'] = [
 			'interval' => ( 60 * 60 * 3 ),
 			'display'  => __( 'Every 3 Hours' ),
-		);
+		];
 
-		$schedules['patchstack_twicedaily'] = array(
+		$schedules['patchstack_twicedaily'] = [
 			'interval' => ( 60 * 60 * 12 ),
 			'display'  => __( '2 Times Daily' ),
-		);
+		];
 
-		$schedules['patchstack_daily'] = array(
+		$schedules['patchstack_daily'] = [
 			'interval' => ( 60 * 60 * 24 ),
 			'display'  => __( '1 Time Daily' ),
-		);
+		];
 
 		return $schedules;
 	}
@@ -67,36 +67,36 @@ class P_Cron extends P_Core {
 		// Random time throughout the day to make sure not all sites synchronize at the same time.
 		$crons = get_option( 'patchstack_cron_offset', false );
 		if ( ! $crons || ! isset ( $crons['patchstack_daily'] ) ) {
-			$crons = array(
+			$crons = [
 				'patchstack_daily'      => strtotime( 'today' ) + mt_rand( 0, 86399 ),
 				'patchstack_hourly'     => strtotime( 'today' ) + mt_rand( 0, 3600 ),
 				'patchstack_trihourly'  => strtotime( 'today' ) + mt_rand( 0, 9599 ),
 				'patchstack_twicedaily' => strtotime( 'today' ) + mt_rand( 0, 43199 ),
 				'patchstack_15minute'   => strtotime( 'today' ) + mt_rand( 0, 899 ),
-			);
+			];
 			update_option( 'patchstack_cron_offset', $crons );
 
 			// Clear existing scheduled events so we can use the new timestamps.
-			foreach ( array( 'patchstack_send_software_data', 'patchstack_send_hacker_logs', 'patchstack_post_firewall_rules', 'patchstack_post_firewall_htaccess_rules', 'patchstack_post_dynamic_firewall_rules', 'patchstack_update_license_status', 'patchstack_send_event_logs', 'patchstack_update_plugins', 'patchstack_send_ping' ) as $event ) {
+			foreach ( [ 'patchstack_send_software_data', 'patchstack_send_hacker_logs', 'patchstack_post_firewall_rules', 'patchstack_post_firewall_htaccess_rules', 'patchstack_post_dynamic_firewall_rules', 'patchstack_update_license_status', 'patchstack_send_event_logs', 'patchstack_update_plugins', 'patchstack_send_ping' ] as $event ) {
 				wp_clear_scheduled_hook( $event );
 			}
 		}
 
 		// List of the different events.
-		$free = array(
+		$free = [
 			'patchstack_send_software_data'    => 'patchstack_twicedaily',
 			'patchstack_update_license_status' => 'patchstack_twicedaily',
 			'patchstack_send_ping'             => 'patchstack_trihourly',
 			'patchstack_update_plugins'        => 'patchstack_15minute'
-		);
+		];
 
-		$premium = array(
+		$premium = [
 			'patchstack_send_hacker_logs'             => 'patchstack_15minute',
 			'patchstack_post_firewall_rules'          => 'patchstack_twicedaily',
 			'patchstack_post_firewall_htaccess_rules' => 'patchstack_trihourly',
 			'patchstack_post_dynamic_firewall_rules'  => 'patchstack_hourly',
 			'patchstack_send_event_logs'              => 'patchstack_15minute'
-		);
+		];
 
 		// Schedule the events if they are not scheduled yet.
 		foreach ( $free as $event => $interval ) {

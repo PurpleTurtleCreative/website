@@ -16,7 +16,7 @@ class P_Event_Core extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( '_core_updated_successfully', array( &$this, 'eventCoreUpdatedSuccessfully' ) );
+		add_action( '_core_updated_successfully', [ &$this, 'eventCoreUpdatedSuccessfully' ] );
 	}
 
 	/**
@@ -34,12 +34,12 @@ class P_Event_Core extends P_Event_Log {
 		}
 
 		$this->insert(
-			array(
+			[
 				'action'      => 'updated',
 				'object'      => 'core',
 				'object_id'   => 0,
 				'object_name' => $object_name,
-			)
+			]
 		);
 	}
 }

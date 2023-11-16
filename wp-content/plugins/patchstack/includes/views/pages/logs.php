@@ -8,6 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Determine the log table that should be shown.
 $logtype  = ( isset( $_GET['logtype'] ) && $_GET['logtype'] == 'activity' ? 'activity' : 'firewall' );
 $url      =  $_SERVER['REQUEST_URI'];
+$site_id = get_option( 'patchstack_site_id', 0 );
+$app_url = $site_id != 0 ? 'https://app.patchstack.com/app/' . $site_id . '/"' : 'https://app.patchstack.com/apps/overview';
 if ( strpos( $url, 'logtype' ) === false ) {
 	$url .= '&logtype=' . $logtype;
 }
@@ -26,7 +28,7 @@ if ( strpos( $url, 'logtype' ) === false ) {
 	</h2>
 	<div class="patchstack-content-inner-table">
 		<div class="patchstack-font">
-			<h4>Log-in at <a href="https://app.patchstack.com" target="_blank">Patchstack App</a> to view more logs.</h4>
+			<h4>Log-in at <a href="<?php echo $app_url; ?>" target="_blank">Patchstack App</a> to view more logs.</h4>
 			<?php if ( $logtype == 'firewall' ) { ?>
 				<table class="table table-lg table-hover table-firewall-log">
 					<thead>
