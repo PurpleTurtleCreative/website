@@ -1,11 +1,11 @@
 === Patchstack - WordPress & Plugins Security ===
 Contributors: patchstack
-Tags: security, wordpress security, plugin security, theme security, virtual patching, vpatch, patching, firewall, web application firewall, vulnerability, plugin vulnerabilities, theme vulnerabilities, WordPress vulnerabilities
+Tags: security, wordpress security, plugin security, theme security, virtual patching, vpatch, vpatches, vpatching, patching, firewall, web application firewall, vulnerability, plugin vulnerabilities, theme vulnerabilities, WordPress vulnerabilities
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 4.4
 Tested up to: 6.4
-Stable tag: 2.2.3
+Stable tag: 2.2.5
 Requires PHP: 5.6
 
 Patchstack automatically identifies & mitigates security vulnerabilities in WordPress plugins, themes, and core.
@@ -72,7 +72,7 @@ Simply install the Patchstack plugin by searching for "Patchstack" on the plugin
 A worrisome website hacking statistic is that well over 90% of WordPress vulnerabilities are related to plugins or themes. One report found that as much as 98% of WordPress vulnerabilities are due to plugins while another study reported that 95% of vulnerabilities were because of plugins and themes.
 To be secure, you should always keep WordPress plugins, themes, and core updated and monitored. Ensure you are always aware of the plugins you’re using on your websites and always remove the ones you are not using.
 When it comes to WordPress security plugins, we first recommend you get a better understanding of the WordPress security ecosystem and how they work.
-Find one that can offer [virtual patching](https://patchstack.com/articles/virtual-patching) ([check out Patchstack's features](https://patchstack.com/pricing)).
+Find one that can offer [vPatching](https://patchstack.com/articles/virtual-patching) ([check out Patchstack's features](https://patchstack.com/pricing)).
 
 = How does Patchstack Community (free) version protect sites from vulnerabilities? =
 Patchstack Community (free) version will let you know if you have any vulnerabilities present in the plugins, themes, or WordPress core version that are installed on your site. 
@@ -82,15 +82,15 @@ By having the knowledge and always getting alerts about vulnerabilities you will
 With Patchstack you will be able to **eliminate security issues before hackers take over your website. You can detect the latest security vulnerabilities in WordPress plugins, themes, and core. You will receive real-time alerts to email or Slack if any security vulnerabilities are found and have a central security overview for up to 10 websites in the Patchstack App.
 
 = What features does Patchstack Developer (paid) version include? =
-With Patchstack Developer version you can identify plugin vulnerabilities, receiver automatic virtual patches to these vulnerabilities, and get detailed reports on your security status.
+With Patchstack Developer version you can identify plugin vulnerabilities, receiver automatic vPatches to these vulnerabilities, and get detailed reports on your security status.
 
 = The features included are: =
 * Plugin vulnerability detection (also included in free)
 * Theme vulnerability detection (also included in free)
 * WordPress core vulnerability detection (also included in free)
-* Virtual patches for WordPress plugins
-* Virtual patches for WordPress themes
-* Virtual patches for WordPress core
+* vPatches for WordPress plugins
+* vPatches for WordPress themes
+* vPatches for WordPress core
 * Insecure configuration detection
 * Domain name and SSL certificate expiration detection
 * HTTP security headers detection

@@ -13,7 +13,7 @@ class Extension implements ExtensionInterface
      */
     public $options = [
         'patchstack_basic_firewall_roles' => ['administrator', 'editor', 'author'],
-        'patchstack_custom_whitelist_rules' => ''
+        'patchstack_whitelist' => ''
     ];
 
     /**
@@ -73,11 +73,24 @@ class Extension implements ExtensionInterface
             return;
         }
 
-        // Determine where to get the POST payload from.
-        if (!isset($request['raw']) || empty($request['raw'])) {
-            $postData = !isset($request['post']) || count($request['post']) == 0 ? null : json_encode($request['post']);
-        } else {
-            $postData = is_array($request['raw']) ? json_encode($request['raw'][0]) : $request['raw'];
+        // Transform raw payload.
+        if (array_key_exists('raw', $request)) {
+            $request['raw'] = isset($request['raw']) && is_array($request['raw']) ? $request['raw'][0] : $request['raw'];
+
+            // Remove raw payload if not present.
+            if ((is_array($request['raw']) && count($request['raw'])) == 0 || empty($request['raw'])) {
+                unset($request['raw']);
+            }
+        }
+
+        // Remove files payload if not present.
+        if (isset($request['files']) && is_array($request['files']) && count($request['files']) == 0) {
+            unset($request['files']);
+        }
+
+        // Remove post payload if not present.
+        if (isset($request['post']) && is_array($request['post']) && count($request['post']) == 0) {
+            unset($request['post']);
         }
 
         // Insert into the logs.
@@ -90,7 +103,7 @@ class Extension implements ExtensionInterface
                 'method'      => isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : '',
                 'fid'         => '55' . $ruleId,
                 'flag'        => '',
-                'post_data'   => $postData,
+                'post_data'   => json_encode($request),
                 'block_type'  => $logType
             ]
         );
@@ -217,7 +230,7 @@ class Extension implements ExtensionInterface
      */
     private function isWhitelistedCustom()
     {
-        $whitelist = $this->options['patchstack_custom_whitelist_rules'];
+        $whitelist = str_replace( '<?php exit; ?>', '', $this->options['patchstack_whitelist'] );
         if (empty($whitelist)) {
             return false;
         }

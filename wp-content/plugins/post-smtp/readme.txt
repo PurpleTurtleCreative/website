@@ -3,8 +3,8 @@ Plugin URI: https://postmansmtp.com/
 Contributors: wpexpertsio
 Tags: email, mail, smtp, wordpress smtp, email log, postman smtp, postman, gmail, google apps, hotmail, yahoo, mandrill api, sendgrid api, elastic email, office365, mailgun
 Requires at least: 5.6.0
-Tested up to: 6.4
-Stable tag: 2.8.2
+Tested up to: 6.4.2
+Stable tag: 2.8.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Connect with any SMTP, including Gmail, Outlook, SendinBlue, Sendgrid, Mailgun, 
 
 == Description ==
 
-[Live Demo](https://www.tastewp.com/plugins/post-smtp) | [Extensions](https://postmansmtp.com/extension/?utm_source=wp_org&utm_medium=readme)
+[💻Live Demo](https://www.tastewp.com/plugins/post-smtp) | [🔌Extensions](https://postmansmtp.com/extension/?utm_source=wp_org&utm_medium=readme_top) | [📱Mobile Application](https://postmansmtp.com/documentation/advance-functionality/postsmtp-mobile-app/?utm_source=wp_org&utm_medium=readme_top)
 
 = WordPress Mail SMTP Plugin =
 
@@ -35,7 +35,7 @@ Even hosts that block the standard SMTP ports, like GoDaddy or Bluehost, can't s
 https://www.youtube.com/watch?v=mXDEEE9jnfw
 
 = Post SMTP Features =
-* Easy-to-use, powerful Setup Wizard for perfect configuration
+* Easy-to-use and powerful 3-Step Setup Wizard for quick SMTP configuration.
 * Commercial-grade Connectivity Tester to diagnose server issues
 * Log and resend all emails; see the exact cause of failed emails
 * Supports [International alphabets](https://tools.ietf.org/html/rfc6530), [HTML Mail](https://en.wikipedia.org/wiki/HTML_email) and [MultiPart/Alternative](https://en.wikipedia.org/wiki/MIME#Alternative)
@@ -320,6 +320,25 @@ To avoid being flagged as spam, you need to prove your email isn't forged. On a 
 1. Email Log Filter
 
 == Changelog ==
+
+= 2.8.6 - 2023-12-07 =
+
+* Improvement - Changed banner placement for NEW mobile app for POST SMTP to improve UX.
+* Improvement - Tweaked dashboard UI for better usability.
+
+= 2.8.5 - 2023-11-23 =
+
+* Fix: In some cases, there was an issue disconnecting mobile application.
+
+= 2.8.4 - 2023-11-20 =
+
+* Fix: From name and emails, prevention settings were not being saved correctly in some cases in the new wizard.
+* Fix: In some sockets, the API keys getting saved were encoded in multiple layers.
+
+= 2.8.3 - 2023-11-17 =
+
+* Fix - Getting error when saving settings in some scenarios.
+* Improvement - Optimized QR code scanning module for [Post SMTP mobile app](https://postmansmtp.com/documentation/advance-functionality/postsmtp-mobile-app/?utm_source=wp_org&utm_medium=changelog) to avoid any scanning delays
 
 = 2.8.2 - 2023-11-14 =
 

@@ -30,9 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
                     <img class="copy-icon" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkiIGhlaWdodD0iMjMiIHZpZXdCb3g9IjAgMCAxOSAyMyIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE0IDAuMDIzNDM3NUgwVjE2LjAyMzRIMlYyLjAyMzQ0SDE0VjAuMDIzNDM3NVpNMTkgNC4wMjM0NEg0VjIyLjAyMzRIMTlWNC4wMjM0NFpNMTcgMjAuMDIzNEg2VjYuMDIzNDRIMTdWMjAuMDIzNFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="Copy Text" onmouseover="hover(this);" onmouseout="unhover(this);" onclick="copyText(id='response')">
                 </div>
                 <div class="descp">
-                    <span class="descp-text"><?php _e( 'This request has been blocked by the Patchstack Web Application Firewall. If
-                        this message persists and you are a legitimate user, contact the site administrator with the above
-                        code.', 'patchstack' ); ?></span>
+                    <span class="descp-text"><?php _e( 'This request has been blocked by Patchstack. If this message persists and you are a legitimate user, contact the site administrator with the above code.', 'patchstack' ); ?></span>
                 </div>
             </div>
         </div>

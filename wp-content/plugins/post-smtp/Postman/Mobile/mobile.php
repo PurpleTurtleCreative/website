@@ -39,6 +39,7 @@ class Post_SMTP_Mobile {
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
 		add_action( 'admin_action_post_smtp_disconnect_app', array( $this, 'disconnect_app' ) );
         add_action( 'admin_post_ps_dimiss_app_notice', array( $this, 'dismiss_app_notice' ) );
+        add_action( 'admin_post_regenerate-qrcode', array( $this, 'regenerate_qrcode' ) );
 		
 		add_filter( 'post_smtp_sanitize', array( $this, 'sanitize' ), 10, 3 );
         add_filter( 'post_smtp_admin_tabs', array( $this, 'tabs' ), 11 );
@@ -52,22 +53,12 @@ class Post_SMTP_Mobile {
             //Incompatible server
             if( function_exists( 'ImageCreate' ) ) {
 
-                delete_transient( 'post_smtp_auth_nonce' );
                 $this->generate_qr_code();
                 $this->app_connected = get_option( 'post_smtp_mobile_app_connection' );
 
             }
 			
 		}
-
-        //Mobile App Notice
-        if ( isset( $_GET['page'] ) && 'postman' === $_GET['page'] ) {
-	        if ( ! get_option( 'ps_dismissed_mobile_notice' ) ) {
-
-		        add_action( 'admin_notices', array( $this, 'mobile_app_notice' ) );
-
-	        }
-        }
         
     }
 
@@ -211,7 +202,7 @@ class Post_SMTP_Mobile {
                         echo '<img src="data:image/jpeg;base64,'. $this->qr_code.'" width="300"/>'; 
                         ?>
                         <div>
-                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=postman/configuration#mobile-app' ) ); ?>"><?php _e( 'Regenerate QR Code', 'post-smtp' ) ?></a>
+                            <a href="<?php echo esc_url( admin_url('admin-post.php?action=regenerate-qrcode') ); ?>"><?php _e( 'Regenerate QR Code', 'post-smtp' ) ?></a>
                         </div>
                         <?php
 
@@ -348,63 +339,6 @@ class Post_SMTP_Mobile {
 	}
 
     /**
-     * Shows mobile app notice | Action Call-back
-     * 
-     * @since 2.7.1
-     * @version 1.0.0
-     */
-    public function mobile_app_notice() {
-
-    ?>
-    <div class="notice is-dismissible ps-mobile-admin-notice">
-        <div class="ps-mobile-notice">
-            <input type="hidden" value="<?php echo esc_url( admin_url( 'admin-post.php?action=ps_dimiss_app_notice' ) ); ?>" class="ps-mobile-notice-hidden-url" />
-            <div class="ps-mobile-notice-img">
-                <img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/mobile2.png' ) ?>" width="55px" />
-            </div>
-            <div class="ps-mobile-notice-content">
-                <h4><?php _e( 'Introducing NEW Post SMTP Mobile App' ); ?></h4>
-                <table width="100%">
-                    <tr>
-                        <td>
-                            <span class="dashicons dashicons-yes-alt"></span>
-                            Easy Email Tracking
-                        </td>
-                        <td>
-                            <span class="dashicons dashicons-yes-alt"></span>
-                            Quickly View Error Details
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="dashicons dashicons-yes-alt"></span>
-                            Get Instant Failure Notifications
-                        </td>
-                        <td>
-                            <span class="dashicons dashicons-yes-alt"></span>
-                            Get Email Preview
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <span class="dashicons dashicons-yes-alt"></span>
-                            Resend Failed Emails
-                        </td>
-                        <td>
-                            <span class="dashicons dashicons-yes-alt"></span>
-                            Support For Multiple Sites (Coming Soon)
-                        </td>
-                    </tr>
-                </table>
-                <a href="https://postmansmtp.com/documentation/advance-functionality/postsmtp-mobile-app/?utm_source=plugin&utm_medium=notice" target="_blank">Learn More</a>
-            </div>
-        </div>
-    </div>
-    <?php
-        
-    }
-
-    /**
      * Dismiss App Notice | Action Call-back
      * 
      * @since 2.7.1
@@ -417,6 +351,24 @@ class Post_SMTP_Mobile {
             update_option( 'ps_dismissed_mobile_notice', 1 );
 
             wp_redirect( admin_url( 'admin.php?page=postman' ) );
+
+        }
+
+    }
+
+    /**
+     * Regenerates QR Code | Action Call-back
+     * 
+     * @since 2.8.2
+     * @version 1.0.0
+     */
+    public function regenerate_qrcode() {
+
+        if( isset( $_GET['action'] ) && $_GET['action'] === 'regenerate-qrcode' ) {
+
+            delete_transient( 'post_smtp_auth_nonce' );
+
+            wp_redirect( admin_url( 'admin.php?page=postman/configuration#mobile-app' ) );
 
         }
 

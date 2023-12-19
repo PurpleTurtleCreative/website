@@ -39,7 +39,7 @@ class P_Firewall extends P_Core {
 		$extension = new Patchstack\Extensions\WordPress\Extension(
 			[
 				'patchstack_basic_firewall_roles' => $this->get_option( 'patchstack_basic_firewall_roles', [ 'administrator', 'editor', 'author' ] ),
-				'patchstack_custom_whitelist_rules' => get_option( 'patchstack_custom_whitelist_rules', '' )
+				'patchstack_whitelist' => get_option( 'patchstack_whitelist', '' )
 			],
 			$this
 		);
@@ -95,7 +95,6 @@ class P_Firewall extends P_Core {
 		$role_count = array_intersect( $user->roles, $roles );
 		return count( $role_count ) != 0;
 	}
-
 
 	/**
 	 * Display error page.

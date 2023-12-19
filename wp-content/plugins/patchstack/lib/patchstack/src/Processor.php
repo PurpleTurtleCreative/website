@@ -130,7 +130,7 @@ class Processor
 
         // Check for whitelist based on the legacy whitelist rules.
         $request  = $this->request->capture();
-        if (!$this->mustUsePluginCall && $this->extension->isWhitelisted($this->whitelistRulesLegacy, $request)) {
+        if ($this->extension->isWhitelisted($this->whitelistRulesLegacy, $request)) {
             return true;
         }
 
@@ -278,6 +278,7 @@ class Processor
                                 return true;
                             } else {
                                 $inclusiveHits++;
+                                break 2;
                             }
                         }
                     }

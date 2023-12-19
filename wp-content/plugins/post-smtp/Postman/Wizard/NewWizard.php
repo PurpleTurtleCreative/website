@@ -119,7 +119,7 @@ class Post_SMTP_New_Wizard {
                                 We're sorry, the <span class="ps-pro-for"></span> mailer is not available on your plan. Please upgrade to the PRO plan to unlock all these awesome fetures.
                             </p>
                             <div>
-                                <a href="https://postmansmtp.com/membership-plan/" target="_blank" class="button button-primary ps-yellow-btn" style="color: #ffffff!important">UPGRADE TO PRO</a>
+                                <a href="https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard" target="_blank" class="button button-primary ps-yellow-btn" style="color: #ffffff!important">UPGRADE TO PRO</a>
                             </div>
                             <div>
                                 <a href="" class="ps-pro-close-popup" style="color: #c2c2c2; font-size: 10px;">Already purchased?</a>
@@ -366,7 +366,7 @@ class Post_SMTP_New_Wizard {
                                                 __( '⚡ Advanced Email delivery and logs', 'post-smtp' ),
                                                 __( 'You can automate the process of retrying failed email attempts and optamize your website for users by sending emails asychronously from the backend.' )
                                             ) ?></p>
-                                            <a href="<?php echo esc_url( 'https://postmansmtp.com/extension/' ); ?>" class="button button-primary ps-yellow-btn" target="_blank"><?php esc_html_e( 'CHECK THERE ADDONS', 'post-smtp' ); ?><span class="dashicons dashicons-arrow-right-alt"></span></a>
+                                            <a href="<?php echo esc_url( 'https://postmansmtp.com/extension/' ); ?>" class="button button-primary ps-yellow-btn" target="_blank"><?php esc_html_e( 'CHECK OTHER ADDONS', 'post-smtp' ); ?><span class="dashicons dashicons-arrow-right-alt"></span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -507,7 +507,7 @@ class Post_SMTP_New_Wizard {
                 <div>
                     <div class="ps-form-switch-control">
                         <label class="ps-switch-1">
-                            <input type="checkbox" '.$from_email_enforced.' name="postman_options['.esc_attr( PostmanOptions::PREVENT_MESSAGE_SENDER_NAME_OVERRIDE ).']" id="">
+                            <input type="checkbox" '.$from_email_enforced.' name="postman_options['.esc_attr( PostmanOptions::PREVENT_MESSAGE_SENDER_EMAIL_OVERRIDE ).']" id="">
                             <span class="slider round"></span>
                         </label> 
                     </div>
@@ -531,7 +531,7 @@ class Post_SMTP_New_Wizard {
                 <div>
                     <div class="ps-form-switch-control">
                         <label class="ps-switch-1">
-                            <input type="checkbox" '.$from_name_enforced.' name="postman_options['.esc_attr( PostmanOptions::PREVENT_MESSAGE_SENDER_EMAIL_OVERRIDE ).']" id="">
+                            <input type="checkbox" '.$from_name_enforced.' name="postman_options['.esc_attr( PostmanOptions::PREVENT_MESSAGE_SENDER_NAME_OVERRIDE ).']" id="">
                             <span class="slider round"></span>
                         </label> 
                     </div>
@@ -1464,24 +1464,24 @@ class Post_SMTP_New_Wizard {
                 $sanitized['envelope_sender'] = isset( $sanitized['sender_email'] ) ? $sanitized['sender_email'] : '';
 
                 //Encode API Keys
-                $sanitized['office365_app_id'] = isset( $sanitized['office365_app_id'] ) ? base64_encode( $sanitized['office365_app_id'] ) : '';
-                $sanitized['office365_app_password'] = isset( $sanitized['office365_app_password'] ) ? base64_encode( $sanitized['office365_app_password'] ) : '';
-                $sanitized['sendinblue_api_key'] = isset( $sanitized['sendinblue_api_key'] ) ? base64_encode( $sanitized['sendinblue_api_key'] ) : '';
-                $sanitized['sparkpost_api_key'] = isset( $sanitized['sparkpost_api_key'] ) ? base64_encode( $sanitized['sparkpost_api_key'] ) : '';
-                $sanitized['postmark_api_key'] = isset( $sanitized['postmark_api_key'] ) ? base64_encode( $sanitized['postmark_api_key'] ) : '';
-                $sanitized['mailgun_api_key'] = isset( $sanitized['mailgun_api_key'] ) ? base64_encode( $sanitized['mailgun_api_key'] ) : '';
-                $sanitized['sendgrid_api_key'] = isset( $sanitized['sendgrid_api_key'] ) ? base64_encode( $sanitized['sendgrid_api_key'] ) : '';
-                $sanitized['mandrill_api_key'] = isset( $sanitized['mandrill_api_key'] ) ? base64_encode( $sanitized['mandrill_api_key'] ) : '';
-                $sanitized['elasticemail_api_key'] = isset( $sanitized['elasticemail_api_key'] ) ? base64_encode( $sanitized['elasticemail_api_key'] ) : '';
-                $sanitized[PostmanOptions::MAILJET_API_KEY] = isset( $sanitized[PostmanOptions::MAILJET_API_KEY] ) ? base64_encode( $sanitized[PostmanOptions::MAILJET_API_KEY] ) : '';
-                $sanitized[PostmanOptions::MAILJET_SECRET_KEY] = isset( $sanitized[PostmanOptions::MAILJET_SECRET_KEY] ) ? base64_encode( $sanitized[PostmanOptions::MAILJET_SECRET_KEY] ) : '';
-                $sanitized['basic_auth_password'] = isset( $sanitized['basic_auth_password'] ) ? base64_encode( $sanitized['basic_auth_password'] ) : '';
-                $sanitized['ses_access_key_id'] = isset( $sanitized['ses_access_key_id'] ) ? base64_encode( $sanitized['ses_access_key_id'] ) : '';
-                $sanitized['ses_secret_access_key'] = isset( $sanitized['ses_secret_access_key'] ) ? base64_encode( $sanitized['ses_secret_access_key'] ) : '';
+                $sanitized['office365_app_id'] = isset( $sanitized['office365_app_id'] ) ? $sanitized['office365_app_id'] : '';
+                $sanitized['office365_app_password'] = isset( $sanitized['office365_app_password'] ) ? $sanitized['office365_app_password'] : '';
+                $sanitized[PostmanOptions::SENDINBLUE_API_KEY] = isset( $sanitized[PostmanOptions::SENDINBLUE_API_KEY] ) ? $sanitized[PostmanOptions::SENDINBLUE_API_KEY] : '';
+                $sanitized['sparkpost_api_key'] = isset( $sanitized['sparkpost_api_key'] ) ? $sanitized['sparkpost_api_key'] : '';
+                $sanitized['postmark_api_key'] = isset( $sanitized['postmark_api_key'] ) ? $sanitized['postmark_api_key'] : '';
+                $sanitized['mailgun_api_key'] = isset( $sanitized['mailgun_api_key'] ) ? $sanitized['mailgun_api_key'] : '';
+                $sanitized[PostmanOptions::SENDGRID_API_KEY] = isset( $sanitized[PostmanOptions::SENDGRID_API_KEY] ) ? $sanitized[PostmanOptions::SENDGRID_API_KEY] : '';
+                $sanitized['mandrill_api_key'] = isset( $sanitized['mandrill_api_key'] ) ? $sanitized['mandrill_api_key'] : '';
+                $sanitized['elasticemail_api_key'] = isset( $sanitized['elasticemail_api_key'] ) ? $sanitized['elasticemail_api_key'] : '';
+                $sanitized[PostmanOptions::MAILJET_API_KEY] = isset( $sanitized[PostmanOptions::MAILJET_API_KEY] ) ? $sanitized[PostmanOptions::MAILJET_API_KEY] : '';
+                $sanitized[PostmanOptions::MAILJET_SECRET_KEY] = isset( $sanitized[PostmanOptions::MAILJET_SECRET_KEY] ) ? $sanitized[PostmanOptions::MAILJET_SECRET_KEY] : '';
+                $sanitized['basic_auth_password'] = isset( $sanitized['basic_auth_password'] ) ? $sanitized['basic_auth_password'] : '';
+                $sanitized['ses_access_key_id'] = isset( $sanitized['ses_access_key_id'] ) ? $sanitized['ses_access_key_id'] : '';
+                $sanitized['ses_secret_access_key'] = isset( $sanitized['ses_secret_access_key'] ) ? $sanitized['ses_secret_access_key'] : '';
                 $sanitized['ses_region'] = isset( $sanitized['ses_region'] ) ? $sanitized['ses_region'] : '';
                 $sanitized['enc_type'] = 'tls';
                 $sanitized['auth_type'] = 'login';
-
+                
                 foreach( $sanitized as $key => $value ) {
 
                     $options[$key] = $value;
@@ -1497,12 +1497,15 @@ class Post_SMTP_New_Wizard {
                     $response = update_option( PostmanOptions::POSTMAN_OPTIONS, $options );
 
                 }
-
+                
             }
             
         }
 
-        wp_send_json( array(), $response ? 200 : 400 );
+        //Prevent redirection
+        delete_transient( PostmanSession::ACTION );
+
+        wp_send_json( array(), 200 );
 
     }
 

@@ -66,6 +66,7 @@ class Request
             case 'log':
                 return [
                     'post' => $_POST,
+                    'files' => $_FILES,
                     'raw' => $this->getParameterValues('raw')
                 ];
                 break;

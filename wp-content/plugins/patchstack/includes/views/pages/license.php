@@ -7,8 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Determine if the subscription of the account is expired.
 $status = $this->plugin->client_id != 'PATCHSTACK_CLIENT_ID' || get_option( 'patchstack_clientid', false ) != false;
-$free   = get_option( 'patchstack_license_free', 0 ) == 1;
-$plan   = get_option( 'patchstack_subscription_class', '');
+$free = get_option( 'patchstack_license_free', 0 ) == 1;
+$planClass = get_option( 'patchstack_subscription_class', '');
 $managed = get_option( 'patchstack_managed', false );
 $site_id = get_option( 'patchstack_site_id', 0 );
 $app_url = $site_id != 0 ? 'https://app.patchstack.com/app/' . $site_id . '/"' : 'https://app.patchstack.com/apps/overview';
@@ -38,12 +38,12 @@ if (!$show_settings) {
 
 			<div style="clear: both;"></div>
 
-			<div class="patchstack-protection" <?php echo !$this->is_protected() && empty($plan) ? 'style="display: none;"' : ''; ?>>
+			<div class="patchstack-protection" <?php echo !$this->is_protected() && empty($planClass) ? 'style="display: none;"' : ''; ?>>
 				<img src="<?php echo esc_url( $this->plugin->url ); ?>assets/images/shield.svg">
 				<span>Protection enabled</span>
 			</div>
 
-			<div class="patchstack-protection" <?php echo $this->is_protected() || $plan > 0 || $managed ? 'style="display: none;"' : ''; ?>>
+			<div class="patchstack-protection" <?php echo $this->is_protected() || $planClass > 0 || $managed ? 'style="display: none;"' : ''; ?>>
 				<span>Protection disabled</span>
 				<a href="<?php echo $app_url; ?>" target="_blank" class="button-primary">
 					Activate for $9 / mo
@@ -54,8 +54,8 @@ if (!$show_settings) {
 				<label for="patchstack_api_key">
 					API key
 					<?php
-						if ($plan != '' && !$managed ) {
-							$plan = $this->get_subscription_name( $plan );
+						if ($planClass != '' && !$managed ) {
+							$plan = $this->get_subscription_name( $planClass );
 					?>
 						<span><?php echo $plan; ?> plan</span>
 					<?php
@@ -94,7 +94,7 @@ if (!$show_settings) {
 		<a href="<?php echo $app_url; ?>" target="_blank"><?php echo __( 'Log in', 'patchstack' ); ?></a>
 		<?php echo __( 'to the central App to view vulnerabilities, activate protection and manage settings for this web application.', 'patchstack' ); ?>
 		<?php } ?>
-		<?php if ( ! $free ) { ?>
+		<?php if ( ! $free && $planClass >= 1 ) { ?>
 			<a href="<?php echo $this->get_option( 'patchstack_show_settings', 0 ) == 1 ? $url_enabled : esc_url( $url ); ?>">Manage</a> the Patchstack plugin settings through WordPress.
 		<?php } ?>
 	</p>
