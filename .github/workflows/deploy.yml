@@ -28,6 +28,16 @@ jobs:
           submodules: recursive
           token: ${{ secrets.PTC_GITHUB_PAT }}
 
+      # Build the site theme.
+      - name: WordPress Theme - Build install
+        working-directory: ./wp-content/themes/purple-turtle-creative
+        run: ./build_install.sh
+        shell: bash
+      - name: WordPress Theme - Build cleanup
+        working-directory: ./wp-content/themes/purple-turtle-creative
+        run: ./build_cleanup.sh
+        shell: bash
+
       # Build Completionist Pro.
       - name: Completionist Pro - Build install
         working-directory: ./wp-content/plugins/completionist-pro
