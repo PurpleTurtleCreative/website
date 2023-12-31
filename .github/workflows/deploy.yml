@@ -32,9 +32,9 @@ jobs:
       - name: Get Submodule SHAs
         id: submodule-shas
         run: |
-          $( git submodule status wp-content/themes/purple-turtle-creative )
+          git submodule status wp-content/themes/purple-turtle-creative
           echo "::set-output SHA_PTC_THEME=$( git submodule status wp-content/themes/purple-turtle-creative | awk '{print $1}' )"
-          $( git submodule status wp-content/plugins/completionist-pro )
+          git submodule status wp-content/plugins/completionist-pro
           echo "::set-output SHA_COMPLETIONIST_PRO=$( git submodule status wp-content/plugins/completionist-pro | awk '{print $1}' )"
 
       # Build the Purple Turtle Creative theme.
