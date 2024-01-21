@@ -34,6 +34,7 @@ class Post_SMTP_Mobile {
      */
     public function __construct() {
         
+        add_action( 'plugins_loaded', array( $this, 'remove_device' ) );
         add_action( 'admin_menu', array( $this, 'add_menu' ), 21 );
         add_action( 'post_smtp_settings_menu', array( $this, 'section' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
@@ -177,7 +178,7 @@ class Post_SMTP_Mobile {
                 </div>
                 <div style="float: right; margin: 19px 0;">
                     <a href="https://play.google.com/store/apps/details?id=com.postsmtp" target="_blank" /><img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/google-play.png' ) ?>" class="google-logo" /></a>
-                    <img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/apple-store.jpg' ) ?>" class="apple-logo" />
+                    <a href="https://apps.apple.com/us/app/post-smtp/id6473368559" target="_blank" /><img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/apple-store.png' ) ?>" class="apple-logo" /></a>
                 </div>
                 <div style="clear: both;"></div>
             </div>
@@ -380,6 +381,35 @@ class Post_SMTP_Mobile {
 
         }
 
+    }
+
+    /**
+     * Remove Device With Incomplete Information
+     * 
+     * @since 2.8.10
+     * @version 1.0.0
+     */
+    public function remove_device() {
+		
+        if( !isset( $_GET['page'] ) || ( isset( $_GET['page'] ) && $_GET['page'] !== 'postman/configuration' ) ) {
+			
+			$device = get_option( 'post_smtp_mobile_app_connection' );
+			$device = $device ? reset( $device ) : $device;
+
+			if( $device && !isset( $device['auth_key'] ) || $device && empty( $device['auth_key'] ) ) {
+
+				delete_option( 'post_smtp_mobile_app_connection' );
+				delete_option( 'post_smtp_server_url' );
+				delete_transient( 'post_smtp_auth_nonce' );
+
+				return;
+
+			}
+
+			return;
+			
+		}
+        
     }
 
 }

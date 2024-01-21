@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 // Determine the active tab and account activation state.
 $tabs 		   = [ 'hardening', 'firewall', 'login', 'cookienotice', 'logs', 'license', 'multisite' ];
 $active_tab    = isset( $_GET['tab'] ) && in_array( $_GET['tab'], $tabs ) ? esc_attr( $_GET['tab'] ) : 'license'; // default active tab
-$activated     = ( ( isset( $_GET['activated'] ) && $_GET['activated'] == 1 ) || ( isset( $_GET['active'] ) && $_GET['active'] == 1 ) );
+$activated     = ( ( isset( $_GET['ps_activated'] ) && $_GET['ps_activated'] == 1 ) || ( isset( $_GET['active'] ) && $_GET['active'] == 1 ) );
 $status        = ( get_option( 'patchstack_license_expiry', '' ) == '' || time() >= strtotime( get_option( 'patchstack_license_expiry', '' ) ) );
 $show_settings = $this->get_option( 'patchstack_show_settings', 0 ) == 1 && !isset($_GET['tab']) || isset($_GET['tab']) && $_GET['tab'] != 'license';
 $is_free = $this->get_option( 'patchstack_license_free', 0 ) == 1;

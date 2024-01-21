@@ -12,7 +12,7 @@ $planClass = get_option( 'patchstack_subscription_class', '');
 $managed = get_option( 'patchstack_managed', false );
 $site_id = get_option( 'patchstack_site_id', 0 );
 $app_url = $site_id != 0 ? 'https://app.patchstack.com/app/' . $site_id . '/"' : 'https://app.patchstack.com/apps/overview';
-if ( isset( $_GET['activated'] ) && $status ) {
+if ( isset( $_GET['ps_activated'] ) && $status ) {
 	echo "<script>window.location = 'admin.php?page=patchstack&tab=license&active=1';</script>";
 }
 
@@ -46,7 +46,7 @@ if (!$show_settings) {
 			<div class="patchstack-protection" <?php echo $this->is_protected() || $planClass > 0 || $managed ? 'style="display: none;"' : ''; ?>>
 				<span>Protection disabled</span>
 				<a href="<?php echo $app_url; ?>" target="_blank" class="button-primary">
-					Activate for $9 / mo
+					Activate for $5 / mo
 				</a>
 			</div>
 

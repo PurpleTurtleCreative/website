@@ -19,7 +19,7 @@ class P_Login extends P_Core {
 	public function __construct( $core ) {
 		parent::__construct( $core );
 
-		if ( $this->get_option( 'patchstack_license_free', 0 ) == 1 || $this->is_community() ) {
+		if ( $this->get_option( 'patchstack_license_free', 0 ) == 1 ) {
 			return;
 		}
 

@@ -10,7 +10,7 @@ $status = $this->plugin->client_id != 'PATCHSTACK_CLIENT_ID' || get_option( 'pat
 $free   = get_option( 'patchstack_license_free', 0 ) == 1;
 $site_id = get_option( 'patchstack_site_id', 0 );
 $app_url = $site_id != 0 ? 'https://app.patchstack.com/app/' . $site_id . '/"' : 'https://app.patchstack.com/apps/overview';
-if ( isset( $_GET['activated'] ) && $status ) {
+if ( isset( $_GET['ps_activated'] ) && $status ) {
 	echo "<script>window.location = 'admin.php?page=patchstack&tab=license&active=1';</script>";
 }
 

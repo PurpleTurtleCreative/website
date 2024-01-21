@@ -21,7 +21,7 @@ class P_Cookie_Notice extends P_Core {
 		parent::__construct( $core );
 
 		// The cookie notice feature can only be used on an activated license.
-		if ( ! $this->license_is_active() || $this->get_option( 'patchstack_license_free', 0 ) == 1 || $this->is_community() ) {
+		if ( ! $this->license_is_active() || $this->get_option( 'patchstack_license_free', 0 ) == 1 ) {
 			return;
 		}
 

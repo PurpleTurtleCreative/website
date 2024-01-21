@@ -2,7 +2,7 @@
 
 // Try to create the mu-plugins folder/file.
 // No need to do this if it already exists.
-if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' )) {
+if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' ) || file_exists( WPMU_PLUGIN_DIR . '/_patchstack.php' )) {
     update_option('patchstack_db_version', '3.0.3');
     return;
 }
@@ -31,7 +31,7 @@ if ( ! is_dir( WPMU_PLUGIN_DIR ) ) {
 // Create the mu-plugin file in the folder.
 if ( is_writable( WPMU_PLUGIN_DIR ) ) {
     $php = file_get_contents( trailingslashit( plugin_dir_path( __FILE__ ) ) . '../mu-plugin.php' );
-    file_put_contents( trailingslashit( WPMU_PLUGIN_DIR ) . 'patchstack.php', $php );
+    file_put_contents( trailingslashit( WPMU_PLUGIN_DIR ) . '_patchstack.php', $php );
 }
 
 update_option('patchstack_db_version', '3.0.3');

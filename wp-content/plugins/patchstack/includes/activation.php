@@ -12,6 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class P_Activation extends P_Core {
 
 	/**
+	 * Holds any activation errors.
+	 * 
+	 * @var array
+	 */
+	private $activation_errors = [];
+
+	/**
 	 * Add the actions required for the activation.
 	 *
 	 * @param Patchstack $core
@@ -38,9 +45,9 @@ class P_Activation extends P_Core {
 
 			// In case of multisite, we want to redirect the user to a different page.
 			if ( $network_activation ) {
-				wp_safe_redirect( network_admin_url( 'admin.php?page=patchstack-multisite-settings&tab=multisite&activated=1' ) );
+				wp_safe_redirect( network_admin_url( 'admin.php?page=patchstack-multisite-settings&tab=multisite&ps_activated=1' ) );
 			} else {
-				wp_safe_redirect( admin_url( 'admin.php?page=' . $this->plugin->name . '&activated=1' ) );
+				wp_safe_redirect( admin_url( 'admin.php?page=' . $this->plugin->name . '&ps_activated=1' ) );
 			}
 			exit;
 		}
@@ -182,10 +189,10 @@ class P_Activation extends P_Core {
 
 		// Try to create the mu-plugins folder/file.
 		// No need to do this if it already exists.
-		if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' )) {
+		if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' ) || file_exists( WPMU_PLUGIN_DIR . '/_patchstack.php' )) {
 			return;
 		}
-	
+
 		// The mu-plugin does not exist, try to create it.
 		@include_once ABSPATH . 'wp-admin/includes/file.php';
 		$wpfs = WP_Filesystem();
@@ -207,7 +214,7 @@ class P_Activation extends P_Core {
 		// Create the mu-plugin file in the folder.
 		if ( is_writable( WPMU_PLUGIN_DIR ) ) {
 			$php = @file_get_contents( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'mu-plugin.php' );
-			@file_put_contents( trailingslashit( WPMU_PLUGIN_DIR ) . 'patchstack.php', $php );
+			@file_put_contents( trailingslashit( WPMU_PLUGIN_DIR ) . '_patchstack.php', $php );
 		}
 	}
 
@@ -286,7 +293,7 @@ class P_Activation extends P_Core {
 	 */
 	public function migrate_check() {
 		// Only perform migrations if we have any to execute.
-		$versions = ['3.0.0', '3.0.1', '3.0.2', '3.0.3'];
+		$versions = ['3.0.0', '3.0.1', '3.0.2', '3.0.3', '3.0.4'];
 		if ( count( $versions ) == 0 ) {
 			return;
 		}
@@ -326,8 +333,10 @@ class P_Activation extends P_Core {
 		$this->plugin->htaccess->cleanup_htaccess_file();
 
 		// Remove the mu-plugin file if it exists.
-		if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' )) {
-			wp_delete_file( WPMU_PLUGIN_DIR . '/patchstack.php' );
+		foreach (['patchstack.php', '_patchstack.php'] as $file) {
+			if ( file_exists( WPMU_PLUGIN_DIR . '/' . $file )) {
+				wp_delete_file( WPMU_PLUGIN_DIR . '/' . $file );
+			}
 		}
 	}
 

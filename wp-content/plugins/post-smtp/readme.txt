@@ -4,7 +4,7 @@ Contributors: wpexpertsio
 Tags: smtp, wordpress smtp, wp_mail, gmail smtp, post smtp, email,  email log, office 365, mailgun, wp smtp, sendgrid, brevo, microsoft 365, amazon ses, sendinblue
 Requires at least: 5.6.0
 Tested up to: 6.4.2
-Stable tag: 2.8.8
+Stable tag: 2.8.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -271,7 +271,24 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 6. Post SMTP Mobile App Screen - Scan the QR Code from the Mobile App and Connect it with the Plugin
 7. Post SMTP Settings - Set Email Failure Alerts on Slack, Email, Twilio, and Chrome Extension
 
+## Upgrade Notice ##
+
+### 2.8.11 ###
+Important: If you are using version 2.8.7 or lower of our plugin, please update to the latest version as soon as possible. This update contains an urgent security fix that prevents potential vulnerabilities and attacks. We apologize for any inconvenience this may cause you and we appreciate your cooperation. Thank you for using our plugin.
+
 == Changelog ==
+
+= 2.8.11 - 2024-01-19 =
+
+* Added link to the [new POST SMTP app for iOS](https://apps.apple.com/us/app/post-smtp/id6473368559) released.
+
+= 2.8.10 - 2024-01-18 =
+
+* Security Improvement: Added check to automatically remove any connected device with incomplete information. 
+
+= 2.8.9 - 2024-01-11 =
+
+* Added compatibility for [InstaWP](https://www.instawp.com/)
 
 = 2.8.8 - 2024-01-01 =
 
@@ -924,4 +941,4 @@ Syntx stupid mistake
 * [[Ticket](https://wordpress.org/support/topic/fatal-error-internal-zend-error-missing-class-information?replies=2#post-7092317)] User reported error "Fatal error: Internal Zend error - Missing class information" - Whoops, used 'require' PostState.php instead of 'require_once' PostState.php which was causing errors. Fixed.
 * [[Ticket](https://wordpress.org/support/topic/error-send-mymail-email-marketing?replies=5)] [[Ticket](https://wordpress.org/support/topic/how-configure-mymail-in-plugin?replies=6)] MyMail Newsletter Plugin for WordPress refuses to use wp_mail. I don't want to make this a habit, but I've integrated Post with MyMail's proprietary delivery mechanism.
 * [[Ticket](https://wordpress.org/support/topic/cant-send-error-500?replies=11#post-7103035)] Found an environment where the plugin's call to new Exception was creating PHP Fatal errors. Fixed.
-* [[Ticket](https://wordpress.org/support/topic/error-calling-post-400-invalid-to-header?replies=4)] Perform validation on all email headers before s
+* [[Ticket](https://wordpress.org/support/topic/error-calling-post-400-invalid-to-header?replies=4)] Perform validation on all email headers before send

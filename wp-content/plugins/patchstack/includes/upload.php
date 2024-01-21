@@ -48,6 +48,8 @@ class P_Upload extends P_Core {
 		// Get the software data and hash.
 		$data = $this->get_software_data();
 		$hash = sha1( json_encode( $data ) );
+
+		// Do not sync for no reason.
 		if ( ! defined( 'DOING_CRON' ) && ! isset( $_POST['webarx_secret'] ) && get_option( 'patchstack_software_data_hash', false ) === $hash && ! is_admin() ) {
 			return;
 		}

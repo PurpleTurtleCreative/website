@@ -23,7 +23,7 @@ class P_Hardening extends P_Core {
 		add_action( 'patchstack_update_plugins', [ $this, 'update_vulnerable_plugins' ] );
 
 		// The hardening features can only be used on an activated license.
-		if ( ! $this->license_is_active() || $this->get_option( 'patchstack_license_free', 0 ) == 1 || $this->is_community() ) {
+		if ( ! $this->license_is_active() || $this->get_option( 'patchstack_license_free', 0 ) == 1 ) {
 			return;
 		}
 

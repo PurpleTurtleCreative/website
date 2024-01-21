@@ -176,13 +176,14 @@ class P_Api extends P_Core {
 
 			if ( $response['free'] == true ) {
 				$this->update_blog_option( $this->blog_id, 'patchstack_show_settings', 0 );
+				$this->update_blog_option( $this->blog_id, 'patchstack_firewall_rules_v3', '[]' );
 			} else {
 				$this->send_header_request();
 			}
 		}
 
-		if ( isset( $response['active'] ) && $response['active'] == true ) {
-			$this->update_blog_option( $this->blog_id, 'patchstack_license_activated', true );
+		if ( isset( $response['active'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_license_activated', $response['active'] == true );
 		}
 
 		if ( isset( $response['class'] ) ) {

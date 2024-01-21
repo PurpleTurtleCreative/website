@@ -18,7 +18,7 @@ class P_Hide_Login extends P_Core {
 	public function __construct( $core ) {
 		parent::__construct( $core );
 
-		if ( $this->get_option( 'patchstack_license_free', 0 ) == 1 || $this->is_community() ) {
+		if ( $this->get_option( 'patchstack_license_free', 0 ) == 1 ) {
 			return;
 		}
 
@@ -33,7 +33,7 @@ class P_Hide_Login extends P_Core {
 		}
 
 		// Register the filters and actions for the functionality.
-		add_action( 'init', [ $this, 'init' ] );
+		add_action( 'init', [ $this, 'init' ], ~PHP_INT_MAX + 1 );
 		add_action( 'wp_logout', [ $this, 'wp_logout' ] );
 	}
 
@@ -59,8 +59,20 @@ class P_Hide_Login extends P_Core {
 
 		// If the current page is the renamed login page we give the user access for 10 minutes to the login page.
 		if ( strpos( $_SERVER['REQUEST_URI'], get_site_option( 'patchstack_rename_wp_login' ) ) !== false ) {
+			// Whitelist the current IP address.
 			$this->whitelist_ip();
-			wp_safe_redirect( 'wp-login.php' );
+
+			// Supported by a number of popular caching plugins.
+			if ( ! defined( 'DONOTCACHEPAGE' ) ) {
+				define( 'DONOTCACHEPAGE', true );
+			}
+
+			// No caching.
+			send_nosniff_header();
+			nocache_headers();
+
+			// User should be whitelisted now, redirect to the login page.
+			wp_safe_redirect( 'wp-login.php', 307 );
 			exit;
 		}
 	}

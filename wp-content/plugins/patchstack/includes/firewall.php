@@ -30,7 +30,7 @@ class P_Firewall extends P_Core {
 		parent::__construct( $core );
 
 		// If we only want to initialize the firewall but not execute the rules.
-		if ( $skip ) {
+		if ( $skip || defined( 'DOING_CRON' ) ) {
 			return;
 		}
 
