@@ -38,6 +38,8 @@ class P_Admin_Options extends P_Core {
 		'patchstack_activity_log_is_enabled'            => 1,
 		'patchstack_activity_log_failed_logins'         => 1,
 		'patchstack_activity_log_failed_logins_db'      => 0,
+		'patchstack_activity_log_posts'					=> 0,
+		'patchstack_activity_log_comments'				=> 0,
 		'patchstack_xmlrpc_is_disabled'                 => 1,
 		'patchstack_captcha_type'                       => 'v2',
 		'patchstack_captcha_public_key_v3'              => '',
@@ -88,19 +90,6 @@ class P_Admin_Options extends P_Core {
 		'patchstack_geo_block_inverse'                  => 0,
 		'patchstack_geo_block_countries'                => [],
 
-		// Cookie notice options.
-		'patchstack_enable_cookie_notice_message'		=> 0,
-		'patchstack_cookie_notice_message'              => 'We use cookies for various purposes including analytics and personalized marketing. By continuing to use the service, you agree to our use of cookies.',
-		'patchstack_cookie_notice_backgroundcolor'      => '222222',
-		'patchstack_cookie_notice_textcolor'            => 'ffffff',
-		'patchstack_cookie_notice_privacypolicy_enable' => 0,
-		'patchstack_cookie_notice_privacypolicy_text'   => 'Cookie Policy',
-		'patchstack_cookie_notice_privacypolicy_link'   => '#',
-		'patchstack_cookie_notice_cookie_expiration'    => 'after_exit',
-		'patchstack_cookie_notice_opacity'              => '100',
-		'patchstack_cookie_notice_accept_text'          => 'I agree',
-		'patchstack_cookie_notice_credits'              => 1,
-
 		// Login and firewall brute force options.
 		'patchstack_block_bruteforce_ips'               => 0,
 		'patchstack_anti_bruteforce_attempts'           => 10,
@@ -118,6 +107,7 @@ class P_Admin_Options extends P_Core {
 		// General options.
 		'patchstack_blackhole_log'                      => '',
 		'patchstack_software_data_hash'                 => '',
+		'patchstack_software_upload_attempted'			=> false,
 		'patchstack_firewall_htaccess_hash'             => '',
 		'patchstack_license_expiry'						=> '',
 		'patchstack_clientid'                           => false,
@@ -137,6 +127,8 @@ class P_Admin_Options extends P_Core {
 		'patchstack_managed_text'						=> '',
 		'patchstack_latest_vulnerable'					=> [],
 		'patchstack_site_id'							=> 0,
+		'patchstack_activation_secret'					=> '',
+		'patchstack_activation_time'					=> '',
 
 		// Admin page rename options.
 		'patchstack_mv_wp_login'                        => 0,
@@ -169,105 +161,90 @@ class P_Admin_Options extends P_Core {
 		$is_community = $class != '' && (int) $class === 0;
 
 		// All (sub)sections that show up.
-		add_settings_section( 'patchstack_settings_section_hardening', __( 'Security Configurations', 'patchstack' ), false, 'patchstack_hardening_settings' );
-		add_settings_section( 'patchstack_settings_section_hardening_captcha', __( '<hr style="height:1px;border:none;background-color: rgba(170, 189, 215, 0.1);"><br /> reCAPTCHA<br /><span style="font-size: 13px; color: #d0d0d0;">It should be noted that the reCAPTCHA feature only applies to WordPress its core features at this time. Not custom forms or of third party plugins.</span>', 'patchstack' ), false, 'patchstack_hardening_settings' );
-		add_settings_section( 'patchstack_settings_section_firewall', __( 'Firewall settings', 'patchstack' ), false, 'patchstack_firewall_settings' );
+		add_settings_section( 'patchstack_settings_section_hardening', esc_attr__( 'Security Configurations', 'patchstack' ), false, 'patchstack_hardening_settings' );
+		add_settings_section( 'patchstack_settings_section_hardening_captcha', esc_attr__( 'reCAPTCHA', 'patchstack' ), false, 'patchstack_hardening_settings' );
+		add_settings_section( 'patchstack_settings_section_firewall', esc_attr__( 'Firewall settings', 'patchstack' ), false, 'patchstack_firewall_settings' );
 		if ( ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) && ! $is_community ) {
-			add_settings_section( 'patchstack_settings_section_firewall_htaccess', __( '.htaccess Features', 'patchstack' ), false, 'patchstack_firewall_settings' );
+			add_settings_section( 'patchstack_settings_section_firewall_htaccess', esc_attr__( '.htaccess Features', 'patchstack' ), false, 'patchstack_firewall_settings' );
 		}
 
 		if (! $is_community ) {
-			add_settings_section( 'patchstack_settings_section_firewall_geo', __( 'Country Blocking', 'patchstack' ), false, 'patchstack_firewall_settings' );
+			add_settings_section( 'patchstack_settings_section_firewall_geo', esc_attr__( 'Country Blocking', 'patchstack' ), false, 'patchstack_firewall_settings' );
 		}
 
-		add_settings_section( 'patchstack_settings_section_firewall_wlbl', __( 'IP Whitelist &amp; Blacklist', 'patchstack' ), false, 'patchstack_firewall_settings' );
-		add_settings_section( 'patchstack_settings_section_cookienotice', __( 'Cookie Notice Settings', 'patchstack' ), false, 'patchstack_cookienotice_settings' );
-		add_settings_section( 'patchstack_settings_section_login', __( 'Login Protection', 'patchstack' ), false, 'patchstack_login_settings' );
-		add_settings_section( 'patchstack_settings_section_login_2fa', __( '<hr style="height:1px;border:none;background-color: rgba(170, 189, 215, 0.1);"><br /> Two Factor Authentication', 'patchstack' ), false, 'patchstack_login_settings' );
-		add_settings_section( 'patchstack_settings_section_login_blocked', __( '<hr style="height:1px;border:none;background-color: rgba(170, 189, 215, 0.1);"><br /> Currently Blocked IP Addresses', 'patchstack' ), false, 'patchstack_login_settings' );
-		add_settings_section( 'patchstack_settings_section_login_whitelist', __( '<hr style="height:1px;border:none;background-color: rgba(170, 189, 215, 0.1);"><br /> Whitelisted IP Addresses', 'patchstack' ), false, 'patchstack_login_settings' );
+		add_settings_section( 'patchstack_settings_section_firewall_wlbl', esc_attr__( 'IP Whitelist &amp; Blacklist', 'patchstack' ), false, 'patchstack_firewall_settings' );
+		add_settings_section( 'patchstack_settings_section_login', esc_attr__( 'Login Protection', 'patchstack' ), false, 'patchstack_login_settings' );
+		add_settings_section( 'patchstack_settings_section_login_2fa', esc_attr__( 'Two Factor Authentication', 'patchstack' ), false, 'patchstack_login_settings' );
+		add_settings_section( 'patchstack_settings_section_login_blocked', esc_attr__( 'Currently Blocked IP Addresses', 'patchstack' ), false, 'patchstack_login_settings' );
+		add_settings_section( 'patchstack_settings_section_login_whitelist', esc_attr__( 'Whitelisted IP Addresses', 'patchstack' ), false, 'patchstack_login_settings' );
 
 		// Hardening.
 		if ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) {
-			add_settings_field( 'patchstack_rm_readme', __( 'Remove readme.html', 'patchstack' ), [ $this, 'patchstack_rm_readme_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-			add_settings_field( 'patchstack_auto_update', __( 'Auto Update Software', 'patchstack' ), [ $this, 'patchstack_auto_update_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+			add_settings_field( 'patchstack_rm_readme', esc_attr__( 'Remove readme.html', 'patchstack' ), [ $this, 'patchstack_rm_readme_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+			add_settings_field( 'patchstack_auto_update', esc_attr__( 'Auto Update Software', 'patchstack' ), [ $this, 'patchstack_auto_update_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
 		}
-		add_settings_field( 'patchstack_basicscanblock', __( 'Stop readme.txt Scans', 'patchstack' ), [ $this, 'patchstack_basicscanblock_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_pluginedit', __( 'Disable theme editor', 'patchstack' ), [ $this, 'patchstack_pluginedit_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_userenum', __( 'Disable user enumeration', 'patchstack' ), [ $this, 'patchstack_userenum_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_hidewpversion', __( 'Hide WordPress version', 'patchstack' ), [ $this, 'patchstack_hidewpversion_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_activity_log_is_enabled', __( 'Enable activity log', 'patchstack' ), [ $this, 'patchstack_activity_log_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_activity_log_failed_logins', __( 'Log failed logins', 'patchstack' ), [ $this, 'patchstack_activity_log_failed_logins_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_activity_log_failed_logins_db', __( 'Upload failed logins to Patchstack', 'patchstack' ), [ $this, 'patchstack_activity_log_failed_logins_db_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_application_passwords_disabled', __( 'Block Application Passwords', 'patchstack' ), [ $this, 'patchstack_application_passwords_disabled_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_xmlrpc_is_disabled', __( 'Restrict XML-RPC Access', 'patchstack' ), [ $this, 'patchstack_xmlrpc_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_json_is_disabled', __( 'Restrict WP REST API Access', 'patchstack' ), [ $this, 'patchstack_json_is_disabled_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
-		add_settings_field( 'patchstack_register_email_blacklist', __( 'Registration Email Blacklist', 'patchstack' ), [ $this, 'patchstack_register_email_blacklist_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_basicscanblock', esc_attr__( 'Stop readme.txt Scans', 'patchstack' ), [ $this, 'patchstack_basicscanblock_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_pluginedit', esc_attr__( 'Disable theme editor', 'patchstack' ), [ $this, 'patchstack_pluginedit_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_userenum', esc_attr__( 'Disable user enumeration', 'patchstack' ), [ $this, 'patchstack_userenum_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_hidewpversion', esc_attr__( 'Hide WordPress version', 'patchstack' ), [ $this, 'patchstack_hidewpversion_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_activity_log_is_enabled', esc_attr__( 'Enable activity log', 'patchstack' ), [ $this, 'patchstack_activity_log_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_activity_log_failed_logins', esc_attr__( 'Log failed logins', 'patchstack' ), [ $this, 'patchstack_activity_log_failed_logins_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_activity_log_failed_logins_db', esc_attr__( 'Upload failed logins to Patchstack', 'patchstack' ), [ $this, 'patchstack_activity_log_failed_logins_db_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_application_passwords_disabled', esc_attr__( 'Block Application Passwords', 'patchstack' ), [ $this, 'patchstack_application_passwords_disabled_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_xmlrpc_is_disabled', esc_attr__( 'Restrict XML-RPC Access', 'patchstack' ), [ $this, 'patchstack_xmlrpc_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_json_is_disabled', esc_attr__( 'Restrict WP REST API Access', 'patchstack' ), [ $this, 'patchstack_json_is_disabled_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
+		add_settings_field( 'patchstack_register_email_blacklist', esc_attr__( 'Registration Email Blacklist', 'patchstack' ), [ $this, 'patchstack_register_email_blacklist_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening' );
 
 		// reCAPTCHA.
-		add_settings_field( 'patchstack_captcha_on_comments', __( 'Post comments form', 'patchstack' ), [ $this, 'patchstack_captcha_on_comments_callback' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_login_form', __( 'Login form', 'patchstack' ), [ $this, 'patchstack_captcha_login_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_registration_form', __( 'Registration form', 'patchstack' ), [ $this, 'patchstack_captcha_registration_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_reset_pwd_form', __( 'Password reset form', 'patchstack' ), [ $this, 'patchstack_captcha_reset_pwd_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_type', __( 'reCAPTCHA version (invisible/normal)' ), [ $this, 'patchstack_captcha_type_callback' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_public_key', __( 'Site Key ', 'patchstack' ), [ $this, 'patchstack_captcha_public_key_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
-		add_settings_field( 'patchstack_captcha_private_key', __( 'Secret Key', 'patchstack' ), [ $this, 'patchstack_captcha_private_key_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_on_comments', esc_attr__( 'Post comments form', 'patchstack' ), [ $this, 'patchstack_captcha_on_comments_callback' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_login_form', esc_attr__( 'Login form', 'patchstack' ), [ $this, 'patchstack_captcha_login_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_registration_form', esc_attr__( 'Registration form', 'patchstack' ), [ $this, 'patchstack_captcha_registration_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_reset_pwd_form', esc_attr__( 'Password reset form', 'patchstack' ), [ $this, 'patchstack_captcha_reset_pwd_form_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_type', esc_attr__( 'reCAPTCHA version (invisible/normal)' ), [ $this, 'patchstack_captcha_type_callback' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_public_key', esc_attr__( 'Site Key ', 'patchstack' ), [ $this, 'patchstack_captcha_public_key_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
+		add_settings_field( 'patchstack_captcha_private_key', esc_attr__( 'Secret Key', 'patchstack' ), [ $this, 'patchstack_captcha_private_key_input' ], 'patchstack_hardening_settings', 'patchstack_settings_section_hardening_captcha' );
 
 		// Firewall.
-		add_settings_field( 'patchstack_basic_firewall', __( 'Enable firewall', 'patchstack' ), [ $this, 'patchstack_basic_firewall_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
-		add_settings_field( 'patchstack_basic_firewall_roles', __( 'Firewall user role whitelist', 'patchstack' ), [ $this, 'patchstack_basic_firewall_roles_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
+		add_settings_field( 'patchstack_basic_firewall', esc_attr__( 'Enable firewall', 'patchstack' ), [ $this, 'patchstack_basic_firewall_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
+		add_settings_field( 'patchstack_basic_firewall_roles', esc_attr__( 'Firewall user role whitelist', 'patchstack' ), [ $this, 'patchstack_basic_firewall_roles_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
 		
 		if ( ! $is_community ) {
-			add_settings_field( 'patchstack_basic_firewall_geo_enabled', __( 'Country Blocking Enabled', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_enabled_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
-			add_settings_field( 'patchstack_basic_firewall_geo_inverse', __( 'Inversed Check', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_inverse_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
-			add_settings_field( 'patchstack_basic_firewall_geo_countries', __( 'Countries To Block', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_countries_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
+			add_settings_field( 'patchstack_basic_firewall_geo_enabled', esc_attr__( 'Country Blocking Enabled', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_enabled_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
+			add_settings_field( 'patchstack_basic_firewall_geo_inverse', esc_attr__( 'Inversed Check', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_inverse_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
+			add_settings_field( 'patchstack_basic_firewall_geo_countries', esc_attr__( 'Countries To Block', 'patchstack' ), [ $this, 'patchstack_basic_firewall_geo_countries_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_geo' );
 		}
 
-		add_settings_field( 'patchstack_firewall_ip_header', __( 'IP Address Header Override', 'patchstack' ), [ $this, 'patchstack_firewall_ip_header_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
+		add_settings_field( 'patchstack_firewall_ip_header', esc_attr__( 'IP Address Header Override', 'patchstack' ), [ $this, 'patchstack_firewall_ip_header_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall' );
 
 		if ( ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) && ! $is_community ) {
-			add_settings_field( 'patchstack_disable_htaccess', __( 'Disable .htaccess features', 'patchstack' ), [ $this, 'patchstack_disable_htaccess_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_add_security_headers', __( 'Add security headers', 'patchstack' ), [ $this, 'patchstack_add_security_headers_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_prevent_default_file_access', __( 'Prevent default WordPress file access', 'patchstack' ), [ $this, 'patchstack_prevent_default_file_access_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_block_debug_log_access', __( 'Block access to debug.log file', 'patchstack' ), [ $this, 'patchstack_block_debug_log_access_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_index_views', __( 'Disable index views', 'patchstack' ), [ $this, 'patchstack_index_views_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_proxy_comment_posting', __( 'Forbid proxy comment posting', 'patchstack' ), [ $this, 'patchstack_proxy_comment_posting_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_image_hotlinking', __( 'Prevent image hotlinking', 'patchstack' ), [ $this, 'patchstack_image_hotlinking_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_firewall_custom_rules', __( 'Add custom .htaccess rules here', 'patchstack' ), [ $this, 'patchstack_firewall_custom_rules_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
-			add_settings_field( 'patchstack_firewall_custom_rules_loc', __( 'Custom .htaccess rules location', 'patchstack' ), [ $this, 'patchstack_firewall_custom_rules_loc_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_disable_htaccess', esc_attr__( 'Disable .htaccess features', 'patchstack' ), [ $this, 'patchstack_disable_htaccess_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_add_security_headers', esc_attr__( 'Add security headers', 'patchstack' ), [ $this, 'patchstack_add_security_headers_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_prevent_default_file_access', esc_attr__( 'Prevent default WordPress file access', 'patchstack' ), [ $this, 'patchstack_prevent_default_file_access_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_block_debug_log_access', esc_attr__( 'Block access to debug.log file', 'patchstack' ), [ $this, 'patchstack_block_debug_log_access_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_index_views', esc_attr__( 'Disable index views', 'patchstack' ), [ $this, 'patchstack_index_views_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_proxy_comment_posting', esc_attr__( 'Forbid proxy comment posting', 'patchstack' ), [ $this, 'patchstack_proxy_comment_posting_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_image_hotlinking', esc_attr__( 'Prevent image hotlinking', 'patchstack' ), [ $this, 'patchstack_image_hotlinking_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_firewall_custom_rules', esc_attr__( 'Add custom .htaccess rules here', 'patchstack' ), [ $this, 'patchstack_firewall_custom_rules_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
+			add_settings_field( 'patchstack_firewall_custom_rules_loc', esc_attr__( 'Custom .htaccess rules location', 'patchstack' ), [ $this, 'patchstack_firewall_custom_rules_loc_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_htaccess' );
 		}
-		add_settings_field( 'patchstack_blackhole_log', __( 'Block IP List', 'patchstack' ), [ $this, 'patchstack_blackhole_log_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
-		add_settings_field( 'patchstack_whitelist', __( 'Whitelist', 'patchstack' ), [ $this, 'patchstack_whitelist_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
+		add_settings_field( 'patchstack_blackhole_log', esc_attr__( 'Block IP List', 'patchstack' ), [ $this, 'patchstack_blackhole_log_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
+		add_settings_field( 'patchstack_whitelist', esc_attr__( 'Whitelist', 'patchstack' ), [ $this, 'patchstack_whitelist_input' ], 'patchstack_firewall_settings', 'patchstack_settings_section_firewall_wlbl' );
 
 		// Login protection.
 		if ( ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] == 'patchstack-multisite-settings' ) ) && floatval( substr( phpversion(), 0, 5 ) ) > 5.5 ) {
-			add_settings_field( 'patchstack_mv_wp_login', __( 'Block access to wp-login.php', 'patchstack' ), [ $this, 'patchstack_hidewplogin_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
+			add_settings_field( 'patchstack_mv_wp_login', esc_attr__( 'Block access to wp-login.php', 'patchstack' ), [ $this, 'patchstack_hidewplogin_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
 			add_settings_field( 'patchstack_rename_wp_login', '', [ $this, 'patchstack_hidewplogin_rename_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
 		}
-		add_settings_field( 'patchstack_block_bruteforce_ips', __( 'Automatic brute-force IP ban', 'patchstack' ), [ $this, 'patchstack_block_bruteforce_ips_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
-		add_settings_field( 'patchstack_login_time_block', __( 'Logon hours', 'patchstack' ), [ $this, 'patchstack_login_time_block_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
-		add_settings_field( 'patchstack_login_2fa', __( 'Two Factor Authentication', 'patchstack' ), [ $this, 'patchstack_login_2fa_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_2fa' );
-		add_settings_field( 'patchstack_login_blocked', __( 'Blocked', 'patchstack' ), [ $this, 'patchstack_login_blocked_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_blocked' );
-		add_settings_field( 'patchstack_login_whitelist', __( 'Whitelist', 'patchstack' ), [ $this, 'patchstack_login_whitelist_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_whitelist' );
-
-		// Cookie notice.
-		add_settings_field( 'patchstack_enable_cookie_notice_message', 'Enable Cookie Notice', [ $this, 'patchstack_enable_cookie_notice_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_message', 'Enter message for displaying', [ $this, 'patchstack_cookie_notice_message_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_accept_text', 'Cookie acceptance button text', [ $this, 'patchstack_cookie_notice_accept_text_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_backgroundcolor', 'Background color (HEX)', [ $this, 'patchstack_cookie_notice_backgroundcolor_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_textcolor', 'Text color (HEX)', [ $this, 'patchstack_cookie_notice_textcolor_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_privacypolicy_enable', 'Enable Policy Link', [ $this, 'patchstack_cookie_notice_privacypolicy_enable_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_privacypolicy_text', 'Enter Policy Text', [ $this, 'patchstack_cookie_notice_privacypolicy_text_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_privacypolicy_link', 'Enter Policy Link', [ $this, 'patchstack_cookie_notice_privacypolicy_link_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_cookie_expiration', 'When to ask user permission again', [ $this, 'patchstack_cookie_notice_cookie_expiration_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_opacity', 'Background opacity (in percentage)', [ $this, 'patchstack_cookie_notice_opacity_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
-		add_settings_field( 'patchstack_cookie_notice_credits', 'Display Patchstack credits', [ $this, 'patchstack_cookie_notice_credits_callback' ], 'patchstack_cookienotice_settings', 'patchstack_settings_section_cookienotice' );
+		add_settings_field( 'patchstack_block_bruteforce_ips', esc_attr__( 'Automatic brute-force IP ban', 'patchstack' ), [ $this, 'patchstack_block_bruteforce_ips_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
+		add_settings_field( 'patchstack_login_time_block', esc_attr__( 'Logon hours', 'patchstack' ), [ $this, 'patchstack_login_time_block_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login' );
+		add_settings_field( 'patchstack_login_2fa', esc_attr__( 'Two Factor Authentication', 'patchstack' ), [ $this, 'patchstack_login_2fa_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_2fa' );
+		add_settings_field( 'patchstack_login_blocked', esc_attr__( 'Blocked', 'patchstack' ), [ $this, 'patchstack_login_blocked_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_blocked' );
+		add_settings_field( 'patchstack_login_whitelist', esc_attr__( 'Whitelist', 'patchstack' ), [ $this, 'patchstack_login_whitelist_input' ], 'patchstack_login_settings', 'patchstack_settings_section_login_whitelist' );
 
 		// Register the group settings.
 		$settings = [
 			'hardening'    => [ 'patchstack_auto_update', 'patchstack_json_is_disabled', 'patchstack_register_email_blacklist', 'patchstack_pluginedit', 'patchstack_basicscanblock', 'patchstack_userenum', 'patchstack_rm_readme', 'patchstack_hidewpcontent', 'patchstack_hidewpversion', 'patchstack_activity_log_is_enabled', 'patchstack_activity_log_failed_logins', 'patchstack_activity_log_failed_logins_db', 'patchstack_movewpconfig', 'patchstack_captcha_on_comments', 'patchstack_captcha_login_form', 'patchstack_captcha_registration_form', 'patchstack_captcha_reset_pwd_form', 'patchstack_captcha_public_key', 'patchstack_captcha_private_key', 'patchstack_captcha_type', 'patchstack_captcha_public_key_v3', 'patchstack_captcha_private_key_v3', 'patchstack_captcha_public_key_v3_new', 'patchstack_captcha_private_key_v3_new', 'patchstack_xmlrpc_is_disabled', 'patchstack_application_passwords_disabled' ],
 			'firewall'     => [ 'patchstack_geo_block_enabled', 'patchstack_geo_block_inverse', 'patchstack_basic_firewall_geo_countries', 'patchstack_ip_block_list', 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_firewall_ip_header', 'patchstack_basic_firewall_roles', 'patchstack_disable_htaccess', 'patchstack_add_security_headers', 'patchstack_known_blacklist', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_bad_query_strings', 'patchstack_advanced_character_string_filter', 'patchstack_advanced_blacklist_firewall', 'patchstack_forbid_rfi', 'patchstack_image_hotlinking', 'patchstack_firewall_custom_rules', 'patchstack_firewall_custom_rules_loc', 'patchstack_blackhole_log', 'patchstack_whitelist', 'patchstack_autoblock_blocktime', 'patchstack_autoblock_attempts', 'patchstack_autoblock_minutes' ],
-			'cookienotice' => [ 'patchstack_enable_cookie_notice_message', 'patchstack_cookie_notice_message', 'patchstack_cookie_notice_backgroundcolor', 'patchstack_cookie_notice_textcolor', 'patchstack_cookie_notice_privacypolicy_enable', 'patchstack_cookie_notice_privacypolicy_text', 'patchstack_cookie_notice_privacypolicy_link', 'patchstack_cookie_notice_cookie_expiration', 'patchstack_cookie_notice_opacity', 'patchstack_cookie_notice_accept_text', 'patchstack_cookie_notice_credits' ],
 			'login'        => [ 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_block_bruteforce_ips', 'patchstack_anti_bruteforce_attempts', 'patchstack_anti_bruteforce_minutes', 'patchstack_anti_bruteforce_blocktime', 'patchstack_login_time_block', 'patchstack_login_time_start', 'patchstack_login_time_end', 'patchstack_login_2fa', 'patchstack_login_blocked', 'patchstack_login_whitelist' ],
 		];
 
@@ -298,17 +275,17 @@ class P_Admin_Options extends P_Core {
 					   . '<label for="patchstack_auto_update_' . $option . '"><i>' . $text . '</i></label><br>';
 		}
 
-		$string1 = __( 'Select what needs to be automatically updated each time WordPress looks for updates in the background.<br />Keep in mind that if a plugin update contains a bug or a fatal error, it could break your site.', 'patchstack' );
+		$string1 = esc_attr__( 'Select what needs to be automatically updated each time WordPress looks for updates in the background.<br />Keep in mind that if a plugin update contains a bug or a fatal error, it could break your site.', 'patchstack' );
 		echo wp_kses( ( '<label for="patchstack_auto_update"><i>' . $string1 . '</i></label><br /><br />' . $out ), $this->allowed_html );
 	}
 
 	public function patchstack_basic_firewall_geo_enabled_input() {
-		$string1 = __( 'If enabled and valid countries are specified to be blocked, will block these countries.', 'patchstack' );
+		$string1 = esc_attr__( 'If enabled and valid countries are specified to be blocked, will block these countries.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_geo_block_enabled" id="patchstack_geo_block_enabled" value="1" ' . checked( 1, $this->get_option( 'patchstack_geo_block_enabled' ), false ) . '/><label for="patchstack_geo_block_enabled"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_basic_firewall_geo_inverse_input() {
-		$string1 = __( 'If enabled, instead of checking if the country of the visitor is in the list, check if it is not in the list instead.', 'patchstack' );
+		$string1 = esc_attr__( 'If enabled, instead of checking if the country of the visitor is in the list, check if it is not in the list instead.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_geo_block_inverse" id="patchstack_geo_block_inverse" value="1" ' . checked( 1, $this->get_option( 'patchstack_geo_block_inverse' ), false ) . '/><label for="patchstack_geo_block_inverse"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
@@ -326,17 +303,17 @@ class P_Admin_Options extends P_Core {
 	}
 
 	public function patchstack_xmlrpc_input() {
-		$string1 = __( 'Restrict access to xmlrpc.php by only allowing authenticated users to access it.', 'patchstack' );
+		$string1 = esc_attr__( 'Restrict access to xmlrpc.php by only allowing authenticated users to access it.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_xmlrpc_is_disabled" id="patchstack_xmlrpc_is_disabled" value="1" ' . checked( 1, $this->get_option( 'patchstack_xmlrpc_is_disabled' ), false ) . '/><label for="patchstack_xmlrpc_is_disabled"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_application_passwords_disabled_input() {
-		$string1 = __( 'Disables the application passwords feature introduced in WordPress 5.6.', 'patchstack' );
+		$string1 = esc_attr__( 'Disables the application passwords feature introduced in WordPress 5.6.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_application_passwords_disabled" id="patchstack_application_passwords_disabled" value="1" ' . checked( 1, $this->get_option( 'patchstack_application_passwords_disabled' ), false ) . '/><label for="patchstack_application_passwords_disabled"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_json_is_disabled_input() {
-		$string1 = __( 'Restrict access to the WP Rest API by only allowing authenticated users to access it.', 'patchstack' );
+		$string1 = esc_attr__( 'Restrict access to the WP Rest API by only allowing authenticated users to access it.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_json_is_disabled" id="patchstack_json_is_disabled" value="1" ' . checked( 1, $this->get_option( 'patchstack_json_is_disabled' ), false ) . '/><label for="patchstack_json_is_disabled"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
@@ -346,83 +323,27 @@ class P_Admin_Options extends P_Core {
 	}
 
 	public function patchstack_activity_log_input() {
-		$string1 = __( 'If enabled, a large number of user related activities will be logged.', 'patchstack' );
+		$string1 = esc_attr__( 'If enabled, a large number of user related activities will be logged.', 'patchstack' );
 		echo wp_kses(  '<input type="checkbox" name="patchstack_activity_log_is_enabled" id="patchstack_activity_log_is_enabled" value="1" ' . checked( 1, $this->get_option( 'patchstack_activity_log_is_enabled' ), false ) . '/><label for="patchstack_activity_log_is_enabled"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_activity_log_failed_logins_input() {
-		$string1 = __( 'If this is checked along with the activity logs, we will also log failed login attempts.', 'patchstack' );
+		$string1 = esc_attr__( 'If this is checked along with the activity logs, we will also log failed login attempts.', 'patchstack' );
 		echo wp_kses(  '<input type="checkbox" name="patchstack_activity_log_failed_logins" id="patchstack_activity_log_failed_logins" value="1" ' . checked( 1, $this->get_option( 'patchstack_activity_log_failed_logins' ), false ) . '/><label for="patchstack_activity_log_failed_logins"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_activity_log_failed_logins_db_input() {
-		$string1 = __( 'If this is checked along with the failed login logger, we will also upload the failed login logs to Patchstack.', 'patchstack' );
+		$string1 = esc_attr__( 'If this is checked along with the failed login logger, we will also upload the failed login logs to Patchstack.', 'patchstack' );
 		echo wp_kses(  '<input type="checkbox" name="patchstack_activity_log_failed_logins_db" id="patchstack_activity_log_failed_logins_db" value="1" ' . checked( 1, $this->get_option( 'patchstack_activity_log_failed_logins_db' ), false ) . '/><label for="patchstack_activity_log_failed_logins_db"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_captcha_on_comments_callback() {
-		$string1 = __( 'Check this if you want to enable reCAPTCHA on post comments.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to enable reCAPTCHA on post comments.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_captcha_on_comments" id="patchstack_captcha_on_comments" value="1" ' . checked( 1, $this->get_option( 'patchstack_captcha_on_comments' ), false ) . '/><label for="patchstack_captcha_on_comments"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
-	public function patchstack_cookie_notice_credits_callback() {
-		$string1 = __( 'Check this if you want to display "Powered by Patchstack"', 'patchstack' );
-		echo wp_kses( '<input type="checkbox" name="patchstack_cookie_notice_credits" id="patchstack_cookie_notice_credits" value="1" ' . checked( 1, $this->get_option( 'patchstack_cookie_notice_credits' ), false ) . '/><label for="patchstack_cookie_notice_credits"><i>' . $string1 . '</i></label>' , $this->allowed_html );
-	}
-
-	public function patchstack_enable_cookie_notice_callback() {
-		$string1 = __( 'Check this if you want to enable cookie notice message.', 'patchstack' );
-		echo wp_kses( '<input type="checkbox" name="patchstack_enable_cookie_notice_message" id="patchstack_enable_cookie_notice_message" value="1" ' . checked( 1, $this->get_option( 'patchstack_enable_cookie_notice_message' ), false ) . '/><label for="patchstack_index_views"><i>' . $string1 . '</i></label>' , $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_message_callback() {
-		echo wp_kses( '<textarea name="patchstack_cookie_notice_message" id="patchstack_cookie_notice_message" rows="20" cols="50">' . esc_textarea( $this->get_option( 'patchstack_cookie_notice_message' ) ) . '</textarea>', $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_accept_text_callback() {
-		echo wp_kses( "<input type='text' name='patchstack_cookie_notice_accept_text' id='patchstack_cookie_notice_accept_text' value='" . esc_attr( $this->get_option( 'patchstack_cookie_notice_accept_text' ) ) . "'>", $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_backgroundcolor_callback() {
-		echo wp_kses( "<input type='text' class='jscolor' name='patchstack_cookie_notice_backgroundcolor' id='patchstack_cookie_notice_backgroundcolor' value='" . esc_attr( $this->get_option( 'patchstack_cookie_notice_backgroundcolor' ) ) . "'>", $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_textcolor_callback() {
-		echo wp_kses( "<input type='text' class='jscolor' name='patchstack_cookie_notice_textcolor' id='patchstack_cookie_notice_textcolor' value='" . esc_attr( $this->get_option( 'patchstack_cookie_notice_textcolor' ) ) . "'>", $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_privacypolicy_enable_callback() {
-		$string1 = __( 'Check this if you want to enable policy link.', 'patchstack' );
-		echo wp_kses( '<input type="checkbox" name="patchstack_cookie_notice_privacypolicy_enable" id="patchstack_cookie_notice_privacypolicy_enable" value="1" ' . checked( 1, $this->get_option( 'patchstack_cookie_notice_privacypolicy_enable' ), false ) . '/><label for="patchstack_index_views"><i>' . $string1 . '</i></label>' , $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_privacypolicy_text_callback() {
-		echo wp_kses( "<input type='text' name='patchstack_cookie_notice_privacypolicy_text' id='patchstack_cookie_notice_privacypolicy_text' value='" . esc_attr( $this->get_option( 'patchstack_cookie_notice_privacypolicy_text' ) ) . "'>", $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_privacypolicy_link_callback() {
-		echo wp_kses( "<input type='text' name='patchstack_cookie_notice_privacypolicy_link' id='patchstack_cookie_notice_privacypolicy_link' value='" . esc_attr( $this->get_option( 'patchstack_cookie_notice_privacypolicy_link' ) ) . "'>" , $this->allowed_html );
-		echo wp_kses( '<br /><label for="patchstack_cookie_notice_privacypolicy_link"><i>Starting with http(s)://</i></label>', $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_cookie_expiration_callback() {
-		echo wp_kses ( '
-            <select name="patchstack_cookie_notice_cookie_expiration" id="patchstack_cookie_notice_cookie_expiration">
-              <option ' . ( $this->get_option( 'patchstack_cookie_notice_cookie_expiration' ) == 'after_exit' ? 'selected="selected"' : '' ) . ' value="after_exit">After user re-open browser</option>
-              <option ' . ( $this->get_option( 'patchstack_cookie_notice_cookie_expiration' ) == '1week' ? 'selected="selected"' : '' ) . ' value="1week">After 1 week</option>
-              <option ' . ( $this->get_option( 'patchstack_cookie_notice_cookie_expiration' ) == '1month' ? 'selected="selected"' : '' ) . ' value="1month">After 1 month</option>
-              <option ' . ( $this->get_option( 'patchstack_cookie_notice_cookie_expiration' ) == '1year' ? 'selected="selected"' : '' ) . ' value="1year">After 1 year</option>
-            </select>
-        ', $this->allowed_html );
-	}
-
-	public function patchstack_cookie_notice_opacity_callback() {
-		echo wp_kses( "<input min=1 max=100 type='number' name='patchstack_cookie_notice_opacity' id='patchstack_cookie_notice_opacity' value='" . esc_attr( $this->get_option( 'patchstack_cookie_notice_opacity' ) ) . "'>", $this->allowed_html );
-		echo wp_kses( '<br /><label for="patchstack_cookie_notice_opacity"><i>min: 1 - max: 99 - no opacity: 100</i></label>', $this->allowed_html );
-	}
-
 	public function patchstack_hidewplogin_input() {
-		$string1 = __( 'Block access to the default wp-login.php page. This will require you to visit the URL below which will whitelist your IP address for 10 minutes to login.', 'patchstack' );
+		$string1 = esc_attr__( 'Block access to the default wp-login.php page. This will require you to visit the URL below which will whitelist your IP address for 10 minutes to login.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_mv_wp_login" id="patchstack_mv_wp_login" value="1" ' . checked( 1, $this->get_option( 'patchstack_mv_wp_login' ), false ) . '/><label for="patchstack_mv_wp_login"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
@@ -439,42 +360,42 @@ class P_Admin_Options extends P_Core {
 	}
 
 	public function patchstack_pluginedit_input() {
-		$string1 = __( 'Disable the theme editor. This could protect you from potential automated attacks that involve the theme editor.', 'patchstack' );
+		$string1 = esc_attr__( 'Disable the theme editor. This could protect you from potential automated attacks that involve the theme editor.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_pluginedit" id="patchstack_pluginedit" value="1" ' . checked( 1, $this->get_option( 'patchstack_pluginedit' ), false ) . '/><label for="patchstack_pluginedit"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_add_security_headers_input() {
-		$string1 = __( 'Add security headers to the response by your webserver.', 'patchstack' );
+		$string1 = esc_attr__( 'Add security headers to the response by your webserver.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_add_security_headers" id="patchstack_add_security_headers" value="1" ' . checked( 1, $this->get_option( 'patchstack_add_security_headers' ), false ) . '/><label for="patchstack_add_security_headers"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_basicscanblock_input() {
-		$string1 = __( 'This will attempt to stop basic readme.txt scans. These scans are generally used to determine the version of installed plugins on the site.', 'patchstack' );
+		$string1 = esc_attr__( 'This will attempt to stop basic readme.txt scans. These scans are generally used to determine the version of installed plugins on the site.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_basicscanblock" id="patchstack_basicscanblock" value="1" ' . checked( 1, $this->get_option( 'patchstack_basicscanblock' ), false ) . '/><label for="patchstack_basicscanblock"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_userenum_input() {
-		$string1 = __( 'Make it harder for malicious people to find your WordPress username.', 'patchstack' );
+		$string1 = esc_attr__( 'Make it harder for malicious people to find your WordPress username.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_userenum" id="patchstack_userenum" value="1" ' . checked( 1, $this->get_option( 'patchstack_userenum' ), false ) . '/><label for="patchstack_userenum"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_hidewpversion_input() {
-		$string1 = __( 'Removes the WordPress version in the meta tag in the HTML output.', 'patchstack' );
+		$string1 = esc_attr__( 'Removes the WordPress version in the meta tag in the HTML output.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_hidewpversion" id="patchstack_hidewpversion" value="1" ' . checked( 1, $this->get_option( 'patchstack_hidewpversion' ), false ) . '/><label for="patchstack_hidewpversion"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_rm_readme_input() {
-		$string1 = __( 'Removes the readme.html file from the WordPress root folder.', 'patchstack' );
+		$string1 = esc_attr__( 'Removes the readme.html file from the WordPress root folder.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_rm_readme" id="patchstack_rm_readme" value="1" ' . checked( 1, $this->get_option( 'patchstack_rm_readme' ), false ) . '/><label for="patchstack_rm_readme"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_prevent_default_file_access_input() {
-		$string1 = __( 'Prevent direct access to files such as license.txt, readme.html and wp-config.php', 'patchstack' );
+		$string1 = esc_attr__( 'Prevent direct access to files such as license.txt, readme.html and wp-config.php', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_prevent_default_file_access" id="patchstack_prevent_default_file_access" value="1" ' . checked( 1, $this->get_option( 'patchstack_prevent_default_file_access' ), false ) . '/><label for="patchstack_prevent_default_file_access"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_basic_firewall_input() {
-		$string1 = __( 'Check this if you want to turn on the advanced firewall protection on your site.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to turn on the advanced firewall protection on your site.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_basic_firewall" id="patchstack_basic_firewall" value="1" ' . checked( 1, $this->get_option( 'patchstack_basic_firewall' ), false ) . '/><label for="patchstack_basic_firewall"><i>' . $string1 . '</i></label><br /><br /><i style="color:#d0d0d0">Block IP for <input style="width: 50px;" type="number" name="patchstack_autoblock_blocktime" value="' . esc_attr( $this->get_option( 'patchstack_autoblock_blocktime', 60 ) ) . '" id="patchstack_autoblock_blocktime"> minutes after <input style="width: 50px;" type="number" name="patchstack_autoblock_attempts" value="' . esc_attr( $this->get_option( 'patchstack_autoblock_attempts', 10 ) ) . '" id="patchstack_autoblock_attempts"> blocked requests over a period of <input style="width: 50px;" type="number" name="patchstack_autoblock_minutes" value="' . esc_attr( $this->get_option( 'patchstack_autoblock_minutes', 30 ) ) . '" id="patchstack_autoblock_minutes"> minutes</i>', $this->allowed_html);
 	}
 
@@ -488,52 +409,52 @@ class P_Admin_Options extends P_Core {
 			$text .= '<input type="checkbox" id="patchstack_basic_firewall_roles-' . esc_attr( $key ) . '" name="patchstack_basic_firewall_roles[]" value="' . esc_attr( $key ) . '" ' . checked( 1, in_array( $key, $selected ), false ) . '/><label for="patchstack_basic_firewall_roles-' . esc_attr( $key ) . '"><i>' . esc_html( $val ) . '</i></label><br>';
 		}
 
-		$string1 = __( 'Against which user roles should the firewall not run against?<br />The firewall will always run against guests.<br />', 'patchstack' );
+		$string1 = esc_attr__( 'Against which user roles should the firewall not run against? The firewall will always run against guests.', 'patchstack' );
 		echo wp_kses( ( '<label for="patchstack_basic_firewall_roles"><i>' . $string1 . '</i></label><br />' . $text ), $this->allowed_html );
 	}
 
 	public function patchstack_known_blacklist_input() {
-		$string1 = __( 'Check this if you want to block known malicious connections.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to block known malicious connections.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_known_blacklist" id="patchstack_known_blacklist" value="1" ' . checked( 1, $this->get_option( 'patchstack_known_blacklist' ), false ) . '/><label for="patchstack_known_blacklist"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_firewall_ip_header_input() {
-		$string1 = __( 'If you would like to override the IP address header that we use to grab the IP address of the visitor, enter the value here. This must be a valid value in the $_SERVER array, for example HTTP_X_FORWARDED_FOR. If the $_SERVER value you enter does not exist, it will fallback to the Patchstack IP grab function so ask your hosting company if you are unsure. Leave this empty to use the Patchstack IP address grabbing function.', 'patchstack' );
+		$string1 = esc_attr__( 'If you would like to override the IP address header that we use to grab the IP address of the visitor, enter the value here. This must be a valid value in the $_SERVER array, for example HTTP_X_FORWARDED_FOR. If the $_SERVER value you enter does not exist, it will fallback to the Patchstack IP grab function so ask your hosting company if you are unsure. Leave this empty to use the Patchstack IP address grabbing function.', 'patchstack' );
 		echo wp_kses( '<input type="text" name="patchstack_firewall_ip_header" id="patchstack_firewall_ip_header" value="' . esc_attr( $this->get_option( 'patchstack_firewall_ip_header' ) ) . '"/><br /><br /><label for="patchstack_firewall_ip_header"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_disable_htaccess_input() {
-		$string1 = __( 'Check this if you want to stop us from writing to your .htaccess file. Note that the current changes to the .htaccess file will remain.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to stop us from writing to your .htaccess file. Note that the current changes to the .htaccess file will remain.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_disable_htaccess" id="patchstack_disable_htaccess" value="1" ' . checked( 1, $this->get_option( 'patchstack_disable_htaccess' ), false ) . '/><label for="patchstack_disable_htaccess"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_block_debug_log_access_input() {
-		$string1 = __( 'Check this if you want to block access to the debug.log file that WordPress creates when debug logging is enabled.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to block access to the debug.log file that WordPress creates when debug logging is enabled.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_block_debug_log_access" id="patchstack_block_debug_log_access" value="1" ' . checked( 1, $this->get_option( 'patchstack_block_debug_log_access' ), false ) . '/><label for="patchstack_block_debug_log_access"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_index_views_input() {
-		$string1 = __( 'Check this if you want to disable directory and file listing.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to disable directory and file listing.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_index_views" id="patchstack_index_views" value="1" ' . checked( 1, $this->get_option( 'patchstack_index_views' ), false ) . '/><label for="patchstack_index_views"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_proxy_comment_posting_input() {
-		$string1 = __( 'Check this if you want to forbid proxy comment posting.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to forbid proxy comment posting.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_proxy_comment_posting" id="patchstack_proxy_comment_posting" value="1" ' . checked( 1, $this->get_option( 'patchstack_proxy_comment_posting' ), false ) . '/><label for="patchstack_proxy_comment_posting"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_block_bruteforce_ips_input() {
-		$string1 = __( 'Check this if you want to automatically ban IP addresses that fail to login multiple times in a short span of time.<br />For this feature to work, make sure that "Log failed logins" is turned on at the hardening settings page.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to automatically ban IP addresses that fail to login multiple times in a short span of time.<br />For this feature to work, make sure that "Log failed logins" is turned on at the hardening settings page.', 'patchstack' );
 		echo wp_kses(  '<input type="checkbox" name="patchstack_block_bruteforce_ips" id="patchstack_block_bruteforce_ips" value="1" ' . checked( 1, $this->get_option( 'patchstack_block_bruteforce_ips' ), false ) . '/><label for="patchstack_block_bruteforce_ips"><i>' . $string1 . '</i></label><br /><br /><i style="color:#d0d0d0">Block IP for <input style="width: 50px;" type="number" name="patchstack_anti_bruteforce_blocktime" value="' . esc_attr( $this->get_option( 'patchstack_anti_bruteforce_blocktime', 60 ) ) . '" id="patchstack_anti_bruteforce_blocktime"> minutes after <input style="width: 50px;" type="number" name="patchstack_anti_bruteforce_attempts" value="' . esc_attr( $this->get_option( 'patchstack_anti_bruteforce_attempts', 10 ) ) . '" id="patchstack_anti_bruteforce_attempts"> failed login attempts over a period of <input style="width: 50px;" type="number" name="patchstack_anti_bruteforce_minutes" value="' . esc_attr( $this->get_option( 'patchstack_anti_bruteforce_minutes', 5 ) ) . '" id="patchstack_anti_bruteforce_minutes"> minutes</i>' , $this->allowed_html );
 	}
 
 	public function patchstack_login_time_block_input() {
-		$string1 = __( 'Check this if you want to enforce specific logon hours.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to enforce specific logon hours.', 'patchstack' );
 		echo wp_kses(  '<input type="checkbox" name="patchstack_login_time_block" id="patchstack_login_time_block" value="1" ' . checked( 1, $this->get_option( 'patchstack_login_time_block' ), false ) . '/><label for="patchstack_login_time_block"><i>' . $string1 . '</i></label><br /><br /><i style="color:#d0d0d0">Allow login between <input style="width: 70px;" type="text" name="patchstack_login_time_start" value="' . esc_attr( $this->get_option( 'patchstack_login_time_start', '00:00' ) ) . '" id="patchstack_login_time_start" autocomplete="off"> and <input style="width: 70px;" type="text" name="patchstack_login_time_end" value="' . esc_attr( $this->get_option( 'patchstack_login_time_end', '23:59' ) ) . '" id="patchstack_login_time_end" autocomplete="off"><br />Times must be in the 24 hour clock format.<br />The logon hours are also based on the current time of your site: ' . current_time( 'H:i:s' ) . '</i>', $this->allowed_html );
 	}
 
 	public function patchstack_login_2fa_input() {
-		$string1 = __( 'Check this if you want to make it possible for users to enable two factor authentication (2FA) on their account.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to make it possible for users to enable two factor authentication (2FA) on their account.', 'patchstack' );
 		echo wp_kses(  '<input type="checkbox" name="patchstack_login_2fa" id="patchstack_login_2fa" value="1" ' . checked( 1, $this->get_option( 'patchstack_login_2fa' ), false ) . '/><label for="patchstack_login_2fa"><i>' . $string1 . '<br />Once enabled, users can configure 2FA on the "Edit My Profile" page which is located <a href="' . admin_url( 'profile.php' ) . '">here</a>.</i></label><br />' , $this->allowed_html );
 	}
 
@@ -577,7 +498,7 @@ class P_Admin_Options extends P_Core {
 			}
 		}
 
-		$string1 = __( 'These are the IP addresses that are currently blocked because of too many failed login attempts.<br />These are not the IP addresses banned by the firewall itself.<br /><br />', 'patchstack' );
+		$string1 = esc_attr__( 'These are the IP addresses that are currently blocked because of too many failed login attempts.<br />These are not the IP addresses banned by the firewall itself.<br /><br />', 'patchstack' );
 		echo wp_kses( '<label><i>' . $string1 . '</i></label>', $this->allowed_html );
 		echo wp_kses( '<div class="patchstack-content-inner-table"><table class="table dataTable patchstack-bi" style="margin: 0 !important;"><thead><tr><th>IP Address</th><th style="padding-left: 0 !important;">Last Attempt</th><th style="padding-left: 0 !important;">Unblock</th><th style="padding-left: 0 !important;">Unbock &amp; Whitelist</th></tr></thead><tbody>' . $rows . '</table></div>', $this->allowed_html );
 	}
@@ -588,12 +509,12 @@ class P_Admin_Options extends P_Core {
 	}
 
 	public function patchstack_image_hotlinking_input() {
-		$string1 = __( 'Check this if you want to prevent hotlinking to images on your site.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to prevent hotlinking to images on your site.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_image_hotlinking" id="patchstack_image_hotlinking" value="1" ' . checked( 1, $this->get_option( 'patchstack_image_hotlinking' ), false ) . '/><label for="patchstack_image_hotlinking"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_firewall_custom_rules_input() {
-		$string1 = __( 'Add custom .htaccess rules here if you know what you are doing, otherwise you may break your site. So be careful.', 'patchstack' );
+		$string1 = esc_attr__( 'Add custom .htaccess rules here if you know what you are doing, otherwise you may break your site. So be careful.', 'patchstack' );
 		echo wp_kses( '<textarea name="patchstack_firewall_custom_rules" id="patchstack_firewall_custom_rules" rows="20" cols="50" placeholder="' . $string1 . '">', $this->allowed_html );
 		$rules = $this->get_option( 'patchstack_firewall_custom_rules' );
 		if ( isset( $rules ) ) {
@@ -614,17 +535,17 @@ class P_Admin_Options extends P_Core {
 	}
 
 	public function patchstack_captcha_login_form_input() {
-		$string1 = __( 'Check this if you want to enable reCAPTCHA on user login.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to enable reCAPTCHA on user login.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_captcha_login_form" id="patchstack_captcha_login_form" value="1" ' . checked( 1, $this->get_option( 'patchstack_captcha_login_form' ), false ) . '/><label for="patchstack_captcha_login_form"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_captcha_registration_form_input() {
-		$string1 = __( 'Check this if you want to enable reCAPTCHA on registration.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to enable reCAPTCHA on registration.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_captcha_registration_form" id="patchstack_captcha_registration_form" value="1" ' . checked( 1, $this->get_option( 'patchstack_captcha_registration_form' ), false ) . '/><label for="patchstack_captcha_registration_form"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_captcha_reset_pwd_form_input() {
-		$string1 = __( 'Check this if you want to enable reCAPTCHA on password reset.', 'patchstack' );
+		$string1 = esc_attr__( 'Check this if you want to enable reCAPTCHA on password reset.', 'patchstack' );
 		echo wp_kses( '<input type="checkbox" name="patchstack_captcha_reset_pwd_form" id="patchstack_captcha_reset_pwd_form" value="1" ' . checked( 1, $this->get_option( 'patchstack_captcha_reset_pwd_form' ), false ) . '/><label for="patchstack_captcha_reset_pwd_form"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
@@ -638,12 +559,12 @@ class P_Admin_Options extends P_Core {
 	}
 
 	public function patchstack_captcha_public_key_input() {
-		$string1 = __( '<br /><br />Enter the reCAPTCHA site key here.<br />Click <a href="https://docs.patchstack.com/discuss/62e286cf7040390013b73bf7" target="_blank">here</a> for a guide on how to get the site / secret key.', 'patchstack' );
+		$string1 = __( '<br /><br />Enter the reCAPTCHA site key here.<br />Click <a href="https://docs.patchstack.com/faq-troubleshooting/integrations/how-to-get-the-site-key-and-secret-key-for-the-recaptcha-feature/" target="_blank">here</a> for a guide on how to get the site / secret key.', 'patchstack' );
 		echo wp_kses( '<input style="display:none;" type="text" name="patchstack_captcha_public_key" id="patchstack_captcha_public_key" value="' . esc_attr( $this->get_option( 'patchstack_captcha_public_key', '' ) ) . '"/><input style="display:none;" type="text" name="patchstack_captcha_public_key_v3" id="patchstack_captcha_public_key_v3" value="' . esc_attr( $this->get_option( 'patchstack_captcha_public_key_v3', '' ) ) . '"/><input style="display:none;" type="text" name="patchstack_captcha_public_key_v3_new" id="patchstack_captcha_public_key_v3_new" value="' . esc_attr( $this->get_option( 'patchstack_captcha_public_key_v3_new', '' ) ) . '"/><label for="patchstack_captcha_public_key"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 
 	public function patchstack_captcha_private_key_input() {
-		$string1 = __( '<br /><br />Enter the reCAPTCHA secret key here.<br />Click <a href="https://docs.patchstack.com/discuss/62e286cf7040390013b73bf7" target="_blank">here</a> for a guide on how to get the site / secret key.', 'patchstack' );
+		$string1 = __( '<br /><br />Enter the reCAPTCHA secret key here.<br />Click <a href="https://docs.patchstack.com/faq-troubleshooting/integrations/how-to-get-the-site-key-and-secret-key-for-the-recaptcha-feature/" target="_blank">here</a> for a guide on how to get the site / secret key.', 'patchstack' );
 		echo wp_kses( '<input style="display:none;" type="text" name="patchstack_captcha_private_key" id="patchstack_captcha_private_key" value="' . esc_attr( $this->get_option( 'patchstack_captcha_private_key', '' ) ) . '"/><input style="display:none;" type="text" name="patchstack_captcha_private_key_v3" id="patchstack_captcha_private_key_v3" value="' . esc_attr( $this->get_option( 'patchstack_captcha_private_key_v3', '' ) ) . '"/><input style="display:none;" type="text" name="patchstack_captcha_private_key_v3_new" id="patchstack_captcha_private_key_v3_new" value="' . esc_attr( $this->get_option( 'patchstack_captcha_private_key_v3_new', '' ) ) . '"/><label for="patchstack_captcha_private_key"><i>' . $string1 . '</i></label>' , $this->allowed_html );
 	}
 

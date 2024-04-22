@@ -16,6 +16,10 @@ class P_Event_Posts extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
+		if ( ! get_option( 'patchstack_activity_log_posts', 0 ) ) {
+			return;
+		}
+
 		add_action( 'transition_post_status', [ &$this, 'transition_post_status' ], 10, 3 );
 		add_action( 'delete_post', [ &$this, 'delete_post' ] );
 	}
@@ -29,7 +33,7 @@ class P_Event_Posts extends P_Event_Log {
 	protected function _draft_or_post_title( $post = 0 ) {
 		$title = esc_html( get_the_title( $post ) );
 		if ( empty( $title ) ) {
-			return __( '(no title)', 'patchstack' );
+			return esc_attr__( '(no title)', 'patchstack' );
 		}
 
 		return $title;

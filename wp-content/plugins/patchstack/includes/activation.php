@@ -40,14 +40,21 @@ class P_Activation extends P_Core {
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			return;
 		}
-		
-		if ( $plugin == $this->plugin->basename ) {
+
+		if ( $plugin == $this->plugin->basename && ! isset( $_REQUEST['_ajax_nonce'] ) ) {
+
+			// Determine if secret token was set, if so, sync with API.
+			$attemptAuto = false;
+			$secretToken = get_option( 'patchstack_activation_secret', '' );
+			if ( ! empty( $secretToken ) ) {
+				$attemptAuto = true;
+			}
 
 			// In case of multisite, we want to redirect the user to a different page.
 			if ( $network_activation ) {
-				wp_safe_redirect( network_admin_url( 'admin.php?page=patchstack-multisite-settings&tab=multisite&ps_activated=1' ) );
+				wp_safe_redirect( network_admin_url( 'admin.php?page=patchstack-multisite-settings&tab=multisite&ps_activated=1' . ($attemptAuto ? '&ps_autoa=1' : '') ) );
 			} else {
-				wp_safe_redirect( admin_url( 'admin.php?page=' . $this->plugin->name . '&ps_activated=1' ) );
+				wp_safe_redirect( admin_url( 'admin.php?page=' . $this->plugin->name . '&ps_activated=1' . ($attemptAuto ? '&ps_autoa=1' : '') ) );
 			}
 			exit;
 		}
@@ -116,7 +123,7 @@ class P_Activation extends P_Core {
 		deactivate_plugins( $this->plugin->basename );
 
 		// Compile default message.
-		$default_message = __( 'Patchstack could not be activated due to a conflict. See below for information regarding the conflict.<br />', 'patchstack' );
+		$default_message = esc_attr__( 'Patchstack could not be activated due to a conflict. See below for information regarding the conflict.<br />', 'patchstack' );
 
 		// Print the errors on the screen.
 		echo wp_kses_post( $default_message );
@@ -159,12 +166,16 @@ class P_Activation extends P_Core {
 		$this->migrate();
 		add_option( 'patchstack_first_activated', '1' );
 
+		// Whether or not we should send a secret key to our API.
+		$sendSecret = false;
+
 		// Activate the license.
 		if ( $this->plugin->client_id != 'PATCHSTACK_CLIENT_ID' && $this->plugin->private_key != 'PATCHSTACK_PRIVATE_KEY' ) {
 			$this->alter_license( $this->plugin->client_id, $this->plugin->private_key, 'activate' );
 		} elseif ( get_option( 'patchstack_clientid', false ) != false && get_option( 'patchstack_secretkey', false ) != false ) {
 			$this->alter_license( get_option( 'patchstack_clientid' ), $this->get_secret_key(), 'activate' );
 		} else {
+			$sendSecret = true;
 			update_option( 'patchstack_license_free', '1' );
 		}
 
@@ -174,6 +185,10 @@ class P_Activation extends P_Core {
 		if ( ! empty( $token ) ) {
 			$api->update_firewall_status( [ 'status' => 1 ] );
 			$api->update_url( [ 'plugin_url' => get_option( 'siteurl' ) ] );
+		} elseif ( $sendSecret ) {
+			$secretToken = wp_generate_password( 36, true );
+			update_option( 'patchstack_activation_secret', $secretToken );
+			update_option( 'patchstack_activation_time', time() + 59 ) ;
 		}
 
 		// Immediately send software data to our server to set firewall as enabled.
@@ -349,6 +364,11 @@ class P_Activation extends P_Core {
 	 * @return array
 	 */
 	public function alter_license( $id, $secret, $action ) {
+		// Set the default option values if calling through CLI.
+		if ( defined( 'WP_CLI' ) && WP_CLI) {
+			$this->plugin->admin_options->settings_init();
+		}
+
 		// Store current keys in tmp variable so in case it fails, we can set it back.
 		$tmp_id  = get_option( 'patchstack_clientid' );
 		$tmp_key = $this->get_secret_key();
@@ -365,8 +385,10 @@ class P_Activation extends P_Core {
 			if ( ! $api_result ) {
 				update_option( 'patchstack_clientid', $tmp_id );
 				$this->set_secret_key( $tmp_key );
+
 				return [
 					'result'  => 'error',
+					'body' => json_encode($this->plugin->api->message),
 					'message' => 'Cannot activate license!',
 				];
 			}
@@ -379,6 +401,7 @@ class P_Activation extends P_Core {
 			if ( ! empty( $token ) ) {
 				do_action( 'patchstack_send_software_data' );
 				if ( get_option( 'patchstack_license_free', 0 ) != 1 ) {
+					update_option( 'patchstack_basic_firewall', 1 );
 					do_action( 'patchstack_post_firewall_rules' );
 					do_action( 'patchstack_post_dynamic_firewall_rules' );
 					$this->header();
@@ -388,6 +411,7 @@ class P_Activation extends P_Core {
 				$this->plugin->api->update_url( [ 'plugin_url' => get_option( 'siteurl' ) ] );
 				$this->plugin->api->ping();
 			}
+
 			return [
 				'result'  => 'success',
 				'message' => 'License activated!',
@@ -398,6 +422,7 @@ class P_Activation extends P_Core {
 		if ( $action == 'deactivate' ) {
 			update_option( 'patchstack_api_token', '' );
 			update_option( 'patchstack_license_activated', '0' );
+	
 			return [
 				'result'  => 'success',
 				'message' => 'License deactivated!',

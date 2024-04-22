@@ -113,12 +113,6 @@ class P_Multisite extends P_Core {
 				$options = [ 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_block_bruteforce_ips', 'patchstack_anti_bruteforce_blocktime', 'patchstack_anti_bruteforce_attempts', 'patchstack_anti_bruteforce_minutes', 'patchstack_login_time_block', 'patchstack_login_time_start', 'patchstack_login_time_end', 'patchstack_login_2fa', 'patchstack_login_whitelist' ];
 				$this->save_options( $options );
 				break;
-
-			// Save cookie notice settings
-			case 'patchstack_cookienotice_settings_group':
-				$options = [ 'patchstack_enable_cookie_notice_message', 'patchstack_cookie_notice_message', 'patchstack_cookie_notice_accept_text', 'patchstack_cookie_notice_backgroundcolor', 'patchstack_cookie_notice_textcolor', 'patchstack_cookie_notice_privacypolicy_enable', 'patchstack_cookie_notice_privacypolicy_text', 'patchstack_cookie_notice_privacypolicy_link', 'patchstack_cookie_notice_cookie_expiration', 'patchstack_cookie_notice_opacity', 'patchstack_cookie_notice_credits' ];
-				$this->save_options( $options );
-				break;
 		}
 	}
 

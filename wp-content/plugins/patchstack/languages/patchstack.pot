@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv3.
 msgid ""
 msgstr ""
-"Project-Id-Version: Patchstack Security 2.2.7\n"
+"Project-Id-Version: Patchstack Security 2.2.12\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/patchstack\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -425,11 +425,11 @@ msgid "Check this if you want to enable reCAPTCHA on password reset."
 msgstr ""
 
 #: includes/admin/options.php:641
-msgid "<br /><br />Enter the reCAPTCHA site key here.<br />Click <a href=\"https://docs.patchstack.com/discuss/62e286cf7040390013b73bf7\" target=\"_blank\">here</a> for a guide on how to get the site / secret key."
+msgid "<br /><br />Enter the reCAPTCHA site key here.<br />Click <a href=\"https://docs.patchstack.com/faq-troubleshooting/integrations/how-to-get-the-site-key-and-secret-key-for-the-recaptcha-feature/\" target=\"_blank\">here</a> for a guide on how to get the site / secret key."
 msgstr ""
 
 #: includes/admin/options.php:646
-msgid "<br /><br />Enter the reCAPTCHA secret key here.<br />Click <a href=\"https://docs.patchstack.com/discuss/62e286cf7040390013b73bf7\" target=\"_blank\">here</a> for a guide on how to get the site / secret key."
+msgid "<br /><br />Enter the reCAPTCHA secret key here.<br />Click <a href=\"https://docs.patchstack.com/faq-troubleshooting/integrations/how-to-get-the-site-key-and-secret-key-for-the-recaptcha-feature/\" target=\"_blank\">here</a> for a guide on how to get the site / secret key."
 msgstr ""
 
 #: includes/admin/options.php:657

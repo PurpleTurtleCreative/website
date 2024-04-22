@@ -16,6 +16,11 @@ class P_Api extends P_Core {
 	public $blog_id;
 
 	/**
+	 * @var string Error message from the API.
+	 */
+	public $message;
+
+	/**
 	 * Add the actions required for the API.
 	 *
 	 * @param Patchstack $core
@@ -60,6 +65,7 @@ class P_Api extends P_Core {
 		}
 
 		// If we reach this, it means we were not able to get the access token.
+		$this->message = $response;
 		$this->update_blog_option( $this->blog_id, 'patchstack_api_token', '' );
 		return null;
 	}
@@ -69,7 +75,7 @@ class P_Api extends P_Core {
 	 *
 	 * @param string $clientid The API client ID.
 	 * @param string $secretkey The API secret key.
-	 * @return string|array
+	 * @return string|array|object
 	 */
 	public function fetch_access_token( $clientid = '', $secretkey = '' ) {
 		// Skeleton for the response data.
@@ -92,7 +98,7 @@ class P_Api extends P_Core {
 		// Make sure these values are set.
 		if ( empty( $client_id ) || empty( $client_secret ) ) {
 			$response_data->result  = 'failed';
-			$response_data->message = __( 'API keys missing! Unable to obtain an access token.', 'patchstack' );
+			$response_data->message = esc_attr__( 'API keys missing! Unable to obtain an access token.', 'patchstack' );
 			return $response_data;
 		}
 
@@ -116,9 +122,19 @@ class P_Api extends P_Core {
 		);
 
 		// Stop if we received an error from the API.
-		if ( is_wp_error( $response ) ) {
+		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) == 401 ) {
+			$this->message = wp_remote_retrieve_body( $response );
+
+			if ( wp_remote_retrieve_response_code( $response ) == 401 ) {
+				$this->update_blog_option( $this->blog_id, 'patchstack_clientid', '' );
+				$this->update_blog_option( $this->blog_id, 'patchstack_secretkey', '' );
+				$this->update_blog_option( $this->blog_id, 'patchstack_secretkey_nonce', '' );
+				$this->update_blog_option( $this->blog_id, 'patchstack_api_token', '' );
+			}
+
 			$response_data->result  = 'failed';
-			$response_data->message = __( 'Unexpected error! Unable to obtain an access token.', 'patchstack' ) . $response->get_error_message();
+			$response_data->message = esc_attr__( 'Unexpected error! Unable to obtain an access token. Error code: ', 'patchstack' ) . wp_remote_retrieve_response_code( $response );
+			$response_data->body = $this->message;
 			return $response_data;
 		}
 
@@ -142,65 +158,9 @@ class P_Api extends P_Core {
 			return $response_data;
 		} elseif ( isset( $result->error ) ) {
 			$response_data->result  = $result->error;
-			$response_data->message = __( 'Unexpected error! Unable to obtain an access token.', 'patchstack' ) . $result->message;
+			$response_data->message = esc_attr__( 'Unexpected error! Unable to obtain an access token.', 'patchstack' ) . $result->message;
 			return $response_data;
 		}
-	}
-
-	/**
-	 * Checks if the API token has expired.
-	 *
-	 * @param integer $expiresin API token expiry.
-	 * @return boolean If the token has expired.
-	 */
-	public function has_expired( $expiresin ) {
-		return ( $expiresin < ( time() + 30 ) );
-	}
-
-	/**
-	 * Retrieve the status of a license.
-	 *
-	 * @return void|array
-	 */
-	public function update_license_status() {
-		// Get current license status.
-		$response = $this->send_request( '/api/license/verify', 'GET' );
-
-		// Update the representing options.
-		if ( isset( $response['expires_at'] ) ) {
-			$this->update_blog_option( $this->blog_id, 'patchstack_license_expiry', $response['expires_at'] );
-		}
-
-		if ( isset( $response['free'] ) ) {
-			$this->update_blog_option( $this->blog_id, 'patchstack_license_free', $response['free'] == false ? 0 : 1 );
-
-			if ( $response['free'] == true ) {
-				$this->update_blog_option( $this->blog_id, 'patchstack_show_settings', 0 );
-				$this->update_blog_option( $this->blog_id, 'patchstack_firewall_rules_v3', '[]' );
-			} else {
-				$this->send_header_request();
-			}
-		}
-
-		if ( isset( $response['active'] ) ) {
-			$this->update_blog_option( $this->blog_id, 'patchstack_license_activated', $response['active'] == true );
-		}
-
-		if ( isset( $response['class'] ) ) {
-			$this->update_blog_option( $this->blog_id, 'patchstack_subscription_class', $response['class'] );
-			$this->update_blog_option( $this->blog_id, 'patchstack_last_license_check', time() );
-		}
-
-		if ( isset( $response['managed'], $response['managed_string'] ) ) {
-			$this->update_blog_option( $this->blog_id, 'patchstack_managed', $response['managed'] );
-			$this->update_blog_option( $this->blog_id, 'patchstack_managed_text', $response['managed_string'] );
-		}
-
-		if ( isset( $response['site_id'] ) ) {
-			$this->update_blog_option( $this->blog_id, 'patchstack_site_id', $response['site_id'] );
-		}
-
-		return $response;
 	}
 
 	/**
@@ -239,11 +199,85 @@ class P_Api extends P_Core {
 
 		// Check error or status code.
 		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) != 200 ) {
+
+			// See if we received a site API connection termination.
+			$body = json_decode( wp_remote_retrieve_body( $response ), true );
+			if ( isset( $body['cancel'] ) ) {
+				$this->update_blog_option( $this->blog_id, 'patchstack_clientid', '' );
+				$this->update_blog_option( $this->blog_id, 'patchstack_secretkey', '' );
+				$this->update_blog_option( $this->blog_id, 'patchstack_secretkey_nonce', '' );
+				$this->update_blog_option( $this->blog_id, 'patchstack_api_token', '' );
+			}
+
+			return wp_remote_retrieve_response_code( $response );
+		}
+
+		return json_decode( wp_remote_retrieve_body( $response ), true );
+	}
+
+	/**
+	 * Checks if the API token has expired.
+	 *
+	 * @param integer $expiresin API token expiry.
+	 * @return boolean If the token has expired.
+	 */
+	public function has_expired( $expiresin ) {
+		return ( $expiresin < ( time() + 30 ) );
+	}
+
+	/**
+	 * Retrieve the status of a license.
+	 *
+	 * @return void|array
+	 */
+	public function update_license_status() {
+		// Get current license status.
+		$response = $this->send_request( '/api/license/verify', 'GET' );
+
+		// Invalid license, or no longer active.
+		if ( ! is_array( $response ) && $response == 422 ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_clientid', '' );
+			$this->update_blog_option( $this->blog_id, 'patchstack_secretkey', '' );
+			$this->update_blog_option( $this->blog_id, 'patchstack_secretkey_nonce', '' );
 			$this->update_blog_option( $this->blog_id, 'patchstack_api_token', '' );
 			return;
 		}
 
-		return json_decode( wp_remote_retrieve_body( $response ), true );
+		// Update the representing options.
+		if ( isset( $response['expires_at'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_license_expiry', $response['expires_at'] );
+		}
+
+		if ( isset( $response['free'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_license_free', $response['free'] == false ? 0 : 1 );
+
+			if ( $response['free'] == true ) {
+				$this->update_blog_option( $this->blog_id, 'patchstack_show_settings', 0 );
+				$this->update_blog_option( $this->blog_id, 'patchstack_firewall_rules_v3', '[]' );
+			} else {
+				$this->send_header_request();
+			}
+		}
+
+		if ( isset( $response['active'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_license_activated', $response['active'] == true );
+		}
+
+		if ( isset( $response['class'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_subscription_class', $response['class'] );
+			$this->update_blog_option( $this->blog_id, 'patchstack_last_license_check', time() );
+		}
+
+		if ( isset( $response['managed'], $response['managed_string'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_managed', $response['managed'] );
+			$this->update_blog_option( $this->blog_id, 'patchstack_managed_text', $response['managed_string'] );
+		}
+
+		if ( isset( $response['site_id'] ) ) {
+			$this->update_blog_option( $this->blog_id, 'patchstack_site_id', $response['site_id'] );
+		}
+
+		return $response;
 	}
 
 	/**
@@ -380,5 +414,45 @@ class P_Api extends P_Core {
 	 */
 	public function ping() {
 		$this->send_request( '/api/ping', 'POST', [ 'firewall' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ? 1 : 0 ] );
+	}
+
+	/**
+	 * Generate a secret value and send it to the Patchstack API for quick activation.
+	 * 
+	 * @param string $secret
+	 * @return void
+	 */
+	public function send_secret_token( $secret ) {
+		$response = wp_remote_request(
+			$this->plugin->api_url . '/api/secret',
+			[
+				'method'      => 'POST',
+				'timeout'     => 60,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking'    => true,
+				'headers'     => [
+					'Source-Host'   => get_site_url(),
+				],
+				'body'        => [
+					'secret' => $secret,
+					'url' => get_site_url()
+				],
+				'cookies'     => [],
+			]
+		);
+
+		// Check error or status code.
+		if ( is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) != 200 ) {
+			return false;
+		}
+
+		// Determine if auto-activation succeeded.
+		$result = json_decode( wp_remote_retrieve_body( $response ), true );
+		if ($result && isset($result['activated'])) {
+			return $result['activated'];
+		}
+
+		return false;
 	}
 }

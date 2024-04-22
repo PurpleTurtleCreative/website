@@ -32,27 +32,27 @@ class P_Cron extends P_Core {
 		// Define the scheduled tasks.
 		$schedules['patchstack_15minute'] = [
 			'interval' => ( 60 * 15 ),
-			'display'  => __( 'Every 15 Minutes' ),
+			'display'  => esc_attr__( 'Every 15 Minutes' ),
 		];
 
 		$schedules['patchstack_hourly'] = [
 			'interval' => ( 60 * 60 ),
-			'display'  => __( 'Every Hour' ),
+			'display'  => esc_attr__( 'Every Hour' ),
 		];
 
 		$schedules['patchstack_trihourly'] = [
 			'interval' => ( 60 * 60 * 3 ),
-			'display'  => __( 'Every 3 Hours' ),
+			'display'  => esc_attr__( 'Every 3 Hours' ),
 		];
 
 		$schedules['patchstack_twicedaily'] = [
 			'interval' => ( 60 * 60 * 12 ),
-			'display'  => __( '2 Times Daily' ),
+			'display'  => esc_attr__( '2 Times Daily' ),
 		];
 
 		$schedules['patchstack_daily'] = [
 			'interval' => ( 60 * 60 * 24 ),
-			'display'  => __( '1 Time Daily' ),
+			'display'  => esc_attr__( '1 Time Daily' ),
 		];
 
 		return $schedules;
@@ -99,16 +99,20 @@ class P_Cron extends P_Core {
 		];
 
 		// Schedule the events if they are not scheduled yet.
-		foreach ( $free as $event => $interval ) {
-			if ( ! wp_next_scheduled( $event ) ) {
-				wp_schedule_event( $crons[ $interval ], $interval, $event );
-			}
-		}
-
-		if ( $this->get_option( 'patchstack_license_free', 0 ) == 0 ) {
-			foreach ( $premium as $event => $interval ) {
+		if ( $this->get_option( 'patchstack_clientid', false ) ) {
+			// These events should always be scheduled for activated sites.
+			foreach ( $free as $event => $interval ) {
 				if ( ! wp_next_scheduled( $event ) ) {
 					wp_schedule_event( $crons[ $interval ], $interval, $event );
+				}
+			}
+
+			// Only schedule these events for protected sites.
+			if ( $this->get_option( 'patchstack_license_free', 0 ) != 1 && $this->license_is_active() ) {
+				foreach ( $premium as $event => $interval ) {
+					if ( ! wp_next_scheduled( $event ) ) {
+						wp_schedule_event( $crons[ $interval ], $interval, $event );
+					}
 				}
 			}
 		}

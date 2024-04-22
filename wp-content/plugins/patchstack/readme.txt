@@ -4,8 +4,8 @@ Tags: security, wordpress security, plugin security, theme security, virtual pat
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 4.4
-Tested up to: 6.4
-Stable tag: 2.2.7
+Tested up to: 6.5
+Stable tag: 2.2.12
 Requires PHP: 5.6
 
 Patchstack automatically identifies & mitigates security vulnerabilities in WordPress plugins, themes, and core.
@@ -37,8 +37,8 @@ https://www.youtube.com/watch?v=LL3Yy15rJ3g
 
 **Important Resources**
 
-* [Support](https://docs.patchstack.com/docs)
-* [Changelog](https://docs.patchstack.com/docs/plugin-changelog)
+* [Support](https://docs.patchstack.com)
+* [Changelog](https://docs.patchstack.com/changelog/plugin-changelog/)
 * [Facebook Community](https://www.facebook.com/groups/patchstackcommunity)
 * [Vulnerability news blog post](https://patchstack.com/articles/wordpress-vulnerability)
 * [Patchstack vulnerability database](https://patchstack.com/database)
@@ -91,10 +91,6 @@ With Patchstack Developer version you can identify plugin vulnerabilities, recei
 * WordPress core vulnerability detection (also included in free)
 * vPatches for WordPress plugins
 * vPatches for WordPress themes
-* vPatches for WordPress core
-* Insecure configuration detection
-* Domain name and SSL certificate expiration detection
-* HTTP security headers detection
 * 0-day protection (OWASP top 10)
 * Unlimited custom firewall rules
 * Logs and analytics
@@ -109,11 +105,6 @@ We do not perform any external checks on your website. We do however match the p
 = How will I be alerted if I have a vulnerability on my site? =
 With the Patchstack Community (free) version, you can set up alerts using email (Slack notifications are available in the Developer plan). 
 
-= What is Patchstack Incident Response? =
-We offer **Incident Response which will cover the sites on all occasions (even if the site was not directly attacked).**
-In the Developer version, we monitor the site we protect from a wide range of attacks, but if something happens, we will have our forensics team step in, collect the evidence, clean up the website and create a report to help you improve the security of your sites even more.
-The add-on can possibly help you save tons of money when something happens. It costs $5 per site/month. **Enable Incident Response on your website [here](https://app.patchstack.com/addons).**
-
 = Does Patchstack conflict with any other security plugins? =
 We have not had issues with Patchstack conflicting with other security services, but we do recommend using as few different tools on your WordPress site as possible. Avoid enabling similar features if using another security plugin to prevent potential site-breaking issues. If you have any issues with other security tools, please contact our support so we could investigate the issue.
 
@@ -125,9 +116,6 @@ Patchstack free version does not include a firewall, the free version is there t
 
 = Will Patchstack slow down my website? =
 The free version of Patchstack does not run anything aside from scheduled tasks on your website, so there will be no noticeable difference. The paid version does run several tasks on each page load but based on tests from us and from our customers we have seen that Patchstack does not affect your website's performance in any significant or noticeable way.
-
-= What if my site has already been hacked? =
-Since Patchstack does not scan your files, it won't help you in finding malware on your website. If you have any indication that your website is hacked, please contact our support so we can take a look and see how or what caused any of the problems you are facing. Our support is available only on live chat on our [website](https://patchstack.com)
 
 = Does Patchstack work on a multisite environment? =
 Once you install the plugin on a multisite installation, you will see a page where you can activate Patchstack on the sites that are available on the multisite installation.
@@ -176,4 +164,4 @@ You can report any security bugs found in the source code of this plugin through
 
 == Changelog ==
 
-To view the changelog of the Patchstack plugin, please go to [here](https://docs.patchstack.com/docs/plugin-changelog).
+To view the changelog of the Patchstack plugin, please go to [here](https://docs.patchstack.com/changelog/plugin-changelog/).

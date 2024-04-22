@@ -58,19 +58,11 @@ class PostmanEmailLogs {
             $id = sanitize_text_field( $_GET['log_id'] );
             $email_query_log = new PostmanEmailQueryLog();
             $log = $email_query_log->get_log( $id, '' );
+            $header = $log['original_headers'];
             $msg = $log['original_message'];
             $msg = preg_replace( "/<script\b[^>]*>(.*?)<\/script>/s", '', $msg );
 
-            // Strip <xml> and comment tags.
-            $msg = preg_replace( '/<xml\b[^>]*>(.*?)<\/xml>/is', '', $msg );
-            $msg = preg_replace( '/<!--(.*?)-->/', '', $msg );
-
-            $allowed_html = wp_kses_allowed_html( 'post' );
-            $allowed_html['style'][''] = true;
-
-            $msg = wp_kses( $msg, $allowed_html );
-
-            echo '<pre>' . $msg . '</pre>';
+            echo ( isset ( $header ) && strpos( $header, "text/html" ) ) ? $msg : '<pre>' . $msg . '</pre>' ;
 
             die;
 
@@ -520,7 +512,7 @@ class PostmanEmailLogs {
 			$logs = $email_query_log->get_all_logs( $args );
             $csv_headers = array(
                 'solution',
-                'success',
+                'response',
                 'from_header',
                 'to_header',
                 'cc_header',
@@ -550,7 +542,7 @@ class PostmanEmailLogs {
             foreach ( $logs as $log ) {
 
                 $data[0] = $log->solution;
-                $data[1] = $log->success;
+                $data[1] = $log->success == 1 ? 'Sent' : $log->success;
                 $data[2] = $log->from_header;
                 $data[3] = $log->to_header;
                 $data[4] = $log->cc_header;

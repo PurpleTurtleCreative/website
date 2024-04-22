@@ -16,6 +16,10 @@ class P_Event_Comments extends P_Event_Log {
 	 * @return void
 	 */
 	public function __construct() {
+		if ( ! get_option( 'patchstack_activity_log_comments', 0 ) ) {
+			return;
+		}
+
 		add_action( 'wp_insert_comment', [ &$this, 'handleCommentLog' ], 10, 2 );
 		add_action( 'edit_comment', [ &$this, 'handleCommentLog' ] );
 		add_action( 'trash_comment', [ &$this, 'handleCommentLog' ] );
@@ -24,7 +28,6 @@ class P_Event_Comments extends P_Event_Log {
 		add_action( 'unspam_comment', [ &$this, 'handleCommentLog' ] );
 		add_action( 'delete_comment', [ &$this, 'handleCommentLog' ] );
 		add_action( 'transition_comment_status', [ &$this, 'transitionCommentStatus' ], 10, 3 );
-
 	}
 
 	/**

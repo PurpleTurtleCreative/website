@@ -4,7 +4,7 @@
  * Plugin URI:  https://patchstack.com/?utm_medium=wp&utm_source=dashboard&utm_campaign=patchstack%20plugin
  * Author URI: https://patchstack.com/?utm_medium=wp&utm_source=dashboard&utm_campaign=patchstack%20plugin
  * Description: Patchstack identifies security vulnerabilities in WordPress plugins, themes, and core.
- * Version: 2.2.7
+ * Version: 2.2.12
  * Author: Patchstack
  * License: GPLv3
  * Text Domain: patchstack
@@ -59,7 +59,7 @@ if ( ! class_exists( 'patchstack' ) ) {
 		 *
 		 * @var string
 		 */
-		const VERSION = '2.2.7';
+		const VERSION = '2.2.12';
 
 		/**
 		 * API URL of Patchstack to communicate with.
@@ -144,7 +144,6 @@ if ( ! class_exists( 'patchstack' ) ) {
 		protected $listener;
 		protected $event_log;
 		protected $multisite;
-		protected $notice;
 		protected $admin_ajax;
 		protected $admin_general;
 		protected $admin_menu;
@@ -197,11 +196,10 @@ if ( ! class_exists( 'patchstack' ) ) {
 				'upload'        => 'P_Upload',
 				'rules'         => 'P_Rules',
 				'hide_login'    => 'P_Hide_Login',
-				'listener'      => 'P_Listener',
 				'event_log'     => 'P_Event_Log',
 				'activation'    => 'P_Activation',
+				'listener'      => 'P_Listener',
 				'multisite'     => 'P_Multisite',
-				'notice'        => 'P_Cookie_Notice',
 				'admin_ajax'    => 'P_Admin_Ajax',
 				'admin_general' => 'P_Admin_General',
 				'admin_menu'    => 'P_Admin_Menu',
@@ -230,24 +228,37 @@ if ( ! class_exists( 'patchstack' ) ) {
 		 *
 		 * ## OPTIONS
 		 *
-		 * <id>
+		 * [<id>]
 		 * : The API client id.
 		 * 
-		 * <secret>
+		 * [<secret>]
 		 * : The API secret key.
-		 *
+		 * 
+		 * <secret-id>
+		 * : The API client id and secret key merged together, found in the App. E.g. 2b072e8b60402e30d481df351fc08183906254e0-123456
+		 * 
 		 * ## EXAMPLES
-		 *
+		 * 
 		 *     $ wp patchstack activate 123456 2b072e8b60402e30d481df351fc08183906254e0
+		 *     Success: The Patchstack plugin has been successfully connected.
+		 * 
+		 * 	   or
+		 * 
+		 *     $ wp patchstack activate 2b072e8b60402e30d481df351fc08183906254e0-123456
 		 *     Success: The Patchstack plugin has been successfully connected.
 		 */
 		public function cli_activate( $args ) {
-			$id = isset( $args[0] ) ? trim( $args[0] ) : '';
-			$secret = isset( $args[1] ) ? trim( $args[1] ) : '';
+			// Handle both ways to activate the plugin.
+			if ( count( $args ) === 1 && strpos( $args[0], '-' ) !== false ) {
+				list( $secret, $id ) = explode( '-', $args[0] );
+			} else {
+				$id = isset( $args[0] ) ? trim( $args[0] ) : '';
+				$secret = isset( $args[1] ) ? trim( $args[1] ) : '';
+			}
 
 			$result = $this->activation->alter_license( $id, $secret, 'activate' );
 			if ( $result['result'] == 'error' ) {
-				\WP_CLI::error( 'The Patchstack plugin could not be connected. Make sure the id and secret key are valid and that api.patchstack.com is not blocked.' );
+				\WP_CLI::error( "The Patchstack plugin could not be connected. Make sure the id and secret key are valid and that api.patchstack.com is not blocked. Additional information:\n" . $result['body'] );
 				return;
 			}
 

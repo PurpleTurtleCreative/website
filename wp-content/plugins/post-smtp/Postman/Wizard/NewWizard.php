@@ -58,6 +58,7 @@ class Post_SMTP_New_Wizard {
         'postmark_api',
         'sparkpost_api',
         'mailjet_api',
+        'sendpulse_api',
         'office365_api',
         'aws_ses_api',
         'zohomail_api',
@@ -119,7 +120,7 @@ class Post_SMTP_New_Wizard {
                                 We're sorry, the <span class="ps-pro-for"></span> mailer is not available on your plan. Please upgrade to the PRO plan to unlock all these awesome fetures.
                             </p>
                             <div>
-                                <a href="https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard" target="_blank" class="button button-primary ps-yellow-btn" style="color: #ffffff!important">UPGRADE TO PRO</a>
+                                <a href="https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin" target="_blank" class="button button-primary ps-yellow-btn ps-pro-product-url" style="color: #ffffff!important">UPGRADE TO PRO</a>
                             </div>
                             <div>
                                 <a href="" class="ps-pro-close-popup" style="color: #c2c2c2; font-size: 10px;">Already purchased?</a>
@@ -192,6 +193,7 @@ class Post_SMTP_New_Wizard {
                                                 'postmark_api'      =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/postmark.png',
                                                 'sparkpost_api'     =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/sparkpost.png',
                                                 'mailjet_api'       =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/mailjet.png',
+                                                'sendpulse_api'     =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/sendpulse.png',
                                                 'office365_api'     =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/logo.png',
                                                 'elasticemail_api'  =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/elasticemail.png',
                                                 'aws_ses_api'       =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/amazon.png',
@@ -203,6 +205,7 @@ class Post_SMTP_New_Wizard {
                                             $slug = '';
                                             $transport_name = '';
                                             $is_pro = '';
+                                            $product_url = '';
 
                                             if( is_object( $transport ) ) {
                                                 
@@ -223,6 +226,7 @@ class Post_SMTP_New_Wizard {
                                                     $slug = $transport_slug;
                                                     $transport_name = 'Microsoft 365';
                                                     $is_pro = 'ps-pro-extension';
+                                                    $product_url = 'https://postmansmtp.com/extensions/office-365-extension-for-post-smtp/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin';
 
                                                 }
                                                 if( $transport_slug == 'zohomail_api' ) {
@@ -231,6 +235,7 @@ class Post_SMTP_New_Wizard {
                                                     $slug = $transport_slug;
                                                     $transport_name = 'Zoho';
                                                     $is_pro = 'ps-pro-extension';
+                                                    $product_url = 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin';
 
                                                 }
                                                 if( !class_exists( 'Post_Smtp_Amazon_Ses' ) && $transport_slug == 'aws_ses_api' ) {
@@ -239,6 +244,7 @@ class Post_SMTP_New_Wizard {
                                                     $slug = $transport_slug;
                                                     $transport_name = 'Amazon SES';
                                                     $is_pro = 'ps-pro-extension';
+                                                    $product_url = 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin';
 
                                                 }
 
@@ -258,7 +264,7 @@ class Post_SMTP_New_Wizard {
 
                                             ?>
                                             <div class="ps-wizard-socket-radio-outer">
-                                                <div class="ps-wizard-socket-radio <?php echo !empty( $is_pro ) ? esc_attr( $is_pro ) . '-outer' : ''; ?>">
+                                                <div class="ps-wizard-socket-radio <?php echo !empty( $is_pro ) ? esc_attr( $is_pro ) . '-outer' : ''; ?>" <?php echo !empty( $is_pro ) ? 'data-url="' . esc_url( $product_url ) . '"' : ''; ?>>
                                                     <?php if( !empty( $is_pro ) ): ?>
                                                         <span class="<?php echo $is_pro . '-tag' ?>">PRO</span>
                                                     <?php endif; ?>
@@ -323,6 +329,7 @@ class Post_SMTP_New_Wizard {
                                                 <div><label>Recipient Email Address</label></div>
                                                 <input type="text" class="ps-test-to" required data-error="Enter Recipient Email Address" name="postman_test_options[test_email]" value="<?php echo esc_attr( wp_get_current_user()->user_email ); ?>" placeholder="Recipient Email Address">
                                                 <span class="ps-form-control-info">Enter the email address where you want to send a test email message.</span>
+                                                <p class="ps-form-control-info">Are your WordPress emails getting broken? Check out our guide on <a href="https://postmansmtp.com/fix-for-broken-emails/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin" target="_blank">how to Fix Broken Emails</a>.</p>
                                             </div>
                                             <button class="button button-primary ps-blue-btn ps-wizard-send-test-email" data-step="3">Send Test Email <span class="dashicons dashicons-email"></span></button>
                                             <div>
@@ -365,15 +372,15 @@ class Post_SMTP_New_Wizard {
                                                         Resend Failed Emails
                                                         <br>
                                                         <span class="dashicons dashicons-yes-alt"></span>
-                                                        Support multiple sites		
+                                                        Support multiple sites
                                                     </div>
                                                 </div>
-                                                <div style="display: flex;">
+                                                <div style="display: flex; margin-top: 15px;">
                                                     <div class="ps-app-download-button">
-                                                        <a href="https://play.google.com/store/apps/details?id=com.postsmtp&referrer=utm_source%3Dplugin%26utm_medium%3Ddashboard%26anid%3Dadmob" target="_blank">Download on Android</a>
+                                                        <a href="https://play.google.com/store/apps/details?id=com.postsmtp&referrer=utm_source%3Dplugin%26utm_medium%3Ddashboard%26utm_campaign%3Dplugin%26anid%3Dadmob" target="_blank"><img src=<?php echo esc_url( POST_SMTP_URL . '/Postman/Wizard/assets/images/android-icon.png' ) ?>><div><p style="font-size: 12px;">Get it On</p><p style="font-size: 14px; font-weight: 750">Google Play</p></div></a>
                                                     </div>
                                                     <div class="ps-app-download-button">
-                                                        <a href="https://apps.apple.com/us/app/post-smtp/id6473368559" target="_blank">Download on iOS</a>
+                                                        <a href="https://apps.apple.com/us/app/post-smtp/id6473368559?utm_source=plugin&utm_medium=dashboard&utm_campaign=plugin" target="_blank"><img src=<?php echo esc_url( POST_SMTP_URL . '/Postman/Wizard/assets/images/apple-icon.png' ) ?>><div><p style="font-size: 12px;">Download on the</p><p style="font-size: 14px; font-weight: 750;">App Store</p></div></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -606,6 +613,9 @@ class Post_SMTP_New_Wizard {
             break;
             case 'mailjet_api':
                 echo wp_kses( $this->render_mailjet_settings(), $this->allowed_tags );
+            break;
+            case 'sendpulse_api':
+                echo wp_kses( $this->render_sendpulse_settings(), $this->allowed_tags );
             break;
             case 'elasticemail_api':
                 echo wp_kses( $this->render_elasticemail_settings(), $this->allowed_tags );
@@ -1177,6 +1187,80 @@ class Post_SMTP_New_Wizard {
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://app.mailjet.com/account/apikeys' ),
                 esc_attr( 'Mailjet API and Access Key' )
+            )
+            .
+        '</div>
+        ';
+
+        return $html;
+
+    }
+
+    /**
+     * Render SendPulse Settings
+     * 
+     * @since 2.9.0
+     * @version 1.0.0
+     */
+    public function render_sendpulse_settings() {
+
+        $api_key = null !== $this->options->getSendpulseApiKey() ? esc_attr ( $this->options->getSendpulseApiKey() ) : '';
+        $secret_key = null !== $this->options->getSendpulseSecretKey() ? esc_attr ( $this->options->getSendpulseSecretKey() ) : '';
+
+        $html = sprintf(
+            '<p>%1$s <a href="%2$s" target="_blank">SendPulse</a> %3$s</p><p>%4$s<p>%5$s <a href="%6$s" target="_blank">%7$s</a>',
+            __( 'With', 'post-smtp' ),
+            esc_url( 'https://sendpulse.com/features/transactional' ),
+            __( 'Transactional Email, whether you need to send order confirmations, booking notifications, password resets, or any other transactional messages, You can handle it with ease and reliability.', 'post-smtp' ),
+            __( 'If you\'re just starting out, the free plan allows you to send up to 12000 emails without entering your credit card details.', 'post-smtp' ),
+            __( 'Let\'s get started with the documentation', 'post-smtp' ),
+            esc_url( 'https://postmansmtp.com/documentation/sockets-addons/configure-post-smtp-with-sendpulse/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin' ),
+            __( 'Configure Sendpulse with Post SMTP', 'post-smtp' )
+        );
+
+        $html .= '
+        <div class="ps-form-control">
+            <div><label>API ID</label></div>
+            <input type="text" class="ps-sendpulse-api-key" required data-error="'.__( 'Please enter API Key.', 'post-smtp' ).'" name="postman_options['. esc_attr( PostmanOptions::SENDPULSE_API_KEY ) .']" value="'.$api_key.'" placeholder="API ID">
+        '.
+        sprintf(
+                
+            '<div class="ps-form-control-info"><a href="%1$s" target="_blank">%2$s</a> %3$s</div>',
+            esc_url( 'https://sendpulse.com/features/transactional' ),
+            esc_attr( 'Click here' ),
+            __( 'to create an account at SendPulse', 'post-smtp' ),
+           
+
+        ).
+        sprintf(
+                
+            '<div class="ps-form-control-info">%1$s<a href="%2$s" target="_blank">%3$s</a></div>',
+            __( 'If you are already logged in follow this ink to get your API ID from Sendpulse ', 'post-smtp' ),
+            esc_url( 'https://login.sendpulse.com/settings/#api' ),
+            esc_attr( 'Get API ID' ),
+            
+           
+
+        ).
+        '</div>'
+        ;
+
+        $html .= '
+        <div class="ps-form-control">
+            <div><label>API Secret</label></div>
+            <input type="text" class="ps-sendpulse-secret-key" required data-error="'.__( 'Please enter Secret Key.', 'post-smtp' ).'" name="postman_options['. esc_attr( PostmanOptions::SENDPULSE_SECRET_KEY ) .']" value="'.$secret_key.'" placeholder="API Secret">'.
+            /**
+             * Translators: %1$s Text, %2$s URL, %3$s URL Text, %4$s Text, %5$s URL, %6$s URL Text
+             */
+            sprintf(
+                
+                '<div class="ps-form-control-info">%1$s<a href="%2$s" target="_blank">%3$s</a></div>',
+                __( 'If you are already logged in follow this ink to get your API ID from Sendpulse ', 'post-smtp' ),
+                esc_url( 'https://login.sendpulse.com/settings/#api' ),
+                esc_attr( 'Get API Secret' ),
+                
+               
+    
             )
             .
         '</div>

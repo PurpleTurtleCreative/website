@@ -80,14 +80,14 @@ class P_Login extends P_Core {
 
 		// If enabled, check to see if the verification code is being sent.
 		if ( ! isset( $_POST['patchstack_2fa'] ) || ( isset( $_POST['patchstack_2fa'] ) && $_POST['patchstack_2fa'] == '' ) ) {
-			return new WP_Error( 'patchstack_2fa_empty_code', __( 'Please enter the 2FA authentication code that is generated on your device.', 'patchstack' ) );
+			return new WP_Error( 'patchstack_2fa_empty_code', esc_attr__( 'Please enter the 2FA authentication code that is generated on your device.', 'patchstack' ) );
 		}
 
 		// Verify the code.
 		require_once dirname( __FILE__ ) . '/2fa/rfc6238.php';
 		$secret  = $this->tfa_get_secret( $user );
 		if ( ! TokenAuth6238::verify( $secret, trim( $_POST['patchstack_2fa'] ) ) ) {
-			return new WP_Error( 'patchstack_2fa_invalid_code', __( 'The 2FA authentication code you entered is invalid.', 'patchstack' ) );
+			return new WP_Error( 'patchstack_2fa_invalid_code', esc_attr__( 'The 2FA authentication code you entered is invalid.', 'patchstack' ) );
 		}
 
 		return $user;
@@ -246,7 +246,7 @@ class P_Login extends P_Core {
 
 		// Block the user?
 		if ( $block ) {
-			wp_die( __( 'Access to the login page has been restricted due to set logon hours.', 'patchstack' ), __( 'Login Disallowed', 'patchstack' ) );
+			wp_die( esc_attr__( 'Access to the login page has been restricted due to set logon hours.', 'patchstack' ), esc_attr__( 'Login Disallowed', 'patchstack' ) );
 		}
 	}
 
@@ -312,7 +312,7 @@ class P_Login extends P_Core {
 			if ( $result['reason'] === 'ERROR_NO_KEYS' ) {
 				return $user;
 			}
-			$error_message = sprintf( '<strong>%s</strong>: %s', 'Error', __( 'You have entered an incorrect reCAPTCHA value.', 'patchstack' ) );
+			$error_message = sprintf( '<strong>%s</strong>: %s', 'Error', esc_attr__( 'You have entered an incorrect reCAPTCHA value.', 'patchstack' ) );
 
 			if ( $result['reason'] === 'VERIFICATION_FAILED' || $result['reason'] === 'RECAPTCHA_EMPTY_RESPONSE' ) {
 				wp_clear_auth_cookie();
@@ -344,7 +344,7 @@ class P_Login extends P_Core {
 			$error = new WP_Error();
 		}
 
-		$error->add( 'patchstack_error', 'ERROR' . ':&nbsp;' . __( 'You have entered an incorrect reCAPTCHA value. Refresh this page and try again.', 'patchstack' ) );
+		$error->add( 'patchstack_error', 'ERROR' . ':&nbsp;' . esc_attr__( 'You have entered an incorrect reCAPTCHA value. Refresh this page and try again.', 'patchstack' ) );
 		return $error;
 	}
 }

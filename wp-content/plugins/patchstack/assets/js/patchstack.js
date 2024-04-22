@@ -7,6 +7,9 @@ window.Patchstack = window.Patchstack || {};
 
 ( function( window, document, $, plugin ) {
 	var $c = {};
+	var polling = null;
+	var isPolling = false;
+	var pollingDelay = 0;
 
 	plugin.init = function() {
 		plugin.cache();
@@ -18,12 +21,47 @@ window.Patchstack = window.Patchstack || {};
 		$c.body = $( document.body );
 	};
 
+	plugin.poller = function() {
+		polling = setInterval(() => {
+			if (!isPolling && pollingDelay == 0) {
+				plugin.autoActivate();
+				pollingDelay = 5;
+			}
+
+			pollingDelay--;
+		}, 1000);
+	};
+
+	plugin.autoActivate = function() {
+		isPolling = true;
+
+		var postData = {
+			action: 'patchstack_activate_auto',
+			PatchstackNonce: PatchstackVars.nonce
+		};
+
+		$.post( PatchstackVars.ajaxurl, postData, function( response ) {
+			var postData = {
+				action: 'patchstack_activation_status',
+				PatchstackNonce: PatchstackVars.nonce
+			};
+			
+			$.post ( PatchstackVars.ajaxurl, postData, function( response ) {
+				if ( response.activated ) {
+					window.location = window.location.href.replace('&ps_autoa=1', '') + '&resync=1';
+				}
+
+				isPolling = false;
+			});
+		});
+	};
+
 	plugin.bindEvents = function() {
 		$('input#patchstack-activate').on( 'click', function(e) {
 			e.preventDefault();
 			var postData = {
 				action: 'patchstack_activate_license',
-				key: $( '#patchstack_api_key' ).val(),
+				key: $('.patchstack-auto-activate').attr('style') == '' ? $( '#patchstack_api_key2' ).val() : $( '#patchstack_api_key' ).val(),
 				PatchstackNonce: PatchstackVars.nonce
 			};
 
@@ -35,10 +73,14 @@ window.Patchstack = window.Patchstack || {};
 			$( '.patchstack-resync' ).hide();
 			$( '#patchstack-activate' ).hide();
 			$( '.patchstack-loading' ).show();
+			$( '.is-polling-section' ).hide();
+			isPolling = true
 
 			$.post( PatchstackVars.ajaxurl, postData, function( response ) {
+				isPolling = false
+				pollingDelay = 5
 				if ( response.result == 'error' ) {
-					$( '#patchstack-activate' ).show();
+					$( '#patchstack-activate, .is-polling-section' ).show();
 					$( '.patchstack-loading' ).hide();
 					if ( response.error_message ) {
 						alert( response.error_message );
@@ -50,95 +92,6 @@ window.Patchstack = window.Patchstack || {};
 				}
 			});
 		});
-
-		$('#patchstack_send_mail_url').on( 'click', function(e) {
-			e.preventDefault();
-			var postData = {
-				action: 'patchstack_send_new_url_email',
-				PatchstackNonce: PatchstackVars.nonce
-			};
-			$.post( PatchstackVars.ajaxurl, postData, function( response ) {
-				if ( response == 'fail') {
-					alert( PatchstackVars.error_message );
-				} else {
-					alert( 'Email Sent!' );
-				}
-			});
-		});
-
-		// Don't load this part if DataTables is not loaded.
-		if(typeof jQuery.fn.dataTable !== 'undefined' && window.location.href.indexOf('patchstack') !== -1){
-
-			// Initialize datatables.
-			$('.table-firewall-log').DataTable({
-				"processing": true,
-				"serverSide": true,
-				"ajax": {
-					"url": PatchstackVars.ajaxurl,
-					"type": "POST",
-					"data": function(d){
-						d.action = 'patchstack_firewall_log_table';
-						d.PatchstackNonce = $("meta[name=patchstack_nonce]").attr("value");
-					}
-				},
-				"responsive": true,
-				"columns": [
-					{ "data": "fid" },
-					{ "data": "referer" },
-					{ "data": "method" },
-					{ "data": "ip", render: $.fn.dataTable.render.text() },
-					{ "data": "log_date" }
-				],
-				"order": [[0, "desc"]],
-				"searching": false,
-				"ordering": false,
-				"drawCallback": function( settings ) {
-					$('.titletip').tooltip();
-				},
-				"columnDefs": [
-					{
-						"render": function ( data, type, row ) {
-							var title = (data ? data : 'Unknown');
-							var description = (row.description ? row.description : 'No Explanation');
-
-							return '<span class=" titletip" title="' + description + '">' + title + '</span>';
-						},
-						"targets": 0
-					},
-					{
-						"render": function ( data, type, row ) {
-							return decodeURIComponent(data).replace(/</g,"&lt;").replace(/>/g,"&gt;").replace('+', ' ');
-						},
-						"targets": 1
-					}
-				]
-			});
-
-			$('.table-user-log').DataTable({
-				"processing": true,
-				"serverSide": true,
-				"ajax": {
-					"url": PatchstackVars.ajaxurl,
-					"type": "POST",
-					"data": function(d){
-						d.action = 'patchstack_users_log_table';
-						d.PatchstackNonce = $("meta[name=patchstack_nonce]").attr("value");
-					}
-				},
-				"responsive": true,
-				"columns": [
-					{ "data": "author" },
-					{ "data": "action", render: $.fn.dataTable.render.text() },
-					{ "data": "object", render: $.fn.dataTable.render.text() },
-					{ "data": "object_name", render: $.fn.dataTable.render.text() },
-					{ "data": "ip", render: $.fn.dataTable.render.text() },
-                    { "data": "date", render: $.fn.dataTable.render.text() }
-				],
-				"order": [[0, "desc"]],
-				"searching": true,
-				"ordering": false
-			});
-		}
 
 		if($("#patchstack_captcha_type").val() == "v2"){
 			$("#patchstack_captcha_public_key_v3, #patchstack_captcha_private_key_v3, #patchstack_captcha_public_key_v3_new, #patchstack_captcha_private_key_v3_new").hide();

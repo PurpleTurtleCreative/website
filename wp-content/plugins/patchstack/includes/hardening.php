@@ -201,7 +201,7 @@ class P_Hardening extends P_Core {
 
 		// Block unauthorized users.
 		if ( ! is_user_logged_in() ) {
-			$msg = apply_filters( 'disable_wp_rest_api_error', __( 'The WP REST API cannot be accessed by unauthorized users.', 'disable-wp-rest-api' ) );
+			$msg = apply_filters( 'disable_wp_rest_api_error', esc_attr__( 'The WP REST API cannot be accessed by unauthorized users.', 'disable-wp-rest-api' ) );
 			return new WP_Error( 'rest_authorization_required', $msg, [ 'status' => rest_authorization_required_code() ] );
 		}
 	}
@@ -386,7 +386,7 @@ class P_Hardening extends P_Core {
 		$patterns = explode( ',', $this->get_option( 'patchstack_register_email_blacklist' ) );
 		foreach ( $patterns as $pattern ) {
 			if ( stripos( $user_email, $pattern ) !== false ) {
-				$errors->add( 'user_email', __( 'An invalid email address has been supplied.', 'patchstack' ) );
+				$errors->add( 'user_email', esc_attr__( 'An invalid email address has been supplied.', 'patchstack' ) );
 			}
 		}
 
@@ -405,7 +405,7 @@ class P_Hardening extends P_Core {
 			$patterns = explode( ',', $this->get_option( 'patchstack_register_email_blacklist' ) );
 			foreach ( $patterns as $pattern ) {
 				if ( stripos( $result['user_email'], $pattern ) !== false ) {
-					$result['errors']->add( 'user_email', __( 'An invalid email address has been supplied.', 'patchstack' ) );
+					$result['errors']->add( 'user_email', esc_attr__( 'An invalid email address has been supplied.', 'patchstack' ) );
 				}
 			}
 		}

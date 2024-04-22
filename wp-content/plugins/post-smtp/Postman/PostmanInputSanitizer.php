@@ -60,6 +60,8 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 			$this->sanitizePassword( 'Brevo API Key', PostmanOptions::SENDINBLUE_API_KEY, $input, $new_input, $this->options->getSendinblueApiKey() );
 			$this->sanitizePassword( 'Mailjet API Key', PostmanOptions::MAILJET_API_KEY, $input, $new_input, $this->options->getMailjetApiKey() );
 			$this->sanitizePassword( 'Mailjet Secret Key', PostmanOptions::MAILJET_SECRET_KEY, $input, $new_input, $this->options->getMailjetSecretKey() );
+			$this->sanitizePassword( 'Sendpulse API Key', PostmanOptions::SENDPULSE_API_KEY, $input, $new_input, $this->options->getSendpulseApiKey() );
+			$this->sanitizePassword( 'Sendpulse Secret Key', PostmanOptions::SENDPULSE_SECRET_KEY, $input, $new_input, $this->options->getSendpulseSecretKey() );
 			$this->sanitizePassword( 'Postmark API Key', PostmanOptions::POSTMARK_API_KEY, $input, $new_input, $this->options->getPostmarkApiKey() );
 			$this->sanitizePassword( 'SparkPost API Key', PostmanOptions::SPARKPOST_API_KEY, $input, $new_input, $this->options->getSparkPostApiKey() );
 			$this->sanitizePassword( 'Mailgun API Key', PostmanOptions::MAILGUN_API_KEY, $input, $new_input, $this->options->getMailgunApiKey() );
@@ -96,6 +98,7 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
             $this->sanitizePassword( 'Fallback password', PostmanOptions::FALLBACK_SMTP_PASSWORD, $input, $new_input, $this->options->getFallbackPassword() );
 
             $new_input = apply_filters( 'post_smtp_sanitize', $new_input, $input, $this );
+			delete_transient( 'sendpulse_token' );
 
 			if ( $new_input [ PostmanOptions::CLIENT_ID ] != $this->options->getClientId() || $new_input [ PostmanOptions::CLIENT_SECRET ] != $this->options->getClientSecret() || $new_input [ PostmanOptions::HOSTNAME ] != $this->options->getHostname() ) {
 				$this->logger->debug( 'Recognized new Client ID' );
@@ -104,12 +107,16 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 			}
 
 			// can we create a tmp file? - this code is duplicated in ActivationHandler
-			PostmanUtils::deleteLockFile( $new_input [ PostmanOptions::TEMPORARY_DIRECTORY ] );
-			$lockSuccess = PostmanUtils::createLockFile( $new_input [ PostmanOptions::TEMPORARY_DIRECTORY ] );
-			// &= does not work as expected in my PHP
-			$lockSuccess = $lockSuccess && PostmanUtils::deleteLockFile( $new_input [ PostmanOptions::TEMPORARY_DIRECTORY ] );
-			$this->logger->debug( 'FileLocking=' . $lockSuccess );
-			PostmanState::getInstance()->setFileLockingEnabled( $lockSuccess );
+			if( isset( $new_input [ PostmanOptions::TEMPORARY_DIRECTORY ] ) ) {
+				
+				PostmanUtils::deleteLockFile( $new_input [ PostmanOptions::TEMPORARY_DIRECTORY ] );
+				$lockSuccess = PostmanUtils::createLockFile( $new_input [ PostmanOptions::TEMPORARY_DIRECTORY ] );
+				// &= does not work as expected in my PHP
+				$lockSuccess = $lockSuccess && PostmanUtils::deleteLockFile( $new_input [ PostmanOptions::TEMPORARY_DIRECTORY ] );
+				$this->logger->debug( 'FileLocking=' . $lockSuccess );
+				PostmanState::getInstance()->setFileLockingEnabled( $lockSuccess );
+
+			}
 
 			if ( $success ) {
 				PostmanSession::getInstance()->setAction( self::VALIDATION_SUCCESS );
@@ -150,7 +157,7 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 			// if $action is not empty, then sanitize has already run
 			if ( ! empty( $action ) ) {
 				// use the already encoded password in the $input
-				$new_input [ $key ] = $input [ $key ];
+				$new_input[$key] = isset( $input[$key] ) ? $input[$key] : '';
 				// log it
 				$this->logger->debug( 'Warning, second sanitizePassword attempt detected' );
 			} else if ( isset( $input [ $key ] ) ) {
@@ -165,8 +172,9 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 				$this->logSanitize( $desc, $new_input [ $key ] );
 				// base-64 scramble password
 				$new_input [ $key ] = base64_encode( $new_input [ $key ] );
+
+				$this->logger->debug( sprintf( 'Encoding %s as %s', $desc, $new_input [ $key ] ) );
 			}
-			$this->logger->debug( sprintf( 'Encoding %s as %s', $desc, $new_input [ $key ] ) );
 		}
 
 		private function sanitizeLogMax( $desc, $key, $input, &$new_input ) {

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Determine the active tab and account activation state.
-$tabs 		   = [ 'hardening', 'firewall', 'login', 'cookienotice', 'logs', 'license', 'multisite' ];
+$tabs 		   = [ 'hardening', 'firewall', 'login', 'logs', 'license', 'multisite' ];
 $active_tab    = isset( $_GET['tab'] ) && in_array( $_GET['tab'], $tabs ) ? esc_attr( $_GET['tab'] ) : 'license'; // default active tab
 $activated     = ( ( isset( $_GET['ps_activated'] ) && $_GET['ps_activated'] == 1 ) || ( isset( $_GET['active'] ) && $_GET['active'] == 1 ) );
 $status        = ( get_option( 'patchstack_license_expiry', '' ) == '' || time() >= strtotime( get_option( 'patchstack_license_expiry', '' ) ) );
@@ -55,6 +55,12 @@ $page = $_GET['page'] == 'patchstack-multisite-settings' ? 'patchstack-multisite
 
 	<div class="patchstack-content-table">
 		<?php
+		if ($show_settings) {
+			echo '<div class="notice notice-error"><p>';
+			_e( 'Note that this is a legacy settings page and will be inaccessible on May 1st, 2024. After this you will be required to view and manage your settings through the <a href="https://app.patchstack.com/" target="_blank">Patchstack App</a>.', 'patchstack' );
+			echo '</p></div><br />';
+		}
+
 		if ( is_multisite() && $show_settings ) {
 			?>
 			<div class="notice notice-warning">
@@ -78,40 +84,33 @@ $page = $_GET['page'] == 'patchstack-multisite-settings' ? 'patchstack-multisite
 			<?php if ( $class >= 1 || $class === '' ) { ?>
 			<a href="?page=<?php echo esc_attr( $page ); ?>&tab=hardening" class="nav-tab patchstack-nav-tab <?php echo $active_tab == 'hardening' ? 'nav-tab-active patchstack-nav-tab-active' : ''; ?>">
 				<span class="patchstack-icon-wrapper"><span class="patchstack-nav-tab-icon ic-services white"></span></span>
-				<span class="patchstack-icon-text"><?php echo __( 'Hardening', 'patchstack' ); ?><br /><span>General Security Tweaks</span></span>
+				<span class="patchstack-icon-text"><?php echo esc_attr__( 'Hardening', 'patchstack' ); ?><br /><span>General Security Tweaks</span></span>
 			</a>
 			<?php } ?>
 
 			<a href="?page=<?php echo esc_attr( $page ); ?>&tab=firewall" class="nav-tab patchstack-nav-tab <?php echo $active_tab == 'firewall' ? 'nav-tab-active patchstack-nav-tab-active' : ''; ?>">
 				<span class="patchstack-icon-wrapper"><span class="patchstack-nav-tab-icon ic-firewall white"></span></span>
-				<span class="patchstack-icon-text"><?php echo __( 'Firewall', 'patchstack' ); ?><br /><span>Whitelist & Blacklist & Firewall</span></span>
+				<span class="patchstack-icon-text"><?php echo esc_attr__( 'Firewall', 'patchstack' ); ?><br /><span>Whitelist & Blacklist & Firewall</span></span>
 			</a>
 
 			<?php if ( $class >= 1 || $class === '' ) { ?>
 			<a href="?page=<?php echo esc_attr( $page ); ?>&tab=login" class="nav-tab patchstack-nav-tab <?php echo $active_tab == 'login' ? 'nav-tab-active patchstack-nav-tab-active' : ''; ?>">
 				<span class="patchstack-icon-wrapper"><span class="patchstack-nav-tab-icon ic-login white"></span></span>
-				<span class="patchstack-icon-text"><?php echo __( 'Login Protection', 'patchstack' ); ?><br /><span>Protect your login page</span></span>
-			</a>
-			<?php } ?>
-
-			<?php if ( $class >= 1 || $class === '' ) { ?>
-			<a href="?page=<?php echo esc_attr( $page ); ?>&tab=cookienotice" class="nav-tab patchstack-nav-tab <?php echo $active_tab == 'cookienotice' ? 'nav-tab-active patchstack-nav-tab-active' : ''; ?>">
-				<span class="patchstack-icon-wrapper"><span class="patchstack-nav-tab-icon ic-cookies white"></span></span>
-				<span class="patchstack-icon-text"><?php echo __( 'Cookie Notice', 'patchstack' ); ?><br /><span>Inform your users</span></span>
+				<span class="patchstack-icon-text"><?php echo esc_attr__( 'Login Protection', 'patchstack' ); ?><br /><span>Protect your login page</span></span>
 			</a>
 			<?php } ?>
 
 			<?php if ( $page != 'patchstack-multisite-settings' ) { ?>
 				<a href="?page=<?php echo esc_attr( $page ); ?>&tab=logs" class="nav-tab patchstack-nav-tab <?php echo $active_tab == 'logs' ? 'nav-tab-active patchstack-nav-tab-active' : ''; ?>">
 					<span class="patchstack-icon-wrapper"><span class="patchstack-nav-tab-icon ic-logs white"></span></span>
-					<span class="patchstack-icon-text"><?php echo __( 'Logs', 'patchstack' ); ?><br /><span>Firewall &amp; Activity Logs</span></span>
+					<span class="patchstack-icon-text"><?php echo esc_attr__( 'Logs', 'patchstack' ); ?><br /><span>Firewall &amp; Activity Logs</span></span>
 				</a>
 			<?php } ?>
 
 			<?php if ( ! is_multisite() || ( isset( $_GET['page'] ) && $_GET['page'] != 'patchstack-multisite-settings' ) ) { ?>
 				<a href="?page=<?php echo esc_attr( $page ); ?>&tab=license" class="nav-tab patchstack-nav-tab <?php echo $active_tab == 'license' ? 'nav-tab-active patchstack-nav-tab-active' : ''; ?>">
 					<span class="patchstack-icon-wrapper"><span class="patchstack-nav-tab-icon ic-license white"></span></span>
-					<span class="patchstack-icon-text"><?php echo __( 'License', 'patchstack' ); ?><br /><span>Your license information</span></span>
+					<span class="patchstack-icon-text"><?php echo esc_attr__( 'License', 'patchstack' ); ?><br /><span>Your license information</span></span>
 				</a>
 			<?php } ?>
 		</h2>
@@ -130,9 +129,6 @@ $page = $_GET['page'] == 'patchstack-multisite-settings' ? 'patchstack-multisite
 							break;
 						case 'login':
 							require 'login.php';
-							break;
-						case 'cookienotice':
-							require 'cookie-notice.php';
 							break;
 						case 'logs':
 							require 'logs.php';

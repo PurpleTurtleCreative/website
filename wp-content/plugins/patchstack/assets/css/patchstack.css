@@ -35,7 +35,7 @@
 }
 
 .patchstack-font a {
-    color: #b2d675;
+    color: #AFE614;
     text-decoration: none
 }
 
@@ -229,10 +229,10 @@
 .patchstack-form-wrap input[type=submit] {
     height: auto;
     padding: 18px 30px !important;
-    color: #B2D675!important;
+    color: #1C1E22!important;
     border: none;
     border-radius: 4px !important;
-    background-color: rgba(178, 214, 117, 0.18);
+    background-color: #AFE614;
     font-size: 15px !important;
     font-weight: 400 !important;
     line-height: 20px;
@@ -250,8 +250,8 @@
 .patchstack-content-inner input[type=submit]:hover,
 .patchstack-form-wrap input[type=submit]:focus,
 .patchstack-form-wrap input[type=submit]:hover {
-    background-color: #b2d675;
-    color: #000 !important;
+    background-color: #AFE614;
+    color: #1C1E22 !important;
 }
 
 .form-table th,
@@ -326,14 +326,14 @@
 }
 
 .patchstack-content-wrap .form-table input[type=checkbox]:checked {
-    border: 3px solid #b2d675
+    border: 3px solid #AFE614
 }
 
 .patchstack-content-wrap .form-table input[type=checkbox]:checked:before {
     margin: -7px 0 0 -5px;
     font-size: 23px;
     width: 25px;
-    color: #b2d675;
+    color: #AFE614;
     content: url(data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2020%2020%27%3E%3Cpath%20d%3D%27M14.83%204.89l1.34.94-5.81%208.38H9.02L5.78%209.67l1.34-1.25%202.57%202.4z%27%20fill%3D%27%2369a700%27%2F%3E%3C%2Fsvg%3E);
 }
 
@@ -555,15 +555,6 @@ thead {
     border-top-color: #2c405a
 }
 
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_processing {
-    background: #272930!important;
-    color: #fff!important;
-    height: 35px;
-    font-size: 13px;
-    text-transform: uppercase;
-    z-index: 99999
-}
-
 .patchstack-content-inner-table .table-overflow .btn {
     margin-bottom: 0
 }
@@ -622,22 +613,6 @@ thead {
     border-top-right-radius: 0
 }
 
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_filter,
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_info,
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_length,
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_paginate .paginate_button {
-    color: #fff!important;
-    font-size: 13px;
-    margin-right: 10px
-}
-
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_filter input,
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_length select {
-    border: 1px solid rgba(170, 189, 215, 0.1);
-    background: #272930;
-    color: #fff
-}
-
 .patchstack-content-inner-table .table-striped>tbody>tr:nth-of-type(odd) {
     background-color: #17273c
 }
@@ -659,14 +634,6 @@ thead {
     margin: 0 auto!important
 }
 
-.patchstack-content-inner-table .dataTables_info,
-.patchstack-content-inner-table .dataTables_length,
-.patchstack-content-inner-table .dataTables_paginate .paging_simple_numbers {
-    color: #fff!important
-}
-
-.patchstack-content-inner-table .dataTables_info,
-.patchstack-content-inner-table .dataTables_length,
 .patchstack-font>h2,
 .patchstack-font>h4 {
     color: #fff;
@@ -686,25 +653,6 @@ thead {
 .patchstack-font>h4 {
     font-family: 'Faktum';
     font-weight: 300!important
-}
-
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_paginate .paginate_button.current,
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-    background: #272930!important;
-    border-radius: 50%;
-    color: #fff!important;
-    border: none
-}
-
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_paginate .paginate_button.next,
-.patchstack-content-inner-table .dataTables_wrapper .dataTables_paginate .paginate_button.previous {
-    background: 0 0!important;
-    color: #fff!important;
-    border: none!important
-}
-
-.patchstack-content-inner-table .dataTables_length {
-    padding-bottom: 15px
 }
 
 .patchstack-content-table>.patchstack-content-inner {
@@ -876,7 +824,7 @@ a.label:hover {
 }
 
 .patchstack-plan a {
-    color: #B2D675;
+    color: #AFE614;
     text-decoration: none;
 }
 
@@ -892,16 +840,12 @@ a.label:hover {
 
 .patchstack-has-text-white,
 .patchstack-has-text-white:hover {
-    color: #fff;
+    color: #fff !important;
     text-decoration: none;
 }
 
-.patchstack-has-text-white:hover {
-    opacity: 0.7;
-}
-
 .patchstack-has-text-white span {
-    color: #B2D675;
+    color: #AFE614;
     font-size: 15px;
     text-transform: uppercase;
 }
@@ -1011,7 +955,7 @@ a.label:hover {
 }
 
 .patchstack-free h1 a {
-    color: #B2D675;
+    color: #AFE614;
     text-decoration: none;
 }
 
@@ -1034,15 +978,15 @@ a.label:hover {
 
 .patchstack-free .form-table label span {
     float: right;
-    color: #B2D675;
+    color: #AFE614;
 }
 
 .patchstack-free .button-primary {
-    color: #B2D675;
+    color: #1C1E22;
     font-weight: 500;
     font-size: 13px;
     line-height: 20px;
-    background: rgba(178, 214, 117, 0.18);
+    background: #AFE614;
     border-radius: 4px;
     border: none;
     padding: 12px 30px;
@@ -1052,8 +996,8 @@ a.label:hover {
 }
 
 .patchstack-free .button-primary:hover {
-    color: #000;
-    background: #b2d675;
+    background-color: #6ebe00 !important;
+    color: #111216 !important;
 }
 
 .patchstack-free .form-table th,
@@ -1097,6 +1041,57 @@ a.label:hover {
     margin-top: 0;
 }
 
+@-moz-keyframes spin {
+    100% {
+      -moz-transform: rotate(360deg);
+    }
+  }
+  
+  @-webkit-keyframes spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes spin {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+}
+
+.is-polling-section {
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.is-polling-section p {
+    color: #afb9c6;
+    font-size: 15px;
+}
+
+.is-polling-section img.rotate {
+    -webkit-animation: spin 2s linear infinite;
+    -moz-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+}
+
+.patchstack-activate-wrapper {
+    position: relative;
+}
+
+.patchstack-activate-wrapper input[type=submit].button-primary {
+    position: absolute;
+    right: 12px;
+    top: 41px;
+    padding: 4px 8px !important;
+    width: auto;
+}
+
+.patchstack-activate-wrapper input[type=text] {
+    margin: 8px 0 0 0 !important;
+}
+
 .patchstack-license-button #patchstack-activate {
     width: 49%;
     float: left;
@@ -1111,7 +1106,7 @@ a.label:hover {
 
 .patchstack-activate.button-primary.focus,
 .patchstack-activate.button-primary:focus {
-    background: #b2d675;
+    background: #AFE614;
     border: none;
     outline: none;
     opacity: .5;
@@ -1126,7 +1121,7 @@ p.patchstack-upsell {
 }
 
 p.patchstack-upsell a {
-    color: #B2D675;
+    color: #AFE614;
     text-decoration: none;
 }
 
@@ -1150,8 +1145,8 @@ p.patchstack-upsell img {
 .patchstack-status-label {
     font-size: 13px;
     border-radius: 2px;
-    background: rgba(178, 214, 117, 0.18);
-    color: #B2D675;
+    background: #AFE614;
+    color: #1C1E22;
     padding: 5px 10px 5px 8px;
     margin-left: auto;
     order: 2;
@@ -1177,9 +1172,8 @@ p.patchstack-upsell img {
 }
 
 .patchstack-protection a.button-primary {
-    background: #B2D675;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
-    color: #000;
+    background-color: #afe614;
+    color: #111216;
     width: initial;
     margin: 0;
     margin-left: auto;
@@ -1228,7 +1222,7 @@ p.patchstack-upsell img {
 }
 
 p.patchstack-resync {
-    color: #B2D675;
+    color: #AFE614;
     margin-top: 32px;
     text-align: center;
 }

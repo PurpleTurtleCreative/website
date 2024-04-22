@@ -33,7 +33,7 @@ class P_Admin_Menu extends P_Core {
 	 */
 	public function add_meta_nonce() {
 		$screen = get_current_screen();
-		if ( current_user_can( 'manage_options' ) && isset( $screen->base ) && ( $screen->base == 'dashboard' || stripos( $screen->base, 'patchstack' ) !== false ) ) {
+		if ( current_user_can( 'manage_options' ) && isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false ) {
 			echo '<meta name="patchstack_nonce" value="' . wp_create_nonce( 'patchstack-nonce' ) . '">';
 		}
 	}
@@ -44,7 +44,7 @@ class P_Admin_Menu extends P_Core {
 	 * @return void
 	 */
 	public function add_menu_pages() {
-		add_submenu_page( $this->plugin->name, 'Main', __( 'Settings', 'patchstack' ), 'manage_options', $this->plugin->name, [ $this, 'render_settings_page' ] );
+		add_submenu_page( $this->plugin->name, 'Main', esc_attr__( 'Settings', 'patchstack' ), 'manage_options', $this->plugin->name, [ $this, 'render_settings_page' ] );
 		add_options_page( 'Security', 'Security', 'manage_options', $this->plugin->name );
 	}
 
@@ -86,11 +86,6 @@ class P_Admin_Menu extends P_Core {
 		if ( isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false ) {
 			wp_enqueue_style( 'patchstack-selectize', $this->plugin->url . 'assets/css/selectize.min.css', [ ], $this->plugin->version );
 		}
-
-		// Only load the dataTables CSS fileon the logs page.
-		if ( isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false && isset( $_GET['tab'] ) && $_GET['tab'] == 'logs' ) {
-			wp_enqueue_style( 'patchstack-logs', $this->plugin->url . 'assets/css/jquery.dataTables.min.css', [ ], $this->plugin->version );
-		}
 	}
 
 	/**
@@ -109,25 +104,14 @@ class P_Admin_Menu extends P_Core {
 				[
 					'ajaxurl'       => admin_url( 'admin-ajax.php' ),
 					'nonce'         => wp_create_nonce( 'patchstack-nonce' ),
-					'error_message' => __( 'Sorry, there was a problem processing your request.', 'patchstack' ),
+					'error_message' => esc_attr__( 'Sorry, there was a problem processing your request.', 'patchstack' ),
 				]
 			);
-		}
-
-		// Only load the colorpicker on the cookie notice settings page.
-		if ( isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false && isset( $_GET['tab'] ) && $_GET['tab'] == 'cookienotice' ) {
-			wp_enqueue_script( 'patchstack-jscolor', $this->plugin->url . 'assets/js/jscolor.js', [ ], $this->plugin->version );
 		}
 
 		// Only load the selectize library on the firewall settings page.
 		if ( isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false ) {
 			wp_enqueue_script( 'patchstack-selectize', $this->plugin->url . 'assets/js/selectize.min.js', [ ], $this->plugin->version );
-		}
-
-		// Only load the dataTables related libraries on the logs page.
-		if ( isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false && isset( $_GET['tab'] ) && $_GET['tab'] == 'logs' ) {
-			wp_enqueue_script( 'patchstack-bootstrap', $this->plugin->url . 'assets/js/bootstrap.min.js', [ 'jquery' ], $this->plugin->version );
-			wp_enqueue_script( 'patchstack-logs', $this->plugin->url . 'assets/js/jquery.dataTables.min.js', [ ], $this->plugin->version );
 		}
 	}
 
@@ -138,6 +122,6 @@ class P_Admin_Menu extends P_Core {
 	 * @return array
 	 */
 	public function admin_settings( $links ) {
-		return array_merge( [ '<a href="admin.php?page=patchstack&tab=license">' . __( 'Settings', 'patchstack' ) . '</a>' ], $links );
+		return array_merge( [ '<a href="admin.php?page=patchstack&tab=license">' . esc_attr__( 'Settings', 'patchstack' ) . '</a>' ], $links );
 	}
 }

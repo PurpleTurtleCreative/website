@@ -95,7 +95,7 @@ body.post-smtp_page_postman_email_log {
     font-size: 16px;
 }
 
-.ps-main-header.post-smtp-welcome-panel {
+.ps-main-header.post-smtp-welcome-panel h2 {
     padding: 0px 15px;
     font-size: 19px;
 }
@@ -1433,6 +1433,10 @@ div#ps-email-log_length{
     border-radius: 50px!important;
 }
 
+.ps-email-log-resend-to {
+    margin: 3px 0;
+}
+
 /* View And Session Transcript Popup */
 .ps-popup-wrap {
     width: 100%;
@@ -1559,7 +1563,7 @@ div#ps-email-log_length{
 .ps-refresh-logs span:hover {
     cursor: pointer;
 }
-#toplevel_page_postman ul li:nth-child(6) a {
+#toplevel_page_postman ul li:nth-last-child(3) a {
     color: #adff2f!important;
 }
 
@@ -1579,4 +1583,8 @@ div#ps-email-log_length{
 
 .ps-home-middle-left {
     float: left;
+}
+
+.ps-pro-icon {
+    color: #fed90f;
 }

@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 			do_settings_sections( 'patchstack_login_settings' );
 			settings_fields( 'patchstack_login_settings_group' );
-			submit_button( __( 'Save settings', 'patchstack' ) );
+			submit_button( esc_attr__( 'Save settings', 'patchstack' ) );
 		?>
 	</form>
 </div>
