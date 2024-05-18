@@ -37,11 +37,14 @@ code[class*='language-'] {
 /* Code blocks */
 pre.wp-block-code {
 	background: #b3d4fc;
+	background-color: white;
+	overflow: auto;
+}
+
+:where(pre.wp-block-code) {
 	padding: 1em;
 	margin: 0.5em auto;
-	overflow: auto;
 	border: 1px solid #dddddd;
-	background-color: white;
 }
 
 .token.comment,

@@ -36,9 +36,12 @@ pre[class*='language-'] {
 /* Code blocks */
 pre.wp-block-code {
 	background: #2e3440;
+	overflow: auto;
+}
+
+:where(pre.wp-block-code) {
 	padding: 1em;
 	margin: 0.5em auto;
-	overflow: auto;
 	border-radius: 0.3em;
 }
 

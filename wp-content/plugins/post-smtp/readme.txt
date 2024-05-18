@@ -1,10 +1,10 @@
-=== POST SMTP - The #1 WordPress SMTP Plugin with Advanced Email Logging and Delivery Failure Notifications ===
+=== Post SMTP - The Complete WP SMTP Plugin with Email Logs and Mobile app for email Failure Notifications ===
 Plugin URI: https://postmansmtp.com/
 Contributors: wpexpertsio
-Tags: smtp, wordpress smtp, wp_mail, gmail smtp, post smtp, email,  email log, office 365, mailgun, wp smtp, sendgrid, brevo, microsoft 365, amazon ses, sendinblue
+Tags: smtp, gmail smtp, email,  email logs, office 365
 Requires at least: 5.6.0
 Tested up to: 6.5.2
-Stable tag: 2.9.0
+Stable tag: 2.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -278,6 +278,14 @@ Important: If you are using version 2.8.7 or lower of our plugin, please update 
 
 == Changelog ==
 
+= 2.9.2 - 2024-05-13 =
+* NEW - Added new filter post_smtp_postmark_content for developers ease.
+* UPDATED - Google Client SDK to latest version.
+* IMPROVEMENT - Site URL was missing in [Post SMTP Chrome Extension](https://chromewebstore.google.com/detail/post-smtp-notifications/npklmbkpbknkmbohdbpikeidiaekjoch).
+
+= 2.9.1 - 2024-04-22 =
+* Bug Fix: error appearing "syntax error, unexpected ')'".
+
 = 2.9.0 - 2024-04-16 =
 * New - Added email health report
 * New - Added new socket/ email service SendPulse
@@ -339,7 +347,7 @@ Important: If you are using version 2.8.7 or lower of our plugin, please update 
 
 = 2.8.0 - 2023-11-13 =
 
-* NEW – Introducing a NEW 3-step wizard to speed up the initial setup.
+* NEW - Introducing a NEW 3-step wizard to speed up the initial setup.
 * NEW - Added documentation within the wizard to ease out the setup
 * NEW - Added new socket/email service for [Mailjet](https://www.mailjet.com/)
 * NEW - Added support for default socket within wizard (you can use this option in case you want to use the logs functionality only)
