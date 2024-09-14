@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	function setResponse(response) {
 		document.getElementById("captcha-response").value = response; 
 	}
-	
 </script>
-<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $site_key ); ?>"  data-size="invisible" data-callback="setResponse"></div>
+<div class="g-recaptcha" data-sitekey="<?php echo esc_attr( $site_key ); ?>" data-size="invisible" data-callback="setResponse"></div>
 <input type="hidden" id="captcha-response" name="captcha-response" />

@@ -99,8 +99,8 @@ class P_Activation extends P_Core {
 
 		// Do checks for required classes / functions or similar.
 		// Add detailed messages to $this->activation_errors array.
-		if ( version_compare( phpversion(), '5.3.0', '<' ) ) {
-			$this->activation_errors[] = 'Please update the PHP version on your host to at least 5.3.0. Ask your host if you do not know what this means.';
+		if ( version_compare( phpversion(), '5.6.0', '<' ) ) {
+			$this->activation_errors[] = 'Please update the PHP version on your host to at least 5.6.0. Ask your host if you do not know what this means.';
 			return false;
 		}
 
@@ -159,7 +159,7 @@ class P_Activation extends P_Core {
 			// Deactivate the plugin.
 			include_once ABSPATH . 'wp-admin/includes/plugin.php';
 			deactivate_plugins( [ 'webarx/webarx.php' ] );
-			update_option( 'patchstack_license_free', '0' );
+			update_option( 'patchstack_license_free', '0', true );
 		}
 
 		// Make sure any rewrite functionality has been loaded.
@@ -176,7 +176,7 @@ class P_Activation extends P_Core {
 			$this->alter_license( get_option( 'patchstack_clientid' ), $this->get_secret_key(), 'activate' );
 		} else {
 			$sendSecret = true;
-			update_option( 'patchstack_license_free', '1' );
+			update_option( 'patchstack_license_free', '1', true );
 		}
 
 		// Update firewall status after activating plugin
@@ -395,13 +395,13 @@ class P_Activation extends P_Core {
 
 			// If we have an access token, tell our API that the firewall is activated
 			// and the current URL of the site.
-			update_option( 'patchstack_license_activated', '1' );
+			update_option( 'patchstack_license_activated', '1', true );
 			$this->plugin->api->update_license_status();
 			$token = $this->plugin->api->get_access_token();
 			if ( ! empty( $token ) ) {
 				do_action( 'patchstack_send_software_data' );
 				if ( get_option( 'patchstack_license_free', 0 ) != 1 ) {
-					update_option( 'patchstack_basic_firewall', 1 );
+					update_option( 'patchstack_basic_firewall', 1, true );
 					do_action( 'patchstack_post_firewall_rules' );
 					do_action( 'patchstack_post_dynamic_firewall_rules' );
 					$this->header();
@@ -421,7 +421,7 @@ class P_Activation extends P_Core {
 		// Deactivate the license.
 		if ( $action == 'deactivate' ) {
 			update_option( 'patchstack_api_token', '' );
-			update_option( 'patchstack_license_activated', '0' );
+			update_option( 'patchstack_license_activated', '0', true );
 	
 			return [
 				'result'  => 'success',

@@ -85,6 +85,12 @@ class P_Upload extends P_Core {
 				update_site_option( 'patchstack_latest_vulnerable', [] );
 			}
 
+			// If we received the number of vulnerable count.
+			if ( isset ( $results['vulnerability_count'], $results['vulnerability_fix_count'] ) ) {
+				update_option( 'patchstack_vulns_present', $results['vulnerability_count'] );
+				update_option( 'patchstack_fixes_present', $results['vulnerability_fix_count'] );
+			}
+
 			return $results;
 		}
 

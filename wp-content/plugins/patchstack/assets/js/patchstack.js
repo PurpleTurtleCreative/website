@@ -92,44 +92,6 @@ window.Patchstack = window.Patchstack || {};
 				}
 			});
 		});
-
-		if($("#patchstack_captcha_type").val() == "v2"){
-			$("#patchstack_captcha_public_key_v3, #patchstack_captcha_private_key_v3, #patchstack_captcha_public_key_v3_new, #patchstack_captcha_private_key_v3_new").hide();
-			$("#patchstack_captcha_public_key, #patchstack_captcha_private_key").show();
-		}else if($("#patchstack_captcha_type").val() == "invisible"){
-			$("#patchstack_captcha_public_key, #patchstack_captcha_private_key, #patchstack_captcha_public_key_v3_new, #patchstack_captcha_private_key_v3_new").hide();
-			$("#patchstack_captcha_public_key_v3, #patchstack_captcha_private_key_v3").show();
-		}else{
-			$("#patchstack_captcha_public_key, #patchstack_captcha_private_key, #patchstack_captcha_public_key_v3, #patchstack_captcha_private_key_v3").hide();
-			$("#patchstack_captcha_public_key_v3_new, #patchstack_captcha_private_key_v3_new").show();
-		}
-
-		$("#patchstack_captcha_type").change(function() {
-			if($("#patchstack_captcha_type").val() == "v2"){
-				$("#patchstack_captcha_public_key_v3, #patchstack_captcha_private_key_v3, #patchstack_captcha_public_key_v3_new, #patchstack_captcha_private_key_v3_new").hide();
-				$("#patchstack_captcha_public_key, #patchstack_captcha_private_key").show();
-			}else if($("#patchstack_captcha_type").val() == "invisible"){
-				$("#patchstack_captcha_public_key, #patchstack_captcha_private_key, #patchstack_captcha_public_key_v3_new, #patchstack_captcha_private_key_v3_new").hide();
-				$("#patchstack_captcha_public_key_v3, #patchstack_captcha_private_key_v3").show();
-			}else{
-				$("#patchstack_captcha_public_key, #patchstack_captcha_private_key, #patchstack_captcha_public_key_v3, #patchstack_captcha_private_key_v3").hide();
-				$("#patchstack_captcha_public_key_v3_new, #patchstack_captcha_private_key_v3_new").show();
-			}
-		});
-
-		if($('#geo-countries').length > 0){
-			var items = []
-			if($('#geo-countries').data('selected') != ''){
-				items = $('#geo-countries').data('selected').split(',')
-			}
-
-			$('#geo-countries').selectize({
-				maxItems: null,
-				delimiter: ',',
-				plugins: ['remove_button'],
-				items: items
-			});
-		}
 	};
 
 	$( plugin.init );

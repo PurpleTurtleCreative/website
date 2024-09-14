@@ -92,8 +92,8 @@ class P_Cron extends P_Core {
 
 		$premium = [
 			'patchstack_send_hacker_logs'             => 'patchstack_15minute',
-			'patchstack_post_firewall_rules'          => 'patchstack_twicedaily',
-			'patchstack_post_firewall_htaccess_rules' => 'patchstack_trihourly',
+			'patchstack_post_firewall_rules'          => 'patchstack_daily',
+			'patchstack_post_firewall_htaccess_rules' => 'patchstack_daily',
 			'patchstack_post_dynamic_firewall_rules'  => 'patchstack_hourly',
 			'patchstack_send_event_logs'              => 'patchstack_15minute'
 		];

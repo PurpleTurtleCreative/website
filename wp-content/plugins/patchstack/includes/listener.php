@@ -169,7 +169,7 @@ class P_Listener extends P_Core {
 	 */
 	private function switchFirewallStatus() {
 		$state = $this->get_option( 'patchstack_basic_firewall' ) == 1;
-		update_option( 'patchstack_basic_firewall', $state == 1 ? 0 : 1 );
+		update_option( 'patchstack_basic_firewall', $state == 1 ? 0 : 1, true );
 		$this->returnResults( null, 'Firewall ' . ( $state == 1 ? 'disabled' : 'enabled' ) . '.', null );
 	}
 
@@ -708,7 +708,7 @@ class P_Listener extends P_Core {
 		// REMOTE_ADDR?
 		foreach ( $ips as $ip ) {
 			if ( isset( $_SERVER['REMOTE_ADDR'] ) && $_SERVER['REMOTE_ADDR'] == $ip ) {
-				update_option( 'patchstack_firewall_ip_header', 'REMOTE_ADDR' );
+				update_option( 'patchstack_firewall_ip_header', 'REMOTE_ADDR', true );
 				update_option( 'patchstack_ip_header_computed', 1 );
 				update_option( 'patchstack_ott_action', '' );
 				wp_send_json( [ 'success' => true, 'header' => 'REMOTE_ADDR' ] );
@@ -720,7 +720,7 @@ class P_Listener extends P_Core {
 		foreach ( $ips as $ip ) {
 			foreach ( $priority as $header ) {
 				if ( isset( $_SERVER[ $header ] ) && $_SERVER[ $header ] == $ip ) {
-					update_option( 'patchstack_firewall_ip_header', $header );
+					update_option( 'patchstack_firewall_ip_header', $header, true );
 					update_option( 'patchstack_ip_header_computed', 1 );
 					update_option( 'patchstack_ott_action', '' );
 					wp_send_json( [ 'success' => true,  'header' => $header ] );
@@ -732,7 +732,7 @@ class P_Listener extends P_Core {
 		foreach ( $ips as $ip ) {
 			foreach ( $_SERVER as $key => $value ) {
 				if ( $value == $ip ) {
-					update_option( 'patchstack_firewall_ip_header', $key );
+					update_option( 'patchstack_firewall_ip_header', $key, true );
 					update_option( 'patchstack_ip_header_computed', 1 );
 					update_option( 'patchstack_ott_action', '' );
 					wp_send_json( [ 'success' => true,  'header' => $key ] );

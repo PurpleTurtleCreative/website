@@ -107,6 +107,16 @@ class Extension implements ExtensionInterface
                 'block_type'  => $logType
             ]
         );
+
+        // Increment all time hits counter.
+        if ($logType == 'BLOCK') {
+            $hits = (int) get_option('patchstack_hits_all_time', 0);
+            update_option('patchstack_hits_all_time', $hits + 1);
+
+            $counters = get_option('patchstack_hits_last_30', []);
+            $counters = $this->merge_counters([date('Y-m-d') => 1], $counters);
+            update_option('patchstack_hits_last_30', $counters);
+        }
     }
 
     /**
@@ -195,6 +205,16 @@ class Extension implements ExtensionInterface
         status_header(403);
         send_nosniff_header();
         nocache_headers();
+
+		// Supported by a number of popular caching plugins.
+		if (!defined( 'DONOTCACHEPAGE')) {
+			define('DONOTCACHEPAGE', true);
+		}
+
+        // Because WP Fastest Cache just has to be special...
+        if (function_exists('wpfc_exclude_current_page')) {
+            @wpfc_exclude_current_page();
+        }
 
         include_once dirname(__FILE__) . '/../../../../../includes/views/access-denied.php';
 
@@ -438,4 +458,45 @@ class Extension implements ExtensionInterface
 
 		return ( $request_ip >= $start_ip && $request_ip <= $end_ip );
 	}
+
+    /**
+     * Given an array of the current counters, merge it with the past counters.
+     * 
+     * @param array $newCounters
+     * @param array $oldCounters
+     * @return array
+     */
+    private function merge_counters($newCounters, $oldCounters)
+    {
+        // The new counters to return.
+        $countersNow = [];
+        $oldCounters = is_array($oldCounters) ? $oldCounters : [];
+    
+        // Set the range of dates we need.
+        $start = new \DateTime();
+        $start->modify('-30 days');
+        $end = new \DateTime();
+        $end->modify('+1 day');
+        $interval = new \DateInterval('P1D');
+        $range = new \DatePeriod($start, $interval, $end);
+    
+        // Set the range from -6 days to +1 day from now.
+        foreach ($range as $date) {
+            $formattedDate = $date->format('Y-m-d');
+            if (isset($oldCounters[$formattedDate])) {
+                $countersNow[$formattedDate] = $oldCounters[$formattedDate];
+            } else {
+                $countersNow[$formattedDate] = 0;
+            }
+        }
+    
+        // Update the counters with the ones passed from the firewall logger.
+        foreach ($newCounters as $date => $hits) {
+            if (isset($countersNow[$date])) {
+                $countersNow[$date] += $hits;
+            }
+        }
+    
+        return $countersNow;
+    }
 }

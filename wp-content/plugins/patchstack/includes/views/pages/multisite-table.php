@@ -15,6 +15,13 @@ require_once dirname( __FILE__ ) . '/../../admin/multisite-table.php';
 			echo '<div class="notice notice-success inline" style="margin: 20px 0 0 0;"><p><strong>The database migration has been re-run for the site: ' . esc_url( $site->siteurl ) . '</strong></p></div>';
 		}
 	?>
+
+	<div class="notice notice-success inline" style="margin: 20px 0 0 0;">
+		<p>
+			<strong>In order to activate Patchstack on a site, go to the <a href="admin.php?page=patchstack-multisite-settings">activation page.</a></strong>
+		</p>
+	</div>
+
 	<form method="GET" style="display: table;">
 		<div class="wrap">
 			<h2>Available Sites</h2>
@@ -23,7 +30,6 @@ require_once dirname( __FILE__ ) . '/../../admin/multisite-table.php';
 		<?php
 			$table = new Patchstack_Network_Sites_Table();
 			$table->prepare_items();
-			$table->search_box( 'Search', 'search' );
 		?>
 	</form>
 	<?php

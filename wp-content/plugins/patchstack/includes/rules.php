@@ -94,19 +94,30 @@ class P_Rules extends P_Core {
 		$rules = $results['firewall'];
 		$newRules = [];
 		$oldRules = [];
+		$vPatchCount = 0;
+		$ruleCount = 0;
 		foreach ( $rules as $rule ) {
 			if ( isset( $rule['rule_v2'] ) ) {
 				$rule['rules'] = $rule['rule_v2'];
 				unset($rule['rule_v2']);
 				$newRules[] = $rule;
+
+				if (stripos($rule['title'], ' vulnerabilit') !== false && stripos($rule['title'], 'block ') !== false) {
+					$vPatchCount++;
+				} else {
+					$ruleCount++;
+				}
 			} else {
+				$ruleCount++;
 				$oldRules[] = $rule;
 			}
 		}
 
 		// Update firewall rules.
-		update_option( 'patchstack_firewall_rules', json_encode( $oldRules ) );
-		update_option( 'patchstack_firewall_rules_v3', json_encode( $newRules ) );
+		update_option( 'patchstack_firewall_rules', json_encode( $oldRules ), true );
+		update_option( 'patchstack_firewall_rules_v3', json_encode( $newRules ), true );
+		update_option( 'patchstack_vpatches_present', $vPatchCount );
+		update_option( 'patchstack_non_vpatches_present', $ruleCount );
 
 		// Separate the new firewall engine rules from the old ones.
 		$rules = $results['whitelists'];
@@ -123,10 +134,10 @@ class P_Rules extends P_Core {
 		}
 
 		// Update whitelist rules.
-		update_option( 'patchstack_whitelist_rules', json_encode( $oldRules ) );
-		update_option( 'patchstack_whitelist_rules_v3', json_encode( $newRules ) );
+		update_option( 'patchstack_whitelist_rules', json_encode( $oldRules ), true );
+		update_option( 'patchstack_whitelist_rules_v3', json_encode( $newRules ), true );
 
 		// Update the whitelisted keys.
-		update_option( 'patchstack_whitelist_keys_rules', json_encode( $results['whitelist_keys'] ) );
+		update_option( 'patchstack_whitelist_keys_rules', json_encode( $results['whitelist_keys'] ), true );
 	}
 }

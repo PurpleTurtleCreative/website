@@ -38,7 +38,7 @@ class P_Admin_Ajax extends P_Core {
 			wp_send_json(
 				[ 
 					'result' => 'error',
-					'error_message' => 'An invalid API key was provided.'
+					'error_message' => esc_attr__('An invalid API key was provided.', 'patchstack')
 				]
 			);
 		}

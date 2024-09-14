@@ -112,6 +112,11 @@ class P_Firewall extends P_Core {
 			define( 'DONOTCACHEPAGE', true );
 		}
 
+        // Because WP Fastest Cache just has to be special...
+        if (function_exists('wpfc_exclude_current_page')) {
+            @wpfc_exclude_current_page();
+        }
+
 		// Send forbidden headers and no-caching headers as well.
 		status_header(403);
 		send_nosniff_header();
@@ -152,5 +157,38 @@ class P_Firewall extends P_Core {
 				'block_type'  => 'BLOCK',
 			)
 		);
+	}
+
+	/**
+	 * Extract the number of blocked hits the past 30 days based on the current counters.
+	 * 
+	 * @return int
+	 */
+	public function get_hits_counter() {
+		$counters = get_option( 'patchstack_hits_last_30', [] );
+		if (!is_array($counters) || count($counters) === 0) {
+			return 0;
+		}
+
+        // Set the range of dates we need.
+		$hits = 0;
+        $start = new \DateTime();
+        $start->modify('-30 days');
+
+        $end = new \DateTime();
+		$end->modify('+1 day');
+
+        $interval = new \DateInterval('P1D');
+        $range = new \DatePeriod($start, $interval, $end);
+    
+        // Set the range from -6 days to +1 day from now.
+        foreach ($range as $date) {
+            $formattedDate = $date->format('Y-m-d');
+            if (isset($counters[$formattedDate])) {
+                $hits += $counters[$formattedDate];
+            }
+        }
+    
+        return $hits;
 	}
 }

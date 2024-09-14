@@ -23,12 +23,12 @@ class P_Hide_Login extends P_Core {
 		}
 
 		// Update the renamed login page if it's set to our hardcoded one.
-		if ( get_site_option( 'patchstack_mv_wp_login' ) == 0 && get_site_option( 'patchstack_rename_wp_login' ) == 'swlogin' ) {
+		if ( get_option( 'patchstack_mv_wp_login' ) == 0 && get_option( 'patchstack_rename_wp_login' ) == 'swlogin' ) {
 			update_site_option( 'patchstack_rename_wp_login', md5( wp_generate_password( 32, true, true ) ) );
 		}
 
 		// No need to continue if it is not enabled.
-		if ( ! get_site_option( 'patchstack_mv_wp_login' ) || ! get_site_option( 'patchstack_rename_wp_login' ) ) {
+		if ( ! get_option( 'patchstack_mv_wp_login' ) || ! get_option( 'patchstack_rename_wp_login' ) ) {
 			return;
 		}
 
@@ -58,13 +58,18 @@ class P_Hide_Login extends P_Core {
 		}
 
 		// If the current page is the renamed login page we give the user access for 10 minutes to the login page.
-		if ( strpos( $_SERVER['REQUEST_URI'], get_site_option( 'patchstack_rename_wp_login' ) ) !== false ) {
+		if ( strpos( $_SERVER['REQUEST_URI'], get_option( 'patchstack_rename_wp_login' ) ) !== false ) {
 			// Whitelist the current IP address.
 			$this->whitelist_ip();
 
 			// Supported by a number of popular caching plugins.
 			if ( ! defined( 'DONOTCACHEPAGE' ) ) {
 				define( 'DONOTCACHEPAGE', true );
+			}
+
+			// Because WP Fastest Cache just has to be special...
+			if ( function_exists( 'wpfc_exclude_current_page' ) ) {
+				@wpfc_exclude_current_page();
 			}
 
 			// No caching.

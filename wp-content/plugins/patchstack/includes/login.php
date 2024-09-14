@@ -45,7 +45,7 @@ class P_Login extends P_Core {
 	 * @return void
 	 */
 	public function login_enqueue_scripts() {
-		if ( $this->get_option( 'patchstack_captcha_login_form', false ) && $this->get_option( 'patchstack_captcha_type' ) != 'v3' ) {
+		if ( $this->get_option( 'patchstack_captcha_login_form', false ) && $this->get_option( 'patchstack_captcha_type' ) != 'v3' && $this->get_option( 'patchstack_captcha_type' ) != 'turnstile' ) {
 			wp_enqueue_script( 'patchstack_captcha', 'https://www.google.com/recaptcha/api.js' );
 		}
 	}
@@ -268,6 +268,10 @@ class P_Login extends P_Core {
 			case 'v3':
 				$public  = $this->get_option( 'patchstack_captcha_public_key_v3_new', '' );
 				$private = $this->get_option( 'patchstack_captcha_private_key_v3_new', '' );
+				break;
+			case 'turnstile':
+				$public  = $this->get_option( 'patchstack_captcha_public_key_turnstile', '' );
+				$private = $this->get_option( 'patchstack_captcha_private_key_turnstile', '' );
 				break;
 			default:
 				return;

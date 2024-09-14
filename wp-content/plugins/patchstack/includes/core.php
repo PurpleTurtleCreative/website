@@ -176,7 +176,7 @@ class P_Core {
 			return update_blog_option( $site_id, $name, $value );
 		}
 
-		return update_option( $name, $value );
+		return update_option( $name, $value, true );
 	}
 
 	/**
@@ -268,7 +268,7 @@ class P_Core {
 	 * @return string
 	 */
 	public function get_ip() {
-		$override = get_site_option( 'patchstack_firewall_ip_header', '' );
+		$override = get_option( 'patchstack_firewall_ip_header', '' );
 		if ( $override != '' && isset( $_SERVER[ $override ] ) ) {
 			return $_SERVER[ $override ];
 		}

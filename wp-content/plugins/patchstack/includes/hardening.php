@@ -213,7 +213,7 @@ class P_Hardening extends P_Core {
 	 * @return void|array
 	 */
 	public function set_security_headers( $headers ) {
-		if ( get_site_option( 'patchstack_add_security_headers' ) ) {
+		if ( get_option( 'patchstack_add_security_headers' ) ) {
 			$headers['Referrer-Policy']           = 'strict-origin-when-cross-origin';
 			$headers['X-Frame-Options']           = 'SAMEORIGIN';
 			$headers['X-XSS-Protection']          = '1; mode=block';
@@ -261,6 +261,10 @@ class P_Hardening extends P_Core {
 				$site_key = trim( $this->get_option( 'patchstack_captcha_public_key_v3_new' ) );
 				require_once dirname( __FILE__ ) . '/views/captcha_v3.php';
 				break;
+			case 'turnstile':
+				$site_key = trim( $this->get_option( 'patchstack_captcha_public_key_turnstile' ) );
+				require_once dirname( __FILE__ ) . '/views/captcha_turnstile.php';
+				break;
 		}
 	}
 
@@ -283,6 +287,10 @@ class P_Hardening extends P_Core {
 				$secret_key = trim( $this->get_option( 'patchstack_captcha_private_key_v3_new' ) );
 				$site_key   = trim( $this->get_option( 'patchstack_captcha_public_key_v3_new' ) );
 				break;
+			case 'turnstile':
+				$secret_key = trim( $this->get_option( 'patchstack_captcha_private_key_turnstile' ) );
+				$site_key   = trim( $this->get_option( 'patchstack_captcha_public_key_turnstile' ) );
+				break;
 		}
 
 		if ( ! $secret_key || ! $site_key ) {
@@ -299,7 +307,7 @@ class P_Hardening extends P_Core {
 			];
 		}
 
-		$response = $this->get_captcha_response( $secret_key );
+		$response = $this->get_captcha_response( $secret_key, $this->get_option( 'patchstack_captcha_type' ) );
 		if ( isset( $response['success'] ) && ! empty( $response['success'] ) ) {
 			return [
 				'response' => true,
@@ -317,9 +325,10 @@ class P_Hardening extends P_Core {
 	 * Query Google for reAPTCHA validation and response.
 	 *
 	 * @param string $privatekey
+	 * @param string $type
 	 * @return array
 	 */
-	public function get_captcha_response( $privatekey ) {
+	public function get_captcha_response( $privatekey, $type ) {
 		$args = [
 			'body'      => [
 				'secret'   => $privatekey,
@@ -327,7 +336,13 @@ class P_Hardening extends P_Core {
 			],
 			'sslverify' => false,
 		];
-		$resp = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', $args );
+
+		if ($type != 'turnstile') {
+			$resp = wp_remote_post( 'https://www.google.com/recaptcha/api/siteverify', $args );
+		} else {
+			$resp = wp_remote_post( 'https://challenges.cloudflare.com/turnstile/v0/siteverify', $args );
+		}
+		
 		return json_decode( wp_remote_retrieve_body( $resp ), true );
 	}
 

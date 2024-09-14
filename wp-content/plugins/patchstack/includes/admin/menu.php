@@ -55,9 +55,8 @@ class P_Admin_Menu extends P_Core {
 	 */
 	public function network_menu() {
 		add_menu_page( 'Patchstack', 'Patchstack', 'manage_options', 'patchstack-multisite', [ $this->plugin->multisite, 'sites_section_callback' ] );
-		add_submenu_page( 'patchstack-multisite', 'Activate', 'Activate', 'manage_options', 'patchstack-multisite-settings&tab=multisite', [ $this->plugin->multisite, 'settings' ] );
+		add_submenu_page( 'patchstack-multisite', 'Activate', 'Activate', 'manage_options', 'patchstack-multisite-settings', [ $this, 'render_settings_page' ] );
 		add_submenu_page( 'patchstack-multisite', 'Sites', 'Sites', 'manage_options', 'patchstack-multisite', [ $this->plugin->multisite, 'sites_section_callback' ] );
-		add_submenu_page( 'patchstack-multisite', 'Settings', 'Settings', 'manage_options', 'patchstack-multisite-settings', [ $this, 'render_settings_page' ] );
 	}
 
 	/**
@@ -80,11 +79,7 @@ class P_Admin_Menu extends P_Core {
 		// Load the Patchstack style on all Patchstack pages except site overview.
 		if ( isset( $screen->base, $_GET['page'] ) && stripos( $screen->base, 'patchstack' ) !== false && $_GET['page'] != 'patchstack-multisite' ) {
 			wp_enqueue_style( 'patchstack', $this->plugin->url . 'assets/css/patchstack.min.css', [], $this->plugin->version );
-		}
-
-		// Only load the selectize CSS file on the firewall settings page.
-		if ( isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false ) {
-			wp_enqueue_style( 'patchstack-selectize', $this->plugin->url . 'assets/css/selectize.min.css', [ ], $this->plugin->version );
+			wp_enqueue_style( 'patchstack-hint', 'https://cdnjs.cloudflare.com/ajax/libs/hint.css/3.0.0/hint.min.css', [], $this->plugin->version );
 		}
 	}
 
@@ -107,11 +102,6 @@ class P_Admin_Menu extends P_Core {
 					'error_message' => esc_attr__( 'Sorry, there was a problem processing your request.', 'patchstack' ),
 				]
 			);
-		}
-
-		// Only load the selectize library on the firewall settings page.
-		if ( isset( $screen->base ) && stripos( $screen->base, 'patchstack' ) !== false ) {
-			wp_enqueue_script( 'patchstack-selectize', $this->plugin->url . 'assets/js/selectize.min.js', [ ], $this->plugin->version );
 		}
 	}
 
