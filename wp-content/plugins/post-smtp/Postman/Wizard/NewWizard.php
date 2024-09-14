@@ -212,6 +212,7 @@ class Post_SMTP_New_Wizard {
                                                 $url = isset( $urls[$transport->getSlug()] ) ? $urls[$transport->getSlug()] : $transport->getLogoURL();
                                                 $this->sockets[$transport->getSlug()] = $transport->getName();
                                                 $checked = $transport->getSlug() == $this->options->getTransportType() ? 'checked' : '';
+                                                $checked = ( isset( $_GET['socket'] ) && !empty( sanitize_text_field( $_GET['socket'] ) ) && $transport->getSlug() == sanitize_text_field( $_GET['socket'] ) ) ? 'checked' : '';
                                                 $slug = $transport->getSlug();
                                                 $transport_name = $transport->getName();
 
@@ -470,8 +471,16 @@ class Post_SMTP_New_Wizard {
             'Step2E2'           => __( 'Please enter From Email.', 'post-smtp' ),
             'Step2E3'           => __( 'Please try again, something went wrong.', 'post-smtp' ),
             'Step3E4'           => __( 'Please enter recipient email address.', 'post-smtp' ),
-            'finish'           => __( 'Finish', 'post-smtp' ),
+            'finish'            => __( 'Finish', 'post-smtp' ),
             'adminURL'          => admin_url(),
+            'connectivityTestMsg'  => sprintf( 
+                '%1$s %2$s <a href="%3$s" target="_blank">%4$s</a> %5$s',
+                '<span class="dashicons dashicons-warning"></span>',
+                __( 'Take the', 'post-smtp' ),
+                esc_url( admin_url( 'admin.php?page=postman/port_test' ) ),
+                __( 'connectivity test', 'post-smtp' ),
+                __( 'of your site to get more information about this failure.', 'post-smtp' )
+            )
         );
 
         if( class_exists( 'Post_Smtp_Office365' ) ) {
@@ -826,7 +835,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'Mandrill' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://mandrillapp.com/settings/index' ),
-                esc_attr( 'API Key.' )
+                __( 'API Key.', 'post-smtp' )
             )
             .'
         </div>
@@ -871,7 +880,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'SendGrid' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://app.sendgrid.com/settings/api_keys' ),
-                esc_attr( 'API Key.' )
+                __( 'API Key.', 'post-smtp' )
             ).'
         </div>
         ';
@@ -917,7 +926,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'Mailgun' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://app.mailgun.com/settings/api_security' ),
-                esc_attr( 'API Key.' )
+                __( 'API Key.', 'post-smtp' )
             )
             .'
         </div>
@@ -935,7 +944,7 @@ class Post_SMTP_New_Wizard {
                 '%1$s <a href="%2$s" target="_blank">%3$s</a>',
                 __( ' Follow this link to get the Mailgun', 'post-smtp' ),
                 esc_url( 'https://app.mailgun.com/app/sending/domains' ),
-                esc_attr( 'Domain Name.' )
+                __( 'Domain Name.', 'post-smtp' )
             )
             .'</span>
         </div>
@@ -1002,7 +1011,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'Brevo' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://app.brevo.com/settings/keys/api' ),
-                esc_attr( 'API Key.' )
+                __( 'API Key.', 'post-smtp' )
             )
             .
         '</div>
@@ -1047,7 +1056,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'Postmark' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://account.postmarkapp.com/api_tokens' ),
-                esc_attr( 'API Key or Server API Token.' )
+                __( 'API Key or Server API Token.', 'post-smtp' )
             )
             .'
         </div>
@@ -1092,7 +1101,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'SparkPost' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://app.sparkpost.com/account/api-keys' ),
-                esc_attr( 'API Key.' )
+                __( 'API Key.', 'post-smtp' )
             )
             .'
         </div>
@@ -1135,7 +1144,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'Elastic Email' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://elasticemail.com/account#/settings/new/manage-api' ),
-                esc_attr( 'API Key.' )
+                __( 'API Key.', 'post-smtp' )
             )
             .
         '</div>
@@ -1186,7 +1195,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'Mailjet' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://app.mailjet.com/account/apikeys' ),
-                esc_attr( 'Mailjet API and Access Key' )
+                __( 'Mailjet API and Access Key', 'post-smtp' )
             )
             .
         '</div>
@@ -1226,14 +1235,14 @@ class Post_SMTP_New_Wizard {
         sprintf(
             '<div class="ps-form-control-info"><a href="%1$s" target="_blank">%2$s</a> %3$s</div>',
             esc_url( 'https://sendpulse.com/features/transactional' ),
-            esc_attr( 'Click here' ),
+            __( 'Click here', 'post-smtp' ),
             __( 'to create an account at SendPulse', 'post-smtp' )
         ).
         sprintf(
             '<div class="ps-form-control-info">%1$s<a href="%2$s" target="_blank">%3$s</a></div>',
             __( 'If you are already logged in follow this ink to get your API ID from Sendpulse ', 'post-smtp' ),
             esc_url( 'https://login.sendpulse.com/settings/#api' ),
-            esc_attr( 'Get API ID' )
+            __( 'Get API ID', 'post-smtp' )
         ).
         '</div>'
         ;
@@ -1249,7 +1258,7 @@ class Post_SMTP_New_Wizard {
                 '<div class="ps-form-control-info">%1$s<a href="%2$s" target="_blank">%3$s</a></div>',
                 __( 'If you are already logged in follow this ink to get your API ID from Sendpulse ', 'post-smtp' ),
                 esc_url( 'https://login.sendpulse.com/settings/#api' ),
-                esc_attr( 'Get API Secret' )
+                __( 'Get API Secret', 'post-smtp' )
             )
             .
         '</div>
@@ -1300,7 +1309,7 @@ class Post_SMTP_New_Wizard {
                 esc_attr( 'Amazon SES' ),
                 __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
                 esc_url( 'https://us-east-1.console.aws.amazon.com/iamv2/home#/users' ),
-                esc_attr( 'Access Key ID and Sceret Access Key' )
+                __( 'Access Key ID and Sceret Access Key', 'post-smtp' )
             )
             .
         '</div>
@@ -1425,7 +1434,7 @@ class Post_SMTP_New_Wizard {
         $selected_region = isset( $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_REGION ] ) ? $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_REGION ]: '';
         
         $client_id = isset( $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_CLIENT_ID ] ) ? $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_CLIENT_ID ] : '';
-        $client_secret = isset( $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_CLIENT_SECRET ] ) ? $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_CLIENT_SECRET ] : '';
+        $client_secret = isset( $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_CLIENT_SECRET ] ) ? base64_decode( $this->options_array[ ZohoMailPostSMTP\ZohoMailTransport::OPTION_CLIENT_SECRET ] ) : '';
         $required = ( isset( $_GET['success'] ) && $_GET['success'] == 1 ) ? '' : 'required';
 
         $html = '
