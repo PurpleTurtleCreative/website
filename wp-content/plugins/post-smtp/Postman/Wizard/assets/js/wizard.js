@@ -505,6 +505,7 @@ jQuery( document ).ready(function() {
         var placeholder = jQuery( this ).find( 'h4' ).text();
         var imgSrc = jQuery( this ).find( 'img' ).attr( 'src' ); 
         var productURL = jQuery( this ).data( 'url' );
+        imgSrc = imgSrc.replace( '.png', '-popup.png' );
 
         jQuery( '.ps-pro-for-img' ).attr( 'src', imgSrc );
         jQuery( '.ps-pro-product-url' ).attr( 'href', productURL );
@@ -519,5 +520,27 @@ jQuery( document ).ready(function() {
         jQuery( '.ps-pro-popup-overlay' ).fadeOut();
 
     } );
+
+    jQuery( '.ps-click-to-copy' ).click( function() {
+
+        // Get the coupon code text
+        var couponCode = jQuery( '.ps-pro-coupon-code' ).text();
+
+        // Create a temporary textarea element to copy the text
+        var $temp = jQuery( '<textarea>' );
+        jQuery( 'body' ).append( $temp );
+        $temp.val( couponCode ).select();
+        document.execCommand( 'copy' );
+        $temp.remove();
+
+        // Show the notification
+        jQuery( '#ps-pro-code-copy-notification' ).fadeIn();
+
+        // Hide the notification after 1 second
+        setTimeout(function() {
+            jQuery( '#ps-pro-code-copy-notification' ).fadeOut();
+        }, 2000);
+
+    });
 
 } );
