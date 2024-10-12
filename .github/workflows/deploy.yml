@@ -23,7 +23,7 @@ jobs:
 
       # Download all source code.
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
           token: ${{ secrets.PTC_GITHUB_PAT }}
@@ -39,7 +39,7 @@ jobs:
 
       - name: WordPress Theme - Cache
         id: ptc-theme-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: wp-content/themes/purple-turtle-creative
           key: ptc-theme-${{ steps.submodule-shas.outputs.SHA_PTC_THEME }}
@@ -55,7 +55,7 @@ jobs:
 
       - name: Completionist Pro - Cache
         id: completionist-pro-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: wp-content/plugins/completionist-pro
           key: completionist-pro-${{ steps.submodule-shas.outputs.SHA_COMPLETIONIST_PRO }}
