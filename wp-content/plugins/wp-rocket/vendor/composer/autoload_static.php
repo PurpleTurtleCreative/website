@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit43952dce62c512aaa853ca79fe4740fb
+class ComposerStaticInit5035f2e1a54ceea9ce26c931da85321e
 {
     public static $files = array (
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
@@ -25,6 +25,10 @@ class ComposerStaticInit43952dce62c512aaa853ca79fe4740fb
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Component\\CssSelector\\' => 30,
+        ),
+        'B' => 
+        array (
+            'BerlinDB\\' => 9,
         ),
     );
 
@@ -49,6 +53,10 @@ class ComposerStaticInit43952dce62c512aaa853ca79fe4740fb
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
+        'BerlinDB\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/berlindb/core/src',
+        ),
     );
 
     public static $prefixesPsr0 = array (
@@ -63,6 +71,15 @@ class ComposerStaticInit43952dce62c512aaa853ca79fe4740fb
 
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
+        'BerlinDB\\Database\\Base' => __DIR__ . '/..' . '/berlindb/core/src/Database/Base.php',
+        'BerlinDB\\Database\\Column' => __DIR__ . '/..' . '/berlindb/core/src/Database/Column.php',
+        'BerlinDB\\Database\\Queries\\Compare' => __DIR__ . '/..' . '/berlindb/core/src/Database/Queries/Compare.php',
+        'BerlinDB\\Database\\Queries\\Date' => __DIR__ . '/..' . '/berlindb/core/src/Database/Queries/Date.php',
+        'BerlinDB\\Database\\Queries\\Meta' => __DIR__ . '/..' . '/berlindb/core/src/Database/Queries/Meta.php',
+        'BerlinDB\\Database\\Query' => __DIR__ . '/..' . '/berlindb/core/src/Database/Query.php',
+        'BerlinDB\\Database\\Row' => __DIR__ . '/..' . '/berlindb/core/src/Database/Row.php',
+        'BerlinDB\\Database\\Schema' => __DIR__ . '/..' . '/berlindb/core/src/Database/Schema.php',
+        'BerlinDB\\Database\\Table' => __DIR__ . '/..' . '/berlindb/core/src/Database/Table.php',
         'CloudFlare\\IpRewrite' => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src/CloudFlare/IpRewrite.php',
         'CloudFlare\\IpUtils' => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src/CloudFlare/IpUtils.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
@@ -159,15 +176,15 @@ class ComposerStaticInit43952dce62c512aaa853ca79fe4740fb
         'WP_Rocket\\Busting\\Abstract_Busting' => __DIR__ . '/../..' . '/inc/deprecated/classes/busting/class-abstract-busting.php',
         'WP_Rocket\\Busting\\Facebook_Pickles' => __DIR__ . '/../..' . '/inc/deprecated/classes/busting/class-facebook-pickles.php',
         'WP_Rocket\\Busting\\Facebook_SDK' => __DIR__ . '/../..' . '/inc/deprecated/classes/busting/class-facebook-sdk.php',
-        'WP_Rocket\\Dependencies\\Database\\Base' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Base.php',
-        'WP_Rocket\\Dependencies\\Database\\Column' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Column.php',
-        'WP_Rocket\\Dependencies\\Database\\Queries\\Compare' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Queries/Compare.php',
-        'WP_Rocket\\Dependencies\\Database\\Queries\\Date' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Queries/Date.php',
-        'WP_Rocket\\Dependencies\\Database\\Queries\\Meta' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Queries/Meta.php',
-        'WP_Rocket\\Dependencies\\Database\\Query' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Query.php',
-        'WP_Rocket\\Dependencies\\Database\\Row' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Row.php',
-        'WP_Rocket\\Dependencies\\Database\\Schema' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Schema.php',
-        'WP_Rocket\\Dependencies\\Database\\Table' => __DIR__ . '/../..' . '/inc/Dependencies/Database/Table.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Base' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Base.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Column' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Column.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Queries\\Compare' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Queries/Compare.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Queries\\Date' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Queries/Date.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Queries\\Meta' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Queries/Meta.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Query' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Query.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Row' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Row.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Schema' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Schema.php',
+        'WP_Rocket\\Dependencies\\BerlinDB\\Database\\Table' => __DIR__ . '/../..' . '/inc/Dependencies/BerlinDB/Database/Table.php',
         'WP_Rocket\\Dependencies\\League\\Container\\Argument\\ArgumentInterface' => __DIR__ . '/../..' . '/inc/Dependencies/League/Container/Argument/ArgumentInterface.php',
         'WP_Rocket\\Dependencies\\League\\Container\\Argument\\ArgumentResolverInterface' => __DIR__ . '/../..' . '/inc/Dependencies/League/Container/Argument/ArgumentResolverInterface.php',
         'WP_Rocket\\Dependencies\\League\\Container\\Argument\\ArgumentResolverTrait' => __DIR__ . '/../..' . '/inc/Dependencies/League/Container/Argument/ArgumentResolverTrait.php',
@@ -693,10 +710,10 @@ class ComposerStaticInit43952dce62c512aaa853ca79fe4740fb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit43952dce62c512aaa853ca79fe4740fb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit43952dce62c512aaa853ca79fe4740fb::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit43952dce62c512aaa853ca79fe4740fb::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit43952dce62c512aaa853ca79fe4740fb::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit5035f2e1a54ceea9ce26c931da85321e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit5035f2e1a54ceea9ce26c931da85321e::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit5035f2e1a54ceea9ce26c931da85321e::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit5035f2e1a54ceea9ce26c931da85321e::$classMap;
 
         }, null, ClassLoader::class);
     }

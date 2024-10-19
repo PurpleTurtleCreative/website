@@ -10,6 +10,15 @@
         'dev' => false,
     ),
     'versions' => array(
+        'berlindb/core' => array(
+            'pretty_version' => '2.0.1',
+            'version' => '2.0.1.0',
+            'reference' => '7dcddaddcffb69c58800d2fb3f6f169791cab1f7',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../berlindb/core',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'cloudflare/cf-ip-rewrite' => array(
             'pretty_version' => '1.0.4',
             'version' => '1.0.4.0',

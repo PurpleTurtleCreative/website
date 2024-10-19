@@ -41,6 +41,7 @@
 	],
 	"require": {
 		"php": ">=7.3",
+		"berlindb/core": "^2.0",
 		"cloudflare/cf-ip-rewrite": "^1.0",
 		"voku/simple_html_dom": "^4.8",
 		"wp-media/apply-filters-typed": "^1.0"
@@ -116,7 +117,8 @@
 				"wp-media/rocket-lazyload-common",
 				"wp-media/wp-imagify-partner",
 				"wp-media/monolog",
-				"league/container"
+				"league/container",
+				"berlindb/core"
 			]
 		}
 	},
