@@ -83,6 +83,6 @@ jobs:
           chmod 600 ./deploy_key
           rsync --recursive --links --checksum --delete \
             --exclude-from="./exclude.lst" \
+            --chown=github:www-data --chmod=D2755,F644 \
             -e 'ssh -i ./deploy_key -o StrictHostKeyChecking=no' \
             ./wp-content ${{ env.remote }}:${{ env.destination }}
-          ssh -i ./deploy_key -o StrictHostKeyChecking=no ${{ env.remote }} 'chmod -R 775 ${{ env.destination }}/wp-content; chgrp -R www-data ${{ env.destination }}/wp-content' || true
