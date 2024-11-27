@@ -3,8 +3,9 @@ Plugin URI: https://postmansmtp.com/
 Contributors: wpexpertsio
 Tags: smtp, gmail smtp, email,  email logs, office 365
 Requires at least: 5.6.0
-Tested up to: 6.6
-Stable tag: 2.9.9
+Tested up to: 6.7
+Stable tag: 2.9.11
+Requires PHP: 7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -201,15 +202,11 @@ In short, our Expert Assistance is your one-stop destination for all your WordPr
 .. and every other plugin that uses the WordPress API wp_mail to send mail!
 
 == Requirements == 
-* WordPress 5.6 and PHP 5.6 with SPL and icons
-
-* Memory: 750KiB per process at idle
-
-* Reliable mail delivery with custom email domains requires an SPF record
-
-* Reliable SMTP delivery requires credentials with an email service provider
-
-
+* WordPress v6.2 and above is recommended
+* PHP v7.0 and above is recommended.
+* Memory should be at least 800KiB per processing at idle.
+* Ensure your email service provider allows SMTP connection through 3rd party applications, if not you can have it enabled.(Other SMTP)
+* Reliable delivery requires valid credentials for a particular email service provider. (Other SMTP)
 
 == Frequently Asked Questions ==
 
@@ -281,6 +278,13 @@ You can report security bugs through the Patchstack Vulnerability Disclosure Pro
 Important: If you are using version 2.8.7 or lower of our plugin, please update to the latest version as soon as possible. This update contains an urgent security fix that prevents potential vulnerabilities and attacks. We apologize for any inconvenience this may cause you and we appreciate your cooperation. Thank you for using our plugin.
 
 == Changelog ==
+
+= 2.9.11 - November 21, 2024 =
+* Updated: Feedback SDK to the latest version.
+* Tweak: Failed email notification typo fixed.
+
+= 2.9.10 - November 19, 2024 =
+* Email logs search security enhancement in admin view reported by [Patchstack](https://patchstack.com/database/vulnerability/post-smtp/wordpress-post-smtp-plugin-2-9-9-sql-injection-vulnerability)
 
 = 2.9.9 - October 01, 2024 =
 * Tweak: Typo fixes.
