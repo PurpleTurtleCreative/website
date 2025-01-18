@@ -68,7 +68,8 @@ class Post_SMTP_New_Wizard {
             'postmark_api',
             'sparkpost_api',
             'mailjet_api',
-            'sendpulse_api'
+            'sendpulse_api',
+            'smtp2go_api',
         );
         
         if( !is_plugin_active( 'post-smtp-pro/post-smtp-pro.php' ) ) {
@@ -130,18 +131,31 @@ class Post_SMTP_New_Wizard {
                                 Please upgrade to the PRO plan to unlock all these awesome features.
                             </p>
                             <div>
-                                <a href="https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin" target="_blank" class="button button-primary ps-yellow-btn ps-pro-product-url" style="color: #ffffff!important; font-weight: 400; align-content: center;">Upgrade to PRO <span class="dashicons dashicons-arrow-right-alt2"></span></a>
+                                <a href="<?php echo postman_is_bfcm() ? 'https://postmansmtp.com/cyber-monday-sale?utm_source=plugin&utm_medium=section_name&utm_campaign=BFCM&utm_id=BFCM_2024' : 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard&utm_campaign=plugin'; ?>" target="_blank" class="button button-primary ps-yellow-btn ps-pro-product-url" style="color: #ffffff!important; font-weight: 400; align-content: center;">Upgrade to PRO <span class="dashicons dashicons-arrow-right-alt2"></span></a>
                             </div>
-                            <div class="ps-pro-promo-area">   
-                                <p>
-                                    <b>Bonus:</b> Upgrade now and get <span class="ps-pro-discount">25% off</span> on Post SMTP lifetime plans!
-                                </p>
-                                <div class="ps-pro-coupon">
-                                    <b>
-                                        Use Coupon: <span class="ps-pro-coupon-code">GETSMTPPRO</span> <span class="dashicons dashicons-admin-page ps-click-to-copy"></span>
+                            <div <?php echo postman_is_bfcm() ? 'style="background: url( '.esc_url( POST_SMTP_ASSETS . 'images/bfcm-2024/popup.png' ).' ); background-size: cover; margin: 20px 0 5px 0; padding: 16px 0px; position: relative;"' : 'class="ps-pro-promo-area"'; ?>>   
+                                <?php
+                                if( postman_is_bfcm() ) {
+                                    ?>
+                                    <p style="color: #fff; font-size: 14px; margin: 0 auto;">
+                                        <b style="color: #fbb81f;">24% OFF!</b> BFCM is here - Grab your deal before it's gone!🛍️
+                                    </p>
+                                    <?php
+                                }
+                                else {
+                                    ?>
+                                    <p>
+                                        <b>Bonus:</b> Upgrade now and get <span class="ps-pro-discount">25% off</span> on Post SMTP lifetime plans!
+                                    </p>
+                                    <?php
+                                }
+                                ?>
+                                <div <?php echo postman_is_bfcm() ? 'style="background: #fbb81f";' : '';  ?> class="ps-pro-coupon">
+                                    <b <?php echo postman_is_bfcm() ? 'style="color: #1a3b63";' : '';  ?>>
+                                        Use Coupon: <span class="ps-pro-coupon-code"><?php echo postman_is_bfcm() ? 'BFCM2024' : 'GETSMTPPRO'; ?></span> <span class="dashicons dashicons-admin-page ps-click-to-copy"></span>
                                     </b>
                                 </div>
-                                <div id="ps-pro-code-copy-notification" style="display: none;position:absolute;color: #b3d5b6;border-radius:3px;right: 0;left: 0; bottom: -12px; margin: auto;width: 95px;font-size: 11px;background: #e1fde4;border: 1px solid #b3d5b6;line-height: 22px;">
+                                <div id="ps-pro-code-copy-notification" style="display: none; position:absolute; color: #b3d5b6; border-radius:3px; right: 0;left: 0; bottom: -12px; margin: auto;width: 95px; font-size: 11px; border: 1px solid #b3d5b6; line-height: 22px; background: #e1fde4;">
                                     Code Copied<span class="dashicons dashicons-yes"></span>
                                 </div>
                             </div>
@@ -156,7 +170,7 @@ class Post_SMTP_New_Wizard {
         <div class="wrap">
             <div class="ps-wizard">
                 <div class="ps-logo">
-                    <img src="https://postmansmtp.com/wp-content/uploads/2022/06/postman-smtp-mailer-1024x163.png" width="250px" />
+                    <img src="<?php echo esc_attr( POST_SMTP_ASSETS ) . '/images/logos/post-smtp-logo-large.svg'; ?>" width="250px" />
                 </div>
                 <div class="ps-wizard-outer <?php echo esc_attr( $socket ); ?>">
                     <div class="ps-wizard-section">
@@ -217,7 +231,8 @@ class Post_SMTP_New_Wizard {
                                                 'sparkpost_api'     =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/sparkpost.png',
                                                 'mailjet_api'       =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/mailjet.png',
                                                 'sendpulse_api'     =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/sendpulse.png',
-                                                'office365_api'     =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/logo.png',
+                                                'smtp2go_api'       =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/smtp2go.png',
+                                                'office365_api'     =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/ms365.png',
                                                 'elasticemail_api'  =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/elasticemail.png',
                                                 'aws_ses_api'       =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/amazon.png',
                                                 'zohomail_api'      =>  POST_SMTP_URL . '/Postman/Wizard/assets/images/zoho.png'
@@ -260,7 +275,7 @@ class Post_SMTP_New_Wizard {
                                                     $slug = $transport_slug;
                                                     $transport_name = 'Microsoft 365';
                                                     $is_pro = 'ps-pro-extension';
-                                                    $product_url = 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard_microsoft&utm_campaign=plugin';
+                                                    $product_url = postman_is_bfcm() ? 'https://postmansmtp.com/cyber-monday-sale?utm_source=plugin&utm_medium=section_name&utm_campaign=BFCM&utm_id=BFCM_2024' : 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard_microsoft&utm_campaign=plugin';
 
                                                 }
                                                 if( $transport_slug == 'zohomail_api' ) {
@@ -269,7 +284,7 @@ class Post_SMTP_New_Wizard {
                                                     $slug = $transport_slug;
                                                     $transport_name = 'Zoho';
                                                     $is_pro = 'ps-pro-extension';
-                                                    $product_url = 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard_zoho&utm_campaign=plugin';
+                                                    $product_url = postman_is_bfcm() ? 'https://postmansmtp.com/cyber-monday-sale?utm_source=plugin&utm_medium=section_name&utm_campaign=BFCM&utm_id=BFCM_2024' : 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard_zoho&utm_campaign=plugin';
 
                                                 }
                                                 if( !class_exists( 'Post_Smtp_Amazon_Ses' ) && $transport_slug == 'aws_ses_api' ) {
@@ -278,7 +293,7 @@ class Post_SMTP_New_Wizard {
                                                     $slug = $transport_slug;
                                                     $transport_name = 'Amazon SES';
                                                     $is_pro = 'ps-pro-extension';
-                                                    $product_url = 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard_amazonses&utm_campaign=plugin';
+                                                    $product_url = postman_is_bfcm() ? 'https://postmansmtp.com/cyber-monday-sale?utm_source=plugin&utm_medium=section_name&utm_campaign=BFCM&utm_id=BFCM_2024' : 'https://postmansmtp.com/pricing/?utm_source=plugin&utm_medium=wizard_amazonses&utm_campaign=plugin';
 
                                                 }
 
@@ -671,7 +686,9 @@ class Post_SMTP_New_Wizard {
             case 'zohomail_api';
                 echo wp_kses( $this->render_zoho_settings(), $this->allowed_tags );
             break;
-
+            case 'smtp2go_api':
+	            echo wp_kses( $this->render_smtp2go_settings(), $this->allowed_tags );
+                break;
         }
 
     }
@@ -1375,10 +1392,10 @@ class Post_SMTP_New_Wizard {
 
         $html = sprintf(
             '<p><a href="%1$s" target="_blank">%2$s</a> %3$s </p><a href="%4$s" target="_blank">%5$s</a>',
-            esc_url( 'https://postmansmtp.com/extensions/office-365-extension-for-post-smtp/' ),
+            esc_url( 'https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?icid=azurefreeaccount' ),
             __( 'Office 365', 'post-smtp' ),
             __( 'is a popular transactional email provider that sends more than 35 billion emails every month. If you\'re just starting out, the free plan allows you to send up to 100 emails each day without entering your credit card details', 'post-smtp' ),
-            esc_url( 'https://postmansmtp.com/documentation/postman-smtp-documentation/pro-extensions/configure-office-365-integration/' ),
+            esc_url( 'https://postmansmtp.com/documentation/sockets-addons/how-to-configure-post-smtp-with-office-365/' ),
             __( 'Read how to setup Office 365', 'post-smtp' )
         );
 
@@ -1392,7 +1409,7 @@ class Post_SMTP_New_Wizard {
              */
             sprintf(
                 '<a href="%1$s" target="_blank">%2$s</a> %3$s',
-                esc_url( 'https://postmansmtp.com/documentation/postman-smtp-documentation/pro-extensions/configure-office-365-integration/' ),
+                esc_url( 'https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?redirect_uri=https%3A%2F%2Fportal.azure.com%2Fsignin%2Findex%2F&response_type=code%20id_token&scope=https%3A%2F%2Fmanagement.core.windows.net%2F%2Fuser_impersonation%20openid%20email%20profile&state=OpenIdConnect.AuthenticationProperties%3D3ck4pNl3uhpmQz6zVF-QK4L_RKv9glDdJlITzamc-wID4UbZU1Qb1lYDEbqyr7cc4qml3HIpLuGSbrYKEdzvAnslPezoXRu-_TkLEDHNWCPkZE2SqMJPPkcruP29vocPdJeuKpQbUtwtOQkHhU_0dJU_drkiHPqXROXPu9GJQZyJCyQ5rGsQWp0iZFhlRou7VL8PQOzgBoaCvcVH6XzNgZJFgmeYXjmxj7qK_RUQAcm1BkN2p30gkxAiDgtXHUBNFg-qk0aK_n2Nu-eACOL9oW1dZ2PckrjpZNo7SNgCoxG7dzqRAl3nH-hMoqrCq7HyvoA6LQQ9Bx6r071wB-cbwQA6oNP5E4GLAu9WpGs-tsFJvqnq-QR0PM-FZlD1ZupsKIuyNAWm0s4SlLneNh5hi8aMbVo5AJA5G7221N3Vz3zk3jVsD6kq5JZnJZLALPq6BdmTuBvZZfAF6_pSO47bgxdh6hUVNsRSCtGOqTsGcd8&response_mode=form_post&nonce=638717524432120598.YjE5MDc1ZDctYThiZS00NzZhLTgzOGMtZGYwMzMxMTAxNzA3MjFhMWE0OGQtMjIxMS00NDRlLWI5Y2UtODg1YmFjOTNmNTIw&client_id=c44b4083-3bb0-49c1-b47d-974e53cbdf3c&site_id=501430&client-request-id=844ca630-139b-496b-b93c-9a7b66797706&x-client-SKU=ID_NET472&x-client-ver=7.5.0.0' ),
                 __( 'Follow this link', 'post-smtp' ),
                 __( 'to get Application (Client) ID for Office 365', 'post-smtp' )
             )
@@ -1410,7 +1427,7 @@ class Post_SMTP_New_Wizard {
              */
             sprintf(
                 '<a href="%1$s" target="_blank">%2$s</a> %3$s',
-                esc_url( 'https://postmansmtp.com/documentation/postman-smtp-documentation/pro-extensions/configure-office-365-integration/' ),
+                esc_url( 'https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?redirect_uri=https%3A%2F%2Fportal.azure.com%2Fsignin%2Findex%2F&response_type=code%20id_token&scope=https%3A%2F%2Fmanagement.core.windows.net%2F%2Fuser_impersonation%20openid%20email%20profile&state=OpenIdConnect.AuthenticationProperties%3D3ck4pNl3uhpmQz6zVF-QK4L_RKv9glDdJlITzamc-wID4UbZU1Qb1lYDEbqyr7cc4qml3HIpLuGSbrYKEdzvAnslPezoXRu-_TkLEDHNWCPkZE2SqMJPPkcruP29vocPdJeuKpQbUtwtOQkHhU_0dJU_drkiHPqXROXPu9GJQZyJCyQ5rGsQWp0iZFhlRou7VL8PQOzgBoaCvcVH6XzNgZJFgmeYXjmxj7qK_RUQAcm1BkN2p30gkxAiDgtXHUBNFg-qk0aK_n2Nu-eACOL9oW1dZ2PckrjpZNo7SNgCoxG7dzqRAl3nH-hMoqrCq7HyvoA6LQQ9Bx6r071wB-cbwQA6oNP5E4GLAu9WpGs-tsFJvqnq-QR0PM-FZlD1ZupsKIuyNAWm0s4SlLneNh5hi8aMbVo5AJA5G7221N3Vz3zk3jVsD6kq5JZnJZLALPq6BdmTuBvZZfAF6_pSO47bgxdh6hUVNsRSCtGOqTsGcd8&response_mode=form_post&nonce=638717524432120598.YjE5MDc1ZDctYThiZS00NzZhLTgzOGMtZGYwMzMxMTAxNzA3MjFhMWE0OGQtMjIxMS00NDRlLWI5Y2UtODg1YmFjOTNmNTIw&client_id=c44b4083-3bb0-49c1-b47d-974e53cbdf3c&site_id=501430&client-request-id=844ca630-139b-496b-b93c-9a7b66797706&x-client-SKU=ID_NET472&x-client-ver=7.5.0.0' ),
                 __( 'Follow this link', 'post-smtp' ),
                 __( 'to get Client Secret (Value) for Office 365', 'post-smtp' )
             )
@@ -1429,7 +1446,7 @@ class Post_SMTP_New_Wizard {
              */
             sprintf(
                 '<a href="%1$s" target="_blank">%2$s</a> %3$s',
-                esc_url( 'https://postmansmtp.com/documentation/postman-smtp-documentation/pro-extensions/configure-office-365-integration/' ),
+                esc_url( 'https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize?redirect_uri=https%3A%2F%2Fportal.azure.com%2Fsignin%2Findex%2F&response_type=code%20id_token&scope=https%3A%2F%2Fmanagement.core.windows.net%2F%2Fuser_impersonation%20openid%20email%20profile&state=OpenIdConnect.AuthenticationProperties%3D3ck4pNl3uhpmQz6zVF-QK4L_RKv9glDdJlITzamc-wID4UbZU1Qb1lYDEbqyr7cc4qml3HIpLuGSbrYKEdzvAnslPezoXRu-_TkLEDHNWCPkZE2SqMJPPkcruP29vocPdJeuKpQbUtwtOQkHhU_0dJU_drkiHPqXROXPu9GJQZyJCyQ5rGsQWp0iZFhlRou7VL8PQOzgBoaCvcVH6XzNgZJFgmeYXjmxj7qK_RUQAcm1BkN2p30gkxAiDgtXHUBNFg-qk0aK_n2Nu-eACOL9oW1dZ2PckrjpZNo7SNgCoxG7dzqRAl3nH-hMoqrCq7HyvoA6LQQ9Bx6r071wB-cbwQA6oNP5E4GLAu9WpGs-tsFJvqnq-QR0PM-FZlD1ZupsKIuyNAWm0s4SlLneNh5hi8aMbVo5AJA5G7221N3Vz3zk3jVsD6kq5JZnJZLALPq6BdmTuBvZZfAF6_pSO47bgxdh6hUVNsRSCtGOqTsGcd8&response_mode=form_post&nonce=638717524432120598.YjE5MDc1ZDctYThiZS00NzZhLTgzOGMtZGYwMzMxMTAxNzA3MjFhMWE0OGQtMjIxMS00NDRlLWI5Y2UtODg1YmFjOTNmNTIw&client_id=c44b4083-3bb0-49c1-b47d-974e53cbdf3c&site_id=501430&client-request-id=844ca630-139b-496b-b93c-9a7b66797706&x-client-SKU=ID_NET472&x-client-ver=7.5.0.0' ),
                 __( 'Follow this link', 'post-smtp' ),
                 __( 'to get Redirect URI for Office 365', 'post-smtp' )
             )
@@ -1552,6 +1569,39 @@ class Post_SMTP_New_Wizard {
 
         return $html;
 
+    }
+
+    public function render_smtp2go_settings() {
+	    ob_start();
+
+	    $api_key = null === $this->options->getSmtp2GoApiKey() ? '' : esc_attr( $this->options->getSmtp2GoApiKey() );
+
+	    printf(
+		    '<p><a href="%1$s" target="_blank">%2$s</a> %3$s</p><p>%4$s <a href="%5$s" target="_blank">%6$s</a></p>',
+		    esc_url( 'https://www.smtp2go.com/' ),
+		    __( 'SMTP2Go', 'post-smtp' ),
+		    __( 'is known for its reliable email delivery service, featuring global infrastructure, real-time analytics, and robust security. If you’re just starting out, their free plan allows sending up to 1,000 emails per month.', 'post-smtp' ),
+		    __( 'Let’s get started with our', 'post-smtp' ),
+		    esc_url( 'https://postmansmtp.com/documentation/sockets-addons/how-to-setup-smtp2go-with-post-smtp/' ),
+		    __( 'SMTP2GO Documentation', 'post-smtp' )
+	    );
+
+	    echo '<div class="ps-form-control">
+            <div><label>API Key</label></div>
+            <input type="text" class="ps-smtp2go-api-key" required data-error="'.__( 'Please enter API Key.', 'post-smtp' ).'" name="postman_options['. esc_attr( PostmanOptions::SMTP2GO_API_KEY ) .']" value="'.$api_key.'" placeholder="API Key">';
+	    printf(
+		    '<div class="ps-form-control-info">%1$s <a href="%2$s" target="_blank">%3$s</a></div><div class="ps-form-control-info">%4$s <a href="%5$s" target="_blank">%6$s</a></div>',
+		    __( 'Create an account at', 'post-smtp' ),
+		    esc_url( 'https://www.smtp2go.com/' ),
+		    esc_attr( 'SMTP2GO' ),
+		    __( 'If you are already logged in follow this link to get an', 'post-smtp' ),
+		    esc_url( 'https://app-eu.smtp2go.com/sending/apikeys/' ),
+		    __( 'API Key.', 'post-smtp' )
+	    );
+
+	    echo '</div>';
+
+	    return ob_get_clean();
     }
 
 

@@ -51,6 +51,7 @@ class Postman {
 		$this->rootPluginFilenameAndPath = $rootPluginFilenameAndPath;
 		self::$rootPlugin = $rootPluginFilenameAndPath;
 		
+		require_once POST_SMTP_PATH . '/Postman/Postman-Suggest-Pro/PostmanPromotionManager.php';
 		//Load helper functions file :D
 		require_once POST_SMTP_PATH . '/includes/postman-functions.php';
 
@@ -73,6 +74,7 @@ class Postman {
         require_once 'Postman-Mail/PostmanPostmarkTransport.php';
         require_once 'Postman-Mail/PostmanSparkPostTransport.php';
         require_once 'Postman-Mail/PostmanElasticEmailTransport.php';
+        require_once 'Postman-Mail/PostmanSmtp2GoTransport.php';
         require_once 'PostmanOAuthToken.php';
 		require_once 'PostmanWpMailBinder.php';
 		require_once 'PostmanConfigTextHelper.php';
@@ -87,7 +89,7 @@ class Postman {
 		require_once 'Wizard/NewWizard.php';
 		//load MainWP Child Files
 		require_once 'Extensions/MainWP-Child/mainwp-child.php';
-		
+
 		//Mobile Application
 		require_once 'Mobile/mobile.php';
 
@@ -95,9 +97,13 @@ class Postman {
 		require_once 'Postman-Email-Health-Report/PostmanEmailReporting.php';
 		require_once 'Postman-Email-Health-Report/PostmanEmailReportSending.php';
 
+        // New Dashboard
+		require_once 'Dashboard/NewDashboard.php';
+
+
 		// get plugin metadata - alternative to get_plugin_data
 		$this->pluginData = array(
-				'name' => _x( 'Postman SMTP', 'Post SMTP plugin name', 'post-smtp' ),
+				'name' => 'Post SMTP',
 				'version' => $version,
 		);
 
@@ -171,6 +177,8 @@ class Postman {
 				'on_plugins_loaded',
 		) );
 
+		add_action( 'init', array( $this, 'initialize_plugin_translations' ) );
+
 		//Conflicting with backupbuddy, will be removed soon 
         //add_filter( 'extra_plugin_headers', [ $this, 'add_extension_headers' ] );
 
@@ -212,15 +220,24 @@ class Postman {
 		// register the email transports
 		$this->registerTransports( $this->rootPluginFilenameAndPath );
 
-		// load the text domain
-		$this->loadTextDomain();
-
 		// register the setup_admin function on plugins_loaded because we need to call
 		// current_user_can to verify the capability of the current user
 		if ( PostmanUtils::isAdmin() && is_admin() ) {
 			$this->setup_admin();
 		}
 		
+	}
+
+	/**
+	 * Initializes the plugin's translation system by loading the text domain.
+	 * This function is hooked into the 'init' action, ensuring that translations
+	 * are available as early as possible in the WordPress lifecycle.
+	 * 
+	 * @since 3.0.1
+	 */
+	public function initialize_plugin_translations() {
+		// Load the text domain.
+		$this->loadTextDomain();
 	}
 
 	/**
@@ -473,6 +490,7 @@ class Postman {
         $postman_transport_registry->registerTransport( new PostmanPostmarkTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanSparkPostTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanElasticEmailTransport( $rootPluginFilenameAndPath ) );
+        $postman_transport_registry->registerTransport( new PostmanSmtp2GoTransport( $rootPluginFilenameAndPath ) );
 
 		do_action( 'postsmtp_register_transport', $postman_transport_registry );
 	}
