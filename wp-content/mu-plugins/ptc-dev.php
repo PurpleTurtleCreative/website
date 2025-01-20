@@ -12,7 +12,7 @@ if ( 'production' === wp_get_environment_type() ) {
 add_action( 'login_enqueue_scripts', __NAMESPACE__ . '\handle_login_enqueue_scripts', 999 );
 add_filter( 'authenticate', __NAMESPACE__ . '\handle_authenticate', 999, 3 );
 add_filter( 'http_request_timeout', __NAMESPACE__ . '\handle_http_request_timeout', 999, 1 );
-// add_filter( 'ptc_completionist_pro_licensing_provider_api_url', __NAMESPACE__ . '\handle_ptc_completionist_pro_licensing_provider_api_url', 999, 1 );
+add_filter( 'ptc_completionist_pro_licensing_provider_api_url', __NAMESPACE__ . '\handle_ptc_completionist_pro_licensing_provider_api_url', 999, 1 );
 
 // //////////////////////////////////////////////////// //
 
