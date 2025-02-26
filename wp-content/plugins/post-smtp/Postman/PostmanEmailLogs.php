@@ -4,6 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require 'Postman-Email-Log/PostmanEmailQueryLog.php';
+require POST_SMTP_PATH . '/includes/libs/HTMLPurifier/HTMLPurifier.auto.php';
 
 class PostmanEmailLogs {
 
@@ -67,16 +68,60 @@ class PostmanEmailLogs {
             $log = $email_query_log->get_log( $id, '' );
             $header = $log['original_headers'];
             $msg = $log['original_message'];
-            $msg = preg_replace( "/<script\b[^>]*>(.*?)<\/script>/s", '', $msg );
-
-            echo ( isset ( $header ) && strpos( $header, "text/html" ) ) ? $msg : '<pre>' . $msg . '</pre>' ;
+ 			$msg = $this->purify_html( $msg );
+           	echo ( isset ( $header ) && strpos( $header, "text/html" ) ) ? $msg : '<pre>' . $msg . '</pre>' ;
 
             die;
 
         }
 
     }
+	
+    /**
+     * 
+     * Purifies and sanitizes HTML content using HTMLPurifier.
+     *
+     * @param string $html_content The potentially unsafe HTML content.
+     * @return string The purified and sanitized HTML content.
+     * @since 3.1.2
+     * @version 1.0.0
+     * 
+     */
+	public function purify_html( $html_content ) {
+		// Configure HTMLPurifier.
+		$config = HTMLPurifier_Config::createDefault();
+		$config->set('Core.Encoding', 'UTF-8');
+		$config->set('HTML.Doctype', 'XHTML 1.0 Transitional');
+		
+		// ✅ Allow all standard email template elements		
+		$config->set('HTML.AllowedElements', null);
 
+		// ✅ Allow all attributes except JavaScript-based ones
+		$config->set('HTML.AllowedAttributes', null);
+
+		// ❌ Block JavaScript-based attacks
+		$config->set( 'HTML.ForbiddenElements', ['script'] );
+		
+		$config->set( 'HTML.ForbiddenAttributes', ['on*'] );
+		// ❌ Prevent JavaScript in links and images.
+		$config->set('URI.AllowedSchemes', [
+			'http'  => true,
+			'https' => true,
+			'mailto' => true,
+			'tel'   => true,
+		]); 
+		
+		$config->set( 'URI.SafeIframeRegexp', '' );
+		// ✅ Allow inline styles but prevent unsafe styles
+		$config->set( 'CSS.Trusted', false ); // Block dangerous inline styles.
+		$config->set( 'CSS.AllowedProperties', null ); // NULL means allow all CSS properties.
+
+		// Initialize HTMLPurifier.
+		$purifier = new HTMLPurifier( $config);
+
+		// Purify the dirty HTML.
+		return $purifier->purify( $html_content );
+	}
 
     /**
      * Installs the Table | Creates the Table
@@ -264,12 +309,9 @@ class PostmanEmailLogs {
 
         }
         else {
-
-            return $this->db->insert(
-                $this->db->prefix . $this->db_name,
-                $data  
-            ) ? $this->db->insert_id : false;
-
+            if( isset( $data[ 'success' ] ) ) {   
+                return $this->db->insert( $this->db->prefix . $this->db_name, $data  ) ? $this->db->insert_id : false;
+            }
         }
 
     }
