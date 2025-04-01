@@ -23,7 +23,7 @@ class P_Core {
 	 *
 	 * @var boolean
 	 */
-	private $is_multi_site = false;
+	public $is_multi_site = false;
 
 	/**
 	 * Allowed HTML for the wp_kses function used to render certain paragraphs of texts.
@@ -89,28 +89,6 @@ class P_Core {
 			'class'    => [],
 			'style'    => []
 		]
-	];
-
-	/**
-	 * Some of the IP addresses of Patchstack.
-	 * 
-	 * @var array
-	 */
-	public $ips = [
-		'18.221.197.243',
-		'52.15.237.250',
-		'3.19.3.34',
-		'3.18.238.17',
-		'13.58.49.77',
-		'18.222.191.77',
-		'3.131.108.250',
-		'3.23.157.140',
-		'18.220.70.233',
-		'3.140.84.221',
-		'185.212.171.100',
-		'3.133.121.93',
-		'18.219.61.133',
-		'3.14.29.150'
 	];
 
 	/**
@@ -195,36 +173,6 @@ class P_Core {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Convert the subscription class name to its text variant.
-	 * 
-	 * @param int $class
-	 * @return string
-	 */
-	public function get_subscription_name( $class ) {
-		switch ( $class ) {
-			case 0:
-				return 'Community';
-			case 1:
-			case 6:
-				return 'Developer';
-			case 7:
-				return 'Business';
-			default:
-				return 'Unknown';
-		}
-	}
-
-	/**
-	 * Determine if the user is a community user.
-	 * 
-	 * @return boolean
-	 */
-	public function is_community() {
-		$class = get_option( 'patchstack_subscription_class', '');
-		return $class != '' && (int) $class === 0;
 	}
 
 	/**

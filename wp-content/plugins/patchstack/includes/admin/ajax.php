@@ -45,8 +45,8 @@ class P_Admin_Ajax extends P_Core {
 
 		// Since we have the keys combined into one now, split them up here.
 		$split = explode('-', $_POST['key']);
-		$secretkey = $split[0];
-		$clientid = $split[1];
+		$secretkey = trim($split[0]);
+		$clientid = trim($split[1]);
 
 		// Test the new keys.
 		update_option( 'patchstack_api_token', '' );

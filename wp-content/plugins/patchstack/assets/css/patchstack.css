@@ -275,6 +275,12 @@ thead {
     text-decoration: none;
 }
 
+.patchstack-has-text-danger,
+.patchstack-has-text-danger:hover {
+    color: #ED645E !important;
+    text-decoration: none;
+}
+
 .patchstack-plan p {
     color: #acacac;
     font-size: 15px;
@@ -610,4 +616,12 @@ p.patchstack-error {
     background: #333 !important;
     border-radius: 4px;
     font-size: 14px !important;
+}
+
+.has-text-centered {
+    text-align: center;
+}
+
+.patchstack-top-16 {
+    margin-top: 16px;
 }

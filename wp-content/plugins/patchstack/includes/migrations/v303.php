@@ -23,7 +23,7 @@ if ( ! is_dir( WPMU_PLUGIN_DIR ) ) {
 }
 
 // Failed to create the mu-plugin folder.
-if ( ! is_dir( WPMU_PLUGIN_DIR ) ) {
+if ( ! is_dir( WPMU_PLUGIN_DIR ) || ( defined( 'PS_DISABLE_MU' ) && PS_DISABLE_MU ) ) {
     update_option('patchstack_db_version', '3.0.3');
     return;
 }

@@ -6,7 +6,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Determine if the subscription of the account is expired.
-$status = ($this->plugin->client_id != 'PATCHSTACK_CLIENT_ID' || get_option( 'patchstack_clientid', false ) != false);
+$status = ( $this->plugin->client_id != 'PATCHSTACK_CLIENT_ID' || get_option( 'patchstack_clientid', false ) != false ) && !empty( $this->get_secret_key() );
 $free = get_option( 'patchstack_license_free', 0 ) == 1;
 $planClass = get_option( 'patchstack_subscription_class', '');
 $site_id = (int) get_option( 'patchstack_site_id', 0 );
@@ -27,16 +27,20 @@ if (!empty($secretToken) && !$this->is_connected() ){
 			<p class="is-text-medium">
 				<?php esc_html_e( 'Checking sync status', 'patchstack' ); ?>
 			</p>
-		</div>
 
-		<?php
-			$mins = ! empty( $secretTime ) ? floor( ( ( 1800 ) - ( time() - $secretTime ) ) / 60 ) : 0;
-			if ( $mins >= 1 ) {
-				echo '<p class="patchstack-upsell patchstack-has-text-white">' . sprintf('%s %d %s', esc_html__('This plugin is only a connector. Add this website to the Patchstack dashboard within '), $mins, esc_html__(' minutes to initiate automatic sync.')) . '</p>';
-			} else {
-				echo '<p class="patchstack-upsell patchstack-has-text-white">' . esc_html_e('This plugin is only a connector. Add this website to the Patchstack dashboard to sync your unique API key.', 'patchstack') . '</p>';
-			}
-		?>
+			<?php
+				$mins = ! empty( $secretTime ) ? floor( ( ( 1800 ) - ( time() - $secretTime ) ) / 60 ) : 0;
+				if ( $mins >= 1 ) {
+					echo '<p class="patchstack-upsell patchstack-has-text-white patchstack-top-16">' . sprintf('%s %d %s', esc_html__('This plugin is only a connector. Add this website to the Patchstack dashboard within '), $mins, esc_html__(' minutes to initiate automatic sync.')) . '</p>';
+				} else {
+					if ( ( $this->plugin->client_id != 'PATCHSTACK_CLIENT_ID' || get_option( 'patchstack_clientid', false ) != false ) && empty( $this->get_secret_key() ) ) {
+						echo '<p class="patchstack-upsell patchstack-has-text-danger patchstack-top-16">' . esc_html__('The connection with Patchstack was lost, this can happen when your WordPress salts change or after a migration. Please re-enter your API key.', 'patchstack') . '</p>';
+					} else {
+						echo '<p class="patchstack-upsell patchstack-has-text-white patchstack-top-16">' . esc_html__('This plugin is only a connector. Add this website to the Patchstack dashboard to sync your unique API key.', 'patchstack') . '</p>';
+					}
+				}
+			?>
+		</div>
 
 		<div class="patchstack-plan patchstack-plan2">
 			<div class="form-table patchstack-form-table">

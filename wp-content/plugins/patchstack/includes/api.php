@@ -31,6 +31,7 @@ class P_Api extends P_Core {
 		$this->blog_id = get_current_blog_id();
 		add_action( 'patchstack_update_license_status', [ $this, 'update_license_status' ] );
 		add_action( 'patchstack_send_ping', [ $this, 'ping' ] );
+		add_action( 'patchstack_send_header_request', [ $this, 'send_header_request' ] );
 	}
 
 	/**
@@ -167,22 +168,27 @@ class P_Api extends P_Core {
 	 * Send a request to the API with optionally POST data.
 	 *
 	 * @param string $url
-	 * @param string $request
+	 * @param string $method
 	 * @param array  $data
 	 * @return void|array If successful array, otherwise void.
 	 */
-	public function send_request( $url, $request, $data = [] ) {
+	public function send_request( $url, $method, $data = [] ) {
 		// Attempt to get the access token.
 		$token = $this->get_access_token();
 		if ( empty( $token ) ) {
 			return;
 		}
 
+		// Pass the multisite value to all requests, only for POST requests.
+		if ( $method == 'POST' ) {
+			$data['is_multisite'] = $this->is_multi_site ? 1 : 0;
+		}
+		
 		// Send the remote request using the WordPress built-in method.
 		$response = wp_remote_request(
 			$this->plugin->api_url . $url,
 			[
-				'method'      => $request,
+				'method'      => $method,
 				'timeout'     => 60,
 				'redirection' => 5,
 				'httpversion' => '1.0',
@@ -282,13 +288,16 @@ class P_Api extends P_Core {
 
 	/**
 	 * Send a request to our API for the IP address header.
+	 * 
+	 * @return void
 	 */
 	public function send_header_request()
 	{
 		$header = get_option( 'patchstack_firewall_ip_header', '' );
 		$computed = get_option( 'patchstack_ip_header_computed', 0 );
+		$force = get_option( 'patchstack_ip_header_force_compute', 0 );
 
-		if ( $header == '' && ! $computed ) {
+		if ( ( $header == '' && ! $computed ) || $force ) {
 			// Create an OTT token.
 			$ott = md5( wp_generate_password( 32, true, true ) );
 			update_option( 'patchstack_ott_action', $ott );

@@ -11,6 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class P_Login extends P_Core {
 
 	/**
+	 * Validated request or not.
+	 * 
+	 * @param boolean
+	 */
+	private $validated = false;
+
+	/**
 	 * Add the actions required to interact with the login process.
 	 *
 	 * @param Patchstack $core
@@ -29,13 +36,31 @@ class P_Login extends P_Core {
 		add_action( 'login_head', [ $this, 'add_captcha' ] );
 		add_action( 'login_enqueue_scripts', [ $this, 'login_enqueue_scripts' ], 1 );
 
+		// WooCommerce related functionality.
+		if ( class_exists( 'WooCommerce' ) ) {
+			add_action( 'woocommerce_login_form_start', [ $this, 'add_captcha' ] );
+			add_action( 'woocommerce_register_form_start', [ $this, 'add_captcha' ] );
+			add_action( 'wp_authenticate', [ $this, 'add_captcha' ] );
+			add_filter( 'woocommerce_process_registration_errors', [$this, 'general_captcha_check' ], 10, 1 );
+			add_action( 'woocommerce_before_lost_password_form', [ $this, 'add_captcha' ] );
+		}
+
 		// 2FA related actions.
 		if ( $this->get_option( 'patchstack_login_2fa', 0 ) ) {
 			add_action( 'login_form', [ $this, 'tfa_login_form' ] );
 			add_action( 'authenticate', [ $this, 'tfa_authenticate' ], 30, 3 );
 			add_action( 'profile_personal_options', [ $this, 'tfa_profile_personal_options' ] );
+			add_action( 'personal_options', [ $this, 'tfa_personal_options' ] );
+			add_action( 'edit_user_profile_update', [ $this, 'tfa_options_update' ] );
 			add_action( 'personal_options_update', [ $this, 'tfa_personal_options_update' ] );
 			add_action( 'admin_enqueue_scripts', [ $this, 'tfa_admin_enqueue_scripts' ] );
+
+			// WooCommerce related functionality.
+			if ( class_exists( 'WooCommerce' ) ) {
+				add_action( 'woocommerce_login_form', [ $this, 'tfa_woocommerce_login_form' ] );
+				add_action( 'woocommerce_edit_account_form', [ $this, 'tfa_woocommerce_profile_personal_options' ] );
+				add_action( 'woocommerce_save_account_details_errors', [ $this, 'tfa_woocommerce_validate_tfa'], 10, 2 );
+			}
 		}
 	}
 
@@ -57,6 +82,15 @@ class P_Login extends P_Core {
 	 */
 	public function tfa_login_form() {
 		require_once dirname( __FILE__ ) . '/views/2fa-login-form.php';
+	}
+
+	/**
+	 * Add the 2FA code to the WooCommerce login form.
+	 *
+	 * @return void
+	 */
+	public function tfa_woocommerce_login_form() {
+		require_once dirname( __FILE__ ) . '/views/2fa-login-form-woocommerce.php';
 	}
 
 	/**
@@ -94,6 +128,16 @@ class P_Login extends P_Core {
 	}
 
 	/**
+	 * Show the 2FA disable field to the admin.
+	 * 
+	 * @param object $user
+	 * @return void
+	 */
+	public function tfa_personal_options( $user ) {
+		require_once dirname( __FILE__ ) . '/views/2fa-profile-configuration-admin.php';
+	}
+
+	/**
 	 * Show the 2FA fields.
 	 *
 	 * @param object $user
@@ -105,12 +149,59 @@ class P_Login extends P_Core {
 	}
 
 	/**
+	 * Show the 2FA fields.
+	 *
+	 * @param object $user
+	 * @return void
+	 */
+	public function tfa_woocommerce_profile_personal_options( $user ) {
+		$secret = $this->tfa_get_secret( $user );
+		require_once dirname( __FILE__ ) . '/views/2fa-profile-configuration-woocommerce.php';
+	}
+
+	/**
+	 * Validate the 2FA connection of a WooCommerce customer.
+	 * 
+	 * @param mixed $errors
+	 * @param mixed $user
+	 * @return void
+	 */
+	public function tfa_woocommerce_validate_tfa( &$errors, &$user ) {
+		// If we have a valid user object, check to see if the user has 2FA enabled.
+		$enabled = get_user_option( 'webarx_2fa_enabled', $user->ID );
+		if ( $enabled || ! isset ( $_POST['patchstack_2fa_enabled'] ) ) {
+			$this->tfa_personal_options_update( $user->ID );
+			return;
+		}
+
+		// Verify the code.
+		require_once dirname( __FILE__ ) . '/2fa/rfc6238.php';
+		$secret  = $this->tfa_get_secret( $user );
+		if ( ! TokenAuth6238::verify( $secret, trim( $_POST['patchstack_2fa_secretkey_verification'] ) ) ) {
+			wc_add_notice( __( 'The 2FA authentication code you entered is invalid.', 'patchstack' ), 'error' );
+			return;
+		}
+
+		$this->tfa_personal_options_update( $user->ID );
+	}
+
+	/**
 	 * Update the 2FA fields.
 	 *
 	 * @param integer $user_id
 	 * @return void
 	 */
 	public function tfa_personal_options_update( $user_id ) {
+		update_user_option( $user_id, 'webarx_2fa_enabled', ! empty( $_POST['patchstack_2fa_enabled'] ), true );
+	}
+
+	/**
+	 * Update the 2FA fields on admin.
+	 *
+	 * @param integer $user_id
+	 * @return void
+	 */
+	public function tfa_options_update( $user_id ) {
 		update_user_option( $user_id, 'webarx_2fa_enabled', ! empty( $_POST['patchstack_2fa_enabled'] ), true );
 	}
 
@@ -286,19 +377,27 @@ class P_Login extends P_Core {
 		// reCAPTCHA on the login page.
 		if ( $this->get_option( 'patchstack_captcha_login_form' ) ) {
 			add_filter( 'login_form', [ $this->plugin->hardening, 'captcha_display' ] );
+			add_filter( 'woocommerce_login_form', [ $this->plugin->hardening, 'captcha_display' ] );
 			add_filter( 'wp_authenticate_user', [ $this, 'login_captcha_check' ], 10, 2 );
 		}
 
 		// reCAPTCHA on the registration form.
 		if ( $this->get_option( 'patchstack_captcha_registration_form' ) ) {
 			add_action( 'register_form', [ $this->plugin->hardening, 'captcha_display' ] );
+			add_action( 'woocommerce_register_form', [ $this->plugin->hardening, 'captcha_display' ] );
 			add_action( 'registration_errors', [ $this, 'general_captcha_check' ] );
 		}
 
 		// reCAPTCHA on the reset password form.
 		if ( $this->get_option( 'patchstack_captcha_reset_pwd_form' ) ) {
 			add_action( 'lostpassword_form', [ $this->plugin->hardening, 'captcha_display' ] );
+			add_action( 'woocommerce_lostpassword_form', [ $this->plugin->hardening, 'captcha_display' ] );
 			add_action( 'allow_password_reset', [ $this, 'general_captcha_check' ] );
+
+			// WooCommerce only.
+			if ( class_exists( 'WooCommerce' ) ) {
+				add_action( 'lostpassword_post', [ $this, 'general_captcha_check' ], 1, 1 );
+			}
 		}
 	}
 
@@ -310,10 +409,15 @@ class P_Login extends P_Core {
 	 * @return WP_User|WP_Error
 	 */
 	public function login_captcha_check( $user, $password ) {
+		if ( $this->validated ) {
+			return $user;
+		}
+
 		$result = $this->plugin->hardening->captcha_check();
 
 		if ( ! $result['response'] ) {
 			if ( $result['reason'] === 'ERROR_NO_KEYS' ) {
+				$this->validated = true;
 				return $user;
 			}
 			$error_message = sprintf( '<strong>%s</strong>: %s', 'Error', esc_attr__( 'You have entered an incorrect reCAPTCHA value.', 'patchstack' ) );
@@ -327,8 +431,36 @@ class P_Login extends P_Core {
 				return new WP_Error( 'patchstack_error', $error_message );
 			}
 		} else {
+			$this->validated = true;
 			return $user;
 		}
+	}
+
+	/**
+	 * Check reCAPTCHA upon login.
+	 *
+	 * @param string $user
+	 * @param string $password
+	 * @return WP_User|WP_Error
+	 */
+	public function login_captcha_check_woocommerce( $error, $username, $password, $email ) {
+		if ( $this->validated ) {
+			return $error;
+		}
+
+		$result = $this->plugin->hardening->captcha_check();
+
+		if ( $result['response'] || $result['reason'] == 'ERROR_NO_KEYS' ) {
+			$this->validated = true;
+			return $error;
+		}
+
+		if ( ! is_wp_error( $error ) ) {
+			$error = new WP_Error();
+		}
+
+		$error->add( 'patchstack_error', 'ERROR' . ':&nbsp;' . esc_attr__( 'You have entered an incorrect reCAPTCHA value.', 'patchstack' ) );
+		return $error;
 	}
 
 	/**
@@ -338,9 +470,14 @@ class P_Login extends P_Core {
 	 * @return WP_Error
 	 */
 	public function general_captcha_check( $error ) {
+		if ( $this->validated ) {
+			return $error;
+		}
+
 		$result = $this->plugin->hardening->captcha_check();
 
 		if ( $result['response'] || $result['reason'] == 'ERROR_NO_KEYS' ) {
+			$this->validated = true;
 			return $error;
 		}
 
@@ -348,7 +485,7 @@ class P_Login extends P_Core {
 			$error = new WP_Error();
 		}
 
-		$error->add( 'patchstack_error', 'ERROR' . ':&nbsp;' . esc_attr__( 'You have entered an incorrect reCAPTCHA value. Refresh this page and try again.', 'patchstack' ) );
+		$error->add( 'patchstack_error', 'ERROR' . ':&nbsp;' . esc_attr__( 'You have entered an incorrect reCAPTCHA value.', 'patchstack' ) );
 		return $error;
 	}
 }

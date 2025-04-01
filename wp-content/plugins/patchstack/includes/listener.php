@@ -20,7 +20,7 @@ class P_Listener extends P_Core {
 		parent::__construct( $core );
 
 		// Only hook into the action if the authentication is set and valid.
-		if ( isset( $_POST['webarx_secret'] ) && $this->verifyToken( $_POST['webarx_secret'] ) ) {
+		if ( isset( $_POST['patchstack_secret'] ) && $this->verifyToken( $_POST['patchstack_secret'] ) ) {
 			add_action( 'init', [ $this, 'handleRequest' ] );
 		}
 
@@ -48,35 +48,67 @@ class P_Listener extends P_Core {
 	 * @return void
 	 */
 	public function handleRequest() {
-		// Loop through all possible actions.
-		foreach ( [
-			'webarx_remote_users'       => 'listUsers',
-			'webarx_firewall_switch'    => 'switchFirewallStatus',
-			'webarx_wordpress_upgrade'  => 'wordpressCoreUpgrade',
-			'webarx_theme_upgrade'      => 'themeUpgrade',
-			'webarx_plugins_upgrade'    => 'pluginsUpgrade',
-			'webarx_plugins_toggle'     => 'pluginsToggle',
-			'webarx_plugins_delete'     => 'pluginsDelete',
-			'webarx_get_options'        => 'getAvailableOptions',
-			'webarx_set_options'        => 'saveOptions',
-			'webarx_refresh_rules'      => 'refreshRules',
-			'webarx_get_firewall_bans'  => 'getFirewallBans',
-			'webarx_firewall_unban_ip'  => 'unbanFirewallIp',
-			'webarx_firewall_unban_all' => 'unbanFirewallAll',
-			'webarx_upload_software'    => 'uploadSoftware',
-			'webarx_upload_logs'        => 'uploadLogs',
-			'webarx_send_ping'          => 'sendPing',
-			'webarx_login_bans'         => 'getLoginBans',
-			'webarx_unban_login'        => 'unbanLogin',
-			'webarx_debug_info'         => 'debugInfo',
-			'webarx_set_ip_header'	    => 'setIpHeader',
-			'webarx_refresh_license'    => 'refreshLicense'
-		] as $key => $action ) {
-			// Special case for Patchstack plugin upgrade.
-			if ( isset( $_POST[ $key ] ) ) {
-				$this->$action();
-			}
+		// Get the request data for the listener action.
+		$request = json_decode(base64_decode($_POST['patchstack_secret']), true);
+		if ( ! isset( $request['data'] ) ) {
+			return;
 		}
+
+		// Parse it; backwards support.
+		$requestData = json_decode( $request['data'], true );
+
+		// Double JSON encoding, edge cases.
+		if ( ! is_array( $requestData ) ) {
+			$requestData = json_decode( $requestData, true );
+		}
+
+		// Failsafe.
+		if ( ! is_array( $requestData ) ) {
+			return;
+		}
+
+		// Set our primary keys.
+		foreach ($requestData as $key => $data) {
+			$_POST[$key] = $data;
+		}
+
+		// Action to execute.
+		$action = $requestData['action'];
+
+		// Available mapped actions.
+		$actions = [
+			'patchstack_remote_users'       => 'listUsers',
+			'patchstack_firewall_switch'    => 'switchFirewallStatus',
+			'patchstack_wordpress_upgrade'  => 'wordpressCoreUpgrade',
+			'patchstack_theme_upgrade'      => 'themeUpgrade',
+			'patchstack_plugins_upgrade'    => 'pluginsUpgrade',
+			'patchstack_plugins_toggle'     => 'pluginsToggle',
+			'patchstack_plugins_delete'     => 'pluginsDelete',
+			'patchstack_get_options'        => 'getAvailableOptions',
+			'patchstack_set_options'        => 'saveOptions',
+			'patchstack_refresh_rules'      => 'refreshRules',
+			'patchstack_get_firewall_bans'  => 'getFirewallBans',
+			'patchstack_firewall_unban_ip'  => 'unbanFirewallIp',
+			'patchstack_firewall_unban_all' => 'unbanFirewallAll',
+			'patchstack_upload_software'    => 'uploadSoftware',
+			'patchstack_upload_logs'        => 'uploadLogs',
+			'patchstack_send_ping'          => 'sendPing',
+			'patchstack_login_bans'         => 'getLoginBans',
+			'patchstack_unban_login'        => 'unbanLogin',
+			'patchstack_debug_info'         => 'debugInfo',
+			'patchstack_set_ip_header'	    => 'setIpHeader',
+			'patchstack_refresh_license'    => 'refreshLicense',
+			'patchstack_reset_2fa'			=> 'resetTFA',
+			'patchstack_reset_cache'		=> 'resetCache'
+		];
+
+		// Action must exist.
+		if ( ! isset( $actions[ $action ] ) ) {
+			return;
+		}
+		
+		// Execute the action.
+		call_user_func( [ $this, $actions[ $action ] ] );
 	}
 
 	/**
@@ -86,14 +118,45 @@ class P_Listener extends P_Core {
 	 * @return boolean
 	 */
 	public function verifyToken( $secret ) {
-		$id  = get_option( 'patchstack_clientid' );
-		$key = $this->get_secret_key();
-
-		if ( empty( $id ) || empty ( $key ) || strlen( $secret ) != 40 ) {
+		if ( empty ( $secret ) ) {
 			return false;
 		}
 
-		return hash_equals( sha1( $id . $key ), $secret );
+		$secret = base64_decode( $secret );
+		$request = json_decode( $secret, true );
+		if ( ! $request || ! isset( $request['nonce'], $request['data'], $request['hmac'], $request['time'] ) ) {
+		  return false;
+		}
+
+        // +- 10 minutes.
+        $found = false;
+        for ( $i = -10; $i <= 10; $i++ ) {
+            if ( floor(( time() + ( $i * 30 ) ) / 30 ) == $request['time'] ) {
+                $found = true;
+            }
+        }
+
+        // Timestamp must match.
+        if ( ! $found ) {
+            return false;
+        }
+
+        // Get client id and key.
+		$id  = get_option( 'patchstack_clientid' );
+		$key = $this->get_secret_key();
+		if ( empty( $id ) || empty ( $key ) ) {
+			return false;
+		}
+
+		// Compute the hmac.
+        $hmac = hash_hmac( 'sha1', $request['nonce'] . $request['time'] . $request['data'], $key . '-' . $id );
+
+        // Ensure it matches.
+        if ( ! hash_equals( $hmac, $request['hmac'] ) ) {
+            return false;
+        }
+
+        return true;
 	}
 
 	/**
@@ -223,14 +286,14 @@ class P_Listener extends P_Core {
 	 * @return string|void
 	 */
 	private function themeUpgrade() {
-		if ( !isset( $_POST['webarx_theme_upgrade'] ) ) {
+		if ( !isset( $_POST['patchstack_theme_upgrade'] ) ) {
 			return;
 		}
 
 		@set_time_limit( 180 );
 
 		// Require some files we need to execute the upgrade.
-		$theme = wp_filter_nohtml_kses( $_POST['webarx_theme_upgrade'] );
+		$theme = wp_filter_nohtml_kses( $_POST['patchstack_theme_upgrade'] );
 		@include_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
 		if ( file_exists( ABSPATH . 'wp-admin/includes/class-theme-upgrader.php' ) ) {
 			@include_once ABSPATH . 'wp-admin/includes/class-theme-upgrader.php';
@@ -257,14 +320,14 @@ class P_Listener extends P_Core {
 	 * @return string|void
 	 */
 	private function pluginsUpgrade() {
-		if (!isset( $_POST['webarx_plugins_upgrade'] ) ) {
+		if (!isset( $_POST['patchstack_plugins_upgrade'] ) ) {
 			return;
 		}
 
 		@set_time_limit( 180 );
 
 		// Must have a valid number of plugins received to upgrade.
-		$plugins = wp_filter_nohtml_kses( $_POST['webarx_plugins_upgrade'] );
+		$plugins = wp_filter_nohtml_kses( $_POST['patchstack_plugins_upgrade'] );
 		$plugins = explode( '|', $plugins );
 		if ( count( $plugins ) == 0 ) {
 			$this->returnResults( false, null, 'No valid plugin names have been given.' );
@@ -317,16 +380,16 @@ class P_Listener extends P_Core {
 	 * @return string|void
 	 */
 	private function pluginsToggle() {
-		if (!isset( $_POST['webarx_plugins'], $_POST['webarx_plugins_toggle'] ) ) {
+		if (!isset( $_POST['patchstack_plugins'], $_POST['patchstack_plugins_toggle'] ) ) {
 			return;
 		}
 
 		@set_time_limit( 180 );
 
 		// Must have a valid number of plugins received to toggle.
-		$plugins = wp_filter_nohtml_kses( $_POST['webarx_plugins'] );
+		$plugins = wp_filter_nohtml_kses( $_POST['patchstack_plugins'] );
 		$plugins = explode( '|', $plugins );
-		$state = $_POST['webarx_plugins_toggle'] == 'on' ? 'on' : 'off';
+		$state = $_POST['patchstack_plugins_toggle'] == 'on' ? 'on' : 'off';
 		if ( count( $plugins ) == 0 ) {
 			$this->returnResults( false, null, 'No valid plugin names have been given.' );
 		}
@@ -380,14 +443,14 @@ class P_Listener extends P_Core {
 	 * @return string|void
 	 */
 	private function pluginsDelete() {
-		if (!isset( $_POST['webarx_plugins'] ) ) {
+		if (!isset( $_POST['patchstack_plugins'] ) ) {
 			return;
 		}
 
 		@set_time_limit( 180 );
 
 		// Must have a valid number of plugins received to toggle.
-		$plugins = wp_filter_nohtml_kses( $_POST['webarx_plugins'] );
+		$plugins = wp_filter_nohtml_kses( $_POST['patchstack_plugins'] );
 		$plugins = explode( '|', $plugins );
 		if ( count( $plugins ) == 0 ) {
 			$this->returnResults( false, null, 'No valid plugin names have been given.' );
@@ -429,12 +492,12 @@ class P_Listener extends P_Core {
 	 * @return void
 	 */
 	private function saveOptions() {
-		if ( ! isset( $_POST['webarx_set_options'], $_POST['webarx_secret'] ) ) {
+		if ( ! isset( $_POST['patchstack_set_options'], $_POST['patchstack_secret'] ) ) {
 			exit;
 		}
 
 		// Get the received options.
-		$options = json_decode( base64_decode( $_POST['webarx_set_options'] ), true );
+		$options = json_decode( base64_decode( $_POST['patchstack_set_options'] ), true );
 		if ( ! $options || count( $options ) == 0 ) {
 			exit;
 		}
@@ -555,12 +618,12 @@ class P_Listener extends P_Core {
 	 * @return void
 	 */
 	private function unbanFirewallIp() {
-		if ( ! isset( $_POST['webarx_ip'] ) || !filter_var( $_POST['webarx_ip'], FILTER_VALIDATE_IP ) ) {
+		if ( ! isset( $_POST['patchstack_ip'] ) || !filter_var( $_POST['patchstack_ip'], FILTER_VALIDATE_IP ) ) {
 			return;
 		}
 
 		global $wpdb;
-		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'patchstack_firewall_log SET apply_ban = 0 WHERE ip = %s', [ $_POST['webarx_ip'] ] ) );
+		$wpdb->query( $wpdb->prepare( 'UPDATE ' . $wpdb->prefix . 'patchstack_firewall_log SET apply_ban = 0 WHERE ip = %s', [ $_POST['patchstack_ip'] ] ) );
 		$this->returnResults( null, 'The IP has been unbanned.' );
 	}
 
@@ -750,7 +813,7 @@ class P_Listener extends P_Core {
 	 * @return void
 	 */
 	private function refreshLicense () {
-		do_action( 'update_license_status' );
+		do_action( 'patchstack_update_license_status' );
 		do_action( 'patchstack_send_software_data' );
 		do_action( 'patchstack_post_dynamic_firewall_rules' );
 		
@@ -775,5 +838,46 @@ class P_Listener extends P_Core {
 		update_option( 'patchstack_activation_secret', '' );
 		update_option( 'patchstack_activation_time', '' );
 		wp_send_json( [ 'success' => true ] );
+	}
+
+	/**
+	 * Reset the 2FA data all users or specific ones.
+	 * 
+	 * @return void
+	 */
+	private function resetTFA () {
+		global $wpdb;
+
+		// Delete by user id if specified.
+		$where = '';
+		$params = [];
+		if (isset($_POST['user_id'])) {
+			$where = 'AND user_id = %d';
+			$params = [$_POST['user_id']];
+		} elseif (isset($_POST['user_name'])) {
+			$where = 'AND user_id IN (SELECT ID FROM ' . $wpdb->users . ' WHERE user_login = %s OR user_email = %s)';
+			$params = [$_POST['user_name'], $_POST['user_name']];
+		}
+
+		// Delete the 2FA data.
+		$wpdb->query(
+			$wpdb->prepare( "
+				DELETE FROM " . $wpdb->usermeta. "
+				WHERE `meta_key` IN ('webarx_2fa_enabled', 'webarx_2fa_secretkey', 'webarx_2fa_secretkey_nonce') 
+				" . $where,
+				$params
+			)
+		);
+
+		wp_send_json( [ 'success' => true ] );
+	}
+
+	/**
+	 * Reset the WordPress cache.
+	 * 
+	 * @return void
+	 */
+	private function resetCache () {
+		wp_send_json( [ 'success' => wp_cache_flush() ] );
 	}
 }

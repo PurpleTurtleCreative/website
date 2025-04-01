@@ -26,7 +26,9 @@ class P_Activation extends P_Core {
 	 */
 	public function __construct( $core ) {
 		parent::__construct( $core );
+
 		add_action( 'activated_plugin', [ $this, 'redirect_activation' ], 10, 2 );
+		add_action( 'updated_option', [ $this, 'updated_option' ], 10, 3 );
 	}
 
 	/**
@@ -52,9 +54,9 @@ class P_Activation extends P_Core {
 
 			// In case of multisite, we want to redirect the user to a different page.
 			if ( $network_activation ) {
-				wp_safe_redirect( network_admin_url( 'admin.php?page=patchstack-multisite-settings&tab=multisite&ps_activated=1' . ($attemptAuto ? '&ps_autoa=1' : '') ) );
+				wp_safe_redirect( network_admin_url( 'admin.php?page=patchstack-multisite-settings&tab=multisite&ps_activated=1' . ($attemptAuto ? '&ps_autoa=1' : '' ) ) );
 			} else {
-				wp_safe_redirect( admin_url( 'admin.php?page=' . $this->plugin->name . '&ps_activated=1' . ($attemptAuto ? '&ps_autoa=1' : '') ) );
+				wp_safe_redirect( admin_url( 'admin.php?page=' . $this->plugin->name . '&ps_activated=1' . ($attemptAuto ? '&ps_autoa=1' : '' ) ) );
 			}
 			exit;
 		}
@@ -93,7 +95,7 @@ class P_Activation extends P_Core {
 
 		// Check if we can access the API.
 		if ( is_wp_error( $response ) ) {
-			$this->activation_errors[] = 'We were unable to contact our API server. Please contact your host and ask them to make sure that outgoing connections to api.webarxsecurity.com and api.patchstack.com are not blocked.<br />Additional error message to give to your host: ' . $response->get_error_message();
+			$this->activation_errors[] = 'We were unable to contact our API server. Please contact your host and ask them to make sure that outgoing connections to api.patchstack.com are not blocked.<br />Additional error message to give to your host: ' . $response->get_error_message();
 			return false;
 		}
 
@@ -199,12 +201,9 @@ class P_Activation extends P_Core {
 			do_action( 'patchstack_post_dynamic_firewall_rules' );
 		}
 
-		// One time actions should be placed here.
-		$this->plugin->hardening->delete_readme();
-
 		// Try to create the mu-plugins folder/file.
 		// No need to do this if it already exists.
-		if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' ) || file_exists( WPMU_PLUGIN_DIR . '/_patchstack.php' )) {
+		if ( file_exists( WPMU_PLUGIN_DIR . '/patchstack.php' ) || file_exists( WPMU_PLUGIN_DIR . '/_patchstack.php' ) || ( defined( 'PS_DISABLE_MU' ) && PS_DISABLE_MU ) ) {
 			return;
 		}
 
@@ -246,7 +245,7 @@ class P_Activation extends P_Core {
 
 		// Add the options to given site.
 		foreach ( $this->plugin->admin_options->options as $name => $value ) {
-			add_blog_option( $site->id, $name, $value );
+			add_blog_option( $site->id, $name, $value['default'] );
 		}
 
 		// Set the client id and secret key.
@@ -346,6 +345,7 @@ class P_Activation extends P_Core {
 
 		// Cleanup the .htaccess file.
 		$this->plugin->htaccess->cleanup_htaccess_file();
+		$this->auto_prepend_removal();
 
 		// Remove the mu-plugin file if it exists.
 		foreach (['patchstack.php', '_patchstack.php'] as $file) {
@@ -364,10 +364,8 @@ class P_Activation extends P_Core {
 	 * @return array
 	 */
 	public function alter_license( $id, $secret, $action ) {
-		// Set the default option values if calling through CLI.
-		if ( defined( 'WP_CLI' ) && WP_CLI) {
-			$this->plugin->admin_options->settings_init();
-		}
+		// Set default options in case they have not been set yet.
+		$this->plugin->admin_options->settings_init();
 
 		// Store current keys in tmp variable so in case it fails, we can set it back.
 		$tmp_id  = get_option( 'patchstack_clientid' );
@@ -410,6 +408,7 @@ class P_Activation extends P_Core {
 				$this->plugin->api->update_firewall_status( [ 'status' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ] );
 				$this->plugin->api->update_url( [ 'plugin_url' => get_option( 'siteurl' ) ] );
 				$this->plugin->api->ping();
+				$this->auto_prepend_injection();
 			}
 
 			return [
@@ -422,6 +421,7 @@ class P_Activation extends P_Core {
 		if ( $action == 'deactivate' ) {
 			update_option( 'patchstack_api_token', '' );
 			update_option( 'patchstack_license_activated', '0', true );
+			$this->auto_prepend_removal();
 	
 			return [
 				'result'  => 'success',
@@ -439,8 +439,9 @@ class P_Activation extends P_Core {
 	{
 		$header = get_option( 'patchstack_firewall_ip_header', '' );
 		$computed = get_option( 'patchstack_ip_header_computed', 0 );
+		$force = get_option( 'patchstack_ip_header_force_compute', 0 );
 
-		if ( $header == '' && ! $computed ) {
+		if ( ( $header == '' && ! $computed ) || $force ) {
 			// Create an OTT token.
 			$ott = md5( wp_generate_password( 32, true, true ) );
 			update_option( 'patchstack_ott_action', $ott );
@@ -465,5 +466,413 @@ class P_Activation extends P_Core {
 				]
 			);
 		}
+	}
+
+	/**
+	 * Create the environment needed for the auto prepend firewall functionality.
+	 * 1. First we check if an auto_prepend_file already exists somewhere.
+	 * 2. Then we write to the .htaccess file and check its status code.
+	 * 3. Then we write to the .user.ini file and check its status code, .user.ini is optional if there are any errors with it.
+	 * 
+	 * @param boolean $refresh
+	 * @return boolean
+	 */
+	public function auto_prepend_injection($refresh = false)
+	{
+		// Determine if AP firewall is enabled.
+		if ( ! get_option( 'patchstack_firewall_ap_enabled', false ) ) {
+			return;
+		}
+
+		// Determine if we received an error that hasn't been cleared yet.
+		if ( get_option( 'patchstack_firewall_ap_error', '' ) != '' ) {
+			return;
+		}
+
+		// No need to display this error if the .htaccess functionality has been disabled.
+		if ( get_option( 'patchstack_disable_htaccess', 0 ) || ( defined( 'PS_DISABLE_HTACCESS' ) && PS_DISABLE_HTACCESS ) || ( defined( 'PS_DISABLE_MU' ) && PS_DISABLE_MU ) ) {
+			return;
+		}
+
+		// Get filesystem.
+		global $wp_filesystem;
+		if ( ! $this->get_filesystem() ) {
+			update_option( 'patchstack_firewall_ap_error', 'Could not establish filesystem.' );
+			return false;
+		}
+
+		// First ensure a .htaccess file exists, otherwise no point.
+		$htaccess_file = ABSPATH . '.htaccess';
+		if ( ! $wp_filesystem->exists( $htaccess_file ) && ! $wp_filesystem->touch( $htaccess_file ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'The .htaccess file could be found nor created.' );
+			return false;
+		}
+
+		// Completely halt if there is already an auto_prepend_file present in .htaccess and not of Patchstack.
+		$htaccess_content = $wp_filesystem->get_contents( $htaccess_file );
+		if ( stripos( $htaccess_content, 'auto_prepend_file' ) !== false && stripos( $htaccess_content, 'mu-plugin-ap.php' ) === false ) {
+			update_option( 'patchstack_firewall_ap_error', 'A different auto_prepend_file value is already present in the .htaccess file.' );
+			return false;
+		}
+
+		// Completely halt if there is already an auto_prepend_file present in .user.ini and not of Patchstack.
+		$user_ini = ini_get( 'user_ini.filename' );
+		if ( $user_ini && $wp_filesystem->exists( ABSPATH . $user_ini ) ) {
+			$ini_content = $wp_filesystem->get_contents( ABSPATH . $user_ini );
+			if ( stripos( $ini_content, 'auto_prepend_file' ) !== false && stripos( $ini_content, 'mu-plugin-ap.php' ) === false ) {
+				update_option( 'patchstack_firewall_ap_error', 'A different auto_prepend_file value is already present in the .user.ini file.' );
+				return false;
+			}
+		}
+
+		// Determine if we can write the /wp-content/pslogs/ folder.
+		$logs_dir = WP_CONTENT_DIR . '/pslogs/';
+		if ( ! $wp_filesystem->exists( $logs_dir ) && ! $wp_filesystem->mkdir( $logs_dir ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'The path ' . $logs_dir . ' could not be created.' );
+			return false;
+		}
+
+		// Create the blank index.php file.
+		if ( ! $wp_filesystem->exists( $logs_dir . 'index.php' ) && ! $wp_filesystem->put_contents( $logs_dir . 'index.php', '' ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'The file ' . $logs_dir . 'index.php could not be created.' );
+			return false;
+		}
+
+		// Create the logs.php file.
+		if ( ! $wp_filesystem->exists( $logs_dir . 'logs.php' ) && ! $wp_filesystem->put_contents( $logs_dir . 'logs.php', '<?php exit; ?>' . PHP_EOL ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'The file ' . $logs_dir . 'logs.php could not be created.' );
+			return false;
+		}
+
+		// Save current site id.
+		$current_id = get_current_blog_id();
+
+		// Pull data to save into the config.php file.
+		$sites = $this->get_sites();
+		$data = [];
+		foreach ($sites as $site) {
+			$this->switch_to_blog( $site->id );
+			$data[] = [
+				'site_id' => $site->id,
+				'site_url' => preg_replace( '/^https?:\/\//i', '', $site->siteurl ),
+				'home_url' => preg_replace( '/^https?:\/\//i', '', get_option( 'home' ) ),
+				'patchstack_basic_firewall' => get_option( 'patchstack_basic_firewall', 1 ),
+				'patchstack_license_activated' => get_option( 'patchstack_license_activated', 0 ),
+				'patchstack_license_free' => get_option( 'patchstack_license_free', 0 ),
+				'patchstack_firewall_ip_header' => get_option( 'patchstack_firewall_ip_header', '' ),
+				'patchstack_firewall_rules_v3_ap' => base64_encode( get_option( 'patchstack_firewall_rules_v3_ap', '[]' ) )
+			];
+		}
+
+		// Switch back to current site.
+		$this->switch_to_blog( $current_id );
+
+		// Save into the config.php file.
+		if ( ! $wp_filesystem->put_contents( $logs_dir . 'config.php', '<?php return ' . var_export( $data, true ) . ';' ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'The file ' . $logs_dir . 'config.php could not be created.' );
+			return false;
+		}
+
+		// In case we only want to refresh the auto prepend rules, we stop here.
+		if ( $refresh ) {
+			return true;
+		}
+
+		// Prepare the rules to inject into .htaccess.
+		$prepend_rules = $this->get_auto_prepend_rules();
+		if ( ! $prepend_rules ) {
+			return false;
+		}
+
+		// Determine if the rules already exist and overwrite them in case of path change.
+		$original_htaccess = $htaccess_content;
+		$re = '/# BEGIN AP Patchstack.*?# END AP Patchstack/is';
+		if ( preg_match( $re, $htaccess_content ) ) {
+			$htaccess_content = preg_replace( $re, rtrim($prepend_rules['htaccess']), $htaccess_content );
+		} else {
+			$htaccess_content .= "\n" . $prepend_rules['htaccess'];
+		}
+
+		// Attempt to write to the .htaccess file.
+		if ( ! $wp_filesystem->put_contents( $htaccess_file, $htaccess_content ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'Could not inject into the .htaccess file.' );
+			return false;
+		}
+
+		// Determine if the site still works as expected with the injected htaccess rules.
+		if ( $this->get_site_status_code() >= 400 ) {
+			$wp_filesystem->put_contents( $htaccess_file, $original_htaccess );
+			update_option( 'patchstack_firewall_ap_error', 'The .htaccess rules caused a fatal internal server error.' );
+			return false;
+		}
+
+		// Ensure a .user.ini is present.
+		$user_ini = ini_get( 'user_ini.filename' );
+		if ( ! $user_ini ) {
+			update_option( 'patchstack_firewall_ap_error', '' );
+			return true;
+		}
+
+		// Define full path to the .user.ini file.
+		$user_ini = ABSPATH . $user_ini;
+
+		// Create the file if it does not exist.
+		if ( ! $wp_filesystem->exists( $user_ini ) && ! $wp_filesystem->touch( $user_ini ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'The .user.ini file could not be created.' );
+			return true;
+		}
+		
+		// Get the contents of the current .user.ini file.
+		$ini_content = $wp_filesystem->get_contents( $user_ini );
+
+		// Determine if the rules already exist and overwrite them in case of path change.
+		$original_ini = $ini_content;
+		$re = '/; BEGIN AP Patchstack.*?; END AP Patchstack/is';
+		if ( preg_match( $re, $ini_content ) ) {
+			$ini_content = preg_replace( $re, rtrim($prepend_rules['ini']), $ini_content );
+		} else {
+			$ini_content .= "\n" . $prepend_rules['ini'];
+		}
+
+		// Attempt to write to the .user.ini file.
+		if ( ! $wp_filesystem->put_contents( $user_ini, $ini_content ) ) {
+			update_option( 'patchstack_firewall_ap_error', 'Could not inject into the .user.ini file.' );
+			return true;
+		}
+
+		// Determine if the site still works as expected with the injected .user.ini rules.
+		if ( $this->get_site_status_code() == 500 ) {
+			$wp_filesystem->put_contents( $user_ini, $original_ini );
+			update_option( 'patchstack_firewall_ap_error', 'The .user.ini rules caused a fatal internal server error.' );
+			return false;
+		}
+
+		update_option( 'patchstack_firewall_ap_error', '' );
+		return true;
+	}
+
+	/**
+	 * Remove everything related to the auto prepend functionality.
+	 * 
+	 * @return boolean
+	 */
+	public function auto_prepend_removal()
+	{
+		global $wp_filesystem;
+		$this->get_filesystem();
+
+		// Define our paths to access.
+		$logs_dir = WP_CONTENT_DIR . '/pslogs/';
+		$htaccess_file = ABSPATH . '.htaccess';
+		$ini_file = ABSPATH . '.user.ini';
+
+		// Remove the entire /pslogs/ directory.
+		if ( $wp_filesystem->is_dir( $logs_dir ) ) {
+			$wp_filesystem->delete( $logs_dir, true );
+		}
+
+		// Remove the .htaccess injected rules.
+		if ( $wp_filesystem->is_file( $htaccess_file ) ) {
+			$htaccess_content = $wp_filesystem->get_contents( $htaccess_file );
+			$re = '/# BEGIN AP Patchstack.*?# END AP Patchstack/is';
+			if ( preg_match( $re, $htaccess_content ) ) {
+				$htaccess_content = preg_replace( $re, '', $htaccess_content );
+				$wp_filesystem->put_contents( $htaccess_file, $htaccess_content );
+			}
+		}
+
+		// Remove the .user.ini injected rules.
+		if ( $wp_filesystem->is_file( $ini_file ) ) {
+			$ini_content = $wp_filesystem->get_contents( $ini_file );
+			$re = '/; BEGIN AP Patchstack.*?; END AP Patchstack/is';
+			if ( preg_match( $re, $ini_content ) ) {
+				$ini_content = preg_replace( $re, '', $ini_content );
+				$wp_filesystem->put_contents( $ini_file, $ini_content );
+			}
+		}
+	}
+
+	/**
+	 * Attempt to establish the proper WP_FileSystem.
+	 * 
+	 * @return boolean
+	 */
+	private function get_filesystem()
+	{
+		// Seems to be the only native way to obtain FTP credentials, if defined.
+		include_once( ABSPATH . 'wp-admin/includes/file.php' );
+		ob_start();
+		$creds = request_filesystem_credentials( admin_url( 'admin-ajax.php' ), '', false, ABSPATH, null, true );
+		ob_end_clean();
+
+		// Returns false if no filesystem connection could be determined.
+		if ( $creds === false ) {
+			update_option( 'patchstack_firewall_ap_error', 'Unable to establish filesystem connection.' );
+			return false;
+		}
+
+		// Attempt to initialize it.
+		$fs = WP_Filesystem( $creds, ABSPATH, true );
+		if ( ! $fs ) {
+			update_option( 'patchstack_firewall_ap_error', 'Unable to establish filesystem connection through acquired creds.' );
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get sites as part of the environment.
+	 * 
+	 * @return array
+	 */
+	private function get_sites()
+	{
+		if ( ! function_exists( 'get_sites' ) ) {
+			return [
+				(object) [
+					'id' => 0,
+					'siteurl' => get_site_url()
+				]
+			];
+		}
+
+		return get_sites();
+	}
+
+	/**
+	 * Switch to a different site.
+	 * 
+	 * @param integer $site_id
+	 * @return void
+	 */
+	private function switch_to_blog($site_id)
+	{
+		if ( ! function_exists( 'switch_to_blog' ) ) {
+			return;
+		}
+
+		switch_to_blog( $site_id );
+	}
+
+	/**
+	 * Determine the web-server software and make sure we support it before we generate the .htaccess rules for it.
+	 * 
+	 * @return array|boolean
+	 */
+	private function get_auto_prepend_rules()
+	{
+		// Establish location of the auto prepend file.
+		$mu_file = __DIR__ . '/mu-plugin-ap.php';
+		if ( ! file_exists( $mu_file ) ) {
+			return false;
+		}
+
+		// Ensure that the SERVER_SOFTWARE value is set.
+		$software = isset( $_SERVER['SERVER_SOFTWARE'] ) ? $_SERVER['SERVER_SOFTWARE'] : '';
+		if ( ! $software ) {
+			update_option( 'patchstack_firewall_ap_error', 'Unsupported SERVER_SOFTWARE, found: ' . $_SERVER['SERVER_SOFTWARE'] );
+			return false;
+		}
+
+		// At this time, reject non-Apache environments.
+		$sapi = function_exists( 'php_sapi_name' ) ? php_sapi_name() : false;
+		if ( ! $sapi || stripos( $_SERVER['SERVER_SOFTWARE'], 'litespeed' ) === false && $sapi != 'litespeed' && stripos($_SERVER['SERVER_SOFTWARE'], 'apache' ) === false) {
+			update_option( 'patchstack_firewall_ap_error', 'Unsupported SERVER_SOFTWARE, found: ' . $_SERVER['SERVER_SOFTWARE'] . ' and ' . $sapi );
+			return false;
+		}
+
+		// Seperate flag for LiteSpeed.
+		$is_litespeed = stripos( $_SERVER['SERVER_SOFTWARE'], 'litespeed' ) !== false || $sapi == 'litespeed';
+
+		// Attempt to find the Apache version, < 2.4 does not support <If>.
+		// This depends on ServerTokens value, so only stop execution if we can't find the specific unsupported versions.
+		$version = function_exists( 'apache_get_version' ) ? apache_get_version() : $_SERVER['SERVER_SOFTWARE'];
+		if ( stripos( $version, 'Apache/2.4' ) === false ) {
+			update_option( 'patchstack_firewall_ap_error', 'Unsupported SERVER_SOFTWARE, found: ' . $_SERVER['SERVER_SOFTWARE'] );
+			return false;
+		}
+
+		// Add c-style slashes.
+		$mu_file_as = wp_normalize_path(addcslashes($mu_file, "'"));
+
+		// Bit different rules for LiteSpeed.
+		if ( ! $is_litespeed ) {
+			$rules = "<IfModule mod_php.c>
+      php_value auto_prepend_file '" . $mu_file_as . "'
+    </IfModule>
+    <IfModule mod_php5.c>
+      php_value auto_prepend_file '" . $mu_file_as . "'
+    </IfModule>
+    <IfModule mod_php7.c>
+      php_value auto_prepend_file '" . $mu_file_as . "'
+    </IfModule>";
+		} else {
+			$rules = "<IfModule LiteSpeed>
+      php_value auto_prepend_file '" . $mu_file_as . "'
+    </IfModule>
+    <IfModule lsapi_module>
+      php_value auto_prepend_file '" . $mu_file_as . "'
+    </IfModule>";
+		}
+
+		return [
+			'htaccess' => "# BEGIN AP Patchstack
+<IfModule mod_authz_core.c>
+	<If \"-f '" . $mu_file_as . "'\">
+		" . $rules . "
+
+		<Files \".user.ini\">
+		<IfModule mod_authz_core.c>
+			Require all denied
+		</IfModule>
+		<IfModule !mod_authz_core.c>
+			Order deny,allow
+			Deny from all
+		</IfModule>
+		</Files>
+	</If>
+</IfModule>
+# END AP Patchstack
+",
+			'ini' => "; BEGIN AP Patchstack
+auto_prepend_file = '" . $mu_file_as . "'
+; END AP Patchstack
+"
+		];
+	}
+
+	/**
+	 * Retrieve the status code of the site.
+	 * This is done to determine if the .htaccess rules do not trigger an error.
+	 *
+	 * @return integer
+	 */
+	public function get_site_status_code() {
+		$response = wp_remote_get( get_site_url() );
+		$http_code = wp_remote_retrieve_response_code( $response );
+		return $http_code;
+	}
+
+	/**
+	 * If option is updated, refresh AP config file.
+	 *
+	 * @param string $option_name
+	 * @param string $option_name
+	 * @param mixed  $value
+	 * @return void
+	 */
+	public function updated_option( $option_name, $old_value, $value ) {
+		// Only allow to run for our options.
+		if ( !in_array( $option_name, [ 'patchstack_basic_firewall', 'patchstack_license_free', 'patchstack_firewall_rules_v3_ap' ] ) ) {
+			return;
+		}
+
+		// Not strict type matching.
+		if ( $old_value == $value ) {
+			return;
+		}
+
+		$this->auto_prepend_injection(true);
 	}
 }

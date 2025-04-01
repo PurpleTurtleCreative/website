@@ -4,7 +4,7 @@
  * Plugin URI:  https://patchstack.com/?utm_medium=wp&utm_source=dashboard&utm_campaign=patchstack%20plugin
  * Author URI: https://patchstack.com/?utm_medium=wp&utm_source=dashboard&utm_campaign=patchstack%20plugin
  * Description: Patchstack identifies security vulnerabilities in WordPress plugins, themes, and core.
- * Version: 2.2.13
+ * Version: 2.3.2
  * Author: Patchstack
  * License: GPLv3
  * Text Domain: patchstack
@@ -59,7 +59,7 @@ if ( ! class_exists( 'patchstack' ) ) {
 		 *
 		 * @var string
 		 */
-		const VERSION = '2.2.13';
+		const VERSION = '2.3.2';
 
 		/**
 		 * API URL of Patchstack to communicate with.
@@ -276,13 +276,21 @@ if ( ! class_exists( 'patchstack' ) ) {
 		}
 
 		/**
+		 * Load translated strings for the plugin.
+		 * 
+		 * @return void
+		 */
+		public function load_textdomain () {
+			load_plugin_textdomain( 'patchstack', false, dirname( $this->basename ) . '/languages/' );
+		}
+
+		/**
 		 * Boot Patchstack.
 		 *
 		 * @return void
 		 */
 		public function init() {
-			// Load translated strings for plugin.
-			load_plugin_textdomain( 'patchstack', false, dirname( $this->basename ) . '/languages/' );
+			add_action( 'init', [ $this, 'load_textdomain' ] );
 
 			// Initialize plugin classes.
 			$this->plugin_classes();
@@ -352,20 +360,33 @@ if ( ! function_exists( 'patchstack_uninstall' ) ) {
 	 */
 	function patchstack_uninstall() {
 		// Delete most of the Patchstack options.
-		$options = [ 'patchstack_eventlog_lastid', 'patchstack_api_token', 'patchstack_dashboardlock', 'patchstack_pluginedit', 'patchstack_move_logs', 'patchstack_userenum', 'patchstack_basicscanblock', 'patchstack_hidewpcontent', 'patchstack_hidewpversionk', 'patchstack_prevent_default_file_access', 'patchstack_basic_firewall', 'patchstack_known_blacklist', 'patchstack_block_debug_log_access', 'patchstack_block_fake_bots', 'patchstack_index_views', 'patchstack_proxy_comment_posting', 'patchstack_bad_query_strings', 'patchstack_advanced_character_string_filter', 'patchstack_advanced_blacklist_firewall', 'patchstack_forbid_rfi', 'patchstack_image_hotlinking', 'patchstack_add_security_headers', 'patchstack_firewall_log_lastid', 'patchstack_user_log_lastid', 'patchstack_captcha_public_key', 'patchstack_captcha_private_key', 'patchstack_scan_interval', 'patchstack_scan_day', 'patchstack_scan_time', 'patchstack_hackers_log', 'patchstack_users_log', 'patchstack_visitors_log', 'external_updates-webarx', 'patchstack_wp_stats', 'patchstack_captcha_login_form', 'patchstack_license_activated', 'patchstack_license_expiry', 'patchstack_software_data_hash', 'patchstack_mv_wp_login', 'patchstack_rename_wp_login', 'patchstack_googledrive_backup_is_running', 'patchstack_googledrive_upload_state', 'patchstack_googledrive_access_token', 'patchstack_googledrive_refresh_token', 'patchstack_cron_offset', 'patchstack_htaccess_rules_hash' ];
-		foreach ( $options as $option ) {
-			delete_option( $option );
+		global $wpdb;
+		$options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'patchstack_%'" );
+
+		// Few options we want to keep.
+		$keep = ['patchstack_hits_last_30', 'patchstack_hits_all_time', 'patchstack_clientid', 'patchstack_secretkey', 'patchstack_secretkey_nonce', 'patchstack_api_token'];
+
+		// Delete everything else.
+		foreach( $options as $option ) {
+			if ( in_array( $option->option_name, $keep ) || stripos( $option->option_name, 'patchstack_captcha_' ) !== false ) {
+				continue;
+			}
+
+			delete_option( $option->option_name );
 
 			if ( is_multisite() ) {
-				delete_site_option( $option );
+				delete_site_option( $option->option_name );
 			}
 		}
 
-		// Drop all Patchstack tables.
+		// Drop all tables.
 		global $wpdb;
-		$tables = [ 'patchstack_user_log', 'patchstack_visitor_log', 'patchstack_firewall_log', 'patchstack_file_hashes', 'patchstack_logic', 'patchstack_ip', 'patchstack_event_log' ];
-		foreach ( $tables as $table ) {
-			$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . $table );
+		$prefixes = ['patchstack_', 'webarx_'];
+		foreach ( $prefixes as $prefix ) {
+			$tables = [ 'user_log', 'visitor_log', 'firewall_log', 'file_hashes', 'logic', 'ip', 'event_log' ];
+			foreach ( $tables as $table ) {
+				$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . $prefix . $table );
+			}
 		}
 	}
 }

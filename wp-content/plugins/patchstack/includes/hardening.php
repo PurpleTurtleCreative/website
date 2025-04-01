@@ -72,12 +72,6 @@ class P_Hardening extends P_Core {
 			add_filter( 'the_generator', [ $this, 'remove_generator' ] );
 		}
 
-		// Block email registration patterns?
-		if ( $this->get_option( 'patchstack_register_email_blacklist', '' ) != '' ) {
-			add_filter( 'registration_errors', [ $this, 'check_email_pattern' ], 1, 3 );
-			add_filter( 'wpmu_validate_user_signup', [ $this, 'check_email_pattern_wpmu' ], 1, 1 );
-		}
-
 		// Auto update software?
 		$update = get_site_option( 'patchstack_auto_update', [] );
 		if ( is_array( $update ) ) {
@@ -153,7 +147,7 @@ class P_Hardening extends P_Core {
 		$ip        = $this->get_ip();
 
 		// Don't block Patchstack.
-		if ( in_array( $ip, $this->ips ) || ( isset( $_POST['webarx_secret'] ) && $this->plugin->listener->verifyToken( $_POST['webarx_secret'] ) ) || isset( $_POST['patchstack_ott_action'] )) {
+		if ( ( isset( $_POST['patchstack_secret'] ) && $this->plugin->listener->verifyToken( $_POST['patchstack_secret'] ) ) || isset( $_POST['patchstack_ott_action'] )) {
 
 			// OTT action.
 			if ( isset( $_POST['patchstack_ott_action'] ) ) {
@@ -251,19 +245,19 @@ class P_Hardening extends P_Core {
 		switch ( $this->get_option( 'patchstack_captcha_type' ) ) {
 			case 'v2':
 				$site_key = trim( $this->get_option( 'patchstack_captcha_public_key' ) );
-				require_once dirname( __FILE__ ) . '/views/captcha_v2.php';
+				require dirname( __FILE__ ) . '/views/captcha_v2.php';
 				break;
 			case 'invisible':
 				$site_key = trim( $this->get_option( 'patchstack_captcha_public_key_v3' ) );
-				require_once dirname( __FILE__ ) . '/views/captcha_invisible.php';
+				require dirname( __FILE__ ) . '/views/captcha_invisible.php';
 				break;
 			case 'v3':
 				$site_key = trim( $this->get_option( 'patchstack_captcha_public_key_v3_new' ) );
-				require_once dirname( __FILE__ ) . '/views/captcha_v3.php';
+				require dirname( __FILE__ ) . '/views/captcha_v3.php';
 				break;
 			case 'turnstile':
 				$site_key = trim( $this->get_option( 'patchstack_captcha_public_key_turnstile' ) );
-				require_once dirname( __FILE__ ) . '/views/captcha_turnstile.php';
+				require dirname( __FILE__ ) . '/views/captcha_turnstile.php';
 				break;
 		}
 	}
@@ -347,22 +341,6 @@ class P_Hardening extends P_Core {
 	}
 
 	/**
-	 * Delete the readme.html file.
-	 *
-	 * @return void
-	 */
-	public function delete_readme() {
-		if ( get_site_option( 'patchstack_rm_readme', false ) != true || ! file_exists( ABSPATH . 'readme.html' ) ) {
-			return;
-		}
-
-		require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-base.php';
-		require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
-		$fs = new WP_Filesystem_Direct( '' );
-		$fs->delete( ABSPATH . 'readme.html' );
-	}
-
-	/**
 	 * Disable user enumeration with ?author= and the REST endpoint.
 	 *
 	 * @return void
@@ -386,45 +364,5 @@ class P_Hardening extends P_Core {
 	 */
 	public function remove_generator() {
 		return '';
-	}
-
-	/**
-	 * Determine if the email address of a new registration matches the defined patterns.
-	 * This filter is called on regular sites.
-	 *
-	 * @param object $errors
-	 * @param string $sanitized_user_login
-	 * @param string $user_email
-	 * @return object
-	 */
-	public function check_email_pattern( $errors, $sanitized_user_login, $user_email ) {
-		$patterns = explode( ',', $this->get_option( 'patchstack_register_email_blacklist' ) );
-		foreach ( $patterns as $pattern ) {
-			if ( stripos( $user_email, $pattern ) !== false ) {
-				$errors->add( 'user_email', esc_attr__( 'An invalid email address has been supplied.', 'patchstack' ) );
-			}
-		}
-
-		return $errors;
-	}
-
-	/**
-	 * Determine if the email address of a new registration matches the defined patterns.
-	 * This filter is called on network sites.
-	 *
-	 * @param array $result
-	 * @return array
-	 */
-	public function check_email_pattern_wpmu( $result ) {
-		if ( isset( $result['user_email'] ) ) {
-			$patterns = explode( ',', $this->get_option( 'patchstack_register_email_blacklist' ) );
-			foreach ( $patterns as $pattern ) {
-				if ( stripos( $result['user_email'], $pattern ) !== false ) {
-					$result['errors']->add( 'user_email', esc_attr__( 'An invalid email address has been supplied.', 'patchstack' ) );
-				}
-			}
-		}
-
-		return $result;
 	}
 }

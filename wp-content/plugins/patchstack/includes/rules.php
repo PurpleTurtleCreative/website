@@ -91,21 +91,32 @@ class P_Rules extends P_Core {
 		}
 
 		// Separate the new firewall engine rules from the old ones.
-		$rules = $results['firewall'];
 		$newRules = [];
+		$newRulesAP = [];
 		$oldRules = [];
+
+		// Counters for displaying purposes on the API key page.
 		$vPatchCount = 0;
 		$ruleCount = 0;
-		foreach ( $rules as $rule ) {
+
+		// Parse the rules.
+		foreach ( $results['firewall'] as $rule ) {
 			if ( isset( $rule['rule_v2'] ) ) {
 				$rule['rules'] = $rule['rule_v2'];
-				unset($rule['rule_v2']);
-				$newRules[] = $rule;
+				unset( $rule['rule_v2'] );
 
-				if (stripos($rule['title'], ' vulnerabilit') !== false && stripos($rule['title'], 'block ') !== false) {
+				// Mark vPatches based on substring.
+				if ( stripos( $rule['title'], ' vulnerabilit' ) !== false && stripos( $rule['title'], 'block ' ) !== false ) {
 					$vPatchCount++;
 				} else {
 					$ruleCount++;
+				}
+
+				// Differentiate between auto prepend rules and regular ones.
+				if ( isset( $rule['ap'] ) && !empty( $rule['ap'] ) ) {
+					$newRulesAP[] = $rule;
+				} else {
+					$newRules[] = $rule;
 				}
 			} else {
 				$ruleCount++;
@@ -116,17 +127,19 @@ class P_Rules extends P_Core {
 		// Update firewall rules.
 		update_option( 'patchstack_firewall_rules', json_encode( $oldRules ), true );
 		update_option( 'patchstack_firewall_rules_v3', json_encode( $newRules ), true );
+		update_option( 'patchstack_firewall_rules_v3_ap', json_encode( $newRulesAP ), true );
+
+		// Update the counters.
 		update_option( 'patchstack_vpatches_present', $vPatchCount );
 		update_option( 'patchstack_non_vpatches_present', $ruleCount );
 
 		// Separate the new firewall engine rules from the old ones.
-		$rules = $results['whitelists'];
 		$newRules = [];
 		$oldRules = [];
-		foreach ( $rules as $rule ) {
+		foreach ( $results['whitelists'] as $rule ) {
 			if ( isset( $rule['rule_v2'] ) ) {
 				$rule['rules'] = $rule['rule_v2'];
-				unset($rule['rule_v2']);
+				unset( $rule['rule_v2'] );
 				$newRules[] = $rule;
 			} else {
 				$oldRules[] = $rule;

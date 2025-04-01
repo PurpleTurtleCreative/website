@@ -24,6 +24,7 @@ class P_Admin_General extends P_Core {
 		add_action( 'admin_notices', [ $this, 'file_error_notice' ] );
 		add_action( 'network_admin_notices', [ $this, 'file_error_notice' ] );
 		add_action( 'update_option_siteurl', [ $this, 'update_option_url' ], 10, 2 );
+		add_action( 'update_option', [ $this, 'update_option_ap' ], 10, 3 );
 
 		// If the firewall or whitelist rules do not exist, attempt to pull fresh.
 		$token = get_option( 'patchstack_api_token', false );
@@ -39,7 +40,7 @@ class P_Admin_General extends P_Core {
 	 */
 	public function file_error_notice() {
 		// No need to display this error if the .htaccess functionality has been disabled.
-		if ( get_site_option( 'patchstack_disable_htaccess', 0 ) ) {
+		if ( get_site_option( 'patchstack_disable_htaccess', 0 ) || ( defined( 'PS_DISABLE_HTACCESS' ) && PS_DISABLE_HTACCESS ) ) {
 			return;
 		}
 
@@ -88,6 +89,31 @@ class P_Admin_General extends P_Core {
 	public function update_option_url( $old_value, $new_value ) {
 		if ( $old_value != $new_value ) {
 			$this->plugin->api->update_url( [ 'plugin_url' => $new_value ] );
+		}
+	}
+
+	/**
+	 * When the firewall auto prepend option value is changed, ensure that we prepare the environment or remove it from the environment.
+	 * 
+	 * @param mixed $option_name
+	 * @param mixed $old_value
+	 * @param mixed $new_value
+	 * @return void
+	 */
+	public function update_option_ap( $option_name, $old_value, $new_value ) {
+		if ( $option_name != 'patchstack_firewall_ap_enabled' ) {
+			return;
+		}
+
+		// No need to perform if user is on free plan.
+		if ( get_option( 'patchstack_license_activated', 0 ) != 1 ) {
+			return;
+		}
+
+		if ( $new_value && get_option( 'patchstack_license_free', 0 ) == 0 ) {
+			$this->plugin->activation->auto_prepend_injection();
+		} else {
+			$this->plugin->activation->auto_prepend_removal();
 		}
 	}
 }

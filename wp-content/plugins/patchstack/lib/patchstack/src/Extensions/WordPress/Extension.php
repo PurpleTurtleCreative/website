@@ -74,7 +74,7 @@ class Extension implements ExtensionInterface
         }
 
         // Transform raw payload.
-        if (array_key_exists('raw', $request)) {
+        if (is_array($request) && array_key_exists('raw', $request)) {
             $request['raw'] = isset($request['raw']) && is_array($request['raw']) ? $request['raw'][0] : $request['raw'];
 
             // Remove raw payload if not present.
@@ -466,7 +466,7 @@ class Extension implements ExtensionInterface
      * @param array $oldCounters
      * @return array
      */
-    private function merge_counters($newCounters, $oldCounters)
+    public function merge_counters($newCounters, $oldCounters)
     {
         // The new counters to return.
         $countersNow = [];
