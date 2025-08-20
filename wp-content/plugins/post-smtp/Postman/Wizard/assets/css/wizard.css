@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 .admin_page_postman-configuration_wizard {
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
@@ -58,6 +59,10 @@
 }
 
 .sendgrid_api-outer .ps-wizard-section .ps-wizard-nav {
+  height: 676px;
+}
+
+.mailersend_api-outer .ps-wizard-section .ps-wizard-nav {
   height: 676px;
 }
 
@@ -231,7 +236,7 @@
 }
 
 .gmail_api-outer .ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after {
-  height: 946px;
+  height: 1100px;
 }
 
 .mandrill_api-outer .ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after {
@@ -242,11 +247,19 @@
   height: 608px;
 }
 
+.mailersend_api-outer .ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after {
+  height: 608px;
+}
+
 .mailgun_api-outer .ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after {
   height: 763px;
 }
 
 .sendinblue_api-outer .ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after {
+  height: 583px;
+}
+
+.resend_api-outer .ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after {
   height: 583px;
 }
 
@@ -283,7 +296,11 @@
 }
 
 .ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after {
-  height: 343px;
+    height: 429px;
+}
+
+.ps-wizard-footer-left .ps-in-active-nav .ps-email-tester-line.ps-wizard-line:after {
+  height: 417px;
 }
 
 .ps-wizard-sockets {
@@ -424,6 +441,11 @@
 .ps-wizard-success {
   display: inline-block;
   font-weight: 600;;
+}
+
+.ps-loading-test-report {
+  display: inline-flex;
+  align-items: center;
 }
 
 .ps-wizard-pages {
@@ -584,8 +606,8 @@
 
 span.ps-pro-close-popup {
   position: absolute;
-  right: 18px;
-  top: 0;
+  right: 25px;
+  top: 25px;
   color: #222222;
   border: 1px solid #e2e4ea;
   border-radius: 50px;
@@ -598,14 +620,19 @@ span.ps-pro-close-popup {
 }
 
 .ps-pro-popup-content {
-  width: 92%;
+  width: 100%;
   text-align: center;
-  margin: 15px auto;
+  padding: 30px 90px 24px;
+  box-sizing: border-box;
 }
 
 .ps-pro-popup-content h1 {
   color: #214A72;
-  font-weight: 400;
+  font-weight: 500;
+  font-size: 20px;
+  margin: 15px 0;
+  line-height: 26px;
+  padding: 0;
 }
 
 .ps-pro-popup-content p {
@@ -618,10 +645,9 @@ span.ps-pro-close-popup {
 }
 
 .ps-pro-promo-area {
-  background: #f0f6ff;
-  border-radius: 6px;
-  margin: 20px 0 5px 0;
-  padding: 16px 0px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
   position: relative;
 }
 
@@ -638,9 +664,11 @@ span.ps-pro-close-popup {
 .ps-pro-coupon {
   background: #5e7cbf;
   display: inline-block;
-  padding: 0px 14px;
+  padding: 0px 35px 0 14px;
   border-radius: 7px;
-  margin-top: 10px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #5E7CBF;
 }
 
 .ps-pro-coupon b {
@@ -682,4 +710,231 @@ span.ps-pro-close-popup {
   height: 557px;
 }
 
+.ps-wizard-pro-tag {
+  background: #ffbf00;
+  color: #ffffff;
+  font-size: 11px;
+  padding: 0px 8px;
+  border-radius: 50px;
+}
+.ps-enable-gmail-one-click.disabled {
+  pointer-events: all;
+  opacity: 0;
+  cursor: not-allowed;
+}
+.ps-hidden {
+  display: none;
+}
+.ps-gmail-btn{
+  background-color: #4285f4 !important;
+  border-radius: 0px !important;
+  line-height: 40px !important;
+  font-size: 15px !important;
+  width: 184px;;
+  display: inline-flex !important;
+  align-items: center;
+  text-decoration: none;
+}
+
+.ps-gmail-btn::before {
+  content: '';
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 20px;
+  margin-right: 10px;
+  background-color: white;
+  padding-top: 5px;
+}
+.ps-remove-gmail-btn{
+  background-color: #d63638 !important;
+  border-color: #d63638 !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 500;
+  padding: 5px 10px !important;
+}
+.ps-wizard-socket .ps-remove-gmail-btn{
+  margin-top:20px !important
+}
+.ps-disable-gmail-setup b{
+  display: inline-block;
+  margin-left: 5px;
+  margin-top: 30px !important;
+ color: green;
+}
+.ps-connect-with{
+	margin-left: 20px;
+}
+
+/* Lets make wiz3rd responsive */
+.ps-dns-results p {
+  margin: 0;  
+}
+
+.ps-dns-heading {
+  border-left: 2px solid #3a5eaf;
+  background: #d8e1e8;
+  color: #585858;
+  padding: 7px 15px;
+}
+
+.ps-dns-results {
+  width: 510px;
+}
+
+.ps-dns-record {
+  border-left: 2px solid #d9d9d9;
+  border-bottom: 2px solid #d9d9d9;
+  padding: 12px 13px;
+  position: relative;
+}
+
+.ps-dns-record p {
+  color: #6E6E6E;
+  font-size: 11px;
+  font-weight: 450;
+}
+
+.ps-dns-record b {
+  color: #6E6E6E;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.ps-dns-footer {
+  font-size: 11px;
+  font-weight: bold;
+  color: #6E6E6E;
+  margin-top: 15px;
+  display: block;
+}
+
+.ps-dns-footer a {
+  color: #5171b9;
+  font-weight: bold;
+}
+
+.ps-dns-footer span {
+  font-size: 18px;
+  color: #375caf;
+  vertical-align: middle;
+}
+
+.ps-dns-pass {
+  color: #74B27B;
+}
+
+.ps-dns-fail {
+  color: #e57373;
+}
+
+.ps-dns-pass,
+.ps-dns-fail {
+  text-transform: capitalize;
+}
+
+.ps-dns-status-icon {
+  position: absolute;
+  left: -10px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  font-size: 17px;
+}
+.ps-pro-popup-body .ps-pro-popup-content *:not(.dashicons){
+  font-family: "Poppins", sans-serif;
+}
+.ps-pro-popup-content h4 {
+  font-weight: 400;
+  font-size: 14px;
+  color: #6A788B;
+  margin: 0;
+  line-height: 100%;
+}
+
+.ps-pro-popup-content .smily strong {
+  background: -webkit-linear-gradient(0deg, #46519E 50%, #8ED2F5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 700;
+}
+
+.ps-pro-popup-content .smily {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.ps-pro-popup-body .ps-pro-popup-content strong {
+  font-weight: 700;
+}
+.ps-pro-coupon span.copy-icon {
+  position: absolute;
+  width: 25px;
+  height: 100%;
+  background: #D3E1FF;
+  right: 0;
+  display: flex;
+  top: 0;
+  align-items: center;
+  justify-content: center;
+  color: #5E7CBF;
+}
+.ps-pro-coupon span.copy-icon svg {
+  width: 15px;
+  height: 15px;
+}
+.ps-pro-popup-content a.button {
+  font-weight: 600;
+  color: #fff !important;
+  padding: 12px 28px;
+  width: auto;
+  line-height: normal;
+}
+div#ps-pro-code-copy-notification {
+  position: absolute;
+  color: rgb(179, 213, 182);
+  border-radius: 3px;
+  right: 0;
+  left: 85%;
+  bottom: 4px;
+  margin: auto;
+  width: 95px;
+  font-size: 11px;
+  border: 1px solid rgb(179, 213, 182);
+  line-height: 22px;
+  background: rgb(225, 253, 228);
+  display: none;
+}
 /* Lets make wizard responsive */
+
+.wizard-btn-css{
+	background: none !important;
+	color: red !important;
+    font-size: 10px !important;
+    margin-left: 100px; 
+}
+.wizard-btn{
+	margin-left: 0px !important;
+}
+.icon-circle {
+  width: 24px;
+  height: 24px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.icon-check {
+  width: 6px;
+  height: 12px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  display: inline-block;
+}

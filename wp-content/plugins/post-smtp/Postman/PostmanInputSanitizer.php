@@ -58,6 +58,8 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 			$this->sanitizePassword( 'Password', PostmanOptions::BASIC_AUTH_PASSWORD, $input, $new_input, $this->options->getPassword() );
 			$this->sanitizePassword( 'Mandrill API Key', PostmanOptions::MANDRILL_API_KEY, $input, $new_input, $this->options->getMandrillApiKey() );
 			$this->sanitizePassword( 'SendGrid API Key', PostmanOptions::SENDGRID_API_KEY, $input, $new_input, $this->options->getSendGridApiKey() );
+			$this->sanitizePassword( 'Resend API Key', PostmanOptions::RESEND_API_KEY, $input, $new_input, $this->options->getResendApiKey() );
+			$this->sanitizePassword( 'MailerSend API Key', PostmanOptions::MAILERSEND_API_KEY, $input, $new_input, $this->options->getMailerSendApiKey() );
 			$this->sanitizePassword( 'Brevo API Key', PostmanOptions::SENDINBLUE_API_KEY, $input, $new_input, $this->options->getSendinblueApiKey() );
 			$this->sanitizePassword( 'Mailjet API Key', PostmanOptions::MAILJET_API_KEY, $input, $new_input, $this->options->getMailjetApiKey() );
 			$this->sanitizePassword( 'Mailjet Secret Key', PostmanOptions::MAILJET_SECRET_KEY, $input, $new_input, $this->options->getMailjetSecretKey() );
@@ -190,6 +192,31 @@ if ( ! class_exists( 'PostmanInputSanitizer' ) ) {
 					$this->logSanitize( $desc, $input [ $key ] );
 					$new_input [ $key ] = absint($value);
 				}
+			}
+		}
+
+		/**
+		 * Sanitizes a URL field in an input array and stores the sanitized value in the output array.
+		 *
+		 * This function checks if the specified key exists in the input array and is not empty. 
+		 * If it does, it logs the original value for debugging or audit purposes, 
+		 * trims any leading or trailing whitespace, and sanitizes the URL.
+		 * The sanitized URL is then stored in the output array under the specified key.
+		 *
+		 * @param string $desc       Description or label of the field for logging purposes.
+		 * @param string $key        The key in the input array that corresponds to the URL field to be sanitized.
+		 * @param array  $input      The input array containing the data to be sanitized.
+		 * @param array  &$new_input The output array where the sanitized data will be stored by reference.
+		 *
+		 * @return void
+		 */
+		public function sanitizeUrl( $desc, $key, $input, &$new_input ) { 
+			if ( isset( $input[ $key ] ) && ! empty( $input[ $key ] ) ) {
+				// Log the sanitization process with the original value for auditing.
+				$this->logSanitize( $desc, $input[ $key ] );
+				
+				// Sanitize the URL by trimming whitespace and ensuring it is in a valid URL format.
+				$new_input[ $key ] = esc_url_raw( trim( $input[ $key ] ) );
 			}
 		}
 

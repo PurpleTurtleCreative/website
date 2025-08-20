@@ -292,11 +292,17 @@ class PostmanConfigurationController {
 		print '<div id="sendgrid_settings" class="authentication_setting non-basic non-oauth2">';
 		do_settings_sections( PostmanSendGridTransport::SENDGRID_AUTH_OPTIONS );
 		print '</div>';
+		print '<div id="mailersend_settings" class="authentication_setting non-basic non-oauth2">';
+		do_settings_sections( PostmanMailerSendTransport::MAILERSEND_AUTH_OPTIONS );
+		print '</div>';
 		print '<div id="mailgun_settings" class="authentication_setting non-basic non-oauth2">';
 		do_settings_sections( PostmanMailgunTransport::MAILGUN_AUTH_OPTIONS );
 		print '</div>';
         print '<div id="sendinblue_settings" class="authentication_setting non-basic non-oauth2">';
         do_settings_sections( PostmanSendinblueTransport::SENDINBLUE_AUTH_OPTIONS );
+        print '</div>';
+        print '<div id="resend_settings" class="authentication_setting non-basic non-oauth2">';
+        do_settings_sections( PostmanResendTransport::RESEND_AUTH_OPTIONS );
         print '</div>';
 		print '<div id="mailjet_settings" class="authentication_setting non-basic non-oauth2">';
         do_settings_sections( PostmanMailjetTransport::MAILJET_AUTH_OPTIONS );
@@ -721,19 +727,6 @@ class PostmanConfigurationController {
 					</div>
 					<h4>Pushover</h4>
 				</div>
-				<?php if( !class_exists( 'PostSMTPTwilio' ) ): ?>
-				<a href="https://postmansmtp.com/extensions/twilio-extension-pro/" target="_blank">
-					<div class="ps-notify-radio-outer">
-						<div class="ps-notify-radio pro-container">
-							<label for="ps-notify-twilio-pro">
-								<img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/pro.png' ) ?>" class="pro-icon" />
-								<img src="<?php echo esc_url( POST_SMTP_ASSETS . 'images/icons/twilio.png' ) ?>" />
-							</label>
-						</div>
-						<h4>Twilio(SMS)</h4>
-					</div>
-				</a>
-				<?php endif; ?>
 			</div>
 			<div id="email_notify" style="display: none;">
 				<input type="text" name="postman_options[notification_email]" value="<?php echo esc_attr( $notification_emails ); ?>" />

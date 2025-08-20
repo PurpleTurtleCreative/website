@@ -69,7 +69,7 @@ class PostmanEmailLogs {
             $header = $log['original_headers'];
             $msg = $log['original_message'];
  			$msg = $this->purify_html( $msg );
-           	echo ( isset ( $header ) && strpos( $header, "text/html" ) ) ? $msg : '<pre>' . $msg . '</pre>' ;
+           	echo ( isset ( $header ) && strpos( $header, "text/html" ) ) ? $msg : '' . $msg . '' ;
 
             die;
 
@@ -98,7 +98,8 @@ class PostmanEmailLogs {
 
 		// ✅ Allow all attributes except JavaScript-based ones
 		$config->set('HTML.AllowedAttributes', null);
-
+        $config->set('CSS.AllowedProperties', 'border-radius, background');
+    
 		// ❌ Block JavaScript-based attacks
 		$config->set( 'HTML.ForbiddenElements', ['script'] );
 		
@@ -110,11 +111,14 @@ class PostmanEmailLogs {
 			'mailto' => true,
 			'tel'   => true,
 		]); 
-		
+        
 		$config->set( 'URI.SafeIframeRegexp', '' );
 		// ✅ Allow inline styles but prevent unsafe styles
 		$config->set( 'CSS.Trusted', false ); // Block dangerous inline styles.
 		$config->set( 'CSS.AllowedProperties', null ); // NULL means allow all CSS properties.
+        $config->set( 'CSS.MaxImgLength', null );
+        // this library is removing display:flex how can we fix it?
+        $config->set( 'CSS.AllowTricky', true );
 
 		// Initialize HTMLPurifier.
 		$purifier = new HTMLPurifier( $config);
@@ -309,9 +313,7 @@ class PostmanEmailLogs {
 
         }
         else {
-            if( isset( $data[ 'success' ] ) ) {   
                 return $this->db->insert( $this->db->prefix . $this->db_name, $data  ) ? $this->db->insert_id : false;
-            }
         }
 
     }
@@ -381,6 +383,12 @@ class PostmanEmailLogs {
             if( isset( $_GET['to'] ) && !empty( $_GET['to'] ) ) {
 
                 $query['to'] = strtotime( sanitize_text_field( $_GET['to'] ) ) + 86400;
+
+            }
+
+            if( isset( $_GET['filter_by'] ) && !empty( $_GET['filter_by'] ) ) {
+
+                $query['filter_by'] = sanitize_text_field( $_GET['filter_by'] );
 
             }
 
@@ -477,11 +485,13 @@ class PostmanEmailLogs {
 		if( isset( $_POST['action'] ) && $_POST['action'] == 'ps-delete-email-logs' ) {
 
 			$args = array();
+            $deleted_all = false;
 
 			//Delete all
 			if( !isset( $_POST['selected'] ) ) {
 
 				$args = array( -1 );
+                $deleted_all = true;
 
 			}
 			//Delete selected
@@ -507,7 +517,8 @@ class PostmanEmailLogs {
 
 				$response = array(
 					'success' => true,
-					'message' => __( 'Logs deleted successfully', 'post-smtp' )
+					'message' => __( 'Logs deleted successfully', 'post-smtp' ),
+                    'deleted_all' => $deleted_all
 				);
 
 			}
@@ -515,7 +526,8 @@ class PostmanEmailLogs {
 
 				$response = array(
 					'success' => false,
-					'message' => __( 'Error deleting logs', 'post-smtp' )
+					'message' => __( 'Error deleting logs', 'post-smtp' ),
+                    'deleted_all' => $deleted_all
 				);
 
 			}

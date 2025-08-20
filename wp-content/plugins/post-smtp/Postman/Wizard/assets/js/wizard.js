@@ -1,5 +1,4 @@
 jQuery( document ).ready(function() {
-
     jQuery( '.ps-wizard-socket-check:checked' ).siblings( '.ps-wizard-socket-tick-container' ).css( { 'opacity': 1 } );
 
     jQuery( document ).on( 'click', '.ps-wizard-socket-radio label', function() {
@@ -28,6 +27,9 @@ jQuery( document ).ready(function() {
             jQuery( `.ps-wizard-step-${stepID}` ).fadeIn( 'slow' );
 
         }
+
+        jQuery( '.ps-wizard-line' ).removeClass( 'ps-email-tester-line' );
+        jQuery( '.ps-dns-results' ).remove();
 
     }
 
@@ -122,6 +124,21 @@ jQuery( document ).ready(function() {
                 var button = jQuery( '.ps-wizard-step-2' ).find( '.ps-wizard-next-btn' );
                 var buttonHTML = jQuery( button ).html();
                 jQuery( button ).html( 'Saving...' );
+
+                // Step 1: Get selected socket from step 1
+                var $step1 = jQuery('.ps-wizard-step-1');
+                var selectedSocket = $step1.attr('data-socket');
+
+                if ( selectedSocket ) {
+                    // Convert socket key to match input class (e.g., sendgrid_api -> ps-sendgrid-api-key)
+                    var classSelector = '.ps-' + selectedSocket.replace('_', '-') + '-key';
+                    var apiKeyInput = jQuery(classSelector);
+                    
+                    if ( apiKeyInput.length > 0 ) {
+                        var apiKey = apiKeyInput.val();
+                        $step1.attr( 'data-apikey', apiKey );
+                    }
+                }
 
                 //Lets AJAX request.
                 jQuery.ajax( {
@@ -256,7 +273,8 @@ jQuery( document ).ready(function() {
         e.preventDefault();
 
         var stepID = jQuery( this ).data( 'step' );
-        
+        var selectedSocket = jQuery( '.ps-wizard-socket-check:checked' ).val();
+        jQuery('.ps-wizard-step-1').attr('data-socket', selectedSocket);
         
         if( validateStep( stepID ) === true ) {
 
@@ -304,19 +322,16 @@ jQuery( document ).ready(function() {
     jQuery( document ).on( 'click', '.ps-wizard-send-test-email', function( e ) {
 
         e.preventDefault();
-
+        jQuery('#ps-dns-results__el_id').empty();
         var sendTo = jQuery( '.ps-test-to' ).val();
         var security = jQuery( '#security' ).val();
-
+        var socket = jQuery( '.ps-wizard-step-1' ).attr( 'data-socket' );
+		var apikey = jQuery( '.ps-wizard-step-1' ).attr( 'data-apikey' );
         if( sendTo == '' ) {
-
             jQuery( '.ps-wizard-error' ).html( `<span class="dashicons dashicons-warning"></span> ${PostSMTPWizard.Step3E4}` );
             return;
 
         }
-
-        jQuery( '.ps-wizard-error' ).html('');
-        jQuery( '.ps-wizard-success' ).html( 'Sending...' );
 
         jQuery.ajax( {
 
@@ -335,12 +350,170 @@ jQuery( document ).ready(function() {
 
                     jQuery( '.ps-wizard-success' ).html( `<span class="dashicons dashicons-yes"></span> ${response.data.message}` );
                     jQuery( '.ps-finish-wizard' ).html( `${PostSMTPWizard.finish} <span class="dashicons dashicons-arrow-right-alt">` );
+                   
+                    jQuery( '.ps-wizard-error' ).html('');
+                    jQuery( '.ps-wizard-health-report' ).html( 
+                    `<div class="ps-loading-test-report">
+                        <span class="spinner is-active" style="margin-left: 0;"></span>
+                        <p>Please wait, we are checking your email health.</p>
+                    </div>` 
+                    );
+                        jQuery.ajax( {
+                            url: ajaxurl,
+                            type: 'POST',
+                            data: {
+                                action: 'ps-mail-test',
+                                email: sendTo,  
+                                security: security,
+                                socket: socket,
+                                apikey: apikey
+                            },
+                            success: function( response ) {
+
+                                jQuery( '.ps-loading-test-report' ).remove();
+                               
+                                if( response.data.message !== undefined && response.data.message === 'test_email_sent' ) {
+
+                                    var title = response.data.data.title;
+                                    var spf = response.data.data.spf;
+                                    var dkim = response.data.data.dkim;
+                                    var dmarc = response.data.data.dmarc;
+
+                                    var successIcon = 'dashicons-yes-alt';
+                                    var warningIcon = 'dashicons-warning';
+                                    var successClass = 'ps-dns-pass';
+                                    var warningClass = 'ps-dns-fail';
+                                    var spfIcon = spf === 'pass' ? `<span class="dashicons ps-dns-status-icon ${successIcon} ${successClass}"></span>` : `<span class="dashicons ps-dns-status-icon ${warningIcon} ${warningClass}"></span>`;
+                                    var dkimIcon = dkim === 'pass' ? `<span class="dashicons ps-dns-status-icon ${successIcon} ${successClass}"></span>` : `<span class="dashicons ps-dns-status-icon ${warningIcon} ${warningClass}"></span>`;
+                                    var dmarcIcon = dmarc === 'pass' ? `<span class="dashicons ps-dns-status-icon ${successIcon} ${successClass}"></span>` : `<span class="dashicons ps-dns-status-icon ${warningIcon} ${warningClass}"></span>`;
+                                    var spfStatus = spf === 'pass' ? 'ps-dns-pass' : 'ps-dns-fail';
+                                    var dkimStatus = dkim === 'pass' ? 'ps-dns-pass' : 'ps-dns-fail';
+                                    var dmarcStatus = dmarc === 'pass' ? 'ps-dns-pass' : 'ps-dns-fail';
+                                    var spfDescription = '';
+                                    var dkimDescription = '';
+                                    var dmarcDescription = '';
+
+                                    // SPF
+                                    if( spf === 'pass' ) {
+                                        spfDescription = 'Great! Your SPF is valid.';
+                                    }
+                                    if( spf === 'none' ) {
+                                        spfDescription = 'We found an SPF entry on your server but it has still not been propagated.';
+                                    }
+                                    if( spf === 'neutral' ) {
+                                        spfDescription = 'SPF: sender does not match SPF record (neutral).';
+                                    }
+                                    if( spf === 'softfail' ) {
+                                        spfDescription = 'SPF: sender does not match SPF record (softfail).';
+                                    }
+                                    if( spf === 'permerror' ) {
+                                        spfDescription = 'SPF: test of record failed (permerror).';
+                                    }
+
+                                    // DKIM
+                                    if( dkim === 'pass' ) {
+                                        dkimDescription = 'Your DKIM signature is valid.';
+                                    }
+                                    if( dkim === 'none' ) {
+                                        dkimDescription = 'Your message is not signed with DKIM.';
+                                    }
+                                    if( dkim === 'fail' ) {
+                                        dkimDescription = 'Your DKIM signature is not valid.';
+                                    }
+
+                                    // DMARC
+                                    if( dmarc === 'pass' ) {
+                                        dmarcDescription = 'Your message passed the DMARC test.';
+                                    }
+                                    if( dmarc === 'missingentry' ) {
+                                        dmarcDescription = 'You do not have a DMARC record.';
+                                    }
+                                    if( dmarc === 'alignment' ) {
+                                        dmarcDescription = 'Your domains are not aligned. We can\'t check DMARC.';
+                                    }
+                                    if( dmarc === 'dkimmissing' ) {
+                                        dmarcDescription = 'Your message is not signed with DKIM.';
+                                    }
+                                    if( dmarc === 'unkown' ) {
+                                        dmarcDescription = 'Your message failed the DMARC verification.';
+                                    }
+
+                                    if( dmarc === 'fail' ) {
+                                        dmarcDescription = 'Your message failed the DMARC verification.';
+                                    }
+
+
+                                    var ps_dns_results = `<div id="ps-dns-results__el_id" class="ps-dns-results">
+                                            <p class="ps-dns-heading">${title}</p>
+                                            <div class="ps-dns-record">
+                                                ${spfIcon}
+                                                <b>SPF record status: <span class="${spfStatus}">${spf}</span></b>
+                                                <p>SPF record description: ${spfDescription}</p>
+                                            </div>
+                                            <div class="ps-dns-record">
+                                                ${dkimIcon}
+                                                <b>DKIM record status: <span class="${dkimStatus}">${dkim}</span></b>
+                                                <p>DKIM record description: ${dkimDescription}</p>
+                                            </div>
+                                            <div class="ps-dns-record">
+                                                ${dmarcIcon}
+                                                <b>DMARC record status: <span class="${dmarcStatus}">${dmarc}</span></b>
+                                                <p>DMARC record description: ${dmarcDescription}</p>
+                                            </div>
+                                            <b class="ps-dns-footer">To check and improve your email spam score! <a href="https://postmansmtp.com/domain-health-checker/?utm_source=plugin&utm_medium=test_email_dns_check&utm_campaign=plugin" target="_blank">Click Here</a><span class="dashicons dashicons-external"></span></b>
+                                        </div>`;
+                                    if ( jQuery( '#ps-dns-results__el_id' ).length ) {
+                                        jQuery( '#ps-dns-results__el_id' ).remove();
+                                    }
+                                    jQuery( '.ps-wizard-success:nth(0)' ).after( 
+                                        ps_dns_results
+                                    );
+
+                                    //jQuery( '.ps-wizard-footer-left .ps-in-active-nav .ps-wizard-line:after' ).css( { 'height': '417px' } );
+                                    jQuery( '.ps-wizard-footer-left' ).find( '.ps-in-active-nav' ).find( '.ps-wizard-line' ).addClass( 'ps-email-tester-line' );
+
+                                }
+                                else {
+
+                                    if ( jQuery( '#ps-dns-results__el_id' ).length ) {
+                                        jQuery( '#ps-dns-results__el_id' ).remove();
+                                    }
+
+                                    jQuery( '.ps-wizard-success:nth(0)' ).after( 
+                                        `<div id="ps-dns-results__el_id">
+                                            <b class="ps-dns-footer" style="padding-left: 12px;">Limit Exceed! To check and improve your email spam score! <a href="https://postmansmtp.com/domain-health-checker/?utm_source=plugin&utm_medium=test_email_dns_check&utm_campaign=plugin" target="_blank">Click Here</a><span class="dashicons dashicons-external"></span></b>
+                                        </div>`
+                                    );
+
+                                }
+
+                            },
+                            error: function(jqXHR, textStatus, errorThrown) {
+                                jQuery( '.ps-loading-test-report' ).remove();
+                                if (jqXHR.status === 429) {
+
+                                    if ( jQuery( '#ps-dns-results__el_id' ).length ) {
+                                        jQuery( '#ps-dns-results__el_id' ).remove();
+                                    }
+                                    jQuery('.ps-wizard-health-report').after( 
+                                        `<div id="ps-dns-results__el_id">
+                                            <b class="ps-dns-footer" style="padding-left: 12px;">Limit Exceed! Please try again later. 
+                                            <a href="https://postmansmtp.com/domain-health-checker/?utm_source=plugin&utm_medium=test_email_dns_check&utm_campaign=plugin" target="_blank">Click Here</a>
+                                            <span class="dashicons dashicons-external"></span></b>
+                                        </div>`
+                                    );
+                                } else {
+                                    console.log("Error: ", errorThrown);
+                                }
+                            }
+                        } );
 
                 }
                 if( response.success === false ) {
 
                     var selectedSocket = jQuery( '.ps-wizard-socket-check:checked' ).val();
-                    jQuery( '.ps-wizard-error' ).html( `<span class="dashicons dashicons-warning"></span> ${response.data.message}` );
+                    jQuery( '.ps-wizard-error' ).html( `<span class="dashicons dashicons-warning"></span> ${response.data.message} <br><br>`  );
+                    jQuery( '.ps-wizard-error' ).append( `<span class="dashicons dashicons-warning"></span> Test email failed. Please check and correct your SMTP configuration. The Email Health Checker cannot proceed until a test email is successfully sent.` );
                     
                     if( selectedSocket === 'smtp' ) {
 
@@ -507,12 +680,76 @@ jQuery( document ).ready(function() {
         var productURL = jQuery( this ).data( 'url' );
         imgSrc = imgSrc.replace( '.png', '-popup.png' );
 
+        console.log(placeholder);
+        // placeholder = "Google Mailer Setup?";
+        if(placeholder == "Amazon SES") {
+            placeholder = 'Amazon SES Mailer?';
+        }
+        if(placeholder == "Zoho") {
+            placeholder = 'Zoho Mailer?';
+        }
+        if(placeholder == "Microsoft 365") {
+            placeholder = 'Microsoft 365 Mailer?';
+        }
+
         jQuery( '.ps-pro-for-img' ).attr( 'src', imgSrc );
         jQuery( '.ps-pro-product-url' ).attr( 'href', productURL );
-        jQuery( '.ps-pro-for' ).text( placeholder );
+        jQuery( '.ps-pro-for' ).html( placeholder );
         jQuery( '.ps-pro-popup-overlay' ).fadeIn();
 
     } );
+
+    jQuery(document).on('click', '.ps-enable-gmail-one-click', function (e) {
+    	
+        if (jQuery(this).hasClass('disabled')) {
+            e.preventDefault();
+            var data = jQuery('#ps-one-click-data').val();
+            var parsedData = JSON.parse(data);
+            console.log(parsedData);
+
+            
+
+            jQuery('.ps-pro-for-img').attr('src', parsedData.url);
+            jQuery('.ps-pro-product-url').attr('href', parsedData.product_url);
+            jQuery('.ps-pro-for').html(parsedData.transport_name);
+            jQuery( '.ps-pro-popup-overlay' ).fadeIn();
+    
+            return;
+        }
+        jQuery(this).prop('disabled', false);
+        jQuery(this).removeClass('disabled'); 
+        
+        var enabled = jQuery(this).is(':checked');
+        if (enabled) {
+            jQuery('.ps-disable-gmail-setup').show();
+            jQuery('.ps-disable-one-click-setup').hide();
+            jQuery('.ps-gmail-api-client-id').removeAttr('required');
+            jQuery('.ps-gmail-api-client-secret').removeAttr('required')
+			jQuery('#ps-gmail-auth-buttons').show();
+        } else {
+            jQuery('.ps-disable-one-click-setup').show();
+            jQuery('.ps-disable-gmail-setup').hide();
+            jQuery('.ps-gmail-api-client-id').attr('required', 'required');
+            jQuery('#ps-gmail-auth-buttons').hide();
+        }
+        
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            async: true,
+            data: {
+                action: 'update_post_smtp_pro_option',
+                enabled: enabled ? 'gmail-oneclick' : '',
+            },
+            success: function(response) {
+                if (response.success) {
+                    console.log('Option updated successfully!');
+                } else {
+                    console.log('Failed to update option.');
+                }
+            }
+        });
+    });
 
     jQuery( document ).on( 'click', '.ps-pro-close-popup', function( e ){
 
@@ -543,4 +780,33 @@ jQuery( document ).ready(function() {
 
     });
 
+    const gmail_icon = PostSMTPWizard.gmail_icon;
+    const css = `
+      .ps-gmail-btn::before {
+          background-image: url( ${gmail_icon} );
+      }
+      `;
+    const style = jQuery('<style>').text(css);
+    jQuery('head').append(style);
+
 } );
+
+jQuery(document).ready(function ($) {
+    const toggleFields = () => {
+        const isChecked = $('.ps-enable-gmail-one-click').is(':checked');
+
+        // Show/Hide Gmail Authorization button
+        jQuery('#ps-wizard-connect-gmail').closest('tr').toggle(isChecked);
+
+        // Show/Hide Client ID and Client Secret fields
+        jQuery('#oauth_client_id, #oauth_client_secret, #input_oauth_callback_domain, #input_oauth_redirect_url')
+            .closest('tr')
+            .toggle(!isChecked);
+    };
+
+    // Initialize visibility on page load
+    toggleFields();
+
+    // Listen for changes on the checkbox
+    jQuery('.ps-enable-gmail-one-click').on('change', toggleFields);
+});

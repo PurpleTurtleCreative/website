@@ -265,17 +265,24 @@ class PostmanSuggestProSocket {
 			    'title'       => esc_html__( 'Zoho Mail', 'post-smtp' ),
 			    'description' => esc_html__( 'Integrate your WordPress site with your Zoho Mail account to improve email deliverability.', 'post-smtp' ),
 		    ),
-	    );
-        $bonus            = array(
             array(
-                'logo' => $images_url . 'logos/email-log-attachments.png',
-                'title' => esc_html__( 'Email Log Attachments', 'post-smtp' ),
-                'description' => esc_html__( 'View and resend any email attachment right from you email log screen to streamline email communication.', 'post-smtp' ),
+                'logo'        => $images_url . 'logos/wizard-google.png',
+                'title'       => __( 'One-Click Setup', 'post-smtp-pro' ),
+                'description' => __( 'Quick and easy way to configure the Google workspace / Gmail mailer in Post SMTP.', 'post-smtp-pro' ),
+            ),
+	    );
+        
+        $bonus = array(
+           
+            'email-logs-attachment'      => array(
+                'logo'          => $images_url . 'logos/email-delivery-log.png',
+                'title'         => __( 'Email Log Attachment', 'post-smtp-pro' ),
+                'description'   => __( 'View and resend any email attachment right from you email log screen to streamline email communication.', 'post-smtp-pro' )
             ),
             array(
-                'logo' => $images_url . 'logos/email-delivery-log.png',
-                'title' => esc_html__( 'Email Delivery and Logs', 'post-smtp' ),
-                'description' => esc_html__( 'Send emails from the back-end, manage your email quota, retry failed emails, and delete log history to optimize email delivery.', 'post-smtp' ),
+                'logo' => $images_url . 'logos/advance-logs-filter.svg',
+                'title' => esc_html__( 'Advance Logs\' Filter', 'post-smtp-pro' ),
+                'description' => esc_html__( 'Get more advance logs filter with all technical details', 'post-smtp' ),
             ),
             array(
                 'logo' => $images_url . 'logos/report-tracking.png',
@@ -286,6 +293,16 @@ class PostmanSuggestProSocket {
                 'logo' => $images_url . 'logos/twilio-sms-notification.png',
                 'title' => esc_html__( 'Twilio SMS Notification', 'post-smtp' ),
                 'description' => esc_html__( 'Configure and receive all your WordPress email failure alerts through SMS by connecting your Twilio account.', 'post-smtp' ),
+            ),
+            array(
+                'logo' => $images_url . 'logos/email-delivery-and-logs.png',
+                'title' => esc_html__( 'Email Delivery and Logs', 'post-smtp' ),
+                'description' => esc_html__( 'Get more advance logs filter with all technical details.', 'post-smtp' ),
+            ),
+            array(
+                'logo' => $images_url . 'logos/microsoft-teams.png',
+                'title' => esc_html__( 'Microsoft Teams Notification', 'post-smtp' ),
+                'description' => esc_html__( 'Set up and receive all your WordPress email failure alerts through webhook URL of your MS Teams.', 'post-smtp' ),
             ),
         );
         $features         = array(
@@ -380,7 +397,7 @@ class PostmanSuggestProSocket {
                         <div class="post-smtp-socket-wrapper post-smtp-fl post-smtp-disabled">
 
                             <div class="post-smtp-p-20">
-                                <img src="<?php echo esc_attr( $socket['logo'] ); ?>" alt="<?php echo esc_attr( $socket['title'] ); ?>" />
+                                <img style="width: 50px;" src="<?php echo esc_attr( $socket['logo'] ); ?>" alt="<?php echo esc_attr( $socket['title'] ); ?>" />
 
                                 <h2 class="post-smtp-h2">
                                     <?php echo esc_attr( $socket['title'] ); ?>

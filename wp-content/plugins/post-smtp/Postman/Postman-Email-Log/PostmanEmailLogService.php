@@ -126,7 +126,7 @@ if ( ! class_exists( 'PostmanEmailLogService' ) ) {
 		 * @param mixed                $originalMessage
 		 * @param mixed                $originalHeaders
 		 */
-		public function writeFailureLog( PostmanEmailLog $log, PostmanMessage $message = null, $transcript, PostmanModuleTransport $transport, $statusMessage ) {
+		public function writeFailureLog( PostmanEmailLog $log, ?PostmanMessage $message, $transcript, PostmanModuleTransport $transport, $statusMessage ) {
 			if ( PostmanOptions::getInstance()->isMailLoggingEnabled() ) {
 				$this->createLog( $log, $message, $transcript, $statusMessage, false, $transport );
 				$this->writeToEmailLog( $log,$message );
@@ -146,12 +146,25 @@ if ( ! class_exists( 'PostmanEmailLogService' ) ) {
 				return '';
 			}
 
-			$email_list = is_array( $emails ) ? $emails : explode( ',', $emails );
+			// Convert string to an array if necessary.
+			if ( is_string( $emails ) ) {
+				$emails = explode( ',', $emails );
+			}
+
+			if ( ! is_array( $emails ) ) {
+				return '';
+			}
 
 			$sanitized_emails = array_map( function ( $email ) {
 				$email = trim( $email );
+
+				// Extract email from "Name <email>" format.
+				if ( preg_match( '/<(.+?)>/', $email, $matches ) ) {
+					$email = $matches[1];
+				}
+
 				return filter_var( $email, FILTER_VALIDATE_EMAIL ) ? sanitize_email( $email ) : '';
-			}, $email_list );
+			}, $emails );
 
 			return implode( ', ', array_filter( $sanitized_emails ) );
 		}
@@ -310,7 +323,7 @@ if ( ! class_exists( 'PostmanEmailLogService' ) ) {
 		 * @param PostmanModuleTransport $transport
 		 * @return PostmanEmailLog
 		 */
-		private function createLog( PostmanEmailLog $log, PostmanMessage $message = null, $transcript, $statusMessage, $success, PostmanModuleTransport $transport ) {
+		private function createLog( PostmanEmailLog $log, ?PostmanMessage $message, $transcript, $statusMessage, $success, PostmanModuleTransport $transport ) {
 			if ( $message ) {
 				$log->sender = $message->getFromAddress()->format();
 				$log->toRecipients = $this->flattenEmails( $message->getToRecipients() );

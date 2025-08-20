@@ -66,8 +66,10 @@ class Postman {
 		require_once 'Postman-Mail/PostmanGmailApiModuleTransport.php';
 		require_once 'Postman-Mail/PostmanMandrillTransport.php';
 		require_once 'Postman-Mail/PostmanSendGridTransport.php';
+		require_once 'Postman-Mail/PostmanMailerSendTransport.php';
 		require_once 'Postman-Mail/PostmanMailgunTransport.php';
         require_once 'Postman-Mail/PostmanSendinblueTransport.php';
+        require_once 'Postman-Mail/PostmanResendTransport.php';
 		require_once 'Postman-Mail/PostmanMailjetTransport.php';
 		require_once 'Postman-Mail/PostmanSendpulseTransport.php';
 		require_once 'Postman-Suggest-Pro/PostmanSuggestProSocket.php';
@@ -99,6 +101,9 @@ class Postman {
 
         // New Dashboard
 		require_once 'Dashboard/NewDashboard.php';
+
+		// Email Tester
+		require_once 'Postman-Mail-Tester/PostmanEmailTester.php';
 
 
 		// get plugin metadata - alternative to get_plugin_data
@@ -198,6 +203,23 @@ class Postman {
 				'on_deactivation',
 		) );
 
+		 add_action( 'admin_head', array( $this, 'hide_wizard_notices' ) );
+
+	}
+
+	/**
+	 * Hide all admin notices on the setup wizard page.
+	 */
+	public function hide_wizard_notices() {
+		
+		if ( ! is_admin() ) {
+            return;
+        }
+
+		if ( isset( $_GET['page'] ) && $_GET['page'] === 'postman/configuration_wizard' ) {
+			remove_all_actions( 'admin_notices' );
+			remove_all_actions( 'all_admin_notices' );
+		}
 	}
 
     function add_extension_headers($headers) {
@@ -469,8 +491,10 @@ class Postman {
         $postman_transport_registry->registerTransport( new PostmanGmailApiModuleTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanMandrillTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanSendGridTransport( $rootPluginFilenameAndPath ) );
+        $postman_transport_registry->registerTransport( new PostmanMailerSendTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanMailgunTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanSendinblueTransport( $rootPluginFilenameAndPath ) );
+		$postman_transport_registry->registerTransport( new PostmanResendTransport( $rootPluginFilenameAndPath ) );
 		$postman_transport_registry->registerTransport( new PostmanMailjetTransport( $rootPluginFilenameAndPath ) );
 		$postman_transport_registry->registerTransport( new PostmanSendpulseTransport( $rootPluginFilenameAndPath ) );
         $postman_transport_registry->registerTransport( new PostmanPostmarkTransport( $rootPluginFilenameAndPath ) );
