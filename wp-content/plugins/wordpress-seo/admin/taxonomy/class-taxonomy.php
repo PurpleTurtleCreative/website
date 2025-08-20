@@ -145,7 +145,7 @@ class WPSEO_Taxonomy {
 
 		if (
 			self::is_term_edit( $pagenow )
-			&& ! is_null( $tag_id )
+			&& $tag_id !== null
 		) {
 			wp_enqueue_media(); // Enqueue files needed for upload functionality.
 
@@ -184,14 +184,14 @@ class WPSEO_Taxonomy {
 				'metabox'               => $this->localize_term_scraper_script( $tag_id ),
 				'isTerm'                => true,
 				'postId'                => $tag_id,
-				'termType'              => $this->get_taxonomy(),
+				'postType'              => $this->get_taxonomy(),
 				'usedKeywordsNonce'     => wp_create_nonce( 'wpseo-keyword-usage' ),
 			];
 
 			/**
 			 * The website information repository.
 			 *
-			 * @var $repo Website_Information_Repository
+			 * @var Website_Information_Repository $repo
 			 */
 			$repo             = YoastSEO()->classes->get( Website_Information_Repository::class );
 			$term_information = $repo->get_term_site_information();
