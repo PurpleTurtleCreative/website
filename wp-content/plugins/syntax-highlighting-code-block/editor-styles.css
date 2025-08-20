@@ -1,0 +1,39 @@
+.shcb-textedit.shcb-textedit-wrap-lines {
+	overflow: auto !important;
+}
+
+.shcb-textedit.rich-text {
+	white-space: pre !important;
+	overflow-x: auto !important;
+}
+
+.shcb-textedit.rich-text.shcb-textedit-wrap-lines {
+	white-space: pre-wrap !important;
+}
+
+.code-block-overlay {
+	box-sizing: border-box;
+	height: 100%;
+	left: 0;
+	padding: inherit; /* To match the padding in the parent since this is positioned absolutely */
+	pointer-events: none;
+	position: absolute;
+	top: 0;
+	white-space: pre;
+	width: 100%;
+	z-index: 10;
+}
+
+.shcb-textedit-wrap-lines + .code-block-overlay {
+	white-space: pre-wrap;
+}
+
+.code-block-overlay .loc {
+	color: transparent;
+	display: block;
+	line-height: inherit;
+}
+
+.code-block-overlay .loc.highlighted {
+	background: rgba(86, 213, 255, 0.2);
+}
