@@ -32,7 +32,6 @@ class P_Login extends P_Core {
 
 		add_action( 'login_init', [ $this, 'add_captcha' ] );
 		add_action( 'login_init', [ $this, 'check_ipban' ] );
-		add_action( 'login_init', [ $this, 'check_logonhours' ] );
 		add_action( 'login_head', [ $this, 'add_captcha' ] );
 		add_action( 'login_enqueue_scripts', [ $this, 'login_enqueue_scripts' ], 1 );
 
@@ -283,61 +282,6 @@ class P_Login extends P_Core {
 		// Block the user?
 		if ( $num >= $this->get_option( 'patchstack_anti_bruteforce_attempts', 10 ) ) {
 			$this->plugin->firewall_base->display_error_page( 24 );
-		}
-	}
-
-	/**
-	 * If logon hours are set, check the current time and allow or disallow the user
-	 * to login depending on the settings.
-	 *
-	 * @return void
-	 */
-	public function check_logonhours() {
-		if ( ! $this->get_option( 'patchstack_login_time_block', 0 ) || is_user_logged_in() || $this->get_option( 'patchstack_login_time_start', '00:00' ) == $this->get_option( 'patchstack_login_time_end', '23:59' ) ) {
-			return;
-		}
-		$block = true;
-
-		// Current time.
-		$hour          = current_time( 'G' );
-		$min           = current_time( 'i' );
-		$stamp_current = current_time( 'U' );
-
-		// Get time start.
-		$start = explode( ':', str_replace( '00', '0', $this->get_option( 'patchstack_login_time_start', '00:00' ) ) );
-		if ( count( $start ) != 2 ) {
-			return;
-		}
-		$stamp_start = strtotime( current_time( 'Y-m-d' ) . ' ' . $this->get_option( 'patchstack_login_time_start', '00:00' ) . ':00' );
-		$start[0]    = (int) $start[0];
-		$start[1]    = (int) $start[1];
-
-		// Get time end.
-		$end = explode( ':', str_replace( '00', '0', $this->get_option( 'patchstack_login_time_end', '23:59' ) ) );
-		if ( count( $end ) != 2 ) {
-			return;
-		}
-		$stamp_end = strtotime( current_time( 'Y-m-d' ) . ' ' . $this->get_option( 'patchstack_login_time_end', '00:00' ) . ':00' );
-		$end[0]    = (int) $end[0];
-		$end[1]    = (int) $end[1];
-
-		// If begin time is earlier than end time.
-		if ( $start[0] <= $end[0] && $stamp_current >= $stamp_start && $stamp_current <= $stamp_end ) {
-			$block = false;
-		}
-
-		// If begin time is later than end time.
-		if ( $start[0] > $end[0] && ( $hour >= $start[0] || $hour <= $end[0] ) ) {
-			$block = false;
-
-			if ( ( $hour == $start[0] && $min < $start[1] ) || ( $hour == $end[0] && $min > $end[1] ) ) {
-				$block = true;
-			}
-		}
-
-		// Block the user?
-		if ( $block ) {
-			wp_die( esc_attr__( 'Access to the login page has been restricted due to set logon hours.', 'patchstack' ), esc_attr__( 'Login Disallowed', 'patchstack' ) );
 		}
 	}
 

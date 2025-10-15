@@ -35,11 +35,6 @@ class P_Hardening extends P_Core {
 		// Set security headers
 		add_filter( 'wp_headers', [ $this, 'set_security_headers' ], 10, 1 );
 
-		// When country blocking is set.
-		if ( $this->get_option( 'patchstack_geo_block_enabled', false ) && ! empty( $this->get_option( 'patchstack_geo_block_countries', [] ) ) ) {
-			add_action( 'init', array( $this, 'geo_block_check' ), ~PHP_INT_MAX );
-		}
-
 		// Apply comment captcha?
 		if ( $this->get_option( 'patchstack_captcha_on_comments', 0 ) && ! is_user_logged_in() ) {
 			add_action( 'comment_form_after_fields', [ $this, 'captcha_display' ] );
@@ -135,47 +130,6 @@ class P_Hardening extends P_Core {
 
 		// Resend the sofware data to the API.
 		do_action( 'patchstack_send_software_data' );
-	}
-
-	/**
-	 * Determine the country of the user and if we should block the user.
-	 *
-	 * @return void
-	 */
-	public function geo_block_check() {
-		$countries = $this->get_option( 'patchstack_geo_block_countries', [] );
-		$ip        = $this->get_ip();
-
-		// Don't block Patchstack.
-		if ( ( isset( $_POST['patchstack_secret'] ) && $this->plugin->listener->verifyToken( $_POST['patchstack_secret'] ) ) || isset( $_POST['patchstack_ott_action'] )) {
-
-			// OTT action.
-			if ( isset( $_POST['patchstack_ott_action'] ) ) {
-				$ott = get_option( 'patchstack_ott_action', '' );
-				if ( ! empty( $ott ) && hash_equals( $ott, $_POST['patchstack_ott_action'] ) ) {
-					return;
-				}
-			} else {
-				return;
-			}
-		}
-
-		// Load the required libraries.
-		try {
-			require_once __DIR__ . '/../lib/geoip2-php/autoload.php';
-			$reader = new GeoIp2\Database\Reader( __DIR__ . '/../lib/GeoLite2-Country.mmdb' );
-			$record = $reader->country( $ip );
-
-			// Determine if we want to do an inverse check or not.
-			$match = in_array( $record->country->isoCode, $countries );
-			$match = $this->get_option( 'patchstack_geo_block_inverse', false ) ? ! $match : $match;
-
-			// Check if there's a match.
-			if ( $match ) {
-				$this->plugin->firewall_base->display_error_page( 23 );
-			}
-		} catch ( \Exception $e ) {
-		}
 	}
 
 	/**

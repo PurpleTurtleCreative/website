@@ -81,9 +81,6 @@ class P_Admin_Options extends P_Core {
 		'patchstack_firewall_custom_rules_loc'          => ['default' => 'bottom', 'autoload' => 'no'],
 		'patchstack_add_security_headers'               => ['default' => 1, 'autoload' => 'yes'],
 		'patchstack_ip_block_list'                      => ['default' => '', 'autoload' => 'yes'],
-		'patchstack_geo_block_enabled'                  => ['default' => 0, 'autoload' => 'yes'],
-		'patchstack_geo_block_inverse'                  => ['default' => 0, 'autoload' => 'yes'],
-		'patchstack_geo_block_countries'                => ['default' => [], 'autoload' => 'yes'],
 
 		// Login and firewall brute force options.
 		'patchstack_block_bruteforce_ips'               => ['default' => 0, 'autoload' => 'no'],
@@ -93,9 +90,6 @@ class P_Admin_Options extends P_Core {
 		'patchstack_autoblock_attempts'                 => ['default' => 60, 'autoload' => 'yes'],
 		'patchstack_autoblock_minutes'                  => ['default' => 1, 'autoload' => 'yes'],
 		'patchstack_autoblock_blocktime'                => ['default' => 1, 'autoload' => 'yes'],
-		'patchstack_login_time_block'                   => ['default' => 0, 'autoload' => 'no'],
-		'patchstack_login_time_start'                   => ['default' => '00:00', 'autoload' => 'no'],
-		'patchstack_login_time_end'                     => ['default' => '23:59', 'autoload' => 'no'],
 		'patchstack_login_2fa'                          => ['default' => 0, 'autoload' => 'yes'],
 		'patchstack_login_whitelist'                    => ['default' => '', 'autoload' => 'no'],
 

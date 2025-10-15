@@ -32,9 +32,3 @@ $managed = get_option( 'patchstack_managed', false );
 		</div>
 	</div>
 </div>
-
-<script>
-	tippy('[data-tippy-content]', {
-		arrow: false,
-	});
-</script>
