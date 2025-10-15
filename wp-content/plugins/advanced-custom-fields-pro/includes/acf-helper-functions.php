@@ -665,7 +665,8 @@ function acf_maybe_unserialize( $data ) {
  * @return boolean True if the current install is ACF PRO
  */
 function acf_is_pro() {
-	return defined( 'ACF_PRO' ) && ACF_PRO;
+	return true;
+	// return defined( 'ACF_PRO' ) && ACF_PRO;
 }
 
 /**

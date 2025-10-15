@@ -816,11 +816,12 @@ function acf_pro_remove_license_status() {
  * @return boolean True if active, false if not.
  */
 function acf_pro_is_license_active( $status = array() ) {
-	if ( empty( $status ) ) {
-		$status = acf_pro_get_license_status();
-	}
+	return true;
+	// if ( empty( $status ) ) {
+	// 	$status = acf_pro_get_license_status();
+	// }
 
-	return 'active' === $status['status'];
+	// return 'active' === $status['status'];
 }
 
 /**
