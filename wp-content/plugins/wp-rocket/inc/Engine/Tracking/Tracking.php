@@ -5,6 +5,7 @@ namespace WP_Rocket\Engine\Tracking;
 
 use WP_Rocket\Abstract_Render;
 use WP_Rocket\Admin\Options_Data;
+use WP_Rocket\Engine\Admin\RocketInsights\Database\Rows\RocketInsights;
 use WPMedia\Mixpanel\Optin;
 use WPMedia\Mixpanel\TrackingPlugin as MixpanelTracking;
 
@@ -83,7 +84,7 @@ class Tracking extends Abstract_Render {
 			}
 
 			$this->mixpanel->track(
-				'WPM Option Changed',
+				'Option Changed',
 				[
 					'context'        => 'wp_plugin',
 					'option_name'    => $option_tracked,
@@ -148,6 +149,10 @@ class Tracking extends Abstract_Render {
 
 		if ( '1' === $value ) {
 			$this->optin->enable();
+			// Update the legacy option to prevent the notice from being displayed again after the opt-in is enabled.
+			update_option( 'rocket_analytics_notice_displayed', 1 );
+			// Set the thank-you transient to display the thank-you notice after the opt-in is enabled.
+			set_transient( 'rocket_analytics_optin', 1 );
 			wp_send_json_success( 'Opt-in enabled.' );
 		} elseif ( '0' === $value ) {
 			$this->optin->disable();
@@ -176,8 +181,9 @@ class Tracking extends Abstract_Render {
 			'rocket_mixpanel_data',
 			[
 				'optin_enabled' => $this->optin->is_enabled() ? true : false,
-				'brand'         => 'WP Media',
-				'product'       => 'WP Rocket',
+				'plugin'        => 'wp rocket ' . rocket_get_constant( 'WP_ROCKET_VERSION', '' ),
+				'brand'         => 'wp media',
+				'app'           => 'wp rocket',
 				'context'       => 'wp_plugin',
 				'path'          => isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '',
 				'user_id'       => $hashed_email,
@@ -215,5 +221,95 @@ class Tracking extends Abstract_Render {
 	 */
 	public function track_optin_change( $status ): void {
 		$this->mixpanel->track_optin( $status );
+	}
+
+	/**
+	 * Track when a URL is added in Rocket Insights
+	 *
+	 * @param string $url        The URL that was added for monitoring.
+	 * @param string $plan       Plan name.
+	 * @param int    $urls_count The current number of URLs being monitored.
+	 *
+	 * @return void
+	 */
+	public function track_rocket_insights_url_added( $url, $plan, $urls_count ): void {
+		if ( ! $this->optin->can_track() ) {
+			return;
+		}
+
+		$this->mixpanel->track(
+			'Rocket Insights Page Added',
+			[
+				'context'       => 'wp_plugin',
+				'plan_type'     => $plan,
+				'tracked_pages' => $urls_count,
+			]
+		);
+	}
+
+	/**
+	 * Tracks when a performance test is completed or failed in Rocket Insights.
+	 *
+	 * @since 3.20
+	 *
+	 * @param RocketInsights $row_details Details related to the database row.
+	 * @param array          $job_details Details related to the job.
+	 * @param string         $plan Plan name.
+	 *
+	 * @return void
+	 */
+	public function track_rocket_insights_test( $row_details, $job_details, $plan ): void {
+		if ( ! $this->optin->can_track() ) {
+			return;
+		}
+
+		if ( empty( $row_details->data ) ) {
+			return;
+		}
+
+		$this->mixpanel->track_direct(
+			'Rocket Insights Performance Test',
+			[
+				'context'   => 'wp_plugin',
+				'status'    => $row_details->status,
+				'score'     => $row_details->score,
+				'retest'    => $row_details->data['is_retest'],
+				'duration'  => time() - $row_details->data['start_time'],
+				'plan_type' => $plan,
+			]
+		);
+	}
+
+	/**
+	 * Tracks visits to settings page
+	 *
+	 * @return void
+	 */
+	public function track_admin_visits(): void {
+		if ( ! $this->optin->is_enabled() ) {
+			return;
+		}
+
+		$user      = wp_get_current_user();
+		$transient = 'rocket_tracking_admin_visited_' . $user->ID;
+
+		if ( false !== get_transient( $transient ) ) {
+			return;
+		}
+
+		$screen = get_current_screen();
+
+		if ( ! $screen || 'settings_page_wprocket' !== $screen->id ) {
+			return;
+		}
+
+		$this->mixpanel->track(
+			'Page Viewed',
+			[
+				'path'    => '/wp-admin/options-general.php?page=wprocket',
+				'context' => 'wp_plugin',
+			]
+		);
+		set_transient( $transient, true, WEEK_IN_SECONDS );
 	}
 }

@@ -11,12 +11,14 @@
     ),
     'versions' => array(
         'berlindb/core' => array(
-            'pretty_version' => '2.0.1',
-            'version' => '2.0.1.0',
-            'reference' => '7dcddaddcffb69c58800d2fb3f6f169791cab1f7',
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'cff87fafedda560dd4ad768d4dd1afb68a36b8c0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../berlindb/core',
-            'aliases' => array(),
+            'aliases' => array(
+                0 => '9999999-dev',
+            ),
             'dev_requirement' => false,
         ),
         'cloudflare/cf-ip-rewrite' => array(
@@ -38,8 +40,8 @@
             'dev_requirement' => false,
         ),
         'symfony/polyfill-php80' => array(
-            'pretty_version' => 'v1.32.0',
-            'version' => '1.32.0.0',
+            'pretty_version' => 'v1.33.0',
+            'version' => '1.33.0.0',
             'reference' => '0cc9dd0f17f61d8131e7df6b84bd344899fe2608',
             'type' => 'library',
             'install_path' => __DIR__ . '/../symfony/polyfill-php80',
@@ -74,9 +76,9 @@
             'dev_requirement' => false,
         ),
         'wp-media/wp-mixpanel' => array(
-            'pretty_version' => 'v1.1.1',
-            'version' => '1.1.1.0',
-            'reference' => '0646d525f0624b13c336ff2829713d9a37192c46',
+            'pretty_version' => 'v1.4.0',
+            'version' => '1.4.0.0',
+            'reference' => 'dfedab2014e816a1040c57d544a6180f1d446624',
             'type' => 'library',
             'install_path' => __DIR__ . '/../wp-media/wp-mixpanel',
             'aliases' => array(),
