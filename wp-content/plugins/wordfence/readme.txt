@@ -3,8 +3,8 @@ Contributors: mmaunder, wfryan, wfmatt, wfmattr
 Tags: security, malware, 2fa, firewall, scanner
 Requires at least: 4.7
 Requires PHP: 7.0
-Tested up to: 6.8
-Stable tag: 8.1.2
+Tested up to: 6.9
+Stable tag: 8.1.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -206,6 +206,10 @@ Secure your website with Wordfence.
 9. Logging in is easy with Wordfence 2FA.
 
 == Changelog ==
+
+= 8.1.3 - December 3, 2025 =
+* Improvement: Updated the bundled geoip database
+* Note: Verified compatibility with WordPress 6.9
 
 = 8.1.2 - November 12, 2025 =
 * Improvement: Updated the bundled geoip database
