@@ -12,67 +12,67 @@ class ComposerStaticInitd9071964ee9e36aab6e5bb942f33cd66
     );
 
     public static $prefixLengthsPsr4 = array (
-        'v' => 
+        'v' =>
         array (
             'voku\\helper\\' => 12,
         ),
-        'W' => 
+        'W' =>
         array (
             'WP_Rocket\\' => 10,
             'WPMedia\\PluginFamily\\' => 21,
             'WPMedia\\Mixpanel\\' => 17,
             'WPMedia\\Cloudflare\\' => 19,
         ),
-        'S' => 
+        'S' =>
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Component\\CssSelector\\' => 30,
         ),
-        'B' => 
+        'B' =>
         array (
             'BerlinDB\\' => 9,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'voku\\helper\\' => 
+        'voku\\helper\\' =>
         array (
             0 => __DIR__ . '/..' . '/voku/simple_html_dom/src/voku/helper',
         ),
-        'WP_Rocket\\' => 
+        'WP_Rocket\\' =>
         array (
             0 => __DIR__ . '/../..' . '/inc',
         ),
-        'WPMedia\\PluginFamily\\' => 
+        'WPMedia\\PluginFamily\\' =>
         array (
             0 => __DIR__ . '/..' . '/wp-media/plugin-family/src',
         ),
-        'WPMedia\\Mixpanel\\' => 
+        'WPMedia\\Mixpanel\\' =>
         array (
             0 => __DIR__ . '/..' . '/wp-media/wp-mixpanel/src',
         ),
-        'WPMedia\\Cloudflare\\' => 
+        'WPMedia\\Cloudflare\\' =>
         array (
             0 => __DIR__ . '/../..' . '/inc/Addon/Cloudflare',
         ),
-        'Symfony\\Polyfill\\Php80\\' => 
+        'Symfony\\Polyfill\\Php80\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
         ),
-        'Symfony\\Component\\CssSelector\\' => 
+        'Symfony\\Component\\CssSelector\\' =>
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
-        'BerlinDB\\' => 
+        'BerlinDB\\' =>
         array (
             0 => __DIR__ . '/..' . '/berlindb/core/src',
         ),
     );
 
     public static $prefixesPsr0 = array (
-        'C' => 
+        'C' =>
         array (
-            'CloudFlare\\' => 
+            'CloudFlare\\' =>
             array (
                 0 => __DIR__ . '/..' . '/cloudflare/cf-ip-rewrite/src',
             ),
