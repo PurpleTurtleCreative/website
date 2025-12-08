@@ -56,7 +56,6 @@ class P_Admin_Menu extends P_Core {
 	public function network_menu() {
 		add_menu_page( 'Patchstack', 'Patchstack', 'manage_options', 'patchstack-multisite', [ $this->plugin->multisite, 'sites_section_callback' ] );
 		add_submenu_page( 'patchstack-multisite', 'Activate', 'Activate', 'manage_options', 'patchstack-multisite-settings', [ $this, 'render_settings_page' ] );
-		add_submenu_page( 'patchstack-multisite', 'Sites', 'Sites', 'manage_options', 'patchstack-multisite', [ $this->plugin->multisite, 'sites_section_callback' ] );
 	}
 
 	/**

@@ -24,7 +24,7 @@ require_once dirname( __FILE__ ) . '/../../admin/multisite-table.php';
 
 	<form method="GET" style="display: table;">
 		<div class="wrap">
-			<h2>Available Sites</h2>
+			<h2>Patchstack - Available Sites</h2>
 		</div>
 		<input type="hidden" name="page" value="<?php echo esc_attr( $_REQUEST['page'] ); ?>" />
 		<?php

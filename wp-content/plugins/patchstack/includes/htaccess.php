@@ -160,6 +160,20 @@ class P_Htaccess extends P_Core {
 			$fs->touch( ABSPATH . '.htaccess' );
 		}
 
+		// Some rule adjustments.
+		$rewrites = [
+			'RedirectMatch 409 .(htaccess|htpasswd|errordocs|logs)$' => 'RedirectMatch 403 \.(htaccess|htpasswd|errordocs|logs)$',
+			"\n  RewriteCond %{HTTP_COOKIE} !^.*wordpress_logged_in.*$ [NC]" => '',
+			"\n  RewriteCond %{REMOTE_ADDR} !=18.221.197.243" => '',
+			'^wp-includes/[^/]+.php$' => '^wp-includes/.*\.php$',
+			'RewriteRule ^debug*.*log$ index.php?webarx_fpage=502 [L,QSA]' => 'RewriteRule debug\.log$ index.php?webarx_fpage=502 [L,QSA]',
+			'*.*' => '\.'
+		];
+
+		foreach ($rewrites as $find => $replace) {
+			$rules = str_replace($find, $replace, $rules);
+		}
+
 		return $this->plugin->htaccess->self_check( $rules );
 	}
 

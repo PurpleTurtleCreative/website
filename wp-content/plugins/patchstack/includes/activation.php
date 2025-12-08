@@ -43,7 +43,18 @@ class P_Activation extends P_Core {
 			return;
 		}
 
+		// Only if it's the current plugin.
 		if ( $plugin == $this->plugin->basename && ! isset( $_REQUEST['_ajax_nonce'] ) ) {
+
+			// If plugin bulk activate through wp-admin, we ignore the redirect if it's more than 1 plugin.
+			if ( isset( $_POST['checked'] ) && is_array( $_POST['checked'] ) && count( $_POST['checked'] ) > 1 ) {
+				return;
+			}
+
+			// If the plugin is already connected or API activated, no need to redirect again.
+			if ( $this->license_is_active() || $this->is_connected() ) {
+				return;
+			}
 
 			// Determine if secret token was set, if so, sync with API.
 			$attemptAuto = false;
@@ -230,49 +241,6 @@ class P_Activation extends P_Core {
 			$php = @file_get_contents( trailingslashit( plugin_dir_path( __FILE__ ) ) . 'mu-plugin.php' );
 			@file_put_contents( trailingslashit( WPMU_PLUGIN_DIR ) . '_patchstack.php', $php );
 		}
-	}
-
-	/**
-	 * Used to activate an individual license on multisite/network.
-	 *
-	 * @param object $site
-	 * @param array  $license
-	 * @return void
-	 */
-	public function activate_multisite_license( $site, $license ) {
-		// Build the Patchstack tables on the site.
-		$this->migrate( null, $site->id );
-
-		// Add the options to given site.
-		foreach ( $this->plugin->admin_options->options as $name => $value ) {
-			add_blog_option( $site->id, $name, $value['default'] );
-		}
-
-		// Set the client id and secret key.
-		update_blog_option( $site->id, 'patchstack_clientid', $license['id'] );
-		$enc = $this->get_secret_key( $license['secret'] );
-		update_blog_option( $site->id, 'patchstack_secretkey', $enc['cipher'] );
-		update_blog_option( $site->id, 'patchstack_secretkey_nonce', $enc['nonce'] );
-
-		$this->plugin->api->blog_id = $site->id;
-
-		// Activate the license and update firewall status after activating the plugin.
-		$token = $this->plugin->api->get_access_token( $license['id'], $license['secret'], true );
-		if ( ! empty( $token ) ) {
-			$this->plugin->api->update_firewall_status( [ 'status' => $this->get_option( 'patchstack_basic_firewall' ) == 1 ] );
-			$this->plugin->api->update_url( [ 'plugin_url' => get_blog_option( $site->id, 'siteurl' ) ] );
-
-			// If we have an access token, tell our API that the firewall is activated
-			// and the current URL of the site.
-			update_blog_option( $site->id, 'patchstack_license_activated', '1' );
-			$this->plugin->api->update_license_status();
-
-			// This will trigger the software synchronization action.
-			wp_remote_get( get_site_url( $site->id ), [ 'sslverify' => false ] );
-		}
-
-		// Make sure to switch back to the current blog id.
-		$this->plugin->api->blog_id = get_current_blog_id();
 	}
 
 	/**

@@ -4,8 +4,8 @@ Tags: security, firewall, vulnerability, vulnerabilities,virtual patching
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 Requires at least: 4.4
-Tested up to: 6.8
-Stable tag: 2.3.3
+Tested up to: 6.9
+Stable tag: 2.3.4
 Requires PHP: 5.6
 
 Patchstack automatically identifies and mitigates security vulnerabilities in WordPress plugins, themes, and core.
@@ -160,7 +160,7 @@ Patchstack provides chat support via [patchstack.com](https://patchstack.com) an
 To access chat support, click the green chat bubble in the bottom right corner (note: some ad blockers may hide this).
 
 = How long does it take to set up Patchstack? =
-Setup takes just a few minutes. Install the plugin, register at [Patchstack App](https://app.patchstack.com/register), add your site, and paste the API key into the plugin.  
+Setup takes just a few minutes. Install the plugin, register at [Patchstack App](https://app.patchstack.com/register?free=1), add your site, and paste the API key into the plugin.  
 See our [Getting Started guide](https://docs.patchstack.com/getting-started/start-using-patchstack/) for help.
 
 = How do I upgrade from the Personal (Free) plan to the Developer plan? =

@@ -344,15 +344,6 @@ class P_Api extends P_Core {
 	}
 
 	/**
-	 * Get the .htaccess firewall rules.
-	 *
-	 * @return array The .htaccess rules.
-	 */
-	public function post_firewall_htaccess_rule() {
-		return $this->send_request( '/api/rules/htaccess', 'POST' );
-	}
-
-	/**
 	 * Send the firewall logs to the API.
 	 *
 	 * @param array $logs

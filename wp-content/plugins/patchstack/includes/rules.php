@@ -19,7 +19,6 @@ class P_Rules extends P_Core {
 	public function __construct( $core ) {
 		parent::__construct( $core );
 		add_action( 'patchstack_post_firewall_rules', [ $this, 'post_firewall_rules' ] );
-		add_action( 'patchstack_post_firewall_htaccess_rules', [ $this, 'post_firewall_htaccess_rules' ] );
 		add_action( 'patchstack_post_dynamic_firewall_rules', [ $this, 'dynamic_firewall_rules' ] );
 	}
 
@@ -48,30 +47,6 @@ class P_Rules extends P_Core {
 			$this->plugin->htaccess->write_to_htaccess( $results['rules'] );
 			return;
 		}
-	}
-
-	/**
-	 * Pull the firewall .htaccess rules from the API.
-	 * Then apply it to the .htaccess file after we create a backup.
-	 *
-	 * @return void
-	 */
-	public function post_firewall_htaccess_rules() {
-		if ( $this->get_option( 'patchstack_license_free', 0 ) == 1 ) {
-			return;
-		}
-
-		$results = $this->plugin->api->post_firewall_htaccess_rule();
-		$rules   = ! isset( $results['rules'] ) || empty( $results ) ? '' : $results['rules'];
-
-		// Check if we have to update anything at all.
-		$hash = sha1( $rules );
-		if ( get_option( 'patchstack_firewall_htaccess_hash', '' ) == $hash || ( get_option( 'patchstack_firewall_htaccess_hash', '' ) == '' && $rules == '' ) ) {
-			return;
-		}
-
-		// We have rules so apply it to the .htaccess file.
-		update_option( 'patchstack_firewall_htaccess_hash', $hash );
 	}
 
 	/**

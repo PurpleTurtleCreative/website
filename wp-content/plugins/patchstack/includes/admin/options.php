@@ -97,7 +97,6 @@ class P_Admin_Options extends P_Core {
 		'patchstack_environment_hash'					=> ['default' => '', 'autoload' => 'no'],
 		'patchstack_software_data_hash'                 => ['default' => '', 'autoload' => 'yes'],
 		'patchstack_software_upload_attempted'			=> ['default' => false, 'autoload' => 'yes'],
-		'patchstack_firewall_htaccess_hash'             => ['default' => '', 'autoload' => 'no'],
 		'patchstack_license_expiry'						=> ['default' => '', 'autoload' => 'yes'],
 		'patchstack_clientid'                           => ['default' => false, 'autoload' => 'yes'],
 		'patchstack_secretkey'                          => ['default' => false, 'autoload' => 'no'],
