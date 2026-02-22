@@ -1,0 +1,27 @@
+:root {
+    --color-primary-light: #7285f8;
+    --color-primary: #3c56f5;
+    --color-primary-dark: #1123b0;
+    --color-true-white: #fff;
+    --color-off-white: #f6f7fd;
+    --color-grey-lightest: #e4e6fd;
+    --color-grey-light: #c3c8e5;
+    --color-grey: #8c92b1;
+    --color-grey-dark: #595d72;
+    --color-black: #08082b;
+
+    --color-links: var(--color-primary);
+
+    --font-family-heading: sans-serif;
+    --font-family-body: sans-serif;
+
+    --font-heading: 700 1.5rem/1.2 var(--font-family-heading);
+    --font-body: 400 1rem/1.5 var(--font-family-body);
+
+    --spacing-xl: 3.125rem;
+    --spacing-lg: 2.5rem;
+    --spacing-md: 1.25rem;
+    --spacing-sm: 0.625rem;
+
+    --spacing-width-content: 1200px;
+}
