@@ -12,8 +12,8 @@
 
     --color-links: var(--color-primary);
 
-    --font-family-heading: sans-serif;
-    --font-family-body: sans-serif;
+    --font-family-heading: Poppins, Helvetica, Arial, sans-serif;
+    --font-family-body: Inter, Helvetica, Arial, sans-serif;
 
     --font-heading: 700 1.5rem/1.2 var(--font-family-heading);
     --font-body: 400 1rem/1.5 var(--font-family-body);
