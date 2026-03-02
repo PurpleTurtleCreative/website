@@ -1,4 +1,4 @@
-import { Mail, MailIcon } from "lucide-react";
+import { MailIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
