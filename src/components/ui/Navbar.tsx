@@ -14,7 +14,7 @@ export default function Navbar() {
 
     return (
         <header className="component-Navbar w-full absolute top-0 z-999">
-            <div className="container max-w-content w-full p-2 md:p-4 mx-auto flex items-center justify-between">
+            <div className="content-section flex items-center justify-between">
                 <div className="w-full flex items-center justify-between">
                     <Link className="flex items-center gap-x-2" href="/">
                         <Image
@@ -23,7 +23,7 @@ export default function Navbar() {
                             width={233}
                             height={54}
                             priority
-                            className="drop-shadow drop-shadow-primary-dark/20"
+                            className="drop-shadow drop-shadow-primary-dark/30"
                         />
                     </Link>
                     <nav>
