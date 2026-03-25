@@ -6,7 +6,7 @@ export default function Services() {
         {
             icon: BlocksIcon,
             title: "Build",
-            subtitle: "Production-grade platforms engineered for scale.",
+            subtitle: "Launch your project with a platform engineered for scale.",
             description: "I translate design systems and product specifications into resilient, maintainable web platforms using WordPress or Next.js. Architecture is structured for performance, extensibility, and long-term operational clarity.",
             bullets: [
                 "Component-driven frontend systems",
@@ -18,7 +18,7 @@ export default function Services() {
         {
             icon: UnplugIcon,
             title: "Integrate",
-            subtitle: "Operational systems unified through API architecture.",
+            subtitle: "Streamline day-to-day operations with unified API architecture.",
             description: "Fragmented tools create friction. I design and implement integrations that synchronize your CRM, marketing stack, analytics, and internal systems into a cohesive infrastructure.",
             bullets: [
                 "Custom REST API development",
@@ -30,7 +30,7 @@ export default function Services() {
         {
             icon: CircleFadingArrowUpIcon,
             title: "Optimize",
-            subtitle: "Performance, stability, and technical authority.",
+            subtitle: "Fine-tune your systems for peak performance.",
             description: "As platforms mature, complexity compounds. I audit and refine systems to improve speed, search visibility, and structural integrity — without introducing instability.",
             bullets: [
                 "Core Web Vitals engineering",
@@ -42,7 +42,7 @@ export default function Services() {
         {
             icon: ChartColumnIcon,
             title: "Measure",
-            subtitle: "Structured analytics that inform strategic decisions.",
+            subtitle: "Unlock strategic insights to take your business to the next level.",
             description: "Growth requires clarity. I implement event architecture and reporting frameworks that translate user behavior into actionable insight.",
             bullets: [
                 "GA4 instrumentation design",
