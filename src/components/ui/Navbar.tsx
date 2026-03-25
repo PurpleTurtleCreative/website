@@ -43,6 +43,7 @@ export default function Navbar() {
                                             px-4
                                             text-md
                                             text-white
+                                            text-sm
                                             font-bold
                                             bg-primary-dark
                                             hover:bg-black

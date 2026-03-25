@@ -5,7 +5,7 @@ export default function Intro() {
         <div className="component-Intro w-full pt-20 sm:pt-24 bg-linear-170 from-primary-light from-0% to-primary to-50% text-white text-center sm:text-left wave-trim-bottom">
             <div className="content-section flex flex-col sm:flex-row items-center justify-between sm:gap-15">
                 <div className="sm:w-3/5 sm:mb-20">
-                    <h1 className="font-heading my-5 text-shadow-lg text-shadow-primary-dark/30 text-[#99aef9]">Building your <span className="text-white">Digital&nbsp;Strategy</span> backbone.</h1>
+                    <h1 className="font-heading my-5 text-shadow-lg text-shadow-primary-dark/30 text-[#9eaafb]">Building your <span className="text-white">Digital&nbsp;Strategy</span> backbone.</h1>
                     <p className="text-xl">Technology solutions that boost business efficiency, standardize processes, and offer unique user experiences.</p>
                 </div>
                 <div className="w-2/5 mx-auto hidden sm:block text-center">
