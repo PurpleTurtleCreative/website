@@ -19,7 +19,7 @@ export default function Navbar() {
 
     return (
         <header className="component-Navbar w-full absolute top-0 z-999">
-            <div className="content-section flex items-center justify-between gap-3">
+            <div className="content-section flex items-start sm:items-center justify-between gap-3">
                 <Link href="/">
                     <Image
                         src="/images/purpleturtlecreative-logo-horizontal-light.svg"
