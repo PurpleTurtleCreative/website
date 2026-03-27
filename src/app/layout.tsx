@@ -22,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`flex flex-col h-screen ${poppins.variable} ${inter.variable} antialiased font-body text-body bg-off-white text-black`}>
+      <body className={`flex flex-col h-dvh ${poppins.variable} ${inter.variable} antialiased font-body text-body bg-off-white text-black`}>
         <Navbar />
         {children}
         <Footer />
