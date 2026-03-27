@@ -18,7 +18,7 @@ export default function Intro() {
                             priority
                             className="drop-shadow-lg drop-shadow-primary-dark/30"
                         />
-                        <p className="leading-[1.125] my-5"><strong>Michelle Blanchette</strong><br /><small>Founder, Senior Web Developer</small></p>
+                        <p className="leading-[1.125] my-5 text-sm"><strong>Michelle Blanchette</strong><br /><small>Founder, Senior Web Developer</small></p>
                     </div>
                 </div>
             </div>

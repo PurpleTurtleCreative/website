@@ -7,18 +7,18 @@ export default function Services() {
             icon: BlocksIcon,
             title: "Build",
             subtitle: "Launch your project with a platform engineered for scale.",
-            description: "I translate design systems and product specifications into resilient, maintainable web platforms using WordPress or Next.js. Architecture is structured for performance, extensibility, and long-term operational clarity.",
+            description: "I translate design systems and product specifications into resilient, maintainable web applications. Architecture is structured for performance, extensibility, and long-term operational clarity.",
             bullets: [
-                "Component-driven frontend systems",
-                "Structured CMS modeling",
-                "Headless and hybrid architectures",
+                "Block-based WordPress websites",
+                "React SPA and component development",
                 "Performance-first implementation",
+                "Complete setup, training, & documentation",
             ],
         },
         {
             icon: UnplugIcon,
             title: "Integrate",
-            subtitle: "Streamline day-to-day operations with unified API architecture.",
+            subtitle: "Streamline day-to-day operations with seamless management flows.",
             description: "Fragmented tools create friction. I design and implement integrations that synchronize your CRM, marketing stack, analytics, and internal systems into a cohesive infrastructure.",
             bullets: [
                 "Custom REST API development",
@@ -33,7 +33,7 @@ export default function Services() {
             subtitle: "Unlock strategic insights to take your business to the next level.",
             description: "Growth requires clarity. I implement event architecture and reporting frameworks that translate user behavior into actionable insight.",
             bullets: [
-                "GA4 instrumentation design",
+                "Google Analytics events and reports",
                 "Google Tag Manager configuration",
                 "Custom conversion tracking",
                 "Looker Studio executive dashboards",
@@ -42,13 +42,13 @@ export default function Services() {
         {
             icon: CircleFadingArrowUpIcon,
             title: "Optimize",
-            subtitle: "Fine-tune your systems for peak performance.",
-            description: "As platforms mature, complexity compounds. I audit and refine systems to improve speed, search visibility, and structural integrity — without introducing instability.",
+            subtitle: "Fine-tune your systems for peak performance and profitability.",
+            description: "As platforms mature, complexity compounds. I audit and refine systems to improve speed, search visibility, and structural integrity.",
             bullets: [
-                "Core Web Vitals engineering",
+                "A/B testing implementation",
+                "Core Web Vitals & CrUX optimization",
                 "Technical SEO remediation",
-                "Infrastructure and database optimization",
-                "Long-term architectural consultation",
+                "Cost reduction strategization",
             ],
         },
     ]
@@ -60,7 +60,7 @@ export default function Services() {
                     <h2 className="text-primary/50 mb-5"><span className="text-primary">Services</span> for Every Stage of Growth</h2>
                     <p>From initial launch to operational maturity, I build and refine the systems that support sustainable scale.</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12 md:mb-40">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12 md:mb-28">
                     {services.map((service, index) => (
                         <div key={index} className={`card ${( 0 === ( index + 1 ) % 2 ) ? "md:translate-y-40" : ""}`}>
                             <div className="inline-block relative text-primary-lightest">
@@ -73,9 +73,7 @@ export default function Services() {
                             <ul className="list-none mt-5 text-left">
                                 {service.bullets.map((bullet, index) => (
                                     <li key={index} className="flex items-center gap-x-3 mb-3">
-                                        <div className="inline-block bg-primary-lightest text-primary rounded-lg p-1">
-                                            <CheckIcon width={14} height={14} />
-                                        </div>
+                                        <CheckIcon className="inline-block bg-primary-lightest text-primary rounded-lg p-1" width="1.3em" height="1.3em" />
                                         {bullet}
                                     </li>
                                 ))}

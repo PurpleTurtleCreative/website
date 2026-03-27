@@ -19,7 +19,7 @@ export default function Clock() {
     const zoneParts = new Intl.DateTimeFormat("en-US", {
         timeZone: "America/New_York",
         hour12: true,
-        hour: "2-digit",
+        hour: "numeric",
         minute: "2-digit",
         timeZoneName: "short",
     }).formatToParts(currentTime);
