@@ -28,18 +28,6 @@ export default function Services() {
             ],
         },
         {
-            icon: CircleFadingArrowUpIcon,
-            title: "Optimize",
-            subtitle: "Fine-tune your systems for peak performance.",
-            description: "As platforms mature, complexity compounds. I audit and refine systems to improve speed, search visibility, and structural integrity — without introducing instability.",
-            bullets: [
-                "Core Web Vitals engineering",
-                "Technical SEO remediation",
-                "Infrastructure and database optimization",
-                "Long-term architectural consultation",
-            ],
-        },
-        {
             icon: ChartColumnIcon,
             title: "Measure",
             subtitle: "Unlock strategic insights to take your business to the next level.",
@@ -51,6 +39,18 @@ export default function Services() {
                 "Looker Studio executive dashboards",
             ],
         },
+        {
+            icon: CircleFadingArrowUpIcon,
+            title: "Optimize",
+            subtitle: "Fine-tune your systems for peak performance.",
+            description: "As platforms mature, complexity compounds. I audit and refine systems to improve speed, search visibility, and structural integrity — without introducing instability.",
+            bullets: [
+                "Core Web Vitals engineering",
+                "Technical SEO remediation",
+                "Infrastructure and database optimization",
+                "Long-term architectural consultation",
+            ],
+        },
     ]
 
     return (
@@ -60,9 +60,9 @@ export default function Services() {
                     <h2 className="text-primary/50 mb-5"><span className="text-primary">Services</span> for Every Stage of Growth</h2>
                     <p>From initial launch to operational maturity, I build and refine the systems that support sustainable scale.</p>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12 md:mb-80">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12 md:mb-40">
                     {services.map((service, index) => (
-                        <div key={service.title} className={`bg-white shadow-xl shadow-primary-dark/10 rounded-3xl p-8 ${( 0 === ( index + 1 ) % 2 ) ? "md:translate-y-40" : ""}`}>
+                        <div key={index} className={`card ${( 0 === ( index + 1 ) % 2 ) ? "md:translate-y-40" : ""}`}>
                             <div className="inline-block relative text-primary-lightest">
                                 <HexagonIcon fill="currentColor" width={64} height={64} />
                                 <div className="absolute inset-4 text-primary"><service.icon width={32} height={32} /></div>
