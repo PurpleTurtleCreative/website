@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 
 export default function Clock() {
     const [currentTime, setCurrentTime] = useState(new Date());
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
         const tick = () => {
             setCurrentTime(new Date());
         };
@@ -28,6 +30,10 @@ export default function Clock() {
     const minute = zoneParts.find((part) => part.type === "minute")?.value ?? "--";
     const dayPeriod = zoneParts.find((part) => part.type === "dayPeriod")?.value.toLowerCase() ?? "";
     const timeZoneName = zoneParts.find((part) => part.type === "timeZoneName")?.value ?? "";
+
+    if ( ! mounted ) {
+        return <span className="component-Clock">--:-- -- --</span>;
+    }
 
     return (
         <span className="component-Clock">
