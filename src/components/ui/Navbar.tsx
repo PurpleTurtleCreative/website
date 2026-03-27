@@ -1,10 +1,15 @@
-import { MailIcon } from "lucide-react";
+import { CircleDollarSignIcon, MailIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
 
     const navLinks = [
+        {
+            href: "https://buy.stripe.com/7sY8wP86bbz3cWmfyG73G03",
+            icon: <CircleDollarSignIcon width={20} height={20} />,
+            label: "Submit Payment",
+        },
         {
             href: "mailto:michelle@purpleturtlecreative.com",
             icon: <MailIcon width={20} height={20} />,
@@ -27,7 +32,7 @@ export default function Navbar() {
                         />
                     </Link>
                     <nav>
-                        <ul className="flex items-center gap-x-1">
+                        <ul className="flex items-center gap-x-3">
                             {navLinks.map((link) => (
                                 <li key={link.label}>
                                     <a
