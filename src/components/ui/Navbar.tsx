@@ -7,12 +7,12 @@ export default function Navbar() {
     const navLinks = [
         {
             href: "https://buy.stripe.com/7sY8wP86bbz3cWmfyG73G03",
-            icon: <CircleDollarSignIcon width={20} height={20} />,
+            icon: <CircleDollarSignIcon width="1.5em" height="1.5em" />,
             label: "Submit Payment",
         },
         {
             href: "mailto:michelle@purpleturtlecreative.com",
-            icon: <MailIcon width={20} height={20} />,
+            icon: <MailIcon width="1.5em" height="1.5em" />,
             label: "Send Email",
         },
     ];
@@ -35,25 +35,7 @@ export default function Navbar() {
                         <ul className="flex items-center gap-x-3">
                             {navLinks.map((link) => (
                                 <li key={link.label}>
-                                    <a
-                                        href={link.href}
-                                        className="
-                                            flex
-                                            flex-row
-                                            flex-nowrap
-                                            items-center
-                                            gap-x-2
-                                            rounded-md
-                                            py-3
-                                            px-4
-                                            text-md
-                                            text-white
-                                            text-sm
-                                            font-bold
-                                            bg-primary-dark
-                                            hover:bg-black
-                                        "
-                                    >
+                                    <a href={link.href} className="button text-sm">
                                         {link.icon}<span>{link.label}</span>
                                     </a>
                                 </li>

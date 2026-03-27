@@ -3,7 +3,7 @@ import Clock from "../client/Clock";
 
 export default function Footer() {
     return (
-        <footer className="component-Footer w-full">
+        <footer className="component-Footer w-full bg-black text-white">
             <div className="content-section flex flex-wrap items-center justify-between gap-y-3 py-5 text-sm">
                 <p>{`©${new Date().getFullYear()} Purple Turtle Creative, LLC. All rights reserved.`}</p>
                 <ul className="list-none flex flex-wrap gap-x-5">
