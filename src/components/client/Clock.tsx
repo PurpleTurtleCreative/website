@@ -31,16 +31,12 @@ export default function Clock() {
     const dayPeriod = zoneParts.find((part) => part.type === "dayPeriod")?.value.toLowerCase() ?? "";
     const timeZoneName = zoneParts.find((part) => part.type === "timeZoneName")?.value ?? "";
 
-    if ( ! mounted ) {
-        return <span className="component-Clock">--:-- -- --</span>;
-    }
-
     return (
         <span className="component-Clock">
-            {hour}
+            {mounted ? hour : "--"}
             <span className="animate-blink">:</span>
-            {minute}
-            <span className="text-xs"> {dayPeriod} {timeZoneName}</span>
+            {mounted ? minute : "--"}
+            <span className="text-xs">{` ${mounted ? dayPeriod : "--"} ${mounted ? timeZoneName : "---"}`}</span>
         </span>
     );
 }
