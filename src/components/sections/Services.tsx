@@ -54,7 +54,7 @@ export default function Services() {
     ]
 
     return (
-        <div className="component-Services w-full py-20">
+        <div className="component-Services w-full py-20 max-sm:pb-0">
             <div className="content-section">
                 <div className="w-2/3">
                     <h2 className="text-primary/50 mb-5"><span className="text-primary">Services</span> for Every Stage of Growth</h2>

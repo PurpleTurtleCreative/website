@@ -35,7 +35,7 @@ export default function Tech() {
     ]
 
     return (
-        <div className="component-Tech w-full py-20">
+        <div className="component-Tech w-full pb-20">
             <div className="content-section">
                 <div className="w-2/3">
                     <h2 className="text-primary/50 mb-5">Using a Modern <span className="text-primary">Tech&nbsp;Stack</span></h2>
