@@ -57,7 +57,7 @@ export default function Services() {
         <div className="component-Services w-full py-20 max-sm:pb-0">
             <div className="content-section">
                 <div className="max-w-xl">
-                    <h2 className="text-primary/50 mb-5"><span className="text-primary">Services</span> for Every Stage of Growth</h2>
+                    <h2 className="text-primary-light mb-5"><span className="text-primary">Services</span> for Every Stage of Growth</h2>
                     <p>From initial launch to operational maturity, I build and refine the systems that support sustainable scale.</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-12 md:mb-28">
@@ -68,7 +68,7 @@ export default function Services() {
                                 <div className="absolute inset-4 text-primary"><service.icon width={32} height={32} /></div>
                             </div>
                             <h3 className="mt-3 mb-1">{service.title}</h3>
-                            <p className="text-lg sm:text-xl text-black/50 mb-5">{service.subtitle}</p>
+                            <p className="text-lg sm:text-xl text-grey-dark/90 mb-5">{service.subtitle}</p>
                             <p>{service.description}</p>
                             <ul className="list-none mt-5 text-left">
                                 {service.bullets.map((bullet, index) => (
