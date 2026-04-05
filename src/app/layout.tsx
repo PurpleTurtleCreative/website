@@ -2,6 +2,7 @@ import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/ui/Footer";
 import Navbar from "@/components/ui/Navbar";
+import { Metadata } from "next";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -14,6 +15,17 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["400"],
 });
+
+export const metadata: Metadata = {
+  title: {
+    template: "%s | Purple Turtle Creative",
+    default: "Purple Turtle Creative",
+  },
+  description: "Technology solutions that boost business efficiency, from internal processes to user-facing conversion engines. Check out our services to see how your business can thrive in the digital age.",
+  icons: {
+    icon: "/favicon.png",
+  }
+};
 
 export default function RootLayout({
   children,
