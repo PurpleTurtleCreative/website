@@ -1,4 +1,4 @@
-import { CircleDollarSignIcon, CircleUserIcon, MailIcon } from "lucide-react";
+import { CircleDollarSignIcon, CircleUserIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -14,12 +14,7 @@ export default function Navbar() {
             href: "https://buy.stripe.com/7sY8wP86bbz3cWmfyG73G03",
             icon: <CircleDollarSignIcon width="1.5em" height="1.5em" />,
             label: "Submit Payment",
-        },
-        {
-            href: "mailto:michelle@purpleturtlecreative.com",
-            icon: <MailIcon width="1.5em" height="1.5em" />,
-            label: "Send Email",
-        },
+        }
     ];
 
     return (
