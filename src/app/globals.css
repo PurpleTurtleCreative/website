@@ -77,6 +77,24 @@
     pointer-events: none;
     user-select: none;
   }
+
+  label {
+    @apply text-sm text-grey-dark font-bold tracking-wide w-full;
+  }
+
+  input {
+    @apply text-black border border-primary-lighter rounded-lg px-4 py-3 my-1 w-full;
+  }
+
+  input[disabled],
+  button[disabled] {
+    @apply cursor-not-allowed text-black/60 bg-primary-lightest;
+  }
+
+  a,
+  button {
+    @apply cursor-pointer;
+  }
 }
 
 @layer components {
@@ -84,7 +102,19 @@
   /* Button */
 
   .button {
-    @apply flex flex-row flex-nowrap text-nowrap items-center gap-x-2 rounded-lg py-2 px-3 sm:py-3 sm:px-4 text-white font-bold bg-primary-dark hover:bg-black;
+    @apply flex flex-row flex-nowrap text-nowrap items-center gap-x-2 rounded-lg py-2 px-3 sm:py-3 sm:px-4 font-bold border border-transparent;
+  }
+
+  .button--primary {
+    @apply text-white bg-primary hover:bg-primary-dark;
+  }
+
+  .button--primary-dark {
+    @apply text-white bg-primary-dark hover:bg-black;
+  }
+
+  .button[disabled] {
+    @apply cursor-not-allowed text-black/60 border border-primary-lighter bg-primary-lightest hover:bg-primary-lightest;
   }
 
   /* Container */

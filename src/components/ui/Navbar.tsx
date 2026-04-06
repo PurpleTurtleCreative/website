@@ -1,10 +1,15 @@
-import { CircleDollarSignIcon, MailIcon } from "lucide-react";
+import { CircleDollarSignIcon, CircleUserIcon, MailIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
 
     const navLinks = [
+        {
+            href: "/portal",
+            icon: <CircleUserIcon width="1.5em" height="1.5em" />,
+            label: "Client Portal",
+        },
         {
             href: "https://buy.stripe.com/7sY8wP86bbz3cWmfyG73G03",
             icon: <CircleDollarSignIcon width="1.5em" height="1.5em" />,
@@ -34,9 +39,9 @@ export default function Navbar() {
                     <ul className="flex flex-wrap items-center justify-end gap-1 sm:gap-3">
                         {navLinks.map((link) => (
                             <li key={link.label}>
-                                <a href={link.href} className="button text-sm">
+                                <Link href={link.href} className="button button--primary-dark text-sm">
                                     {link.icon}<span>{link.label}</span>
-                                </a>
+                                </Link>
                             </li>
                         ))}
                     </ul>

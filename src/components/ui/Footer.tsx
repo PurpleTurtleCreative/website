@@ -1,5 +1,6 @@
 import { BuildingIcon, ClockIcon, MailIcon } from "lucide-react";
 import Clock from "../client/Clock";
+import Link from "next/link";
 
 export default function Footer() {
     return (
@@ -9,7 +10,7 @@ export default function Footer() {
                 <ul className="list-none flex flex-wrap gap-x-5 gap-y-3 max-sm:justify-center">
                     <li><BuildingIcon className="inline-block relative bottom-[0.1em]" aria-label="headquarters" width="1.3em" height="1.3em" /> New York, USA</li>
                     <li><ClockIcon className="inline-block relative bottom-[0.1em]" aria-label="business local time" width="1.3em" height="1.3em" /> <Clock /></li>
-                    <li><MailIcon className="inline-block relative bottom-[0.1em]" aria-label="email contact" width="1.3em" height="1.3em" /> <a href="mailto:michelle@purpleturtlecreative.com">Michelle Blanchette</a></li>
+                    <li><MailIcon className="inline-block relative bottom-[0.1em]" aria-label="email contact" width="1.3em" height="1.3em" /> <Link href="mailto:michelle@purpleturtlecreative.com">Michelle Blanchette</Link></li>
                 </ul>
             </div>
         </footer>

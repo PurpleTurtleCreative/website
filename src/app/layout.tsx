@@ -1,7 +1,5 @@
 import { Poppins, Inter } from "next/font/google";
-import "./globals.css";
-import Footer from "@/components/ui/Footer";
-import Navbar from "@/components/ui/Navbar";
+import "@/app/globals.css";
 import { Metadata } from "next";
 
 const poppins = Poppins({
@@ -35,9 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`flex flex-col h-dvh ${poppins.variable} ${inter.variable} antialiased font-body text-body bg-off-white text-black`}>
-        <Navbar />
         {children}
-        <Footer />
       </body>
     </html>
   );

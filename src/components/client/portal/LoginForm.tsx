@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { TimesheetResponse } from "@/types/TimesheetData";
 import { API_BASE_URL } from "@/util/constants";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function LoginForm({ onSubmit }: { onSubmit: (data: TimesheetResponse) => void }) {
     const [formStatus, setFormStatus] = useState("idle");
@@ -34,7 +36,11 @@ export default function LoginForm({ onSubmit }: { onSubmit: (data: TimesheetResp
             if (response.ok) {
                 return response.json();
             } else {
-                throw new Error(response.statusText);
+                let errorMessage = response.statusText;
+                if ( 401 === response.status ) {
+                    errorMessage = "Invalid credentials or unknown account.";
+                }
+                throw new Error(errorMessage);
             }
         }).then((data: TimesheetResponse) => {
             setFormStatus("success");
@@ -45,38 +51,58 @@ export default function LoginForm({ onSubmit }: { onSubmit: (data: TimesheetResp
     };
 
     return (
-        <div className="component-LoginForm">
-            <div className="content-section">
-                <div className="card max-w-xl mx-auto">
-                    <div className="bg-primary text-white text-center py-5">
-                        <h1 className="font-heading my-5 text-shadow-lg text-shadow-primary-dark/30 text-[#9eaafb]">Log In to Your Account</h1>
-                        <p className="text-lg sm:text-xl mb-10">Enter your client name and password to access your account.</p>
+        <div className="component-LoginForm content-section my-5">
+            <div className="max-w-md mx-auto text-center sm:mb-[10dvh]">
+                <Link href="/" className="block w-fit mx-auto">
+                    <Image
+                        src="/images/purpleturtlecreative-horizontal-light.svg"
+                        alt="Purple Turtle Creative"
+                        width={200}
+                        height={41}
+                        priority
+                        className="drop-shadow-md drop-shadow-primary-dark/50"
+                    />
+                </Link>
+                <div className="card my-5 text-black">
+                    <div>
+                        <h1 className="font-heading text-h3 my-2 text-primary">Client Portal</h1>
+                        <p className="mb-10 text-grey-dark">Access your account summary, payments, and outstanding balance.</p>
                     </div>
-                    {
-                        ( "loading" === formStatus ) ? (
-                            <div className="text-center py-5 text-sm text-grey-dark">
-                                <p>Loading...</p>
-                            </div>
-                        ) : (
-                            <form onSubmit={handleSubmit}>
-                                <label htmlFor="client">Client Name</label>
-                                <input type="text" id="client" name="client" value={client} onChange={handleClientChange} />
-                                <label htmlFor="password">Password</label>
-                                <input type="password" id="password" name="password" value={password} onChange={handlePasswordChange} />
-                                <button type="submit" className="button">Log In</button>
-                            </form>
-                        )
-                    }
-                    {
-                        ( ! [ "idle", "success", "loading" ].includes(formStatus) ) && (
-                            <div className="text-left text-sm py-2 px-3 bg-red-50 text-red-600 border border-red-200 rounded-lg">
-                                <p><strong>Failed to load your account summary.</strong><br /><small>Error: {formStatus}</small></p>
-                            </div>
-                        )
-                    }
-                    <div className="text-center py-5 text-sm text-grey-dark">
-                        <p>Don&apos;t have an account? <a href="mailto:michelle@purpleturtlecreative.com" className="text-primary underline">Contact us</a> to get one.</p>
-                    </div>
+                    <form className="flex flex-col items-stretch justify-start gap-5 text-left text-lg" onSubmit={handleSubmit}>
+                        <label>
+                            <span>Client Name</span>
+                            <input
+                                type="text"
+                                name="client"
+                                value={client}
+                                onChange={handleClientChange}
+                                disabled={"loading" === formStatus}
+                                required
+                            />
+                        </label>
+                        <label>
+                            <span>Password</span>
+                            <input
+                                type="password"
+                                name="password"
+                                value={password}
+                                onChange={handlePasswordChange}
+                                disabled={"loading" === formStatus}
+                                required
+                            />
+                        </label>
+                        {
+                            ( ! [ "idle", "success", "loading" ].includes(formStatus) ) && (
+                                <div className="text-left text-sm py-2 px-3 bg-red-50 text-red-600 border border-red-200 rounded-lg">
+                                    <p><strong>Failed to load your account.</strong><br /><small>Error: {formStatus}</small></p>
+                                </div>
+                            )
+                        }
+                        <button type="submit" className="button button--primary my-2 self-center">{("loading" === formStatus) ? "Loading..." : "Sign In"}</button>
+                    </form>
+                </div>
+                <div className="text-center text-sm text-white">
+                    <p>Don&apos;t know your login? <Link href="mailto:michelle@purpleturtlecreative.com" className="underline underline-offset-3">Request access</Link>.</p>
                 </div>
             </div>
         </div>
