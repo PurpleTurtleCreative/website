@@ -95,6 +95,25 @@
   button {
     @apply cursor-pointer;
   }
+
+  /* Table */
+
+  table th,
+  table td {
+    @apply p-4;
+  }
+
+  table tr {
+    @apply border-b border-b-primary-lighter hover:bg-off-white;
+  }
+
+  table thead {
+    @apply text-left text-grey-dark bg-off-white;
+  }
+
+  table thead th {
+    @apply uppercase text-xs font-bold tracking-widest;
+  }
 }
 
 @layer components {
@@ -121,6 +140,10 @@
 
   .content-section {
     @apply max-w-content w-full p-4 mx-auto;
+  }
+
+  .component-ClientPortalSPA .content-section {
+    @apply max-w-[1400px];
   }
 
   .card {
