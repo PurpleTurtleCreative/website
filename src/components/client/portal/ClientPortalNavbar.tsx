@@ -1,14 +1,27 @@
-import { CircleDollarSignIcon, LogOutIcon } from "lucide-react";
+import { LogOutIcon, MailIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ReactElement } from "react";
 
-export default function ClientPortalNavbar() {
+export interface ClientPortalNavbarProps {
+    clientName: string;
+    moreNavLinks: NavLink[];
+}
 
-    const navLinks = [
+export interface NavLink {
+    href: string;
+    icon: ReactElement;
+    label: string;
+}
+
+export default function ClientPortalNavbar({ clientName = "", moreNavLinks = [] }: ClientPortalNavbarProps) {
+
+    const navLinks: NavLink[] = [
+        ...moreNavLinks,
         {
-            href: "https://buy.stripe.com/7sY8wP86bbz3cWmfyG73G03",
-            icon: <CircleDollarSignIcon width="1.5em" height="1.5em" />,
-            label: "Submit Payment",
+            href: "mailto:michelle@purpleturtlecreative.com",
+            icon: <MailIcon width="1.5em" height="1.5em" />,
+            label: "Send Email",
         },
         {
             href: "/",
@@ -38,6 +51,7 @@ export default function ClientPortalNavbar() {
                                 </Link>
                             </li>
                         ))}
+                        <li className="font-bold">{clientName}</li>
                     </ul>
                 </nav>
             </div>

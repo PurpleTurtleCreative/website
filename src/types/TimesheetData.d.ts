@@ -22,5 +22,11 @@ export type TimesheetRowTuple = readonly [
 ];
 
 export interface TimesheetResponse {
+    client: ClientData;
     rows: TimesheetRowTuple[];
+}
+
+interface ClientData {
+    name: string; // The client's name.
+    submitPaymentUrl: string; // URL for client to pay toward their balance.
 }
