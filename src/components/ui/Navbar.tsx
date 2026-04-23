@@ -6,7 +6,7 @@ export default function Navbar() {
 
     const navLinks = [
         {
-            href: "/portal",
+            href: "/portal/",
             icon: <CircleUserIcon width="1.5em" height="1.5em" />,
             label: "Client Portal",
         },
