@@ -103,6 +103,16 @@
     @apply p-4;
   }
 
+  table th:where(:first-child),
+  table td:where(:first-child) {
+    @apply pl-8;
+  }
+
+  table th:where(:last-child),
+  table td:where(:last-child) {
+    @apply pr-8;
+  }
+
   table tr {
     @apply border-b border-b-primary-lighter hover:bg-off-white;
   }

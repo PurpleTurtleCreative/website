@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ChangeEventHandler, FormEventHandler, useCallback, useState } from "react";
 import { TimesheetResponse } from "@/types/TimesheetData";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,15 +16,15 @@ export default function LoginForm({ year, onSuccess }: LoginFormParams) {
     const [client, setClient] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleClientChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleClientChange: ChangeEventHandler<HTMLInputElement> = useCallback(e => {
         setClient(e.target.value);
-    };
+    }, [setClient]);
 
-    const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePasswordChange: ChangeEventHandler<HTMLInputElement> = useCallback(e => {
         setPassword(e.target.value);
-    };
+    }, [setPassword]);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit: FormEventHandler<HTMLFormElement> = useCallback(e => {
         e.preventDefault();
         setFormStatus("loading");
         fetchTimesheetData(client, password, year).then((data: TimesheetResponse) => {
@@ -33,7 +33,7 @@ export default function LoginForm({ year, onSuccess }: LoginFormParams) {
         }).catch(error => {
             setFormStatus(error.message ?? "An unknown error occurred");
         });
-    };
+    }, [client, password, year, setFormStatus, onSuccess]);
 
     return (
         <div className="component-LoginForm content-section my-5">
