@@ -13,3 +13,5 @@ function isBrowserLocalhost(): boolean {
 export const API_BASE_URL = isBrowserLocalhost()
     ? "http://localhost:8080"
     : "https://api.purpleturtlecreative.com";
+
+export const CURRENT_YEAR = new Date().getFullYear();

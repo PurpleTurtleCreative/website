@@ -2,11 +2,16 @@
 
 import { useState } from "react";
 import { TimesheetResponse } from "@/types/TimesheetData";
-import { API_BASE_URL } from "@/util/constants";
 import Link from "next/link";
 import Image from "next/image";
+import { fetchTimesheetData } from "@/util/fetch";
 
-export default function LoginForm({ onSubmit }: { onSubmit: (data: TimesheetResponse) => void }) {
+interface LoginFormParams {
+    year: number;
+    onSuccess: (client: string, password: string, data: TimesheetResponse) => void;
+}
+
+export default function LoginForm({ year, onSuccess }: LoginFormParams) {
     const [formStatus, setFormStatus] = useState("idle");
     const [client, setClient] = useState("");
     const [password, setPassword] = useState("");
@@ -22,29 +27,9 @@ export default function LoginForm({ onSubmit }: { onSubmit: (data: TimesheetResp
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setFormStatus("loading");
-        window.fetch(
-            `${API_BASE_URL}/v1/timesheet`,
-            {
-                method: "POST",
-                headers: {
-                    "Accept": "*/*",
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ client, password }),
-            }
-        ).then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                let errorMessage = response.statusText;
-                if ( 401 === response.status ) {
-                    errorMessage = "Invalid credentials or unknown account.";
-                }
-                throw new Error(errorMessage);
-            }
-        }).then((data: TimesheetResponse) => {
+        fetchTimesheetData(client, password, year).then((data: TimesheetResponse) => {
             setFormStatus("success");
-            onSubmit(data);
+            onSuccess(client, password, data);
         }).catch(error => {
             setFormStatus(error.message ?? "An unknown error occurred");
         });

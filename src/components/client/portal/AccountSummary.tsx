@@ -1,8 +1,26 @@
-import { useMemo } from "react";
+import { Dispatch, SetStateAction, useMemo } from "react";
 import { TimesheetResponse } from "@/types/TimesheetData";
 import { formatCurrency, formatDate, formatTime } from "@/util/formatters";
+import { CURRENT_YEAR } from "@/util/constants";
 
-export default function AccountSummary({ data }: { data: TimesheetResponse }) {
+interface AccountSummaryParams {
+    year: number;
+    setYear: Dispatch<SetStateAction<number>>;
+    data: TimesheetResponse;
+}
+
+export default function AccountSummary({ year, setYear, data }: AccountSummaryParams) {
+    const years = useMemo(() => {
+        return Array.from(
+            { length: CURRENT_YEAR - 2022 + 1 },
+            (_, i) => 2022 + i
+        );
+    }, []);
+
+    const handleYearChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setYear(parseInt(e.target.value));
+    };
+
     const [
         sumCredits,
         sumDebits,
@@ -29,7 +47,16 @@ export default function AccountSummary({ data }: { data: TimesheetResponse }) {
 
     return (
         <div className="component-AccountSummary content-section mb-40">
-            <h1 className="text-h3 mt-4">Account Summary</h1>
+            <div className="mt-4 flex items-center justify-between">
+                <h1 className="text-h3">Account Summary</h1>
+                <select value={year} onChange={handleYearChange} defaultValue={year}>
+                    {
+                        years.map(yr => {
+                            return <option key={yr} value={yr}>{yr}</option>
+                        })
+                    }
+                </select>
+            </div>
             <ul className="grid grid-cols-3 gap-5 mt-8 mb-12">
                 <li className="card">
                     <h2 className="text-xl">Charges</h2>
