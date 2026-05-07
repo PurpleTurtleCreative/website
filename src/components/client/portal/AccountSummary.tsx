@@ -2,7 +2,7 @@ import { ChangeEventHandler, Dispatch, SetStateAction, useCallback, useMemo, use
 import { TimesheetResponse } from "@/types/TimesheetData";
 import { formatCurrency, formatDate, formatTime } from "@/util/formatters";
 import { CURRENT_YEAR } from "@/util/constants";
-import { BanknoteArrowDown, CalendarSearchIcon, DollarSign, ReceiptText } from "lucide-react";
+import { BanknoteArrowDown, CalendarSearchIcon, DollarSign, FilterIcon, ReceiptText } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 
 interface AccountSummaryParams {
@@ -28,12 +28,18 @@ const monthsLabelMap: Record<number, string> = {
 
 export default function AccountSummary({ year, setYear, data }: AccountSummaryParams) {
     const [filterMonth, setFilterMonth] = useState(-1);
+    const [filterProject, setFilterProject] = useState("");
 
     const displayRows = useMemo(() => {
-        return ( filterMonth < 0 )
-            ? data.rows
-            : data.rows.filter(row => filterMonth === (new Date(row[0]).getMonth()));
-    }, [data.rows, filterMonth]);
+        let rows = data.rows;
+        if ( filterMonth >= 0 ) {
+            rows = rows.filter(row => filterMonth === (new Date(row[0]).getMonth()));
+        }
+        if ( filterProject !== "" ) {
+            rows = rows.filter(row => filterProject === row[2]);
+        }
+        return rows;
+    }, [data.rows, filterMonth, filterProject]);
 
     const availableYears = useMemo(() => {
         return Array.from(
@@ -46,6 +52,12 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
         return data.rows.reduce((valuesSet, row) => {
             return valuesSet.add(new Date(row[0]).getMonth());
         }, new Set([-1]));
+    }, [data.rows]);
+
+    const availableProjects = useMemo(() => {
+        return data.rows.reduce((valuesSet, row) => {
+            return valuesSet.add(row[2]);
+        }, new Set([""]));
     }, [data.rows]);
 
     const [
@@ -81,6 +93,10 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
         setFilterMonth(parseInt(e.target.value));
     }, [setFilterMonth]);
 
+    const handleFilterProjectChange: ChangeEventHandler<HTMLSelectElement> = useCallback(e => {
+        setFilterProject(e.target.value);
+    }, [setFilterProject]);
+
     return (
         <div className="component-AccountSummary content-section mb-40">
             <div className="mt-4 flex items-center justify-between">
@@ -90,7 +106,6 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                     <select
                         value={year}
                         onChange={handleYearChange}
-                        defaultValue={year}
                         className="cursor-pointer card rounded-xl bg-off-white text-lg font-bold px-3 py-2"
                     >
                         {
@@ -99,10 +114,26 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                             })
                         }
                     </select>
-                    <select value={filterMonth} onChange={handleFilterMonthChange} className="cursor-pointer card rounded-xl bg-off-white text-lg font-bold px-3 py-2">
+                    <select
+                        value={filterMonth}
+                        onChange={handleFilterMonthChange}
+                        className="cursor-pointer card rounded-xl bg-off-white text-lg font-bold px-3 py-2"
+                    >
                         {
                             availableMonths.values().map(m => {
                                 return <option key={m} value={m}>{monthsLabelMap[m] || "All months"}</option>
+                            })
+                        }
+                    </select>
+                    <FilterIcon className="ml-auto stroke-grey-dark" width="1.3em" height="1.3em" />
+                    <select
+                        value={filterProject}
+                        onChange={handleFilterProjectChange}
+                        className="cursor-pointer card rounded-xl bg-off-white text-lg font-bold px-3 py-2"
+                    >
+                        {
+                            availableProjects.values().map(p => {
+                                return <option key={p} value={p}>{p || "All projects"}</option>
                             })
                         }
                     </select>
@@ -132,36 +163,44 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                     <span className="text-h3 text-orange-600 font-bold">{formatCurrency(outstandingBalance)}</span>
                 </li>
             </ul>
-            <div className="card p-0 overflow-y-hidden overflow-x-scroll">
+            <div className="card p-0">
                 <h2 className="text-xl p-8">Detailed Entries</h2>
-                <table>
-                    <thead className="border-t border-t-primary-lighter">
-                        <tr>
-                            <th>Date</th>
-                            <th>Project</th>
-                            <th>Description</th>
-                            <th className="text-right">Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            displayRows.map((row, index) => (
-                                <tr key={index} className={(row[6] < 0.0) ? "bg-emerald-50 text-emerald-600 font-bold" : ""}>
-                                    <td className="whitespace-nowrap font-bold">
-                                        {formatDate(row[0])}
-                                        { (row[0] !== row[1]) && <span className="block text-sm whitespace-nowrap text-gray-500 font-normal">{`${formatTime(row[0])} – ${formatTime(row[1])}`}</span> }
-                                    </td>
-                                    <td className="whitespace-nowrap">{row[2]}</td>
-                                    <td>{row[3] || "—"}</td>
-                                    <td className="whitespace-nowrap text-right font-bold">
-                                        {formatCurrency(row[6])}
-                                        { (0.0 !== row[4] && 0.0 !== row[5]) && <span className="block text-sm whitespace-nowrap text-gray-500 font-normal">{`${row[4]}h × ${formatCurrency(row[5]).replace(".00", "")}`}</span> }
-                                    </td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
+                <div className="w-full overflow-x-auto">
+                    <table className="w-full table-fixed">
+                        <colgroup>
+                            <col width="200" />
+                            <col width="340" />
+                            <col width="520" />
+                            <col width="175" />
+                        </colgroup>
+                        <thead className="border-t border-t-primary-lighter">
+                            <tr>
+                                <th scope="col">Date</th>
+                                <th scope="col">Project</th>
+                                <th scope="col">Description</th>
+                                <th scope="col" className="text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                displayRows.map((row, index) => (
+                                    <tr key={index} className={(row[6] < 0.0) ? "bg-emerald-50 text-emerald-600 font-bold" : ""}>
+                                        <td className="whitespace-nowrap font-bold">
+                                            {formatDate(row[0])}
+                                            { (row[0] !== row[1]) && <span className="block text-sm whitespace-nowrap text-gray-500 font-normal">{`${formatTime(row[0])} – ${formatTime(row[1])}`}</span> }
+                                        </td>
+                                        <td className="whitespace-nowrap">{row[2]}</td>
+                                        <td>{row[3] || "—"}</td>
+                                        <td className="whitespace-nowrap text-right font-bold">
+                                            {formatCurrency(row[6])}
+                                            { (0.0 !== row[4] && 0.0 !== row[5]) && <span className="block text-sm whitespace-nowrap text-gray-500 font-normal">{`${row[4]}h × ${formatCurrency(row[5]).replace(".00", "")}`}</span> }
+                                        </td>
+                                    </tr>
+                                ))
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

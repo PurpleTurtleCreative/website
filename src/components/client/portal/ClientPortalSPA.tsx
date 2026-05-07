@@ -50,7 +50,7 @@ export default function ClientPortalSPA() {
             </main>
         ) :
         (
-            <main className="component-ClientPortalSPA flex-1 flex flex-col align-center justify-center bg-primary-lightest">
+            <main className="component-ClientPortalSPA flex-1 flex flex-col align-center justify-start bg-primary-lightest">
                 <ClientPortalNavbar clientName={timesheetData.client.name} moreNavLinks={clientPortalNavbarLinks} />
                 <AccountSummary year={year} setYear={setYear} data={timesheetData} />
             </main>
