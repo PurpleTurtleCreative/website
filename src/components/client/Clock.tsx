@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { BUSINESS_TIME_ZONE } from "@/util/constants";
 
 export default function Clock() {
     const [currentTime, setCurrentTime] = useState(new Date());
@@ -19,7 +20,7 @@ export default function Clock() {
     }, []);
 
     const zoneParts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "America/New_York",
+        timeZone: BUSINESS_TIME_ZONE,
         hour12: true,
         hour: "numeric",
         minute: "2-digit",

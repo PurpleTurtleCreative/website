@@ -1,6 +1,16 @@
+import { BUSINESS_TIME_ZONE } from "@/util/constants";
 
-export const dateFormatter = new Intl.DateTimeFormat('en-US', { year: "numeric", month: "short", day: "numeric" });
-export const timeFormatter = new Intl.DateTimeFormat('en-US', { hour: "numeric", minute: "2-digit" });
+export const dateFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: BUSINESS_TIME_ZONE,
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+});
+export const timeFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone: BUSINESS_TIME_ZONE,
+    hour: "numeric",
+    minute: "2-digit",
+});
 export const usdFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
@@ -10,6 +20,16 @@ export const usdFormatter = new Intl.NumberFormat('en-US', {
     currencySign: 'accounting',
 });
 
-export const formatDate = (ms: number) => dateFormatter.format(new Date(ms));
-export const formatTime = (ms: number) => timeFormatter.format(new Date(ms)).replace(' ', '').toLowerCase();
+export const formatDate = (date: Date) => dateFormatter.format(date);
+export const formatTime = (date: Date) => timeFormatter.format(date).replace(" ", "").toLowerCase();
+
+const businessMonthNumeric = new Intl.DateTimeFormat("en-US", {
+    timeZone: BUSINESS_TIME_ZONE,
+    month: "numeric",
+});
+
+/** 0–11 month index for the given instant in `BUSINESS_TIME_ZONE`. */
+export function getBusinessCalendarMonth(date: Date): number {
+    return parseInt(businessMonthNumeric.format(date), 10) - 1;
+}
 export const formatCurrency = (amount: number) => usdFormatter.format(amount);

@@ -1,9 +1,13 @@
 /**
- * Refactored API row tuple, in order. Example:
+ * Client row tuple after normalizing the API payload (see `fetchTimesheetData`).
+ * Start/end are `Date` for the same instants the API sent as Unix ms; calendar
+ * fields for display and filtering use `BUSINESS_TIME_ZONE` via formatters.
+ *
+ * Example (conceptually from API ms values):
  *
  *     [
- *       1767294900000,
- *       1767297600000,
+ *       Date,
+ *       Date,
  *       "TBred Sonny's Transactions",
  *       "(12-28) Code review Keap order item and invoice data service queries",
  *       0.75,
@@ -12,8 +16,8 @@
  *     ]
  */
 export type TimesheetRowTuple = readonly [
-    number, // start unix timestamp (ms)
-    number, // end unix timestamp (ms)
+    Date, // start instant (from API unix timestamp ms)
+    Date, // end instant (from API unix timestamp ms)
     string, // project title
     string, // description
     number, // hours

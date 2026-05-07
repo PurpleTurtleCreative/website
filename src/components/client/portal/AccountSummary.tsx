@@ -1,6 +1,6 @@
 import { ChangeEventHandler, Dispatch, SetStateAction, useCallback, useMemo, useState } from "react";
 import { TimesheetResponse } from "@/types/TimesheetData";
-import { formatCurrency, formatDate, formatTime } from "@/util/formatters";
+import { formatCurrency, formatDate, formatTime, getBusinessCalendarMonth } from "@/util/formatters";
 import { CURRENT_YEAR } from "@/util/constants";
 import { BanknoteArrowDown, CalendarSearchIcon, DollarSign, FilterIcon, ReceiptText } from "lucide-react";
 import Badge from "@/components/ui/Badge";
@@ -33,7 +33,7 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
     const displayRows = useMemo(() => {
         let rows = data.rows;
         if ( filterMonth >= 0 ) {
-            rows = rows.filter(row => filterMonth === (new Date(row[0]).getMonth()));
+            rows = rows.filter(row => filterMonth === getBusinessCalendarMonth(row[0]));
         }
         if ( filterProject !== "" ) {
             rows = rows.filter(row => filterProject === row[2]);
@@ -50,7 +50,7 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
 
     const availableMonths = useMemo(() => {
         return data.rows.reduce((valuesSet, row) => {
-            return valuesSet.add(new Date(row[0]).getMonth());
+            return valuesSet.add(getBusinessCalendarMonth(row[0]));
         }, new Set([-1]));
     }, [data.rows]);
 
@@ -120,7 +120,7 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                         className="cursor-pointer card rounded-xl bg-off-white text-lg font-bold px-3 py-2"
                     >
                         {
-                            availableMonths.values().map(m => {
+                            [...availableMonths].map(m => {
                                 return <option key={m} value={m}>{monthsLabelMap[m] || "All months"}</option>
                             })
                         }
@@ -132,8 +132,8 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                         className="cursor-pointer card rounded-xl bg-off-white text-lg font-bold px-3 py-2"
                     >
                         {
-                            availableProjects.values().map(p => {
-                                return <option key={p} value={p}>{p || "All projects"}</option>
+                            [...availableProjects].map(p => {
+                                return <option key={p} value={p}>{p || "All categories"}</option>
                             })
                         }
                     </select>
@@ -158,7 +158,7 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                 <li className="card">
                     <div className="flex items-center justify-start gap-4 mb-4">
                         <Badge color="orange" icon={DollarSign} />
-                        <h2 className="text-xl">Balance</h2>
+                        <h2 className="text-xl">{filterMonth >= 0 ? "Net change" : "Balance"}</h2>
                     </div>
                     <span className="text-h3 text-orange-600 font-bold">{formatCurrency(outstandingBalance)}</span>
                 </li>
@@ -170,13 +170,13 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                         <colgroup>
                             <col width="200" />
                             <col width="340" />
-                            <col width="520" />
+                            <col width="600" />
                             <col width="175" />
                         </colgroup>
                         <thead className="border-t border-t-primary-lighter">
                             <tr>
                                 <th scope="col">Date</th>
-                                <th scope="col">Project</th>
+                                <th scope="col">Category</th>
                                 <th scope="col">Description</th>
                                 <th scope="col" className="text-right">Amount</th>
                             </tr>
@@ -187,7 +187,7 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                                     <tr key={index} className={(row[6] < 0.0) ? "bg-emerald-50 text-emerald-600 font-bold" : ""}>
                                         <td className="whitespace-nowrap font-bold">
                                             {formatDate(row[0])}
-                                            { (row[0] !== row[1]) && <span className="block text-sm whitespace-nowrap text-gray-500 font-normal">{`${formatTime(row[0])} – ${formatTime(row[1])}`}</span> }
+                                            { (row[0].getTime() !== row[1].getTime()) && <span className="block text-sm whitespace-nowrap text-gray-500 font-normal">{`${formatTime(row[0])} – ${formatTime(row[1])}`}</span> }
                                         </td>
                                         <td className="whitespace-nowrap">{row[2]}</td>
                                         <td>{row[3] || "—"}</td>
