@@ -1,8 +1,9 @@
 import { ChangeEventHandler, Dispatch, SetStateAction, useCallback, useMemo, useState } from "react";
 import { TimesheetResponse } from "@/types/TimesheetData";
 import { formatCurrency, formatDate, formatTime, getBusinessCalendarMonth } from "@/util/formatters";
+import { downloadTimesheetCsv } from "@/util/csv";
 import { CURRENT_YEAR } from "@/util/constants";
-import { BanknoteArrowDown, CalendarSearchIcon, DollarSign, FilterIcon, ReceiptText } from "lucide-react";
+import { BanknoteArrowDown, CalendarSearchIcon, DollarSign, DownloadIcon, FilterIcon, ReceiptText } from "lucide-react";
 import Badge from "@/components/ui/Badge";
 import MultiSelectCheckbox from "@/components/ui/MultiSelectCheckbox";
 
@@ -120,6 +121,14 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
         setFilterProjects(new Set());
     }, []);
 
+    const handleDownloadCsv = useCallback(() => {
+        const sanitizedClientName = data.client.name
+            .replace(/[^\w\s-]/g, "")
+            .trim()
+            .replace(/\s+/g, "-");
+        downloadTimesheetCsv(displayRows, `${sanitizedClientName}-${year}-entries.csv`);
+    }, [data.client.name, displayRows, year]);
+
     const noResultsMessage = useMemo(() => {
         if ( hasMonthFilter && hasProjectFilter ) {
             return "No entries match the selected months and categories for this time period.";
@@ -206,7 +215,21 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                 </li>
             </ul>
             <div className="card p-0">
-                <h2 className="text-xl p-8">Detailed Entries</h2>
+                <div className="flex items-center justify-between gap-4 p-8">
+                    <div>
+                        <h2 className="text-xl">Detailed Entries</h2>
+                        <p className="text-sm text-grey-dark">All dates and times are EST/EDT timezone.</p>
+                    </div>
+                    <button
+                        type="button"
+                        onClick={handleDownloadCsv}
+                        disabled={hasNoResults}
+                        className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-primary bg-white px-4 py-2 text-sm font-bold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:border-grey-light disabled:text-grey-dark disabled:hover:bg-white disabled:hover:text-grey-dark"
+                    >
+                        <DownloadIcon width="1.1em" height="1.1em" />
+                        Download CSV
+                    </button>
+                </div>
                 {hasNoResults ? (
                     <div className="flex flex-col items-center border-t border-t-primary-lighter px-8 py-16 text-center">
                         <p className="text-grey-dark">
