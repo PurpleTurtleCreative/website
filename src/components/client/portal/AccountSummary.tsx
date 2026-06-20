@@ -158,7 +158,10 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
     return (
         <div className="component-AccountSummary content-section mb-40">
             <div className="mt-4 flex items-center justify-between">
-                <h1 className="text-h3">Account Summary</h1>
+                <div>
+                    <h1 className="text-h3">Account Summary</h1>
+                    <p className="text-sm text-grey-dark">Changes may take up to 48 hours to be reflected.</p>
+                </div>
                 <div className="flex items-center justify-between gap-3">
                     <CalendarSearchIcon className="ml-auto stroke-grey-dark" width="1.3em" height="1.3em" />
                     <select
@@ -190,7 +193,6 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                     />
                 </div>
             </div>
-            <p className="text-sm text-grey-dark">Changes may take up to 48 hours to be reflected.</p>
             <ul className="grid grid-cols-3 gap-5 mt-8 mb-12">
                 <li className="card">
                     <div className="flex items-center justify-start gap-4 mb-4">
