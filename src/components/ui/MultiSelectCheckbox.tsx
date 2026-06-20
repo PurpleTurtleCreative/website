@@ -12,7 +12,7 @@ import {
 } from "react";
 import { Check, ChevronDown, Minus } from "lucide-react";
 
-export interface MultiSelectCheckboxProps<T extends string = string> {
+export interface MultiSelectCheckboxProps<T extends string | number = string> {
     options: readonly T[];
     value: ReadonlySet<T>;
     onChange: (value: Set<T>) => void;
@@ -23,7 +23,7 @@ export interface MultiSelectCheckboxProps<T extends string = string> {
     getOptionLabel?: (option: T) => string;
 }
 
-interface OptionRowProps<T extends string> {
+interface OptionRowProps<T extends string | number> {
     id: string;
     option: T;
     label: string;
@@ -31,7 +31,7 @@ interface OptionRowProps<T extends string> {
     onToggle: (option: T) => void;
 }
 
-const OptionRow = memo(function OptionRow<T extends string>({
+const OptionRow = memo(function OptionRow<T extends string | number>({
     id,
     option,
     label,
@@ -63,9 +63,9 @@ const OptionRow = memo(function OptionRow<T extends string>({
             <span className="min-w-0 truncate">{label}</span>
         </label>
     );
-}) as <T extends string>(props: OptionRowProps<T>) => React.ReactElement;
+}) as <T extends string | number>(props: OptionRowProps<T>) => React.ReactElement;
 
-function resolveTriggerLabel<T extends string>(
+function resolveTriggerLabel<T extends string | number>(
     selected: ReadonlySet<T>,
     options: readonly T[],
     placeholder: string,
@@ -81,7 +81,7 @@ function resolveTriggerLabel<T extends string>(
     return `${selected.size} selected`;
 }
 
-export default function MultiSelectCheckbox<T extends string = string>({
+export default function MultiSelectCheckbox<T extends string | number = string>({
     options,
     value,
     onChange,
@@ -89,7 +89,7 @@ export default function MultiSelectCheckbox<T extends string = string>({
     selectAllLabel = "Select all",
     className = "",
     disabled = false,
-    getOptionLabel = (option: T) => option,
+    getOptionLabel = (option: T) => String(option),
 }: MultiSelectCheckboxProps<T>) {
     const [open, setOpen] = useState(false);
     const rootRef = useRef<HTMLDivElement>(null);

@@ -28,19 +28,19 @@ const monthsLabelMap: Record<number, string> = {
 };
 
 export default function AccountSummary({ year, setYear, data }: AccountSummaryParams) {
-    const [filterMonth, setFilterMonth] = useState(-1);
+    const [filterMonths, setFilterMonths] = useState<Set<number>>(() => new Set());
     const [filterProjects, setFilterProjects] = useState<Set<string>>(() => new Set());
 
     const displayRows = useMemo(() => {
         let rows = data.rows;
-        if ( filterMonth >= 0 ) {
-            rows = rows.filter(row => filterMonth === getBusinessCalendarMonth(row[0]));
+        if ( filterMonths.size > 0 ) {
+            rows = rows.filter(row => filterMonths.has(getBusinessCalendarMonth(row[0])));
         }
         if ( filterProjects.size > 0 ) {
             rows = rows.filter(row => filterProjects.has(row[2]));
         }
         return rows;
-    }, [data.rows, filterMonth, filterProjects]);
+    }, [data.rows, filterMonths, filterProjects]);
 
     const availableYears = useMemo(() => {
         return Array.from(
@@ -50,10 +50,14 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
     }, []);
 
     const availableMonths = useMemo(() => {
-        return data.rows.reduce((valuesSet, row) => {
-            return valuesSet.add(getBusinessCalendarMonth(row[0]));
-        }, new Set([-1]));
+        const months = new Set<number>();
+        for ( const row of data.rows ) {
+            months.add(getBusinessCalendarMonth(row[0]));
+        }
+        return [ ...months ].sort((a, b) => a - b);
     }, [data.rows]);
+
+    const getMonthLabel = useCallback((month: number) => monthsLabelMap[month], []);
 
     const availableProjects = useMemo(() => {
         const projects = new Set<string>();
@@ -87,17 +91,17 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
         [displayRows]
     );
 
+    const hasMonthFilter = filterMonths.size > 0;
     const hasProjectFilter = filterProjects.size > 0;
     const hasNoResults = displayRows.length === 0;
 
     const handleYearChange: ChangeEventHandler<HTMLSelectElement> = useCallback(e => {
-        setFilterMonth(-1);
         setYear(parseInt(e.target.value));
-    }, [setYear, setFilterMonth]);
+    }, [setYear]);
 
-    const handleFilterMonthChange: ChangeEventHandler<HTMLSelectElement> = useCallback(e => {
-        setFilterMonth(parseInt(e.target.value));
-    }, [setFilterMonth]);
+    const handleFilterMonthsChange = useCallback((next: Set<number>) => {
+        setFilterMonths(next);
+    }, []);
 
     const handleFilterProjectsChange = useCallback((next: Set<string>) => {
         setFilterProjects(next);
@@ -108,8 +112,39 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
     }, []);
 
     const handleClearMonthFilter = useCallback(() => {
-        setFilterMonth(-1);
-    }, [setFilterMonth]);
+        setFilterMonths(new Set());
+    }, []);
+
+    const handleClearAllFilters = useCallback(() => {
+        setFilterMonths(new Set());
+        setFilterProjects(new Set());
+    }, []);
+
+    const noResultsMessage = useMemo(() => {
+        if ( hasMonthFilter && hasProjectFilter ) {
+            return "No entries match the selected months and categories for this time period.";
+        }
+        if ( hasMonthFilter ) {
+            return "No entries match the selected months for this time period.";
+        }
+        if ( hasProjectFilter ) {
+            return "No entries match the selected categories for this time period.";
+        }
+        return "No entries for this time period.";
+    }, [hasMonthFilter, hasProjectFilter]);
+
+    const clearFiltersAction = useMemo(() => {
+        if ( hasMonthFilter && hasProjectFilter ) {
+            return { label: "Clear all filters", onClick: handleClearAllFilters };
+        }
+        if ( hasMonthFilter ) {
+            return { label: "Show all months", onClick: handleClearMonthFilter };
+        }
+        if ( hasProjectFilter ) {
+            return { label: "Show all projects", onClick: handleClearProjectFilter };
+        }
+        return null;
+    }, [hasMonthFilter, hasProjectFilter, handleClearAllFilters, handleClearMonthFilter, handleClearProjectFilter]);
 
     return (
         <div className="component-AccountSummary content-section mb-40">
@@ -128,17 +163,14 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                             })
                         }
                     </select>
-                    <select
-                        value={filterMonth}
-                        onChange={handleFilterMonthChange}
-                        className="cursor-pointer card rounded-xl bg-off-white text-lg font-bold px-3 py-2"
-                    >
-                        {
-                            [...availableMonths].map(m => {
-                                return <option key={m} value={m}>{monthsLabelMap[m] || "All months"}</option>
-                            })
-                        }
-                    </select>
+                    <MultiSelectCheckbox
+                        options={availableMonths}
+                        value={filterMonths}
+                        onChange={handleFilterMonthsChange}
+                        placeholder="All months"
+                        selectAllLabel="Select all"
+                        getOptionLabel={getMonthLabel}
+                    />
                     <FilterIcon className="ml-auto stroke-grey-dark" width="1.3em" height="1.3em" />
                     <MultiSelectCheckbox
                         options={availableProjects}
@@ -168,7 +200,7 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                 <li className="card">
                     <div className="flex items-center justify-start gap-4 mb-4">
                         <Badge color="orange" icon={DollarSign} />
-                        <h2 className="text-xl">{filterMonth >= 0 ? "Net change" : "Balance"}</h2>
+                        <h2 className="text-xl">{hasMonthFilter ? "Net change" : "Balance"}</h2>
                     </div>
                     <span className="text-h3 text-orange-600 font-bold">{formatCurrency(outstandingBalance)}</span>
                 </li>
@@ -178,17 +210,17 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
                 {hasNoResults ? (
                     <div className="flex flex-col items-center border-t border-t-primary-lighter px-8 py-16 text-center">
                         <p className="text-grey-dark">
-                            {hasProjectFilter
-                                ? "No entries match the selected categories for this time period."
-                                : "No entries for this time period."}
+                            {noResultsMessage}
                         </p>
-                        <button
-                            type="button"
-                            onClick={hasProjectFilter ? handleClearProjectFilter : handleClearMonthFilter}
-                            className="mt-4 cursor-pointer rounded-lg border border-primary bg-white px-4 py-2 text-sm font-bold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white"
-                        >
-                            {hasProjectFilter ? "Clear filters" : "Show all months"}
-                        </button>
+                        {clearFiltersAction && (
+                            <button
+                                type="button"
+                                onClick={clearFiltersAction.onClick}
+                                className="mt-4 cursor-pointer rounded-lg border border-primary bg-white px-4 py-2 text-sm font-bold text-primary transition-colors hover:border-primary hover:bg-primary hover:text-white"
+                            >
+                                {clearFiltersAction.label}
+                            </button>
+                        )}
                     </div>
                 ) : (
                     <div className="w-full overflow-x-auto">
