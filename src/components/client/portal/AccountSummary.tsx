@@ -92,8 +92,8 @@ export default function AccountSummary({ year, setYear, data }: AccountSummaryPa
         [displayRows]
     );
 
-    const hasMonthFilter = filterMonths.size > 0;
-    const hasProjectFilter = filterProjects.size > 0;
+    const hasMonthFilter = filterMonths.size > 0 && filterMonths.size < availableMonths.length;
+    const hasProjectFilter = filterProjects.size > 0 && filterProjects.size < availableProjects.length;
     const hasNoResults = displayRows.length === 0;
 
     const handleYearChange: ChangeEventHandler<HTMLSelectElement> = useCallback(e => {
