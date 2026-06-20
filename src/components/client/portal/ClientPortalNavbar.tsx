@@ -37,9 +37,10 @@ export default function ClientPortalNavbar({ clientName = "", moreNavLinks = [] 
                     <Image
                         src="/images/purpleturtlecreative-logo-horizontal-color.svg"
                         alt="Purple Turtle Creative"
-                        width={233}
-                        height={54}
+                        width={300}
+                        height={92}
                         priority
+                        className="w-auto h-[70px]"
                     />
                 </Link>
                 <nav>
