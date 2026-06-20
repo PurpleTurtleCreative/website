@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { TimesheetResponse } from "@/types/TimesheetData";
 import { CURRENT_YEAR } from "@/util/constants";
 import { fetchTimesheetData } from "@/util/fetch";
+import { sumOutstandingBalance } from "@/util/timesheet";
 import LoginForm from "./LoginForm";
 import AccountSummary from "./AccountSummary";
 import ClientPortalNavbar, { ClientPortalNavbarProps } from "./ClientPortalNavbar";
@@ -14,16 +15,33 @@ export default function ClientPortalSPA() {
     const [client, setClient] = useState("");
     const [password, setPassword] = useState("");
     const [timesheetData, setTimesheetData] = useState<TimesheetResponse | null>(null);
+    const [currentYearDue, setCurrentYearDue] = useState<number | null>(null);
 
     useEffect(() => {
-        if ( client && password && year ) {
-            fetchTimesheetData(client, password, year).then((data: TimesheetResponse) => {
-                setTimesheetData(data);
-            }).catch(error => {
-                window.alert(error.message ?? "An unknown error occurred");
-            });
+        if ( ! client || ! password || ! year ) {
+            return;
         }
-    }, [client, password, year, setTimesheetData]);
+
+        let cancelled = false;
+
+        fetchTimesheetData(client, password, year).then((data: TimesheetResponse) => {
+            if ( cancelled ) {
+                return;
+            }
+            setTimesheetData(data);
+            if ( year === CURRENT_YEAR ) {
+                setCurrentYearDue(sumOutstandingBalance(data.rows));
+            }
+        }).catch(error => {
+            if ( ! cancelled ) {
+                window.alert(error.message ?? "An unknown error occurred");
+            }
+        });
+
+        return () => {
+            cancelled = true;
+        };
+    }, [client, password, year]);
 
     const clientPortalNavbarLinks = useMemo(() => {
         const navLinks: ClientPortalNavbarProps["moreNavLinks"] = [];
@@ -41,7 +59,10 @@ export default function ClientPortalSPA() {
         setClient(client);
         setPassword(password);
         setTimesheetData(data);
-    }, [setClient, setPassword, setTimesheetData]);
+        if ( year === CURRENT_YEAR ) {
+            setCurrentYearDue(sumOutstandingBalance(data.rows));
+        }
+    }, [setClient, setPassword, setTimesheetData, year]);
 
     return ( ! timesheetData ) ?
         (
@@ -51,7 +72,11 @@ export default function ClientPortalSPA() {
         ) :
         (
             <main className="component-ClientPortalSPA flex-1 flex flex-col align-center justify-start bg-primary-lightest">
-                <ClientPortalNavbar clientName={timesheetData.client.name} moreNavLinks={clientPortalNavbarLinks} />
+                <ClientPortalNavbar
+                    clientName={timesheetData.client.name}
+                    moreNavLinks={clientPortalNavbarLinks}
+                    currentYearDue={currentYearDue}
+                />
                 <AccountSummary year={year} setYear={setYear} data={timesheetData} />
             </main>
         );

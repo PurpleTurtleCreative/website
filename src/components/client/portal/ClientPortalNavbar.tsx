@@ -2,10 +2,12 @@ import { LogOutIcon, MailIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactElement } from "react";
+import { formatCurrency } from "@/util/formatters";
 
 export interface ClientPortalNavbarProps {
     clientName: string;
     moreNavLinks: NavLink[];
+    currentYearDue?: number | null;
 }
 
 export interface NavLink {
@@ -14,7 +16,9 @@ export interface NavLink {
     label: string;
 }
 
-export default function ClientPortalNavbar({ clientName = "", moreNavLinks = [] }: ClientPortalNavbarProps) {
+export default function ClientPortalNavbar({ clientName = "", moreNavLinks = [], currentYearDue = null }: ClientPortalNavbarProps) {
+
+    const hasOutstandingBalance = currentYearDue !== null && currentYearDue > 0;
 
     const navLinks: NavLink[] = [
         ...moreNavLinks,
@@ -43,18 +47,35 @@ export default function ClientPortalNavbar({ clientName = "", moreNavLinks = [] 
                         className="w-auto h-[70px]"
                     />
                 </Link>
-                <nav>
-                    <ul className="flex flex-wrap items-center justify-end gap-1 sm:gap-3">
-                        {navLinks.map((link) => (
-                            <li key={link.label}>
-                                <Link href={link.href} className="button button--primary text-sm">
-                                    {link.icon}<span>{link.label}</span>
-                                </Link>
-                            </li>
-                        ))}
-                        <li className="font-bold">{clientName}</li>
-                    </ul>
-                </nav>
+                <div className="flex flex-wrap items-stretch justify-end gap-3">
+                    {currentYearDue !== null && (
+                        <div
+                            className={`flex flex-row flex-nowrap items-center gap-x-2 rounded-lg border py-2 px-3 sm:py-0 sm:px-4 font-bold text-sm ${
+                                hasOutstandingBalance
+                                    ? "border-orange-300 bg-orange-50 text-orange-800"
+                                    : "border-primary-lighter bg-off-white text-grey-dark"
+                            }`}
+                            aria-label="Current amount due"
+                        >
+                            <span>Current due</span>
+                            <span className={`${hasOutstandingBalance ? "text-orange-600" : "text-black"} text-lg`}>
+                                {formatCurrency(currentYearDue)}
+                            </span>
+                        </div>
+                    )}
+                    <nav>
+                        <ul className="flex flex-wrap items-center justify-end gap-1 sm:gap-3">
+                            {navLinks.map((link) => (
+                                <li key={link.label}>
+                                    <Link href={link.href} className="button button--primary text-sm">
+                                        {link.icon}<span>{link.label}</span>
+                                    </Link>
+                                </li>
+                            ))}
+                            <li className="font-bold">{clientName}</li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </header>
     );
