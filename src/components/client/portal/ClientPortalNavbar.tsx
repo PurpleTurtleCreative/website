@@ -36,15 +36,15 @@ export default function ClientPortalNavbar({ clientName = "", moreNavLinks = [],
 
     return (
         <header className="component-Navbar w-full bg-white drop-shadow-md drop-shadow-primary-dark/10">
-            <div className="content-section flex items-start sm:items-center justify-between gap-3 py-1">
+            <div className="content-section flex items-start sm:items-center justify-between gap-3 py-3">
                 <Link href="/">
                     <Image
                         src="/images/purpleturtlecreative-logo-horizontal-color.svg"
                         alt="Purple Turtle Creative"
-                        width={300}
-                        height={92}
+                        width={215}
+                        height={50}
                         priority
-                        className="w-auto h-[70px]"
+                        className="w-auto h-[50px]"
                     />
                 </Link>
                 <div className="flex flex-wrap items-stretch justify-end gap-3">
