@@ -2,14 +2,8 @@ import Footer from "@/components/ui/Footer";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: {
-    template: "%s | Purple Turtle Creative",
-    default: "Client Portal | Purple Turtle Creative",
-  },
-  description: "Access your account summary, payments, and outstanding balance.",
-  icons: {
-    icon: "/favicon.png",
-  }
+  title: "Client Portal",
+  description: "Access your Purple Turtle Creative account summary, payments, and outstanding balance.",
 };
 
 export default function RootLayout({
