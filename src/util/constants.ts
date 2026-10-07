@@ -14,6 +14,8 @@ export const API_BASE_URL = isBrowserLocalhost()
     ? "http://localhost:8080"
     : "https://api.purpleturtlecreative.com";
 
+export const PRODUCTION_SITE_URL = "https://purpleturtlecreative.com";
+
 export const CURRENT_YEAR = new Date().getFullYear();
 
 export const BUSINESS_TIME_ZONE = "America/New_York";
